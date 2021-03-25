@@ -1,6 +1,16 @@
 # Index des artistes & pages par artiste
 La page artiste présente la liste des artistes et les liens vers leur(s) œuvres respectives
 - Références https://2016.mappingfestival.com/artists.html
+
+# Routes
+|method|path|role|help|
+|--|--|--|--|
+|GET|/api/artist|anonymous||
+|POST|/api/artist|admin,editor||
+|PUT|/api/artist/:id|admin,editor||
+|DELETE|/api/artist/:id|admin,editor||
+
+
 # Model
 
 ``` js
