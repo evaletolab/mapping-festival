@@ -1,3 +1,9 @@
+# Index des artistes & pages par artiste
+La page artiste présente la liste des artistes et les liens vers leur(s) œuvres respectives
+- Références https://2016.mappingfestival.com/artists.html
+# Model
+
+``` json
 {
   name:{fr:string,en:string},
   content:{fr:string,en:string},  
@@ -13,4 +19,4 @@
   signature:string,
   creator:string,
 }
-
+```
