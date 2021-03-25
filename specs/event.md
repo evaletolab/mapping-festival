@@ -1,5 +1,31 @@
+# Structure «Events/Œuvres»
+- Un descriptif général
+- Une localisation géographique
+- Un tag de zone géographique pour filtrage alphanumérique [??]
+- Un tag de typologie (Event [ Emission/Workshop/Masterclass/Table
+Ronde/Concert/Performance/Nightclubbing ] — Œuvre)
+- Une collection de médias à afficher sur la page liée
+- Une date et heure (de début et de fin) vs. (de début et de durée)
+- Un tarif
+- Un nombre de participants
+- Un descriptif de langue (ex. workshops in english)
+- Un champ matériel à amener (workshops)
+- Une zone «Notes/addendum/remarque» fourre tout pour les oublis
+
+# Routes
+|method|path|role|filters|
+|--|--|--|--|
+|GET|/api/event|anonymous| type=|
+|POST|/api/event|admin,editor||
+|PUT|/api/event/:id|admin,editor||
+|DELETE|/api/event/:id|admin,editor||
+
+# Model
+* type == enum(Emission/Workshop/Masterclass/TableRonde/Concert/Performance/Nightclubbing)
+
+```js
 {
-  type:enum(Emission/Workshop/Masterclass/TableRonde/Concert/Performance/Nightclubbing),
+  type:string,
   title:{fr:string,en:string},
   header:{fr:string,en:string},
   content:{fr:string,en:string},  
@@ -35,4 +61,4 @@
   signature:string,
   creator:string,
 }
-
+```
