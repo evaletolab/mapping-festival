@@ -1,3 +1,7 @@
+# Config chargée au load
+Elle détermine le context générale et particulier
+
+```js
 {
   meta:[
     {key:string,content:string}
@@ -9,13 +13,36 @@
     fr:{key:string,label:string},
     en:{key:string,label:string},
   },
+  // dynamic version
   layout:[
-    {slug:string,name:string,title:string}
+    {slug:string,css:string,title:string,meta:string,},    
   ],
+  // static version
+  {
+    home:{
+      css:string,
+      title:string,
+      meta:[
+        {key:string,content:string}
+      ],
+      assets:[//...]
+    },
+    artist:{
+      // ...
+    }
+    calendar:{
+      // ...
+    },
+    event:{
+      // ...
+    },
+    singleton:{
+    }
+
   footer:{
     fr:string
     en:string
   }
 
 }
-
+```
