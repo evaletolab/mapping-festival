@@ -12,8 +12,9 @@ Elle détermine le context générale et particulier
   meta:[
     {key:string,content:string}
   ],
-  menu:[
-    {item:string,slug:string,weight:number,active:boolean,layout:string,icon:string}
+  // bind menu items with 1..N layout
+  menu:[    
+    {layout:string,item:string,slug:string,weight:number,active:boolean,icon:string}
   ],
   i18n:{
     fr:{key:string,label:string},
@@ -24,7 +25,7 @@ Elle détermine le context générale et particulier
     {slug:string,css:string,title:string,meta:string,},    
   ],
   // static version
-  {
+  layout:{
     home:{
       css:string,
       title:string,
