@@ -1,4 +1,4 @@
-# Config chargée au load
+# Config - chargée au load
 Elle détermine le context générale et particulier
 
 ```js
