@@ -3,7 +3,7 @@ La page artiste présente la liste des artistes et les liens vers leur(s) œuvre
 - Références https://2016.mappingfestival.com/artists.html
 # Model
 
-``` json
+``` js
 {
   name:{fr:string,en:string},
   content:{fr:string,en:string},  
