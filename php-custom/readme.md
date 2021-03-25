@@ -3,8 +3,7 @@
 
 implements a route to add a event object to an flat file NoSQL database like.
 expects a json encoded object of format: 
-```
-
+```js
 {
   "name":{
     "fr":"bonjour",
