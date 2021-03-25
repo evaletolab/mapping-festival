@@ -15,7 +15,7 @@ Ronde/Concert/Performance/Nightclubbing ] — Œuvre)
 # Routes
 |method|path|role|filters|
 |--|--|--|--|
-|GET|/api/event|anonymous| type=|
+|GET|/api/event|anonymous| &type=Emission/... &geo.tag=... &when=... |
 |POST|/api/event|admin,editor||
 |PUT|/api/event/:id|admin,editor||
 |DELETE|/api/event/:id|admin,editor||
