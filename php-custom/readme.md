@@ -1,7 +1,7 @@
 
 # Ultre Simple API REST for artist  
 
-implements a route to add a event object to an flat file NoSQL database like.
+implements a route (GET,POST,PUT,DEL) to manage Artist content with a flat file NoSQL database like.
 expects a json encoded object of format: 
 ```js
 {
