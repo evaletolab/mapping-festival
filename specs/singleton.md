@@ -1,4 +1,4 @@
-
+# Index des pages
 Un nombre non défini de pages informatives (urls statiques)
 - À propos
 - Archives (ref https://2017.mappingfestival.com/infos.html)
@@ -8,6 +8,18 @@ Un nombre non défini de pages informatives (urls statiques)
 - etc (Liens Twitter / Instagram / Facebook / Tiktok / Youtube / Viméo / abo
 newsletters)
 
+# Routes
+|method|path|role|filters|
+|--|--|--|--|
+|GET|/api/singleton|anonymous|&unpublished |
+|POST|/api/singleton|admin,editor||
+|PUT|/api/singleton/:id|admin,editor||
+|DELETE|/api/singleton/:id|admin,editor||
+
+
+# Model
+
+``` js
 {
   title:{fr:string,en:string},
   header:{fr:string,en:string},
