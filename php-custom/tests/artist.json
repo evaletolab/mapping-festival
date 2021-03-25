@@ -1,0 +1,27 @@
+{
+  "name":{
+    "fr":"bonjour",
+    "en":"hello"
+  },
+  "content":{
+    "fr":"le monde",
+    "en":"world"
+  },  
+  "medias":[
+    { 
+      "label": "2021", 
+      "url":"https://lh3.googleusercontent.com/eupqUd8o-yPZS-sNkLQ94ZLVvG5iFh96hMooyUoml94Om096vGsnEceNqcvfjQ5H76Y", 
+      "type":"image" 
+    }
+  ],  
+  "link":[
+    { 
+      "url":"https://karibou.ch/", 
+      "label":"2021",
+      "icon":"none" 
+    }
+  ],  
+  "active": true,
+  "signature":"oli",
+  "creator":"olivier"
+}
