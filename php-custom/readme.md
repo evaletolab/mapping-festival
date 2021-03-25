@@ -1,5 +1,5 @@
 
-# An Ultra Simple API REST for artist  
+# An Ultra Simple API REST to manage artist content  
 ## This is a simple POC just for fun
 
 implements a route (GET,POST,PUT,DEL) to manage Artist content with a flat file NoSQL database like.
