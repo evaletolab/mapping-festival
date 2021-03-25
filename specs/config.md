@@ -1,6 +1,11 @@
 # Config - chargée au load
 Elle détermine le context générale et particulier
 
+```sh
+/api/config 
+GET|PUT
+```
+
 ```js
 {
   meta:[
