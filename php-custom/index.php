@@ -26,7 +26,7 @@
 
   
 
-  // endpoints for /event
+  // endpoints for /atist
   // everything else results in a 404 Not Found
   router_add('/artist', function ($method, $uri, $query, $payload) {
     return controller_artist(db(), $method, $uri, $query, $payload);

@@ -1,8 +1,6 @@
 {
-  "name":{
-    "fr":"bonjour",
-    "en":"hello"
-  },
+  "name":"Michael J. Jr",
+  "slug":["michael-j-jr"],
   "content":{
     "fr":"le monde",
     "en":"world"
@@ -14,7 +12,7 @@
       "type":"image" 
     }
   ],  
-  "link":[
+  "links":[
     { 
       "url":"https://karibou.ch/", 
       "label":"2021",

@@ -89,8 +89,8 @@
     if(!controller_artist_validate($artist)){
       //response_fail();
     }
-
     $array = json_decode(json_encode($artist), true);
+    unset($array["_id"]);
     $result = $db->updateById($slug, $array);
     if(!$result){
         http_response_code(500);
