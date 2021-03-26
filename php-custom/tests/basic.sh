@@ -12,8 +12,8 @@ curl -v -H "Content-Type: application/json"  http://localhost:4000/artist
 
 #
 # update one
-curl -v -H "Content-Type: application/json"  http://localhost:4000/artist/1
+curl -X PUT -v -H "Content-Type: application/json" --data @artist.json http://localhost:4000/artist/1
 
 #
 # get one
-curl -X PUT -v -H "Content-Type: application/json" --data @artist.json http://localhost:4000/artist/1
+curl -v -H "Content-Type: application/json"  http://localhost:4000/artist/1

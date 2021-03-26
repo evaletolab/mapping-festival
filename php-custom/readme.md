@@ -1,27 +1,50 @@
 
-# milid analytics php sqlite version
+# An Ultra Simple API REST to manage artist content  
+## This is a simple POC just for fun
 
-implements a route to add a Milid event object to an sqlite database.
+implements a route (GET,POST,PUT,DEL) to manage Artist content with a flat file NoSQL database like.
 expects a json encoded object of format: 
-```
+```js
 {
-	"uid": "2bdaf3e1-39653661",
-	"username": "marcus",
-	"module": 1,
-	"lesson":1,
-	"state": 0
+  "name":{
+    "fr":"bonjour",
+    "en":"hello"
+  },
+  "content":{
+    "fr":"le monde",
+    "en":"world"
+  },  
+  "medias":[
+    { 
+      "label": "2021", 
+      "url":"https://lh3.googleusercontent.com/eupqUd8o-yPZS-sNkLQ94ZLVvG5iFh96hMooyUoml94Om096vGsnEceNqcvfjQ5H76Y", 
+      "type":"image" 
+    }
+  ],  
+  "link":[
+    { 
+      "url":"https://karibou.ch/", 
+      "label":"2021",
+      "icon":"none" 
+    }
+  ],  
+  "active": true,
+  "signature":"oli",
+  "creator":"olivier"
 }
 ```
 
 ## install it
 
-- copy **empty.sqlite** and rename it **db.sqlite** 
-- copy **db.sqlite** and **event_add.php** to target apache directory
+- install compose 2
+- composer require rakibtg/sleekdb
 
 ## todo
-- auth ??
-- protect sqlite file from download
+- missing auth0 JWT 
+- missing payload validator
+- missing ... many 
 
 ## curl test
-- curl -v -H "Content-Type: application/json" --data @test.json http://site-address/event_add.php
-- curl -v -H "Content-Type: application/json" -H "Authorization: Bearer abcd"  http://localhost:4000/event/2bdaf3e1-39653661
+  php -S localhost:4000
+  cd tests
+  bash test.sh
