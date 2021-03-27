@@ -1,0 +1,13 @@
+Title: my first event
+
+----
+
+Name: super event
+
+----
+
+Artists: artists/john-doe, artists/mary-popins
+
+----
+
+Text: blabla bla

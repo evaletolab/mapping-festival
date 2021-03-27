@@ -1,0 +1,6 @@
+title: Artists
+
+sections:
+  artists:
+    type: pages
+    template: artist

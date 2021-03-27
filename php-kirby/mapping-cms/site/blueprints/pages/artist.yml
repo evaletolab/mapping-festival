@@ -1,0 +1,21 @@
+name: artist
+
+sections:
+  info:
+    type: fields
+    fields:
+      first-name:
+        label: first name
+        type: text
+      last-name:
+        label: last name
+        type: text
+      bio:
+       type: textarea
+       size: medium
+    
+  gallery:
+    type: files
+    layout: cards
+    image:
+      ratio: 1/1 

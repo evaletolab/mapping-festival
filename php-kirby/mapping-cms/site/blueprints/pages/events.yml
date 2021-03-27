@@ -1,0 +1,7 @@
+title: Events
+
+sections:
+  events:
+    label: events
+    type: pages
+    template: event
