@@ -1,6 +1,11 @@
 <template>
   <div class="landing">
-    Hello
+    <h1>calendar</h1>
+    <ul>
+      <li v-for="event in events" :key="event._id">
+        {{ event.title.en }} 
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -18,7 +23,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { $config, $user } from '../services';
+import { $config, $cms } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 
@@ -28,26 +33,27 @@ import CMSIcons from '../components/CMSIcons.vue';
   },
 })
 export default class Landing extends Vue {
-  open = false;
-  deferredPrompt: any = {};
-  pseudo = '';
 
-  async mounted(){
-    window.addEventListener('beforeinstallprompt', (e) => {
-      // Prevent Chrome 67 and earlier from automatically showing the prompt
-      e.preventDefault();
+  mounted(){
 
-      // Stash the event so it can be triggered later.
-      this.deferredPrompt = e;
-    });
   }
+
+  // async mounted(){
+  //   window.addEventListener('beforeinstallprompt', (e) => {
+  //     // Prevent Chrome 67 and earlier from automatically showing the prompt
+  //     e.preventDefault();
+
+  //     // Stash the event so it can be triggered later.
+  //     this.deferredPrompt = e;
+  //   });
+  // }
 
   get config(){
     return $config.store.config;
   }
 
-  get user() {
-    return $user.user;
+  get events(){
+    return $cms.events;
   }
 
   // beforeRouteEnter(to: any, from: any, next: any) {
@@ -60,38 +66,6 @@ export default class Landing extends Vue {
   //   })
   // }
 
-  onEnter(username){
-    console.log('--- DBG entrer',username)
-    $user.createUser(username)
-    this.$router.push({path:'/content' });
-  }
-
-  onToggle(){
-    this.open = !this.open;
-  }
-  
-  onInstall($event) {
-    const deferredPrompt = this.deferredPrompt;
-    // Show the prompt
-    if(!deferredPrompt.prompt) {
-      console.log('---DBG alternative install message',$event);
-      $event.preventDefault();
-      $event.stopPropagation();
-      return;
-    }
-
-    deferredPrompt.prompt();
-
-    // Wait for the user to respond to the prompt
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt', choiceResult);
-      } else {
-        console.log('User dismissed the A2HS prompt', choiceResult);
-      }
-      this.deferredPrompt = {};
-    });    
-  }
 
 }
 </script>

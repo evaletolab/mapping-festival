@@ -19,8 +19,8 @@ Vue.config.productionTip = false
 
 import '@/main.scss'
 
-import { $config, $user } from '@/services';
-const load = [$config.get(),$user.get()];
+import { $config, $user, $cms } from '@/services';
+const load = [$config.get(), $cms.loadAll(), $user.get()];
 
 Promise.all(load).
 then(() => {
