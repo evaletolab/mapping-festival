@@ -1,5 +1,5 @@
 export { $config } from './config-service';
-export { $editor } from './editor-service';
+export { $cms } from './cms-service';
 export { $user } from './user-service';
 
 

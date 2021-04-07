@@ -50,4 +50,4 @@ class CMSService {
 
 //
 // service start with $
-export const $editor = new CMSService();
+export const $cms = new CMSService();
