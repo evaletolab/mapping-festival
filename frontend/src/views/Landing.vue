@@ -1,6 +1,6 @@
 <template>
   <div class="landing">
-
+    Hello
   </div>
 </template>
 
@@ -50,15 +50,15 @@ export default class Landing extends Vue {
     return $user.user;
   }
 
-  beforeRouteEnter(to: any, from: any, next: any) {
-    const all = [$config.get(),$user.get()]
-    Promise.all(all).then(([config, user])=> {
-      if(user.id && user.name) {
-        return next('/content');
-      }
-      next();
-    })
-  }
+  // beforeRouteEnter(to: any, from: any, next: any) {
+  //   const all = [$config.get(),$user.get()]
+  //   Promise.all(all).then(([config, user])=> {
+  //     if(user.id && user.name) {
+  //       return next('/content');
+  //     }
+  //     next();
+  //   })
+  // }
 
   onEnter(username){
     console.log('--- DBG entrer',username)
