@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
-import Landing from '../views/Landing.vue'
 
 import { $config, $user } from '@/services'
 
-import About from '../views/About.vue'
-import Home from '../views/Home.vue'
+import Artist from '../views/Artist.vue'
 import Content from '../views/Content.vue'
+import Event from '../views/Event.vue'
+import Landing from '../views/Landing.vue'
+import Spot from '../views/Spot.vue'
 
 Vue.use(VueRouter)
 
@@ -18,25 +19,30 @@ const routes: Array<RouteConfig> = [
     component: Landing
   },
   {
-    path: '/content',
-    name: 'Modules',
-    component: Home,
+    path: '/events/:event',
+    name: 'Event',
+    component: Event
+  },
+  {
+    path: '/artist/:artist',
+    name: 'About',
+    component: Artist
+  },
+  {
+    path: '/spot/:spot-slug',
+    name: 'Spot',
+    component: Spot
   },
   {
     path: '/content/:slug',
     name: 'Modules',
-    component: Home,
+    component: Content,
     // children:[{
     //   path: ':slug',
     //   name: 'Content',
     //   components: { l2 : Content}  
     // }]
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: About
-  }
+  }  
 ]
 
 const router = new VueRouter({

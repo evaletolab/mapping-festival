@@ -2,7 +2,7 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  <div class="content">
+  <div class="spot">
     <!-- TOOLBAR -->
     <nav class="toolbar " :class="{'exited': (scrollDirection <= 0) }">
       <div class="toolbar-row">
@@ -31,7 +31,7 @@
 </template>
 
 <style lang="scss" scoped>
-  .content{
+  .spot{
     position: fixed;
     top: 0;
     right: 0;
@@ -43,9 +43,6 @@
     width: 100vw;    
     padding-top:0;    
   }
-
-
-
 </style>
 
 <script lang="ts">
@@ -62,7 +59,7 @@ import CMSIcons from '../components/CMSIcons.vue';
     CMSIcons,
   }
 })
-export default class Content extends Vue {
+export default class Spot extends Vue {
   private lastScrollTop = 0;
   scrollDirection = 0;
 
