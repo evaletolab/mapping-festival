@@ -1,32 +1,32 @@
 /* * * * suisse * * * * */
 
-@font-face {
-  font-family: "suisse";
-  src: url("/fonts/suisse.woff/SuisseEDUIntl-Regular-WebS.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: "suisse";
+//   src: url("/fonts/suisse.woff/SuisseEDUIntl-Regular-WebS.woff") format("woff");
+//   font-weight: normal;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: "suisse";
-  src: url("/fonts/suisse.woff/SuisseEDUIntl-RegularItalic-WebS.woff") format("woff");
-  font-weight: normal;
-  font-style: italic;
-}
+// @font-face {
+//   font-family: "suisse";
+//   src: url("/fonts/suisse.woff/SuisseEDUIntl-RegularItalic-WebS.woff") format("woff");
+//   font-weight: normal;
+//   font-style: italic;
+// }
 
-@font-face {
-  font-family: "suisse";
-  src: url("/fonts/suisse.woff/SuisseEDUIntl-Bold-WebS.woff") format("woff");
-  font-weight: bold;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: "suisse";
+//   src: url("/fonts/suisse.woff/SuisseEDUIntl-Bold-WebS.woff") format("woff");
+//   font-weight: bold;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: "suisse";
-  src: url("/fonts/suisse.woff/SuisseEDUIntl-BoldItalic-WebS.woff") format("woff");
-  font-weight: bold;
-  font-style: italic;
-}
+// @font-face {
+//   font-family: "suisse";
+//   src: url("/fonts/suisse.woff/SuisseEDUIntl-BoldItalic-WebS.woff") format("woff");
+//   font-weight: bold;
+//   font-style: italic;
+// }
 
 
   html {
@@ -35,98 +35,34 @@
   }
   body{
       margin: 0;
-      -background-color: rgba(255, 255, 255, 0.1);
   }
 
   button{
     padding: 8px;
   }
   
-  .hide    {display: none!important;}
 
-  .show-sm     {display: none!important;}
-
+  //
+  // global tools
+  .hide             {display : none!important;}
+  [hidden]          {visibility: hidden;}
+  .show-sm          {display: none!important;}
   @media only screen and (max-width: 767px) {
-    .hide-sm    {display: none!important;}
-    .show-sm     {display: block!important;}
-    .inline-show-sm     {display: inline-block!important;}
+    .hide-sm        {display: none!important;}
+    .show-sm        {display: block!important;}
+    .inline-show-sm {display: inline-block!important;}
   }
   
   @media only screen and (max-width: 1023px) {
-    .hide-md    {display: none;}
+    .hide-md        {display: none;}
   }
   @media only screen and (min-width: 1024px) {
-    .show-lg    {display: block;}
-    .hide-lg    {display: none;}
+    .show-lg        {display: block;}
+    .hide-lg        {display: none;}
   }
 
-  .theme-1 {
-    .primary-on-text { color: var(--theme-1-primary)!important;}
-    .secondary-on-text { color: var(--theme-1-secondary)!important;}
-    .tertiary-on-text { color: var(--theme-1-tertiary)!important; }
-
-    .primary { background-color: var(--theme-1-primary)!important; color: white!important }
-    .secondary { background-color: var(--theme-1-secondary)!important; color: white!important; }
-    .tertiary { background-color: var(--theme-1-tertiary)!important; }
-  }
-
-  .theme-2 {
-    .primary { background-color: var(--theme-2-primary)!important;color: white!important; }
-    .secondary { background-color: var(--theme-2-secondary)!important;color: white!important; }
-    .tertiary { background-color: var(--theme-2-tertiary)!important; }
-
-    .primary-on-text { color: var(--theme-2-primary)!important;}
-    .secondary-on-text { color: var(--theme-2-secondary)!important;}
-    .tertiary-on-text { color: var(--theme-2-tertiary)!important; }
-  }
-
-  .theme-3 {
-    .primary { background-color: var(--theme-3-primary)!important;color: white!important; }
-    .secondary { background-color: var(--theme-3-secondary)!important;color: white!important; }
-    .tertiary { background-color: var(--theme-3-tertiary)!important; }
-
-    .primary-on-text { color: var(--theme-3-primary)!important;}
-    .secondary-on-text { color: var(--theme-3-secondary)!important;}
-    .tertiary-on-text { color: var(--theme-3-tertiary)!important; }  
-  }
-
-  .theme-4 {
-    .primary { background-color: var(--theme-4-primary)!important;color: white!important; }
-    .secondary { background-color: var(--theme-4-secondary)!important;color: white!important; }
-    .tertiary { background-color: var(--theme-4-tertiary)!important; }
-
-    .primary-on-text { color: var(--theme-4-primary)!important;}
-    .secondary-on-text { color: var(--theme-4-secondary)!important;}
-    .tertiary-on-text { color: var(--theme-4-tertiary)!important; }
-  }
-
-.hidden {
-  visibility: hidden;
-}
-
-.disable-transitions {
-  -webkit-transition: none !important;
-  -moz-transition: none !important;
-  -ms-transition: none !important;
-  -o-transition: none !important;
-  transition: none !important;
-}
-
-
-.infographic-overlay{
-  opacity:0;
-  transition: opacity 0.4s linear;
-  -moz-transition: opacity 0.4s linear;
-  -webkit-transition: opacity 0.4s linear;
-  pointer-events: none;
-}
-
-.infographic-overlay-visible{
-  opacity:1;
-  pointer-events: auto;
-}
-
-
+//
+// common style for toolbar, can be overhided on Component.vue
 .toolbar {
   border-radius: 0 0 18px 18px;
   flex-flow: row wrap;
@@ -221,9 +157,56 @@
   margin-right: -25px;      
 }
 
-  
+  //
+  // global color themes (--css-values are defined in config-service.js
+  .theme-1 {
+    .primary-on-text { color: var(--theme-1-primary)!important;}
+    .secondary-on-text { color: var(--theme-1-secondary)!important;}
+    .tertiary-on-text { color: var(--theme-1-tertiary)!important; }
 
-  // Info
-  // https://css-tricks.com/practical-css-scroll-snapping/
+    .primary { background-color: var(--theme-1-primary)!important; color: white!important }
+    .secondary { background-color: var(--theme-1-secondary)!important; color: white!important; }
+    .tertiary { background-color: var(--theme-1-tertiary)!important; }
+  }
+
+  .theme-2 {
+    .primary { background-color: var(--theme-2-primary)!important;color: white!important; }
+    .secondary { background-color: var(--theme-2-secondary)!important;color: white!important; }
+    .tertiary { background-color: var(--theme-2-tertiary)!important; }
+
+    .primary-on-text { color: var(--theme-2-primary)!important;}
+    .secondary-on-text { color: var(--theme-2-secondary)!important;}
+    .tertiary-on-text { color: var(--theme-2-tertiary)!important; }
+  }
+
+  .theme-3 {
+    .primary { background-color: var(--theme-3-primary)!important;color: white!important; }
+    .secondary { background-color: var(--theme-3-secondary)!important;color: white!important; }
+    .tertiary { background-color: var(--theme-3-tertiary)!important; }
+
+    .primary-on-text { color: var(--theme-3-primary)!important;}
+    .secondary-on-text { color: var(--theme-3-secondary)!important;}
+    .tertiary-on-text { color: var(--theme-3-tertiary)!important; }  
+  }
+
+  .theme-4 {
+    .primary { background-color: var(--theme-4-primary)!important;color: white!important; }
+    .secondary { background-color: var(--theme-4-secondary)!important;color: white!important; }
+    .tertiary { background-color: var(--theme-4-tertiary)!important; }
+
+    .primary-on-text { color: var(--theme-4-primary)!important;}
+    .secondary-on-text { color: var(--theme-4-secondary)!important;}
+    .tertiary-on-text { color: var(--theme-4-tertiary)!important; }
+  }
+
+
+.disable-transitions {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
 
 
