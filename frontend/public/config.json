@@ -15,11 +15,11 @@
   },
   "footer":{
     "menu":[
-      {"name":{ "fr": "fbook", "en":""},"slug":"https://fb","weight":0,"active":true},
-      {"name":{ "fr": "insta", "en":""},"slug":"https://insta","weight":0,"active":true},
-      {"name":{ "fr": "vimeo", "en":""},"slug":"https://viemo","weight":0,"active":true},
-      {"name":{ "fr": "mail", "en":""},"slug":"mailto:foo@bar.cc","weight":0,"active":true},
-      {"name":{ "fr": "about", "en":""},"slug":"/content/about","weight":0,"active":true}
+      {"name":{ "fr": "fbook", "en":"fbook"},"link":"https://fb","weight":0,"active":true},
+      {"name":{ "fr": "insta", "en":"insta"},"link":"https://insta","weight":0,"active":true},
+      {"name":{ "fr": "vimeo", "en":"viemo"},"link":"https://viemo","weight":0,"active":true},
+      {"name":{ "fr": "mail", "en":"mail"},"link":"mailto:foo@bar.cc","weight":0,"active":true},
+      {"name":{ "fr": "about", "en":"about"},"link":"/content/about","weight":0,"active":true}
     ]
   },
   "themes": {
