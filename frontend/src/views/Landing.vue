@@ -1,5 +1,6 @@
 <template>
   <div class="landing">
+    <LanguageSelector />
     <img class="front" :src="config.logo" />
     <section class="header">
       <div class="title1">{{t(config.landing.title1)}}</div>
@@ -11,6 +12,13 @@
         {{ t(menu.name) }} 
       </li>
     </ul>
+
+    <ul>
+      <li v-for="event in events" :key="event._id">
+        {{ t(event.title) }} 
+      </li>
+    </ul>
+
   </div>
 </template>
 
