@@ -39,30 +39,22 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue, Mixins } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 import { $config, $cms } from '../services';
 import { Translatable } from '../mixins';
 
 import CMSIcons from '../components/CMSIcons.vue';
+import LanguageSelector from '../components/LanguageSelector.vue';
 
-import { setLang, Lang } from '../services/i18n';
 import { mixins } from 'vue-class-component';
 
 @Component({
   components: {
-    CMSIcons    
+    CMSIcons,
+    LanguageSelector,
   },
 })
 export default class Landing extends mixins(Translatable) {
-
-  mounted(){
-    let lang = Lang.fr;
-    setInterval(() => {
-      lang = (lang == Lang.fr) ? Lang.en : Lang.fr;
-      setLang(lang);
-      
-    }, 1000);
-  }
 
   // async mounted(){
   //   window.addEventListener('beforeinstallprompt', (e) => {
@@ -82,10 +74,6 @@ export default class Landing extends mixins(Translatable) {
     return $cms.events;
   }
 
-  // t(obj){
-  //   return t(obj); 
-  // }
-
   // beforeRouteEnter(to: any, from: any, next: any) {
   //   const all = [$config.get(),$user.get()]
   //   Promise.all(all).then(([config, user])=> {
@@ -95,7 +83,6 @@ export default class Landing extends mixins(Translatable) {
   //     next();
   //   })
   // }
-
 
 }
 </script>
