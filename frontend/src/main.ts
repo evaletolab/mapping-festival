@@ -1,8 +1,6 @@
 
 
 import Vue from 'vue';
-// import VueCompositionApi from '@vue/composition-api'
-// Vue.use(VueCompositionApi)
 
 import Editor from 'vue-editor-js/src';
 Vue.use(Editor);
@@ -13,14 +11,13 @@ import './ts/class-component-hooks.ts';
 import router from './router'
 
 
-console.log('--- INIT main');
 Vue.config.productionTip = false
 
 
 import '@/main.scss'
 
-import { $config, $user, $cms } from '@/services';
-const load = [$config.get(), $cms.loadAll(), $user.get()];
+import { $config, $user } from '@/services';
+const load = [$config.get(), $user.get()];
 
 Promise.all(load).
 then(() => {

@@ -1,28 +1,30 @@
 {
-  "version" : "v0.2.0",
-  "icons":{
-    "VIDEO": "video",
-    "PODCAST": "podcast",
-    "INFOGRAPHIC": "infographie",
-    "MARKDOWN": "cours"
+  "landing":{
+    "menu":[    
+      {"item":{ "fr": "live", "en":""},"slug":"/events?selected=live","weight":0,"active":true},
+      {"item":{ "fr": "lieux", "en":""},"slug":"/spot","weight":0,"active":true},
+      {"item":{ "fr": "expo", "en":""},"slug":"/events?selected=expo","weight":0,"active":true},
+      {"item":{ "fr": "events", "en":""},"slug":"/events","weight":0,"active":true},
+      {"item":{ "fr": "workshop", "en":""},"slug":"/events?selected=workshop","weight":0,"active":true},
+      {"item":{ "fr": "artists", "en":""},"slug":"/artists","weight":0,"active":true}
+    ],
+    "title1":{"fr":"","en":""},
+    "title2":{"fr":"","en":""},
+    "title3":{"fr":"","en":""}
+  },
+  "footer":{
+    "menu":[
+      {"item":{ "fr": "fbook", "en":""},"slug":"https://fb","weight":0,"active":true},
+      {"item":{ "fr": "insta", "en":""},"slug":"https://insta","weight":0,"active":true},
+      {"item":{ "fr": "vimeo", "en":""},"slug":"https://viemo","weight":0,"active":true},
+      {"item":{ "fr": "mail", "en":""},"slug":"mailto:foo@bar.cc","weight":0,"active":true},
+      {"item":{ "fr": "about", "en":""},"slug":"/content/about","weight":0,"active":true}
+    ]
   },
   "themes": {
     "1": { "primary":"#6900FF","secondary":"#260063", "tertiary":"#BBB8FF"},
     "2": { "primary":"#FFBC00","secondary":"#FF8D00", "tertiary":"#FFF9C5"},
     "3": { "primary":"#00D6B2","secondary":"#00A585", "tertiary":"#D9FFF8"},
     "4": { "primary":"#FF0049","secondary":"#A5003F", "tertiary":"#FF85A2"}
-  },
-  "airtable": {
-    "key" : "--",
-    "base" : "appdgQusWVGxQVipj"
-  },
-  "i18n":{
-    "fr":{
-      "landing_title1":"Bienvenue!"
-    },
-    "de":{
-      "landing_title1":"Bienvenue!"
-    }
   }
-
 }
