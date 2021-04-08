@@ -7,7 +7,7 @@
     <nav class="toolbar " :class="{'exited': (scrollDirection <= 0) }">
       <div class="toolbar-row">
         <div class="toolbar-section-start">
-          <button class="icon start">
+          <button class="icon start" @click="onBack">
             <CMSIcons name="home" color="black"/>
           </button>
         </div>
@@ -96,6 +96,9 @@ export default class Spot extends Vue {
     }, false);    
   }
 
+  async onBack() {
+    this.$router.go(-1);
+  }
 
   async onLoad(slug: string) {
     //
