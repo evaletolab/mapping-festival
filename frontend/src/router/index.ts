@@ -7,6 +7,7 @@ import { $config, $user } from '@/services'
 import Artist from '../views/Artist.vue'
 import Content from '../views/Content.vue'
 import Event from '../views/Event.vue'
+import Events from '../views/Events.vue'
 import Landing from '../views/Landing.vue'
 import Spot from '../views/Spot.vue'
 
@@ -19,7 +20,12 @@ const routes: Array<RouteConfig> = [
     component: Landing
   },
   {
-    path: '/events/:event',
+    path: '/events',
+    name: 'Event',
+    component: Events
+  },
+  {
+    path: '/event/:event',
     name: 'Event',
     component: Event
   },

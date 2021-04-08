@@ -9,7 +9,7 @@
     </section>
     <ul class="links">
       <li v-for="menu in config.landing.menu" :key="menu.link">
-        {{ t(menu.name) }} 
+        <router-link :to="menu.link">{{ t(menu.name) }}</router-link>
       </li>
     </ul>
 
