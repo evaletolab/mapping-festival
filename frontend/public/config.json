@@ -1,24 +1,25 @@
 {
+  "logo":"/img/logo.png",
   "landing":{
     "menu":[    
-      {"item":{ "fr": "live", "en":""},"slug":"/events?selected=live","weight":0,"active":true},
-      {"item":{ "fr": "lieux", "en":""},"slug":"/spot","weight":0,"active":true},
-      {"item":{ "fr": "expo", "en":""},"slug":"/events?selected=expo","weight":0,"active":true},
-      {"item":{ "fr": "events", "en":""},"slug":"/events","weight":0,"active":true},
-      {"item":{ "fr": "workshop", "en":""},"slug":"/events?selected=workshop","weight":0,"active":true},
-      {"item":{ "fr": "artists", "en":""},"slug":"/artists","weight":0,"active":true}
+      {"name":{ "fr": "live", "en":"live"},"link":"/events?selected=live","weight":0,"active":true},
+      {"name":{ "fr": "lieux", "en":"location"},"link":"/spot","weight":0,"active":true},
+      {"name":{ "fr": "expo", "en":"expo"},"link":"/events?selected=expo","weight":0,"active":true},
+      {"name":{ "fr": "events", "en":"events"},"link":"/events","weight":0,"active":true},
+      {"name":{ "fr": "workshop", "en":"workshop"},"link":"/events?selected=workshop","weight":0,"active":true},
+      {"name":{ "fr": "artists", "en":"artists"},"link":"/artists","weight":0,"active":true}
     ],
-    "title1":{"fr":"","en":""},
-    "title2":{"fr":"","en":""},
-    "title3":{"fr":"","en":""}
+    "title1":{"fr":"festival des arts technologiques et déviants","en":"deviant art festival"},
+    "title2":{"fr":"genève","en":"geneva"},
+    "title3":{"fr":"15.5 — 27.5.2021","en":"15.5 — 27.5.2021"}
   },
   "footer":{
     "menu":[
-      {"item":{ "fr": "fbook", "en":""},"slug":"https://fb","weight":0,"active":true},
-      {"item":{ "fr": "insta", "en":""},"slug":"https://insta","weight":0,"active":true},
-      {"item":{ "fr": "vimeo", "en":""},"slug":"https://viemo","weight":0,"active":true},
-      {"item":{ "fr": "mail", "en":""},"slug":"mailto:foo@bar.cc","weight":0,"active":true},
-      {"item":{ "fr": "about", "en":""},"slug":"/content/about","weight":0,"active":true}
+      {"name":{ "fr": "fbook", "en":""},"slug":"https://fb","weight":0,"active":true},
+      {"name":{ "fr": "insta", "en":""},"slug":"https://insta","weight":0,"active":true},
+      {"name":{ "fr": "vimeo", "en":""},"slug":"https://viemo","weight":0,"active":true},
+      {"name":{ "fr": "mail", "en":""},"slug":"mailto:foo@bar.cc","weight":0,"active":true},
+      {"name":{ "fr": "about", "en":""},"slug":"/content/about","weight":0,"active":true}
     ]
   },
   "themes": {

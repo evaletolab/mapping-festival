@@ -1,9 +1,14 @@
 <template>
   <div class="landing">
-    <h1>i18n reactive test</h1>
-    <ul>
-      <li v-for="event in events" :key="event._id">
-        {{ t(event.title) }} 
+    <img class="front" :src="config.logo" />
+    <section class="header">
+      <div class="title1">{{t(config.landing.title1)}}</div>
+      <div class="title2">{{t(config.landing.title2)}}</div>
+      <div class="title3">{{t(config.landing.title3)}}</div>
+    </section>
+    <ul class="links">
+      <li v-for="menu in config.landing.menu" :key="menu.link">
+        {{ t(menu.name) }} 
       </li>
     </ul>
   </div>
@@ -13,7 +18,19 @@
 
   .landing{
     display: block;
+    img.front{
+      width: 100%;
+    }
+    section.header {
+      div.title1{
+      }
+    }
+
+    ul.links{
+      list-style: none;
+    }
   }
+
   
   .version {
     font-weight: 200;
