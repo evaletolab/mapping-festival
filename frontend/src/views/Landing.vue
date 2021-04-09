@@ -35,48 +35,9 @@
 </template>
 
 <style lang="scss" scoped>
-
-  .landing{
-    display: block;
-    img.front{
-      width: 100%;
-    }
-    section.header {
-      div.title1{
-      }
-    }
-
-    ul.links{
-      padding: 0;
-      list-style: none;
-      li{
-        padding: 10px ;
-      }
-    }
-
-    .footer{
-      position: fixed;
-      bottom: 0px;
-      left: 0;
-      right: 0;
-      ul{
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        li{
-          float: left;
-          padding: 2px 10px;
-          text-decoration: none;
-        }
-      }
-    }
-  }
-
-  
-  .version {
-    font-weight: 200;
-    opacity: .5;
-  }
+  // 
+  // landing style
+  @import "../styles/landing.scss";
 </style>
 
 <script lang="ts">
