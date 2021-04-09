@@ -4,28 +4,7 @@
   <!--         ---------         -->  
   <div class="content">
     <!-- TOOLBAR -->
-    <nav class="toolbar " :class="{'exited': (scrollDirection <= 0) }">
-      <div class="toolbar-row">
-        <div class="toolbar-section-start">
-          <button class="icon start">
-            <CMSIcons name="home" color="black"/>
-          </button>
-        </div>
-
-        <div class="toolbar-title">
-          <!-- <img class="logo" src="@/assets/MILID-logo-text.svg" /> -->
-        </div>        
-
-        <div class="toolbar-section-end">
-          <button class="icon end">
-            <CMSIcons name="parametres" color="black"/>
-          </button>
-        </div>
-      </div>
-
-      <div class="toolbar-row">
-      </div>        
-    </nav>
+    <Toolbar />
 
   </div>
 </template>
@@ -55,17 +34,15 @@ import { CMS } from "../models";
 import { $config } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
+import Toolbar from '../components/Toolbar.vue';
 
 
 @Component({
   components: {
-    CMSIcons,
+    CMSIcons,Toolbar
   }
 })
 export default class Content extends Vue {
-  private lastScrollTop = 0;
-  scrollDirection = 0;
-
   get config(){
     return $config.store.config;
   }
@@ -80,23 +57,6 @@ export default class Content extends Vue {
   }
 
   mounted(){
-    window.addEventListener("scroll", () => { 
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      //
-      // downscroll code
-      if (st > this.lastScrollTop){
-        this.scrollDirection = 1;
-      } 
-      //
-      // upscroll code
-      else {          
-        this.scrollDirection = -1;
-      }
-
-      //
-      // For Mobile or negative scrolling
-      this.lastScrollTop = st <= 0 ? 0 : st; 
-    }, false);    
   }
 
 

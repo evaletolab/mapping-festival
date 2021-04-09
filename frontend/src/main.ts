@@ -1,11 +1,11 @@
 
 
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+
 import Vue from 'vue';
+import './registerServiceWorker';
 
-import Editor from 'vue-editor-js/src';
-Vue.use(Editor);
-
-import './registerServiceWorker'
 import App from './App.vue'
 import './ts/class-component-hooks.ts';
 import router from './router'

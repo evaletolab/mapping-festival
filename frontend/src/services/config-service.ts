@@ -1,6 +1,5 @@
 import Vue from "vue";
 import axios from 'axios';
-import Airtable from 'airtable';
 
 const defaultAxios = {
   headers: { 'Cache-Control': 'no-cache' }
@@ -63,21 +62,6 @@ class ConfigService {
       //
       // generate root colors
       this.generateColors(this._store.config.themes);
-
-      //
-      // configure Airtable instance 
-      const air = this._store.config.airtable;
-      if(!air || !air.key) {
-        console.log('-- DBG missing airtable config');
-        return;
-      }
-
-      const config = {
-        endpointUrl: 'https://api.airtable.com',
-        apiKey: air.key
-      } as any;
-      Airtable.configure(config);
-      air.base = Airtable.base(air.base); 
     }
 
     return this._store.config;

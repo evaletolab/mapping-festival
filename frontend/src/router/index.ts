@@ -5,9 +5,10 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import { $config, $user } from '@/services'
 
 import Artist from '../views/Artist.vue'
+import ArtistList from '../views/ArtistList.vue'
 import Content from '../views/Content.vue'
 import Event from '../views/Event.vue'
-import Events from '../views/Events.vue'
+import EventList from '../views/EventList.vue'
 import Landing from '../views/Landing.vue'
 import Spot from '../views/Spot.vue'
 
@@ -22,20 +23,25 @@ const routes: Array<RouteConfig> = [
   {
     path: '/events',
     name: 'Event',
-    component: Events
+    component: EventList
   },
   {
-    path: '/event/:event',
+    path: '/events/:event',
     name: 'Event',
     component: Event
   },
   {
-    path: '/artist/:artist',
+    path: '/artists/:artist?',
     name: 'About',
     component: Artist
   },
   {
-    path: '/spot/:spot-slug',
+    path: '/artists',
+    name: 'About',
+    component: ArtistList
+  },
+  {
+    path: '/spot/:spotslug?',
     name: 'Spot',
     component: Spot
   },

@@ -2,15 +2,15 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  <div class="event">
+  <div class="artist">
     <!-- TOOLBAR -->
-    <Toolbar/>
-
+    <Toolbar />
+    
   </div>
 </template>
 
 <style lang="scss" scoped>
-  .event{
+  .artist{
     position: fixed;
     top: 0;
     right: 0;
@@ -39,7 +39,7 @@ import Toolbar from '../components/Toolbar.vue';
     CMSIcons, Toolbar
   }
 })
-export default class Event extends Vue {
+export default class ArtistList extends Vue {
   get config(){
     return $config.store.config;
   }
@@ -56,6 +56,9 @@ export default class Event extends Vue {
   mounted(){
   }
 
+  async onBack() {
+    this.$router.go(-1);
+  }
 
   async onLoad(slug: string) {
     //
