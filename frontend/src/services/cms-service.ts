@@ -8,23 +8,34 @@ import { $user } from "./user-service";
 
 import axios from 'axios';
 
+const authToken = "690a8296407bdd55ae785e519d02fe";
+
 const defaultAxios = {
   headers: { 
     'Cache-Control': 'no-cache',
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer abcd'
+    'Authorization': `Bearer ${authToken}`,
   }
 };
 
 
+interface CMS_Map{
+  events: CMS.Event[];
+  artists: CMS.Artist[];
+  eventLocations: CMS.EventLocation[];
+}
 
 class CMSService {
   public STORAGE_KEY = "cms-progression";
 
-  public cms: any = {};
+  cms: CMS_Map = {
+    events: [],
+    artists: [],
+    eventLocations: [],
+  };
 
   constructor() {
-    this.cms = Vue.observable({});
+    this.cms = Vue.observable(this.cms);
   }
 
   extractTranslation(map, key){
@@ -37,7 +48,12 @@ class CMSService {
     };
   }
 
+  formatEvent(event){
+
+  }
+
   async loadAll(){
+    console.log("cms-service load all");
     const user = await $user.get();
     const baseUrl = "https://iziapi.ch/mappingDev/index/api";
     const config = Object.assign({},defaultAxios) as any;
@@ -60,7 +76,7 @@ class CMSService {
       const eventsUrl = `${baseUrl}/collections/get/events`;
       const events = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["title", "header", "content", "hardware", "notes"]
-      this.cms.events = events.entries.map(entry => fixTranslations(entry, localizedKeys));
+      this.cms.events: CMS.Event[] = events.entries.map(entry => fixTranslations(entry, localizedKeys)).map(formatEvents);
       console.log(this.cms.events);
     }
     

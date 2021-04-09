@@ -6,9 +6,10 @@ import '@fortawesome/fontawesome-free/js/all.js'
 import Vue from 'vue';
 import './registerServiceWorker';
 
-import App from './App.vue'
+import './registerServiceWorker';
+import App from './App.vue';
 import './ts/class-component-hooks.ts';
-import router from './router'
+import router from './router';
 
 
 Vue.config.productionTip = false
@@ -16,8 +17,8 @@ Vue.config.productionTip = false
 
 import '@/main.scss'
 
-import { $config, $user } from '@/services';
-const load = [$config.get(), $user.get()];
+import { $config, $user, $cms } from '@/services';
+const load = [$config.get(), $cms.loadAll(), $user.get()];
 
 Promise.all(load).
 then(() => {
