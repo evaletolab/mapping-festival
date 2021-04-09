@@ -43,14 +43,14 @@ import Toolbar from '../components/Toolbar.vue';
 export default class EventList extends mixins(Translatable) {
   //
   // "emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
-  selected = null;
+  private _selected;
 
   get events() {
     return $cms.cms.events.filter(event => {
-      if(!this.selected){
+      if(!this._selected || this._selected == ''){
         return event;
       }
-      return event.eventType == this.selected;
+      return event.type == this._selected;
     })
   }
 
@@ -67,7 +67,7 @@ export default class EventList extends mixins(Translatable) {
   }
 
   async mounted(){
-    this.selected = this.$route.query.selected
+    this._selected = this.$route.query.selected;
   }
 
   async onBack() {
