@@ -5,6 +5,10 @@ Yeah !
 * `git clone git@github.com:evaletolab/mapping-festival.git`
 * `git checkout oe-v0_1`
 
+# enter frontend folder
+* `cd frontend`
+* `npm install #first time initialization`
+* `npm run serve`
 
 # project assets and style
 * `public`
