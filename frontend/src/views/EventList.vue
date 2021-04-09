@@ -2,6 +2,13 @@
   <div class="events">
     <!-- TOOLBAR -->
     <Toolbar />
+    <section class="header">
+      <ul>
+        <li class="selected">Agenda</li>
+        <li class="">lieux</li>
+        <li class="">artistes</li>
+      </ul>
+    </section>
 
     <div class="grid">
       <div class="event" v-for="event in events" :key="event._id">

@@ -9,6 +9,7 @@
 
       <div class="toolbar-title">
         <!-- <img class="logo" src="@/assets/MILID-logo-text.svg" /> -->
+        mppng2051
       </div>        
 
       <div class="toolbar-section-end">

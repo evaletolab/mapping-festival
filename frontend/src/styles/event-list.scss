@@ -10,8 +10,42 @@
   width: 100vw;    
   padding-top:0;    
 
-  .grid {
+  section.header{
     margin-top: 80px;
+    ul{
+      padding: 0;
+      list-style: none;
+      li{
+        &.selected{
+          font-size: 48px;
+        }
+        &:not(.selected) {
+          &::after {
+            content: "⚫";
+            float: right;
+            margin-top: 5px;
+          }
+  
+        }
+        &:last-child {
+          border-bottom: 1px solid #333;
+        }
+    
+        margin: 0 20px ;
+        padding: 20px 0;
+        border-top: 1px solid #333;
+        
+        a{
+          text-decoration: none;
+          font-size: 30px;
+          color: black;
+          font-weight: 600;          
+        }
+      }
+    }
+  }
+  
+  .grid {
     display: flex;
     justify-content: space-between;
     .event {
@@ -25,3 +59,5 @@
     }
   }
 }
+
+
