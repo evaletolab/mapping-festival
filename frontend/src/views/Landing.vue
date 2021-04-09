@@ -8,7 +8,7 @@
       <div class="title3">{{t(config.landing.title3)}}</div>
     </section>
     <!-- MENU LINKS -->
-    <ul class="links">
+    <ul class="navigation">
       <li v-for="menu in config.landing.menu" :key="menu.link">
         <router-link :to="menu.link">{{ t(menu.name) }}</router-link>
       </li>
