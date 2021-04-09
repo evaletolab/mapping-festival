@@ -16,14 +16,17 @@ export namespace CMS {
     themes: any;
   }
 
+  export type socialPlatformType = ("facebook"|"twitter"|"instagram"|"linkedin");
   export interface SocialMedia {
-    platform: string,
+    platform: socialPlatformType,
     url:string,
   }
 
+  
+  export type mediaPlatformType = ("video"|"img"|"audio"|"soundcloud"|"vimeo");
   export interface ExternalMedia {
     name: string,
-    platform: string,
+    platform: mediaPlatformType,
     url:string,
   }
 
@@ -73,7 +76,6 @@ export namespace CMS {
     updated?: Date;
   }
 
-  export type mediaType = ("video"|"image"|"audio"|"soundcloud"|"vimeo");
   export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
 
   type Lat = number;
@@ -149,14 +151,13 @@ export namespace CMS {
     price: number,
     limit: number,
     geo: EventLocation | null,
-    medias:[
-      { label: string, url: string,type:mediaType }
-    ],
     artists:[{
       lastname:string,
       slug:string,
       _id: string
     }],
+    localMedias: LocalMedia[],
+    externalMedias: ExternalMedia[],
     // published: Date,
     created: Date,
     // signature:string,
