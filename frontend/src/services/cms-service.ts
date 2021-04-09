@@ -8,6 +8,7 @@ import { $user } from "./user-service";
 
 import axios from 'axios';
 
+const baseUrl = "https://iziapi.ch/mappingDev/index/api";
 const authToken = "690a8296407bdd55ae785e519d02fe";
 
 const defaultAxios = {
@@ -17,7 +18,6 @@ const defaultAxios = {
     'Authorization': `Bearer ${authToken}`,
   }
 };
-
 
 interface CMS_Map{
   events: CMS.Event[];
@@ -38,112 +38,24 @@ class CMSService {
     this.cms = Vue.observable(this.cms);
   }
 
-  extractTranslation(map, key){
-    const en = map[key];
-    const fr = map[`${key}_fr`];
-
-    return {
-      fr,
-      en,
-    };
-  }
-  
-  formatSlug(obj:any): void{
-    const parts = obj.slug.split('/');
-    obj.slug = parts[parts.length - 1];
+  public get events(): CMS.Event[]{
+    return this.cms.events;
   }
 
-  addMeta(obj:any){
-    obj.meta = {
-      _mby: obj._mby,
-      _by: obj._by,
-      _modified: obj._modified,
-      _created: obj._created,
-    };
-    delete obj._mby;
-    delete obj._by;
-    delete obj._modified;
-    delete obj._created;
-
-    delete obj._o;
-    delete obj._pid;
-
-    return obj;
+  public get eventLocations(): CMS.EventLocation[]{
+    return this.cms.eventLocations;
   }
 
-  formatEvent(event: any): CMS.Event{
-
-    this.formatSlug(event);
-
-    // TODO: evil bad 
-    const geoId = event.when[0].value.localisation.id;
-    const geo: any = this.cms.eventLocations.find(el => el._id === geoId) || null; 
-    event.geo = geo; 
-
-    event.when = event.when.map (w => {
-      const v = w.value;
-      const start = new Date(`${v.startDate} ${v.startHour}`);
-      const end = new Date(`${v.endDate} ${v.endHour}`);
-      const duration = (end.getTime() - start.getTime()) / 1000 / 60;
-      const cancel = v.cancel;
-      return { start, end, duration, cancel, };
-    });
-
-    event.medias = null; // TODO handle this
-
-    event.artists = event.artists.map(a =>{
-      const artist = this.cms.artists.find(artst => artst._id === a._id);
-      const lastname = artist?.lastname || "";
-      const slug = artist?.slug || "";
-      const _id = a._id;
-
-      return {
-        lastname, slug, _id
-      };
-    });
-
-    event.created = event._created;
-
-    event = this.addMeta(event);
-
-    return event as CMS.Event;
+  public get artists(): CMS.Artist[]{
+    return this.cms.artists;
   }
 
-
-  formatEventLocation(eventLocation:any): CMS.EventLocation{
-
-    this.formatSlug(eventLocation);
-
-    const geo = eventLocation.geo;
-    eventLocation.street = geo.street;
-    eventLocation.postalcode = geo.postalcode;
-    eventLocation.city = geo.city;
-    eventLocation.tag = geo.tag;
-    eventLocation.coordinates = [geo.location.lng, geo.location.lat];
-
-
-    delete eventLocation.geo;
-    eventLocation = this.addMeta(eventLocation);
-
-    return eventLocation as CMS.EventLocation;
-  }
-
-  formatArtist(artist:any): CMS.Artist{
-    
-    this.formatSlug(artist);
-
-    artist.created = artist._created;
-    artist = this.addMeta(artist);
-    return artist as CMS.Artist;
-  }
-
-  async loadAll(force?: boolean){
+  public async loadAll(force?: boolean){
     if(!force && this.cms.events.length) {
       return;
-    }
+    } 
     console.log("cms-service load all");
     const user = await $user.get();
-    const baseUrl = "https://iziapi.ch/mappingDev/index/api";
     const config = Object.assign({},defaultAxios) as any;
 
     const fixTranslations = (entry, keys) => {
@@ -194,20 +106,168 @@ class CMSService {
     }
   }
 
-  get events(): CMS.Event[]{
-    return this.cms.events;
+  private extractTranslation(map, key){
+    const en = map[key];
+    const fr = map[`${key}_fr`];
+
+    return {
+      fr,
+      en,
+    };
   }
 
-  get eventLocations(): CMS.EventLocation[]{
-    return this.cms.eventLocations;
+  private formatLocalMedias(obj:any){
+    if(!obj.localMedias){
+      obj.localMedias = [];
+      return;
+    }
+
+    obj.localMedias = obj.localMedias.map(localMedia => {
+      const lm = localMedia.value;
+      
+      let result: any = {
+        name: lm.name,  
+      };
+
+      [
+        "_id", "path", "title", "mime", "description",
+        "tags", "size", "image", "video", "audio",
+        "archive", "document", "code", "created", "modified",
+        "width", "height", "colors", "sizes"
+      ].forEach(attr => {
+        result[attr] = lm[""][attr];
+      })
+
+      result.created = new Date(result.created * 1000);
+      result.modified = new Date(result.modified * 1000);
+      return result;
+    });
   }
 
-  get artists(): CMS.Artist[]{
-    return this.cms.artists;
+  private formatExternalMedias(obj:any){
+    if(!obj.externalMedias){
+      obj.externalMedias = [];
+      return;
+    }
+
+    obj.externalMedias = obj.externalMedias.map(externalMedia => {
+      const name = externalMedia.value.name; 
+      const platform = externalMedia.value.platform;
+      const url = externalMedia.value.url;
+      return { name, platform, url };
+    });
   }
 
+  private formatSocialMedias(obj:any){
+    if(!obj.socialMedias){
+      obj.socialMedias = [];
+      return;
+    }
+    
+    obj.socialMedias = obj.socialMedias.map(socialMedia => {
+      const platform = socialMedia.value.platform;
+      const url = socialMedia.value.url;
+      return { platform, url };
+    });
+  }
+  
+  private formatSlug(obj:any): void{
+    const parts = obj.slug.split('/');
+    obj.slug = parts[parts.length - 1];
+  }
+
+  private addMeta(obj:any){
+    obj.meta = {
+      _mby: obj._mby,
+      _by: obj._by,
+      _modified: obj._modified,
+      _created: obj._created,
+    };
+    delete obj._mby;
+    delete obj._by;
+    delete obj._modified;
+    delete obj._created;
+
+    delete obj._o;
+    delete obj._pid;
+
+    return obj;
+  }
+
+  private formatEvent(event: any): CMS.Event{
+
+    this.formatSlug(event);
+    
+    this.formatLocalMedias(event);
+    this.formatExternalMedias(event);
+
+    // TODO: evil bad 
+    const geoId = event.when[0].value.localisation.id;
+    const geo: any = this.cms.eventLocations.find(el => el._id === geoId) || null; 
+    event.geo = geo; 
+
+    event.when = event.when.map (w => {
+      const v = w.value;
+      const start = new Date(`${v.startDate} ${v.startHour}`);
+      const end = new Date(`${v.endDate} ${v.endHour}`);
+      const duration = (end.getTime() - start.getTime()) / 1000 / 60;
+      const cancel = v.cancel;
+      return { start, end, duration, cancel, };
+    });
+
+    event.medias = null; // TODO handle this
+
+    event.artists = event.artists.map(a =>{
+      const artist = this.cms.artists.find(artst => artst._id === a._id);
+      const lastname = artist?.lastname || "";
+      const slug = artist?.slug || "";
+      const _id = a._id;
+
+      return {
+        lastname, slug, _id
+      };
+    });
+
+    event.created = event._created;
+
+    event = this.addMeta(event);
+
+    return event as CMS.Event;
+  }
+
+
+  private formatEventLocation(eventLocation:any): CMS.EventLocation{
+
+    this.formatSlug(eventLocation);
+
+    const geo = eventLocation.geo;
+    eventLocation.street = geo.street;
+    eventLocation.postalcode = geo.postalcode;
+    eventLocation.city = geo.city;
+    eventLocation.tag = geo.tag;
+    eventLocation.coordinates = [geo.location.lng, geo.location.lat];
+
+
+    delete eventLocation.geo;
+    eventLocation = this.addMeta(eventLocation);
+
+    return eventLocation as CMS.EventLocation;
+  }
+
+  private formatArtist(artist:any): CMS.Artist{
+    
+    this.formatSlug(artist);
+
+    this.formatLocalMedias(artist);
+    this.formatExternalMedias(artist);
+    this.formatSocialMedias(artist);
+
+    artist.created = artist._created;
+    artist = this.addMeta(artist);
+    return artist as CMS.Artist;
+  }
 }
 
 //
-// service start with $
+// services start with $
 export const $cms = new CMSService();
