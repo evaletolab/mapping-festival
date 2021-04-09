@@ -137,7 +137,10 @@ class CMSService {
     return artist as CMS.Artist;
   }
 
-  async loadAll(){
+  async loadAll(force?: boolean){
+    if(!force && this.cms.events.length) {
+      return;
+    }
     console.log("cms-service load all");
     const user = await $user.get();
     const baseUrl = "https://iziapi.ch/mappingDev/index/api";

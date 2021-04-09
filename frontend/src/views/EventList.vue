@@ -3,29 +3,26 @@
     <!-- TOOLBAR -->
     <Toolbar />
 
+    <div class="grid">
+      <div class="event" v-for="event in events" :key="event._id">
+        {{ t(event.title) }} 
+      </div>
+    </div>
+
   </div>
 </template>
 
 <style lang="scss" scoped>
-  .events{
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: white;
-    margin: 0;
-    z-index: 2;
-    height: 100vh;
-    width: 100vw;    
-    padding-top:0;    
-  }
+  @import "../styles/event-list.scss";
 </style>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { mixins } from 'vue-class-component';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
-import { $config } from '../services';
+import { $config, $cms } from '../services';
+import { Translatable } from '../mixins';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
@@ -36,21 +33,34 @@ import Toolbar from '../components/Toolbar.vue';
     CMSIcons, Toolbar
   }
 })
-export default class EventList extends Vue {
+export default class EventList extends mixins(Translatable) {
+  //
+  // "emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
+  selected = null;
+
+  get events() {
+    return $cms.cms.events.filter(event => {
+      if(!this.selected){
+        return event;
+      }
+      return event.eventType == this.selected;
+    })
+  }
+
   get config(){
     return $config.store.config;
   }
-
 
   themeTertiary(theme) {
     return this.config.themes[theme].tertiary;
   }
 
   beforeRouteEnter(to: Route, from: Route, next: any) {
-    next()
+    $cms.loadAll().then(next);
   }
 
-  mounted(){
+  async mounted(){
+    this.selected = this.$route.query.selected
   }
 
   async onBack() {

@@ -14,13 +14,6 @@
       </li>
     </ul>
 
-    <!-- FOR TEST -->
-    <ul>
-      <li v-for="event in events" :key="event._id">
-        {{ t(event.title) }} 
-      </li>
-    </ul>
-
     <!-- FOOTER LINKS -->
     <div class="footer">
       <ul>
@@ -35,8 +28,6 @@
 </template>
 
 <style lang="scss" scoped>
-  // 
-  // landing style
   @import "../styles/landing.scss";
 </style>
 
@@ -58,15 +49,13 @@ import { mixins } from 'vue-class-component';
 })
 export default class Landing extends mixins(Translatable) {
 
-  // async mounted(){
-  //   window.addEventListener('beforeinstallprompt', (e) => {
-  //     // Prevent Chrome 67 and earlier from automatically showing the prompt
-  //     e.preventDefault();
-
-  //     // Stash the event so it can be triggered later.
-  //     this.deferredPrompt = e;
-  //   });
-  // }
+  async mounted(){
+    //
+    // load content after landing
+    setTimeout(async ()=>{
+      await $cms.loadAll();
+    },1000);
+  }
 
   get config(){
     return $config.store.config;
