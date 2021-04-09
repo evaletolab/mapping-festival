@@ -33,33 +33,46 @@ export namespace CMS {
   export type mediaType = ("video"|"image"|"audio"|"soundcloud"|"vimeo");
   export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
 
+  type Lat = number;
+  type Lng = number;
+
   export interface EventLocation {
-    lng:number,
-    lat:number,
+    _id:string
     slug:string,
-    street:string
-    postalCode:string,
-    city:string
+    active:boolean,
+    street: string,
+    postalcode: string,
+    city: string,
+    tag: string,
+    coordinates: [Lng, Lat], 
+    content: {
+      fr:string,
+      en:string,
+    }
   }
 
   export interface Artist {
     _id: string,
-    name:string,
-    slug:[string],
+    slug:string,
+    active: boolean,
+    firstname:string,
+    lastname:string,
+    artistWebsite: string,
     content:{
       fr:string,
       en:string
     },  
     medias:{label:string,url:string,type:mediaType}[],  
     links:{url:string,label:string,css:string}[],  
-    published: Date,
+    // published: Date,
     created: Date,
-    active: boolean,
-    signature:string,
-    creator:string,
+    // signature:string,
+    // creator:string,
   }
   export interface Event {
     _id: string,
+    slug: string,
+    active: boolean,
     type: eventType,
     title:{
       fr:string,
@@ -90,19 +103,19 @@ export namespace CMS {
     }],
     price: number,
     limit: number,
-    geo: EventLocation,
+    geo: EventLocation | null,
     medias:[
       { label: string, url: string,type:mediaType }
     ],
     artists:[{
-      name:string,
-      slug:string
+      lastname:string,
+      slug:string,
+      _id: string
     }],
-    published: Date,
+    // published: Date,
     created: Date,
-    active: boolean,
-    signature:string,
-    creator:string,    
+    // signature:string,
+    // creator:string,    
   }
 
   export type Content = (Artist) ;
