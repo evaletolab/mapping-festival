@@ -2,8 +2,8 @@
 Yeah !
 
 # get Code
-`git clone git@github.com:evaletolab/mapping-festival.git`
-`git checkout oe-v0_1`
+* `git clone git@github.com:evaletolab/mapping-festival.git`
+* `git checkout oe-v0_1`
 
 
 # project assets and style
