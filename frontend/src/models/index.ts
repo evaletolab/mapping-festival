@@ -2,7 +2,7 @@
 // TODO: discuss i18n with client
 export namespace CMS {
   
-  export enum AssetType
+  export enum MimeType
   {
       PNG = 'image/png',
       SVG = 'image/svg+xml',
@@ -11,14 +11,57 @@ export namespace CMS {
       MP3 = 'audio/mpeg'
   }
 
-  export interface Asset {
-      type: AssetType;
-      url: string;
-  }
-
   export interface Config {
     version: string;
     themes: any;
+  }
+
+  export interface SocialMedia {
+    platform: string,
+    url:string,
+  }
+
+  export interface ExternalMedia {
+    name: string,
+    platform: string,
+    url:string,
+  }
+
+  export interface SizeVariant {
+    path: string,
+    width: number,
+    height: number,
+    size: number,
+  }
+
+  export interface LocalMedia{
+    _id: string,
+    name: string,
+    path: string,
+    title: string,
+    mime: string,
+    description: string,
+    tags: string[],
+    size: number
+    image: boolean,
+    video: boolean,
+    audio: boolean,
+    archive: boolean,
+    document: boolean,
+    code: boolean,
+    created: Date,
+    modified: Date,
+    width: number,
+    height: number,
+    colors: string[],
+
+    sizes:{
+      small: SizeVariant,
+      thumbs: SizeVariant,
+      headerimage: SizeVariant,
+      full: SizeVariant,
+    },
+  
   }
 
   //
@@ -62,8 +105,10 @@ export namespace CMS {
       fr:string,
       en:string
     },  
-    medias:{label:string,url:string,type:mediaType}[],  
-    links:{url:string,label:string,css:string}[],  
+    localMedias: LocalMedia[],
+    externalMedias: ExternalMedia[],
+    socialMedias: SocialMedia[],
+
     // published: Date,
     created: Date,
     // signature:string,
