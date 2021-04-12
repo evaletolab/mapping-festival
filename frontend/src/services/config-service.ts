@@ -82,27 +82,23 @@ class ConfigService {
   }
 
 
-  async storageGet(key: string) {
-    return new Promise((resolve, reject) => {
-      try {
-        const item = localStorage.getItem(key);
-        const parsed = JSON.parse(item as string);
-        resolve(parsed);
-      } catch (err) {
-        return reject(err);
-      }
-    });
+  storageGet(key: string) {
+    try {
+      const item = localStorage.getItem(key);
+      const parsed = JSON.parse(item as string);
+      return parsed;
+    } catch (err) {
+      return null;
+    }
   }
 
-  async storageSet(key: string, value: any) {
-    return new Promise((resolve, reject) => {
-      try {
-        localStorage.setItem(key, JSON.stringify(value));
-        resolve(value);
-      } catch (err) {
-        reject(err);
-      }
-    });
+  storageSet(key: string, value: any) : boolean {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 }
 
