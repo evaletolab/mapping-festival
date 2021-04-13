@@ -50,11 +50,11 @@ import { mixins } from 'vue-class-component';
 export default class Landing extends mixins(Translatable) {
 
   async mounted(){
-    //
-    // load content after landing
-    setTimeout(async ()=>{
-      await $cms.loadAll();
-    },1000);
+    // //
+    // // load content after landing
+    // setTimeout(async ()=>{
+    //   await $cms.loadAll();
+    // },1000);
   }
 
   get config(){
