@@ -3,6 +3,11 @@ import { CMS } from "@/models";
 
 class ArtistService
 {
+
+    get all(): CMS.Artist[]{
+        return $cms.artists;
+    }
+
     artistWithSlug(slug: string): CMS.Artist | null {
         return $cms.artists.find(a => a.slug === slug) || null;
     }
