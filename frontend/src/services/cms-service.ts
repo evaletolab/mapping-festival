@@ -79,7 +79,8 @@ class CMSService {
       const localizedKeys = ["name", "content"];
       this.cms.eventLocations = eventLocations.entries
         .map(entry => fixTranslations(entry, localizedKeys))
-        .map(this.formatEventLocation.bind(this));
+        .map(this.formatEventLocation.bind(this))
+        .filter(item => item.active);
       console.log("eventLocations", this.cms.eventLocations);
     }
     
@@ -90,7 +91,8 @@ class CMSService {
       const localizedKeys = ["content"];
       this.cms.artists = artists.entries
         .map(entry => fixTranslations(entry, localizedKeys))
-        .map(this.formatArtist.bind(this));
+        .map(this.formatArtist.bind(this))
+        .filter(item => item.active);
       console.log("artists", this.cms.artists);
     }
 
@@ -101,7 +103,8 @@ class CMSService {
       const localizedKeys = ["title", "header", "content", "hardware", "notes"]
       this.cms.events = events.entries
         .map(entry => fixTranslations(entry, localizedKeys))
-        .map(this.formatEvent.bind(this));
+        .map(this.formatEvent.bind(this))
+        .filter(item => item.active);
       console.log("events", this.cms.events);
     }
   }
@@ -202,9 +205,14 @@ class CMSService {
     this.formatExternalMedias(event);
 
     // TODO: evil bad 
-    const geoId = event.when[0].value.localisation.id;
-    const geo: any = this.cms.eventLocations.find(el => el._id === geoId) || null; 
-    event.geo = geo; 
+    const validLocalisations = event.when.filter(when => when.value.localisation != null);
+    if(validLocalisations.length > 0){
+      const geoId = event.when[0].value.localisation.id;
+      const geo: any = this.cms.eventLocations.find(el => el._id === geoId) || null; 
+      event.geo = geo; 
+    }else{
+      event.geo = null;
+    }
 
     event.when = event.when.map (w => {
       const v = w.value;
@@ -235,17 +243,16 @@ class CMSService {
     return event as CMS.Event;
   }
 
-
   private formatEventLocation(eventLocation:any): CMS.EventLocation{
 
     this.formatSlug(eventLocation);
 
     const geo = eventLocation.geo;
-    eventLocation.street = geo.street;
-    eventLocation.postalcode = geo.postalcode;
-    eventLocation.city = geo.city;
-    eventLocation.tag = geo.tag;
-    eventLocation.coordinates = [geo.location.lng, geo.location.lat];
+    eventLocation.street = geo.street || "";
+    eventLocation.postalcode = geo.postalcode || "";
+    eventLocation.city = geo.city || "";
+    eventLocation.tag = geo.tag || "";
+    eventLocation.coordinates = geo.location ? [geo.location.lng, geo.location.lat] : null;
 
 
     delete eventLocation.geo;

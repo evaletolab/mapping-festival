@@ -32,12 +32,12 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/artists/:artist?',
-    name: 'About',
+    name: 'Artist',
     component: Artist
   },
   {
     path: '/artists',
-    name: 'About',
+    name: 'Artists',
     component: ArtistList
   },
   {
