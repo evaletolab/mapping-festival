@@ -11,6 +11,7 @@ import Event from '../views/Event.vue'
 import EventList from '../views/EventList.vue'
 import Landing from '../views/Landing.vue'
 import Spot from '../views/Spot.vue'
+import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -31,14 +32,14 @@ const routes: Array<RouteConfig> = [
     component: Event
   },
   {
-    path: '/artists/:artist?',
-    name: 'Artist',
-    component: Artist
-  },
-  {
     path: '/artists',
     name: 'Artists',
     component: ArtistList
+  },
+  {
+    path: '/artists/:artist?',
+    name: 'Artist',
+    component: Artist
   },
   {
     path: '/spot/:spotslug?',
@@ -54,7 +55,17 @@ const routes: Array<RouteConfig> = [
     //   name: 'Content',
     //   components: { l2 : Content}  
     // }]
-  }  
+  },
+  {
+    path: '/404',
+    name: 'NotFound',
+    component: NotFound,
+  },
+  {
+    path: '*',
+    name: 'CatchAll',
+    redirect: {name: "NotFound"},
+  }
 ]
 
 const router = new VueRouter({
