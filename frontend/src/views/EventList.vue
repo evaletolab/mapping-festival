@@ -63,7 +63,7 @@ export default class EventList extends mixins(Translatable) {
   }
 
   beforeRouteEnter(to: Route, from: Route, next: any) {
-    $cms.loadAll().then(next);
+    next();
   }
 
   async mounted(){

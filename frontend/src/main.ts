@@ -16,12 +16,17 @@ Vue.config.productionTip = false
 
 
 import '@/main.scss'
+import VuePlyr from 'vue-plyr';
+import 'vue-plyr/dist/vue-plyr.css';
+
 
 import { $config, $user, $cms } from '@/services';
 const load = [$config.get(), $cms.loadAll(), $user.get()];
 
 Promise.all(load).
 then(() => {
+  Vue.use(VuePlyr);
+
   new Vue({
     router,
     render: h => h(App)

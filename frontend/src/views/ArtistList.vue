@@ -43,7 +43,7 @@ import Toolbar from '../components/Toolbar.vue';
 
 @Component({
   components: {
-    CMSIcons, Toolbar
+    CMSIcons, Toolbar, 
   }
 })
 export default class ArtistList extends Vue {
