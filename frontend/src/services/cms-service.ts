@@ -175,6 +175,9 @@ class CMSService {
   }
   
   private formatSlug(obj:any): void{
+    if(!obj.slug) {
+      return;
+    }
     const parts = obj.slug.split('/');
     obj.slug = parts[parts.length - 1];
   }
