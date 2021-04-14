@@ -42,7 +42,7 @@
 
 
   /* helpers settings */
-  --helper-color-alpha: 0;
+  --helper-color-alpha: 0.2;
 
   /* font basics settings*/
   --font-size: calc((1vmin + 1.5vmax) * .8);
@@ -220,9 +220,7 @@ body{
 
 .spiegel{
   background-color: rgba(200,220,220,var(--helper-color-alpha));
-  
   width: var(--spiegel-width);
-
   margin: 0 0 calc(var(--line-height) - var(--image-to-x)) var(--margin-left);
   line-height: var(--line-height);
 
@@ -311,7 +309,7 @@ h2{ /*  dates, etc */
 
   font-family: 'Inter', sans-serif;
   font-weight: 470;
-  font-family: inter;
+  font-family: 'inter';
 }
 
 
@@ -368,8 +366,8 @@ h5{  /*  notes et addendum */
   font-weight: 470;
   font-family: inter;
 
-  border-top: 1px solid var(--font-color);;
-  border-bottom: 1px solid var(--font-color);;
+  border-top: 1px solid var(--font-color);
+  border-bottom: 1px solid var(--font-color);
 
 }
 

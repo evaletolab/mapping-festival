@@ -75,11 +75,6 @@ export default class Landing extends mixins(Translatable) {
   cfg = $config;
 
   async mounted(){
-    // //
-    // // load content after landing
-    // setTimeout(async ()=>{
-    //   await $cms.loadAll();
-    // },1000);
   }
 
   get config(){
@@ -89,16 +84,6 @@ export default class Landing extends mixins(Translatable) {
   get events(){
     return $cms.events;
   }
-
-  // beforeRouteEnter(to: any, from: any, next: any) {
-  //   const all = [$config.get(),$user.get()]
-  //   Promise.all(all).then(([config, user])=> {
-  //     if(user.id && user.name) {
-  //       return next('/content');
-  //     }
-  //     next();
-  //   })
-  // }
 
 }
 </script>

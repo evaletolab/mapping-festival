@@ -5,13 +5,26 @@
   <div class="artist">
     <!-- TOOLBAR -->
     <Toolbar />
+
+    <div style="height:100px" />
+    <ul>
+      <li>{{artist.firstname}} {{artist.lastname}}</li>
+      <li><a href="artist.artistWebsite">{{artist.artistWebsite}}</a></li>
+    </ul>
+
+    <h4>Bio</h4>
+    <div v-html="t(artist.content)" />
+
+    <h4>Media</h4>
+    <div v-for="media in externalMedias" :key="media.id">
+      <VideoPlayer :externalMedia="media" />
+    </div>
     
   </div>
 </template>
 
 <style lang="scss" scoped>
   .artist{
-    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
@@ -28,18 +41,22 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
-import { $config } from '../services';
+import { $config, $artist } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
+import VideoPlayer from '../components/VideoPlayer.vue';
+import { mixins } from 'vue-class-component';
+import { Translatable } from '@/mixins';
 
 
 @Component({
   components: {
-    CMSIcons, Toolbar
+    CMSIcons, Toolbar, VideoPlayer  
   }
 })
-export default class Artist extends Vue {
+export default class Artist extends mixins(Translatable) {
+
   get config(){
     return $config.store.config;
   }
@@ -49,11 +66,37 @@ export default class Artist extends Vue {
     return this.config.themes[theme].tertiary;
   }
 
+  // *this* does not exist at this point
   beforeRouteEnter(to: Route, from: Route, next: any) {
-    next()
+    const slug = to.params.artist;
+    const artistExists = !!$artist.artistWithSlug(slug);
+    if(!artistExists){
+      next({name:'NotFound'});
+    }else{
+      next();
+    }
+  }
+  
+  // *this* does not exist at this point
+  beforeRouteUpdate(to: Route, from: Route, next: any) {
+    const slug = to.params.artist;
+    const artistExists = !!$artist.artistWithSlug(slug);
+    if(!artistExists){
+      next({name:'NotFound'});
+    }else{
+      next();
+    }
   }
 
   mounted(){
+  }
+
+  get artist(): CMS.Artist {
+    return $artist.artistWithSlug(this.$route.params.artist) as CMS.Artist;
+  }
+
+  get externalMedias(): CMS.ExternalMedia[] {
+    return this.artist.externalMedias;
   }
 
   async onBack() {

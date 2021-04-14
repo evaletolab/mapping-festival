@@ -5,14 +5,14 @@ const github = process.env.NODE_ENV === "github";
 // https://cli.vuejs.org/core-plugins/pwa.html#configuration
 module.exports = {  
   publicPath : github? '/CMS': (prod? '/':'/'),
-  devServer: {
-    proxy: {
-      '^/artist': {
-        target: 'http://localhost:4000',
-        changeOrigin: true, // so CORS doesn't bite us. 
-      }
-    }
-  },
+  // devServer: {
+  //   proxy: {
+  //     '^/artist': {
+  //       target: 'http://localhost:4000',
+  //       changeOrigin: true, // so CORS doesn't bite us. 
+  //     }
+  //   }
+  // },
   pwa:{
     name:"CMS",
     themeColor:"#6900FF",

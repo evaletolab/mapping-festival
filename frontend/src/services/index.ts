@@ -1,5 +1,8 @@
 export { $config } from './config-service';
 export { $cms } from './cms-service';
+export { $event } from './event-service';
+export { $artist } from './artist-service';
+export { $eventLocation } from './eventLocation-service';
 export { $user } from './user-service';
 
 

@@ -31,7 +31,11 @@
     {"layout":"primary","name":{ "fr": "about", "en":"about"},"link":"/content/about","weight":0,"active":true},
     {"layout":"primary","name":{ "fr": "about", "en":"about"},"link":"/content/about","weight":0,"active":true}
 
-],
+  ],
+  
+  "notFound":{
+    "message": {"fr": "cette ressource n'existe pas", "en": "this resource does not exist"}
+  },
 
   "themes": {
     "1": { "primary":"#6900FF","secondary":"#260063", "tertiary":"#BBB8FF"},

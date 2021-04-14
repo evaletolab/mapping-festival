@@ -1,23 +1,15 @@
 <template>
-  <!--         ---------         -->  
-  <!-- TESTING READ-ONLY DISPLAY -->
-  <!--         ---------         -->  
-  <div class="artist">
-    <!-- TOOLBAR -->
+  <div class="not-found">
     <Toolbar />
-    
-    <div style="height:80px" />
 
-    <ul>
-      <li v-for="artist in sortedArtists" :key="artist._id">
-        <router-link :to="`/artists/${artist.slug}`">{{ artist.firstname }} {{ artist.lastname }}</router-link>
-      </li>
-    </ul>
+    <div style="height:100px" />
+    <h2>{{t(config.notFound.message)}}</h2>
   </div>
+    
 </template>
 
 <style lang="scss" scoped>
-  .artist{
+  .not-found{
     position: fixed;
     top: 0;
     right: 0;
@@ -34,26 +26,24 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Route } from 'vue-router';
-import { CMS } from "../models";
-import { $config, $artist } from '../services';
+import { $config } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
+import { mixins } from 'vue-class-component';
+import { Translatable } from '@/mixins';
 
 
 @Component({
   components: {
-    CMSIcons, Toolbar, 
+    CMSIcons, Toolbar
   }
 })
-export default class ArtistList extends Vue {
+export default class NotFound extends mixins(Translatable) {
   get config(){
     return $config.store.config;
   }
 
-  get sortedArtists(): CMS.Artist[] {
-    return $artist.all.sort((a, b) => a.lastname.localeCompare(b.lastname));
-  }
 
   themeTertiary(theme) {
     return this.config.themes[theme].tertiary;
