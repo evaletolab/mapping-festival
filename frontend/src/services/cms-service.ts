@@ -144,6 +144,11 @@ class CMSService {
       const baseUrl = $config.store.config.cms.baseUrl;
       const uploadsPath = $config.store.config.cms.uploadsPath;
       result.path = `${baseUrl}${uploadsPath}${result.path}`;
+
+      for(const prop in result.sizes){
+        const path = result.sizes[prop].path;
+        result.sizes[prop].path = `${baseUrl}${uploadsPath}${path}`;
+      }
       // console.log("path", result.path);
 
       result.created = new Date(result.created * 1000);

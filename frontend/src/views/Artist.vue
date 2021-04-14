@@ -17,10 +17,19 @@
     <div v-html="t(artist.content)" />
 
     <h4>Media</h4>
-    <div v-for="media in externalMedias" :key="media.id">
+    <h5>Videos</h5>
+    <div v-for="media in externalMedias" :key="media.url">
       <VideoPlayer :externalMedia="media" />
     </div>
     
+    <h5>images local (on cms with size variants)</h5>
+    <div v-for="image in localImages" :key="image._id">
+      <img :src="image.sizes.headerimage.path" /> 
+    </div>
+    <h5>images external</h5>
+    <div v-for="image in externalImages" :key="image._id">
+      <img :src="image.url" /> 
+    </div>
   </div>
 </template>
 
@@ -34,6 +43,9 @@
     // height: 100vh;
     // width: 100vw;    
     // padding-top:0;    
+  }
+  img{
+    width:100%;
   }
 </style>
 
@@ -97,6 +109,16 @@ export default class Artist extends mixins(Translatable) {
 
   get externalMedias(): CMS.ExternalMedia[] {
     return this.artist.externalMedias;
+  }
+
+  get localImages(): CMS.LocalMedia[]{
+    const result = this.artist.localMedias.filter(m => m.image);
+    return result;
+  }
+
+  get externalImages(): CMS.ExternalMedia[]{
+    const result = this.artist.externalMedias.filter(m => m.platform === "img");
+    return result;
   }
 
   async onBack() {
