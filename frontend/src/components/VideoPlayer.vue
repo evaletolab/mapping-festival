@@ -9,6 +9,14 @@
           allow="autoplay"
         ></iframe>
       </div>
+      <div v-else-if="externalMedia.platform == 'vimeo'"  class="plyr__video-embed">
+        <iframe
+          :src="resolveVimeoSrc"
+          allowfullscreen
+          allowtransparency
+          allow="autoplay"
+        ></iframe>
+      </div>
     </vue-plyr>
   </div>
 </template>
@@ -44,6 +52,18 @@ export default class VideoPlayer extends Vue {
     }
 
     console.log("computed youtube source", result);
+    return result;
+  }
+
+  get resolveVimeoSrc(): string {
+    const quietMode = "loop=false&amp;byline=false&amp;portrait=false&amp;title=false&amp;speed=true&amp;transparent=0&amp;gesture=media";
+    let result = "";
+    if(this.externalMedia.url.startsWith("https://")){
+      result = `${this.externalMedia.url}?${quietMode}`;
+    }else{
+      result = `https://player.vimeo.com/video/${this.externalMedia.url}?${quietMode}`; 
+    }
+    console.log("computed vimeo source", result);
     return result;
   }
 }
