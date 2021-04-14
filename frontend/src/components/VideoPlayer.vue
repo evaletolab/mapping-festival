@@ -30,6 +30,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { CMS } from '../models';
+import getVideoId from 'get-video-id';
+
 
 @Component({
   components: { },
@@ -57,12 +59,9 @@ export default class VideoPlayer extends Vue {
 
   get resolveVimeoSrc(): string {
     const quietMode = "loop=false&amp;byline=false&amp;portrait=false&amp;title=false&amp;speed=true&amp;transparent=0&amp;gesture=media";
-    let result = "";
-    if(this.externalMedia.url.startsWith("https://")){
-      result = `${this.externalMedia.url}?${quietMode}`;
-    }else{
-      result = `https://player.vimeo.com/video/${this.externalMedia.url}?${quietMode}`; 
-    }
+
+    const videoId = this.externalMedia.url.startsWith("https://") ? getVideoId(this.externalMedia.url).id : this.externalMedia.url;
+    const result = `https://player.vimeo.com/video/${videoId}?${quietMode}`; 
     console.log("computed vimeo source", result);
     return result;
   }
