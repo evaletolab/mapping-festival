@@ -61,20 +61,22 @@
 /*******************************/
 
 
-body {
+/* not vue compatible */
+
+
+/* body {
     display: block;
     position: fixed;
-    overflow: hidden;
+    overflow: hidden; 
 
 
-    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-       -moz-animation: fadein 2s; /* Firefox < 16 */
-        -ms-animation: fadein 2s; /* Internet Explorer */
-         -o-animation: fadein 2s; /* Opera < 12.1 */
+    -webkit-animation: fadein 2s; 
+       -moz-animation: fadein 2s; 
+        -ms-animation: fadein 2s; 
+         -o-animation: fadein 2s; 
             animation: fadein 2s;
 
-
-    }
+}  */
 
 /*******************************/
 
