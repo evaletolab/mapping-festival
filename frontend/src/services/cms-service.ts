@@ -274,6 +274,9 @@ class CMSService {
 
     artist.created = artist._created;
     artist = this.addMeta(artist);
+    artist.firstname = artist.firstname || "";
+    artist.lastname = artist.lastname || "";
+    artist.artistname = artist.artistname || null;
     return artist as CMS.Artist;
   }
 }

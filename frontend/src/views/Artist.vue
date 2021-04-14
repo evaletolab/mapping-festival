@@ -9,6 +9,7 @@
     <div style="height:100px" />
     <ul>
       <li>{{artist.firstname}} {{artist.lastname}}</li>
+      <li v-if="artist.artistname">{{artist.artistname}}</li>
       <li><a href="artist.artistWebsite">{{artist.artistWebsite}}</a></li>
     </ul>
 
