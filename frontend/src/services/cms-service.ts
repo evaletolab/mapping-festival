@@ -1,30 +1,29 @@
 import { CMS } from "@/models";
-
 import { Vue } from 'vue-property-decorator';
-
 import { $config } from "./config-service";
-import { $user } from "./user-service";
-
-
 import axios from 'axios';
 
-const baseUrl = "https://iziapi.ch/mappingDev/index";
-const uploadsPath = "/storage/uploads";
-const authToken = "690a8296407bdd55ae785e519d02fe";
 
-const defaultAxios = {
-  headers: { 
-    'Cache-Control': 'no-cache',
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${authToken}`,
-  }
-};
+function getAxiosOptions(){
+
+  const authToken = $config.store.config.cms.authToken;
+  return {
+    headers: { 
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}`,
+    }
+  };
+}
+
 
 interface CMS_Map{
   events: CMS.Event[];
   artists: CMS.Artist[];
   eventLocations: CMS.EventLocation[];
 }
+
+
 
 class CMSService {
   public STORAGE_KEY = "cms-progression";
@@ -56,8 +55,7 @@ class CMSService {
       return;
     } 
     console.log("cms-service load all");
-    const user = await $user.get();
-    const config = Object.assign({},defaultAxios) as any;
+    const config = Object.assign({}, getAxiosOptions()) as any;
 
     const fixTranslations = (entry, keys) => {
       for(const key of keys){
@@ -72,6 +70,7 @@ class CMSService {
       return entry;
     }
 
+    const baseUrl = $config.store.config.cms.baseUrl;
     
     // load eventLocations
     {
@@ -142,8 +141,10 @@ class CMSService {
         result[attr] = lm[""][attr];
       });
 
+      const baseUrl = $config.store.config.cms.baseUrl;
+      const uploadsPath = $config.store.config.cms.uploadsPath;
       result.path = `${baseUrl}${uploadsPath}${result.path}`;
-      console.log("path", result.path);
+      // console.log("path", result.path);
 
       result.created = new Date(result.created * 1000);
       result.modified = new Date(result.modified * 1000);
@@ -207,7 +208,6 @@ class CMSService {
   private formatEvent(event: any): CMS.Event{
 
     this.formatSlug(event);
-    
     this.formatLocalMedias(event);
     this.formatExternalMedias(event);
 
@@ -271,7 +271,6 @@ class CMSService {
   private formatArtist(artist:any): CMS.Artist{
     
     this.formatSlug(artist);
-
     this.formatLocalMedias(artist);
     this.formatExternalMedias(artist);
     this.formatSocialMedias(artist);
