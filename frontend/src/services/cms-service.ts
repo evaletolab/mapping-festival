@@ -8,7 +8,8 @@ import { $user } from "./user-service";
 
 import axios from 'axios';
 
-const baseUrl = "https://iziapi.ch/mappingDev/index/api";
+const baseUrl = "https://iziapi.ch/mappingDev/index";
+const uploadsPath = "/storage/uploads";
 const authToken = "690a8296407bdd55ae785e519d02fe";
 
 const defaultAxios = {
@@ -74,7 +75,7 @@ class CMSService {
     
     // load eventLocations
     {
-      const eventsUrl = `${baseUrl}/collections/get/localisations`;
+      const eventsUrl = `${baseUrl}/api/collections/get/localisations`;
       const eventLocations = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["name", "content"];
       this.cms.eventLocations = eventLocations.entries
@@ -86,7 +87,7 @@ class CMSService {
     
     // load artists
     {
-      const eventsUrl = `${baseUrl}/collections/get/artists`;
+      const eventsUrl = `${baseUrl}/api/collections/get/artists`;
       const artists = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["content"];
       this.cms.artists = artists.entries
@@ -98,7 +99,7 @@ class CMSService {
 
     // load events (must be loaded last)
     {
-      const eventsUrl = `${baseUrl}/collections/get/events`;
+      const eventsUrl = `${baseUrl}/api/collections/get/events`;
       const events = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["title", "header", "content", "hardware", "notes"]
       this.cms.events = events.entries
@@ -139,7 +140,10 @@ class CMSService {
         "width", "height", "colors", "sizes"
       ].forEach(attr => {
         result[attr] = lm[""][attr];
-      })
+      });
+
+      result.path = `${baseUrl}${uploadsPath}${result.path}`;
+      console.log("path", result.path);
 
       result.created = new Date(result.created * 1000);
       result.modified = new Date(result.modified * 1000);

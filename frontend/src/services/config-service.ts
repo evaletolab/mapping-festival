@@ -65,6 +65,7 @@ class ConfigService {
       this.generateColors(this._store.config.themes);
     }
 
+    console.log("config loaded");
     return this._store.config;
   }  
 

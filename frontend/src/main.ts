@@ -22,10 +22,14 @@ import VuePlyr from 'vue-plyr';
 import 'vue-plyr/dist/vue-plyr.css';
 
 import { $config, $user, $cms } from '@/services';
-const load = [$config.get(), $cms.loadAll(), $user.get()];
+const load = [$config.get(), $user.get()];
 
-Promise.all(load).
-then(() => {
+Promise.all(load)
+.then(() => {
+  // must be loaded after config
+  return $cms.loadAll();
+})
+.then(() => {
   Vue.use(VuePlyr);
 
   new Vue({
