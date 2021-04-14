@@ -51,6 +51,7 @@ class ConfigService {
     }
     return this.config.i18n[this._lang][key];
   }  
+
   async get(force?: boolean){
     if(!this._store.config.done && !force) {
       const res = await axios.get(this._baseUrl + 'config.json',defaultAxios);
@@ -66,6 +67,11 @@ class ConfigService {
 
     return this._store.config;
   }  
+
+  getMenu(layout) {
+    const menu = this._store.config.menu || [];
+    return menu.filter(menu => menu.layout == layout && menu.active); 
+  }
 
   generateColors(themes){
     const root = document.documentElement;
@@ -100,6 +106,7 @@ class ConfigService {
       return false;
     }
   }
+  
 }
 
 //

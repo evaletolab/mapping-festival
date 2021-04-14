@@ -1,27 +1,38 @@
 {
   "logo":"/img/logo.png",
   "landing":{
-    "menu":[    
-      {"name":{ "fr": "live", "en":"live"},"link":"/events?selected=live","weight":0,"active":true},
-      {"name":{ "fr": "lieux", "en":"location"},"link":"/spot","weight":0,"active":true},
-      {"name":{ "fr": "expo", "en":"expo"},"link":"/events?selected=expo","weight":0,"active":true},
-      {"name":{ "fr": "events", "en":"events"},"link":"/events","weight":0,"active":true},
-      {"name":{ "fr": "workshop", "en":"workshop"},"link":"/events?selected=workshop","weight":0,"active":true},
-      {"name":{ "fr": "artists", "en":"artists"},"link":"/artists","weight":0,"active":true}
-    ],
-    "title1":{"fr":"festival des arts technologiques et déviants","en":"deviant art festival"},
-    "title2":{"fr":"genève","en":"geneva"},
-    "title3":{"fr":"15.5 — 27.5.2021","en":"15.5 — 27.5.2021"}
+    "title1":{"fr":"2051 <br>is near","en":"2051 <br>est proche"},
+    "title2":{"fr":"festival\ndes arts\technologiques\net déviants","en":"deviant art\nfestival"},
+    "title3":{"fr":"13 — 23.5<br>genève","en":"13 — 23.5<br>geneva"},
+    "help":{
+      "name":{"fr":"bénévoles&#8239;!","en":"volunteers&#8239;!"},
+      "link":"https://docs.google.com/forms/d/e/1FAIpQLSeqzDLxisp0UboBNDx6G6IvQo2oYRfvwPPT1_rZ7Wo-E_mMmA/viewform"
+    }
   },
   "footer":{
-    "menu":[
-      {"name":{ "fr": "fbook", "en":"fbook"},"link":"https://fb","weight":0,"active":true},
-      {"name":{ "fr": "insta", "en":"insta"},"link":"https://insta","weight":0,"active":true},
-      {"name":{ "fr": "vimeo", "en":"viemo"},"link":"https://viemo","weight":0,"active":true},
-      {"name":{ "fr": "mail", "en":"mail"},"link":"mailto:foo@bar.cc","weight":0,"active":true},
-      {"name":{ "fr": "about", "en":"about"},"link":"/content/about","weight":0,"active":true}
-    ]
   },
+
+  "menu":[    
+    {"layout":"landing","name":{ "fr": "live", "en":"live"},"link":"/events?selected=live","weight":0,"active":true},
+    {"layout":"landing","name":{ "fr": "lieux", "en":"location"},"link":"/spot","weight":0,"active":true},
+    {"layout":"landing","name":{ "fr": "expo", "en":"expo"},"link":"/events?selected=expo","weight":0,"active":true},
+    {"layout":"landing","name":{ "fr": "events", "en":"events"},"link":"/events","weight":0,"active":true},
+    {"layout":"landing","name":{ "fr": "workshop", "en":"workshop"},"link":"/events?selected=workshop","weight":0,"active":true},
+    {"layout":"landing","name":{ "fr": "artists", "en":"artists"},"link":"/artists","weight":0,"active":true},
+
+    {"layout":"footer","name":{ "fr": "contact", "en":"contact"},"link":"mailto:elvis@mappingfestival.com","weight":0,"active":true},
+
+    {"layout":"social","name":{ "fr": "fbook", "en":"fbook"},"link":"https://www.facebook.com/mappingfest","weight":0,"active":true},
+    {"layout":"social","name":{ "fr": "insta", "en":"insta"},"link":"https://www.instagram.com/mappingfestival","weight":0,"active":true},
+    {"layout":"social","name":{ "fr": "vimeo", "en":"vimeo"},"link":"https://vimeo.com/mappingfestival","weight":0,"active":true},
+    {"layout":"social","name":{ "fr": "nft", "en":"nft"},"link":"https://opensea.com","weight":0,"active":false},
+
+    {"layout":"primary","name":{ "fr": "about", "en":"about"},"link":"/content/about","weight":0,"active":true},
+    {"layout":"primary","name":{ "fr": "about", "en":"about"},"link":"/content/about","weight":0,"active":true},
+    {"layout":"primary","name":{ "fr": "about", "en":"about"},"link":"/content/about","weight":0,"active":true}
+
+],
+
   "themes": {
     "1": { "primary":"#6900FF","secondary":"#260063", "tertiary":"#BBB8FF"},
     "2": { "primary":"#FFBC00","secondary":"#FF8D00", "tertiary":"#FFF9C5"},
