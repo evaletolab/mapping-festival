@@ -2,7 +2,7 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  <div class="artist">
+  <div class="artist spiegel margin-top1">
     <!-- TOOLBAR -->
     <Toolbar />
     
@@ -16,13 +16,18 @@
   </div>
 </template>
 
+<style >
+ :root{
+    --main-font-color: white;
+ }
+</style>
+
 <style lang="scss" scoped>
   .artist{
-    position: fixed;
+    // position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
-    background: white;
     margin: 0;
     z-index: 2;
     height: 100vh;

@@ -2,7 +2,7 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  <div class="artist">
+  <div class="artist spiegel margin-top1">
     <!-- TOOLBAR -->
     <Toolbar />
 
@@ -26,15 +26,14 @@
 
 <style lang="scss" scoped>
   .artist{
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: white;
-    margin: 0;
-    z-index: 2;
-    height: 100vh;
-    width: 100vw;    
-    padding-top:0;    
+    // top: 0;
+    // right: 0;
+    // bottom: 0;
+    // margin: 0;
+    // z-index: 2;
+    // height: 100vh;
+    // width: 100vw;    
+    // padding-top:0;    
   }
 </style>
 
