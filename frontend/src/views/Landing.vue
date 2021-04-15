@@ -30,7 +30,7 @@
     <!--------------------- Footer --------------------------->
     <footer>
       <p>
-        <a v-for="menu in cfg.getMenu('footer')" :key="menu.link" :href="menu.link" target="_new">{{t(menu.name)}}</a>
+        <router-link v-for="menu in cfg.getMenu('footer')" :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
         <LanguageSelector class="lang" />
       </p>
     </footer>
