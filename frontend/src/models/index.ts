@@ -76,8 +76,13 @@ export namespace CMS {
     updated?: Date;
   }
 
-  export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
+  // export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
+  const _eventType = ["Installation", "Live", "Masterclass", "Collection"] as const;
+  export type eventType = typeof _eventType[number];
 
+  const _eventSubType = ["Parcours urbain", "Exposition", "Performance", "Nighclubbing", "Concert", "Workshop", "Table ronde", "Masterclass", "mappingTV"] as const;
+  export type  eventSubType = typeof _eventSubType[number];
+  
   type Lat = number;
   type Lng = number;
 
@@ -122,6 +127,7 @@ export namespace CMS {
     slug: string,
     active: boolean,
     type: eventType,
+    subType: eventSubType,
     title:{
       fr:string,
       en:string

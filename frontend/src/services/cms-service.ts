@@ -250,6 +250,8 @@ class CMSService {
 
     event.created = event._created;
 
+    event.subType = event.subType || null;
+
     event = this.addMeta(event);
 
     return event as CMS.Event;
