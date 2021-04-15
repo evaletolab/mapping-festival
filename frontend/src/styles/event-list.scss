@@ -74,15 +74,20 @@
   
   .grid {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     .event {
       flex: 1;
       width: 49%;
       background-color: #eee;
+      background: url(https://via.placeholder.com/150) no-repeat;
+      background-size: cover;
+      background-position: center;
       border-radius: 4px;
       margin: 4px;
       padding: 4px;
       min-height: 140px;
+      max-width: 150px;
+      
     }
   }
 }
