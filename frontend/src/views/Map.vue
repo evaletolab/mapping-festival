@@ -34,6 +34,7 @@
 
 <style lang="scss" scoped>
   .map {
+    width: 100vw;
   }
   .map-container{
     padding-top: 80px;

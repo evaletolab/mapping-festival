@@ -21,7 +21,7 @@
     {"layout":"landing","name":{ "fr": "artists", "en":"artists"},"link":"/artists","weight":0,"active":true},
 
     {"layout":"footer","name":{ "fr": "contact", "en":"contact"},"link":"mailto:elvis@mappingfestival.com","weight":0,"active":true},
-    {"layout":"footer","name":{ "fr": "lieux", "en":"spot"},"link":"/spots","weight":0,"active":true},
+    {"layout":"footer","name":{ "fr": "lieux", "en":"spots"},"link":"/spot","weight":0,"active":true},
     {"layout":"footer","name":{ "fr": "events", "en":"events"},"link":"/events","weight":0,"active":true},
     {"layout":"footer","name":{ "fr": "artistes", "en":"artists"},"link":"/artists","weight":0,"active":true},
 

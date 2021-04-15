@@ -43,7 +43,7 @@ const routes: Array<RouteConfig> = [
     component: Artist
   },
   {
-    path: '/map',
+    path: '/spot',
     name: 'Map',
     component: Map
   },
