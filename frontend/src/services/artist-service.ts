@@ -18,7 +18,7 @@ class ArtistService
 
     eventsForArtist(artist: CMS.Artist): CMS.Event[]{
         return $cms.events.filter(event => {
-            !!event.artists.find(obj => obj._id === artist._id);
+            return !!event.artists.find(obj => obj._id === artist._id);
         });
     }
 }

@@ -107,7 +107,7 @@ export namespace CMS {
     active: boolean,
     firstname:string,
     lastname:string,
-    artistname:string,
+    artistName:string,
     artistWebsite: string,
     content:{
       fr:string,

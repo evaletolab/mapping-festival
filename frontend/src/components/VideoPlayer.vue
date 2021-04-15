@@ -53,7 +53,7 @@ export default class VideoPlayer extends Vue {
       result = `https://www.youtube.com/embed/${this.externalMedia.url}?${quietMode}`; 
     }
 
-    console.log("computed youtube source", result);
+    // console.log("computed youtube source", result);
     return result;
   }
 
@@ -62,7 +62,7 @@ export default class VideoPlayer extends Vue {
 
     const videoId = this.externalMedia.url.startsWith("https://") ? getVideoId(this.externalMedia.url).id : this.externalMedia.url;
     const result = `https://player.vimeo.com/video/${videoId}?${quietMode}`; 
-    console.log("computed vimeo source", result);
+    // console.log("computed vimeo source", result);
     return result;
   }
 }

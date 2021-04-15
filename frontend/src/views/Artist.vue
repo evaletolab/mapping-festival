@@ -8,13 +8,19 @@
 
     <div style="height:100px" />
     <ul>
-      <li>{{artist.firstname}} {{artist.lastname}}</li>
-      <li v-if="artist.artistname">{{artist.artistname}}</li>
+      <li>{{artist.firstname}} {{artist.lastname}} <span v-if="artist.artistName">aka {{artist.artistName}}</span> </li>
       <li><a href="artist.artistWebsite">{{artist.artistWebsite}}</a></li>
     </ul>
 
     <h4>Bio</h4>
     <div v-html="t(artist.content)" />
+
+    <h4>Events</h4>
+    <ul v-for="event in events" :key="event._id">
+      <li> 
+        <router-link :to="`/events/${event.slug}`">{{ t(event.title) }}</router-link>
+      </li>
+    </ul>
 
     <h4>Media</h4>
     <h5>Videos</h5>
@@ -118,6 +124,12 @@ export default class Artist extends mixins(Translatable) {
 
   get externalImages(): CMS.ExternalMedia[]{
     const result = this.artist.externalMedias.filter(m => m.platform === "img");
+    return result;
+  }
+
+  get events(): CMS.Event[]{
+    const result = $artist.eventsForArtist(this.artist);
+    console.log("events for artist", result);
     return result;
   }
 
