@@ -217,23 +217,22 @@ class CMSService {
     this.formatLocalMedias(event);
     this.formatExternalMedias(event);
 
-    // TODO: evil bad 
-    const validLocalisations = event.when.filter(when => when.value.localisation != null);
-    if(validLocalisations.length > 0){
-      const geoId = event.when[0].value.localisation._id;
-      const geo: any = this.cms.eventLocations.find(el => el._id === geoId) || null; 
-      event.geo = geo; 
-    }else{
-      event.geo = null;
-    }
-
+    // build **when** array
     event.when = event.when.map (w => {
       const v = w.value;
       const start = new Date(`${v.startDate} ${v.startHour}`);
       const end = new Date(`${v.endDate} ${v.endHour}`);
       const duration = (end.getTime() - start.getTime()) / 1000 / 60;
       const cancel = v.cancel;
-      return { start, end, duration, cancel, };
+      
+      // extract eventLocation if present
+      let eventLocation:CMS.EventLocation | null = null;
+      if(v.localisation){
+        const geoId = v.localisation[0]._id;
+        eventLocation = this.eventLocations.find(e => e._id === geoId) as CMS.EventLocation;
+      }
+
+      return { start, end, duration, cancel, eventLocation };
     });
 
     event.medias = null; // TODO handle this

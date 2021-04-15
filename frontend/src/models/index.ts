@@ -159,11 +159,11 @@ export namespace CMS {
       start:Date,
       end:Date,
       duration: number,
-      cancel: boolean
+      cancel: boolean,
+      eventLocation: EventLocation | null,
     }],
     price: number,
     limit: number,
-    geo: EventLocation | null,
     artists:[{
       lastname:string,
       slug:string,

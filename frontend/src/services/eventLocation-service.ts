@@ -17,13 +17,15 @@ class EventLocationService
     }
 
     eventsForEventLocation(eventLocation: CMS.EventLocation): CMS.Event[]{
-        return $cms.events.filter(event => {
-            if(event.geo){
-                return event.geo._id == eventLocation._id;
-            }else{
-                return false;
+        const set: Set<CMS.Event> = new Set();
+        for(const event of $cms.events){
+            for(const w of event.when){
+                if(w.eventLocation && w.eventLocation == eventLocation){
+                    set.add(event);
+                }
             }
-        });
+        }
+        return Array.from(set);
     }
 
     artistsForEventLocation(eventLocation: CMS.EventLocation): CMS.Artist[]{
