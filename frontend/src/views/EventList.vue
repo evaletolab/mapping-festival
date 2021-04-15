@@ -2,13 +2,16 @@
   <div class="events">
     <!-- TOOLBAR -->
     <Toolbar />
-    <section class="header">
-      <ul>
-        <li class="selected">Agenda</li>
-        <li class="">lieux</li>
-        <li class="">artistes</li>
-      </ul>
+    <section class="primary">
+      <p>
+        <a v-for="(menu) in getMenu('primary')" :class="{'selected':menu.selected}" :key="menu.link" :href="menu.link" target="_new">{{t(menu.name)}}</a>
+      </p>
     </section>
+
+    <section class="secondary">
+        <a v-for="(menu) in getMenu('secondary')" :class="{'selected':menu.selected}" :key="menu.link" :href="menu.link" target="_new">{{t(menu.name)}}</a>
+    </section>
+
 
     <div class="grid">
       <div class="event" v-for="event in events" :key="event._id">
@@ -56,6 +59,18 @@ export default class EventList extends mixins(Translatable) {
 
   get config(){
     return $config.store.config;
+  }
+
+  getMenu(layout) {
+    const menu = $config.getMenu(layout);
+    const path = this.$router.currentRoute.fullPath;
+    const itemIdx = menu.findIndex(item => item.link.indexOf(path)>-1);
+    menu[itemIdx].selected = true;
+    // const item = menu[itemIdx];
+    // menu.splice(itemIdx)
+    console.log('--DBG',this.$router.currentRoute.fullPath,menu,itemIdx)
+
+    return menu;
   }
 
   themeTertiary(theme) {

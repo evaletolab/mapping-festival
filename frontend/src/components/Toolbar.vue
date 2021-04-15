@@ -27,6 +27,9 @@
 
 <style lang="scss" scoped>
 
+  .toolbar {
+  }
+
 </style>
 
 <script lang="ts">

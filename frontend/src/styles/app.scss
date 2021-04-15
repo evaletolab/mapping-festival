@@ -35,9 +35,8 @@
 //
 // common style for toolbar, can be overhided on Component.vue
 .toolbar {
-  border-radius: 0 0 18px 18px;
+  -border-radius: 0 0 18px 18px;
   flex-flow: row wrap;
-  position: relative;
   z-index: 2;    
   position: fixed;
   width: 100vw;
