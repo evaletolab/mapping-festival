@@ -111,12 +111,12 @@ class CMSService {
   }
 
   private extractTranslation(map, key){
-    const en = map[key];
-    const fr = map[`${key}_fr`];
+    const _en = map[key];
+    const _fr = map[`${key}_fr`];
 
     return {
-      fr,
-      en,
+      fr: _fr || _en,
+      en: _en || _fr,
     };
   }
 
@@ -220,7 +220,7 @@ class CMSService {
     // TODO: evil bad 
     const validLocalisations = event.when.filter(when => when.value.localisation != null);
     if(validLocalisations.length > 0){
-      const geoId = event.when[0].value.localisation.id;
+      const geoId = event.when[0].value.localisation._id;
       const geo: any = this.cms.eventLocations.find(el => el._id === geoId) || null; 
       event.geo = geo; 
     }else{

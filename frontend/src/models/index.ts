@@ -91,6 +91,10 @@ export namespace CMS {
   export interface EventLocation {
     _id:string
     slug:string,
+    name:{
+      fr:string,
+      en:string
+    }
     active:boolean,
     street: string,
     postalcode: string,

@@ -1,5 +1,5 @@
 <template>
-  <div class="not-found">
+  <div class="not-found spiegel margin-top1">
     <Toolbar />
 
     <div style="height:100px" />
@@ -10,16 +10,7 @@
 
 <style lang="scss" scoped>
   .not-found{
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: white;
-    margin: 0;
-    z-index: 2;
-    height: 100vh;
     width: 100vw;    
-    padding-top:0;    
   }
 </style>
 

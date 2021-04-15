@@ -16,7 +16,7 @@
           :attribution="attribution"
         />
         <l-marker 
-          v-for="evtLocation in eventLocations" :key="evtLocation._id" 
+          v-for="evtLocation in eventLocationsForMarkers" :key="evtLocation._id" 
           :lat-lng="evtLocation.coordinates" 
           @click="markerClick(evtLocation._id)">
            <l-icon
@@ -24,9 +24,15 @@
             :icon-anchor="[42, 73]"
             icon-url="/map/SpotMarker.svg"
           />
-
         </l-marker>
       </l-map>
+
+      <h2>{{t({fr:"Lieux", en:"Spots"})}}</h2>
+
+      <ul v-for="evtLocation in eventLocationsForList" :key="evtLocation._id" >
+        <li><router-link :to="`/spot/${evtLocation.slug}`" >{{t(evtLocation.name)}}</router-link></li>
+      </ul>
+
     </div>
   </div>
 </template>
@@ -57,7 +63,7 @@ import { Translatable } from '@/mixins';
 
 import  { LatLng, latLng } from 'leaflet';
 import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet';
-
+import { currentLangStore, Lang } from '../services/i18n';
 
 
 @Component({
@@ -80,9 +86,16 @@ export default class Map extends mixins(Translatable) {
     return $config.store.config;
   }
 
-  get eventLocations(): CMS.EventLocation[]{
+  get eventLocationsForMarkers(): CMS.EventLocation[]{
     const result = $eventLocation.all().filter(evtLocation => !!evtLocation.coordinates);
-    console.log("locations", result);
+    return result;
+  }
+
+  get eventLocationsForList(): CMS.EventLocation[]{
+    const result = $eventLocation.all().sort((a, b) => {
+      return b.name[currentLangStore.lang].localeCompare(a.name[currentLangStore.lang])
+    });
+
     return result;
   }
 
@@ -98,7 +111,6 @@ export default class Map extends mixins(Translatable) {
   }
 
   zoomUpdate(zoom: number) {
-    console.log(zoom);
     this.currentZoom = zoom;
   }
 
@@ -107,7 +119,8 @@ export default class Map extends mixins(Translatable) {
   }
 
   markerClick(markerId){
-    console.log("click", markerId);
+    const eventLocation = $eventLocation.eventLocationWithId(markerId) as CMS.EventLocation;
+    this.$router.push({path: `/spot/${eventLocation.slug}`});
   }
 
   async onBack() {
