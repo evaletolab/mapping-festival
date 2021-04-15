@@ -24,10 +24,7 @@
     <!--------------------- Social links --------------------------->
     <div class="sociallinks">
       <p>
-        <span v-for="(menu,index) in cfg.getMenu('social')" :key="menu.link">
-          <a :href="menu.link" target="_new">{{t(menu.name)}}</a>
-           <span v-if="index != cfg.getMenu('social').length - 1"> — </span> 
-        </span>
+        <a v-for="(menu) in cfg.getMenu('social')" :key="menu.link" :href="menu.link" target="_new">{{t(menu.name)}}</a>           
       </p>
     </div>
     <!--------------------- Footer --------------------------->

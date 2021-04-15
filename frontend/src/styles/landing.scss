@@ -26,6 +26,32 @@
     }
   }
 
+  footer{
+    a {
+      margin-right: 10px;
+    }    
+    a:last-child {
+      margin-right: 0px;
+    }
+  }
+  .sociallinks {
+    a{
+      margin-bottom: 30px;
+    }
+    a::after{
+      content: " — ";
+      color: white;
+      text-decoration: none!important;
+      position: absolute;
+      margin-top: 5px;
+    }
+    a:last-child {
+      &::after {
+        content: "";
+      }
+    }
+  }
+
   button.lang {
     border: none;
     margin: 0 10px;
