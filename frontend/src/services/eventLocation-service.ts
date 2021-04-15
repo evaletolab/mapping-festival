@@ -4,6 +4,9 @@ import { CMS } from "@/models";
 
 class EventLocationService
 {
+    all(): CMS.EventLocation[]{
+        return $cms.eventLocations;
+    }
 
     eventLocationWithSlug(slug: string): CMS.EventLocation | null {
         return $cms.eventLocations.find(a => a.slug === slug) || null;

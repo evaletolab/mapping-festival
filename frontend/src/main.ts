@@ -18,6 +18,10 @@ import '@/main.scss'
 import "@/styles/dd_baseline_v04.css"; /* Typographic styles */
 import "@/styles/specific_v01.css";    /* Waiting page specific styles */
 
+// leaflet css
+import 'leaflet/dist/leaflet.css';
+
+
 import VuePlyr from 'vue-plyr';
 import 'vue-plyr/dist/vue-plyr.css';
 

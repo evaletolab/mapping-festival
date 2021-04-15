@@ -12,6 +12,7 @@ import EventList from '../views/EventList.vue'
 import Landing from '../views/Landing.vue'
 import Spot from '../views/Spot.vue'
 import NotFound from '../views/NotFound.vue'
+import Map from '../views/Map.vue';
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,11 @@ const routes: Array<RouteConfig> = [
     path: '/artists/:artist?',
     name: 'Artist',
     component: Artist
+  },
+  {
+    path: '/map',
+    name: 'Map',
+    component: Map
   },
   {
     path: '/spot/:spotslug?',

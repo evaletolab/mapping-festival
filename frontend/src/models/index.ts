@@ -1,5 +1,7 @@
 /* eslint-disable */
-// TODO: discuss i18n with client
+
+import { LatLng } from 'leaflet';
+
 export namespace CMS {
   
   export enum MimeType
@@ -94,7 +96,7 @@ export namespace CMS {
     postalcode: string,
     city: string,
     tag: string,
-    coordinates: [Lng, Lat], 
+    coordinates: LatLng, 
     content: {
       fr:string,
       en:string,

@@ -27,6 +27,8 @@ import { $config } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
+import { mixins } from 'vue-class-component';
+import { Translatable } from '@/mixins';
 
 
 @Component({
@@ -34,7 +36,7 @@ import Toolbar from '../components/Toolbar.vue';
     CMSIcons,Toolbar
   }
 })
-export default class Spot extends Vue {
+export default class Spot extends mixins(Translatable) {
   get config(){
     return $config.store.config;
   }
