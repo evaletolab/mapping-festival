@@ -14,7 +14,7 @@
 
 
     <div class="grid">
-      <div class="event" v-for="event in events" :key="event._id">
+      <div class="event" v-for="event in events" :key="event._id" @click="gotoEvent(event)">
         <div class="when">{{ getWhen(event).start |shortdate }} </div>
         <div class="title">{{ t(event.title) }} </div>
         
@@ -82,6 +82,10 @@ export default class EventList extends mixins(Translatable) {
 
   beforeRouteEnter(to: Route, from: Route, next: any) {
     next();
+  }
+
+  gotoEvent(event: CMS.Event) {
+    this.$router.push({ path: `/events/${event.slug}` });
   }
 
   async mounted(){
