@@ -24,6 +24,7 @@
     {"layout":"footer","name":{ "fr": "lieux", "en":"spots"},"link":"/spot","weight":0,"active":true},
     {"layout":"footer","name":{ "fr": "events", "en":"events"},"link":"/events","weight":0,"active":true},
     {"layout":"footer","name":{ "fr": "artistes", "en":"artists"},"link":"/artists","weight":0,"active":true},
+    {"layout":"footer","name":{ "fr": "workshop", "en":"workshop"},"link":"/events?selected=workshop","weight":0,"active":true},
 
     {"layout":"social","name":{ "fr": "fbook", "en":"fbook"},"link":"https://www.facebook.com/mappingfest","weight":0,"active":true},
     {"layout":"social","name":{ "fr": "insta", "en":"insta"},"link":"https://www.instagram.com/mappingfestival","weight":0,"active":true},

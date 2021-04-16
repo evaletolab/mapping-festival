@@ -4,30 +4,32 @@
     <Toolbar />
     <section class="primary">
       <p>
-        <a v-for="(menu) in getMenu('primary')" :class="{'selected':menu.selected}" :key="menu.link" :href="menu.link" target="_new">{{t(menu.name)}}</a>
+        <router-link v-for="(menu) in getMenu('primary')" :class="{'selected':menu.selected}" :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
       </p>
     </section>
 
     <section class="secondary">
-        <a v-for="(menu) in getMenu('secondary')" :class="{'selected':menu.selected}" :key="menu.link" :href="menu.link" target="_new">{{t(menu.name)}}</a>
+        <router-link v-for="(menu) in getMenu('secondary')" :class="{'selected':menu.selected}" :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
     </section>
 
 
     <div class="grid">
       <div class="event" v-for="event in events" :key="event._id">
-        {{ t(event.title) }} 
+        <div class="when">{{ getWhen(event).start |shortdate }} </div>
+        <div class="title">{{ t(event.title) }} </div>
+        
       </div>
     </div>
 
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import "../styles/event-list.scss";
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { mixins } from 'vue-class-component';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
@@ -46,14 +48,14 @@ import Toolbar from '../components/Toolbar.vue';
 export default class EventList extends mixins(Translatable) {
   //
   // "emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
-  private _selected;
+  private selected = '';
 
   get events() {
     return $cms.cms.events.filter(event => {
-      if(!this._selected || this._selected == ''){
+      if(!this.selected || this.selected == ''){
         return event;
       }
-      return event.type == this._selected;
+      return event.type == this.selected;
     })
   }
 
@@ -61,15 +63,16 @@ export default class EventList extends mixins(Translatable) {
     return $config.store.config;
   }
 
+  getWhen(event: CMS.Event) {
+    return event.when[0];
+  }
+
   getMenu(layout) {
-    const menu = $config.getMenu(layout);
+    const menu = [... $config.getMenu(layout)];
     const path = this.$router.currentRoute.fullPath;
     const itemIdx = menu.findIndex(item => item.link.indexOf(path)>-1);
-    menu[itemIdx].selected = true;
-    // const item = menu[itemIdx];
-    // menu.splice(itemIdx)
-    console.log('--DBG',this.$router.currentRoute.fullPath,menu,itemIdx)
-
+    menu.forEach(item => item.selected = false);
+    menu[(itemIdx == -1)? 0:itemIdx].selected = true;
     return menu;
   }
 
@@ -82,7 +85,7 @@ export default class EventList extends mixins(Translatable) {
   }
 
   async mounted(){
-    this._selected = this.$route.query.selected;
+    this.selected = this.$route.query.selected as string;
   }
 
   async onBack() {
@@ -96,5 +99,11 @@ export default class EventList extends mixins(Translatable) {
   async onSave() {
     //
   }
+
+  @Watch('$route', { immediate: true, deep: true })
+  async onRouteUpdate(to) {
+    this.selected = this.$route.query.selected as string;
+  }
+
 }
 </script>

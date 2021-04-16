@@ -26,13 +26,18 @@ import VuePlyr from 'vue-plyr';
 import 'vue-plyr/dist/vue-plyr.css';
 
 import { $config, $user, $cms } from '@/services';
+
+//
+// filters
+Vue.filter('shortdate', function(value) {
+  const d = new Date(value);
+  return d.getDate()+'.'+d.getMonth()+'.'+d.getFullYear();
+});
+
 const load = [$config.get(), $user.get()];
 
 Promise.all(load)
-.then(() => {
-  // must be loaded after config
-  return $cms.loadAll();
-})
+.then(() => $cms.loadAll())
 .then(() => {
   Vue.use(VuePlyr);
 
