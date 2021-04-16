@@ -240,7 +240,7 @@ body{
   float:left;
   z-index: -1;
 
-  margin: 0  var(--gutter-width) calc(var(--line-height) - var(--image-to-x) - 1px) 0;
+  margin: 0 var(--gutter-width) calc(var(--line-height) - var(--image-to-x)) 0;
   transform: translateY(var(--image-to-x));
 
   max-width: 100%;
@@ -490,5 +490,30 @@ h5{  /*  notes et addendum */
 
 
 
+  /* ************************************************ */
+  /* *************  Container blocs *******************/
+  /* ************************************************ */
 
+  .info-container {
+  background-color: rgb(125, 147, 156);
+  position: relative;
+  display: inline-block;
 
+  margin: 0 var(--gutter-width) calc(var(--line-height) - var(--image-to-x)) 0;
+  transform: translateY(var(--image-to-x));
+  }
+
+  .info-container > img {
+  position: absolute;
+  display:block;
+  margin-top:0;
+  margin-left:0;
+  object-fit: cover;
+  overflow: hidden;
+  z-index: -1;
+  }
+
+  .info-container > p {
+    margin: 0;
+    padding:calc(var(--gutter-width)*.5);
+    }
