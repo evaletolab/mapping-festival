@@ -1,5 +1,9 @@
   //
   // global tools
+  .body-scroll {
+    overflow-y: auto!important;
+    position: relative;
+  }
 
   .img-fullwidth{
     width: 100vw;

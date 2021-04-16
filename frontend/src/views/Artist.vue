@@ -106,7 +106,13 @@ export default class Artist extends mixins(Translatable) {
     }
   }
 
+  beforeDestroy() {
+    document.body.classList.remove('body-scroll');
+  }
+
+
   mounted(){
+    document.body.classList.add('body-scroll');
   }
 
   get artist(): CMS.Artist {

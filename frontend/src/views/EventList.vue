@@ -76,6 +76,7 @@ export default class EventList extends mixins(Translatable) {
     return menu;
   }
 
+
   themeTertiary(theme) {
     return this.config.themes[theme].tertiary;
   }
@@ -84,12 +85,17 @@ export default class EventList extends mixins(Translatable) {
     next();
   }
 
+  beforeDestroy() {
+    document.body.classList.remove('body-scroll');
+  }
+
   gotoEvent(event: CMS.Event) {
     this.$router.push({ path: `/events/${event.slug}` });
   }
 
   async mounted(){
     this.selected = this.$route.query.selected as string;
+    document.body.classList.add('body-scroll');
   }
 
   async onBack() {
