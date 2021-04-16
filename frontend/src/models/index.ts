@@ -2,6 +2,9 @@
 
 import { LatLng } from 'leaflet';
 
+import { t } from '../services/i18n';
+import { $config } from '../services/config-service';
+
 export namespace CMS {
   
   export enum MimeType
@@ -151,22 +154,16 @@ export namespace CMS {
       en:string
     },  
     notes:{
-      fr:string,
-      en:string
+      fr: string,
+      en: string
     },  
-    year:number,
-    when:[{
-      start:Date,
-      end:Date,
-      duration: number,
-      cancel: boolean,
-      eventLocation: EventLocation | null,
-    }],
+    year: number,
+    when: When[],
     price: number,
     limit: number,
     artists:[{
-      lastname:string,
-      slug:string,
+      lastname: string,
+      slug: string,
       _id: string
     }],
     localMedias: LocalMedia[],
@@ -190,6 +187,65 @@ export namespace CMS {
   //   time: Date|number;
   //   published: boolean;
   // }
-  
+
+  export class When
+  {
+    constructor(
+      private _id:number,
+      private _start: Date, 
+      private _end: Date, 
+      private _cancel: boolean, 
+      private _eventLocation: EventLocation | null) 
+    {}
+
+    public get id(): number {
+      return this._id;
+    }
+
+    public get start(): Date{
+      return this._start;
+    }
+
+    public get end(): Date{
+      return this._end;
+    }
+
+    public get eventLocation(): CMS.EventLocation | null {
+      return this._eventLocation; 
+    }
+
+    // returns duration in minutes
+    public get duration(): number{
+      const duration = (this.end.getTime() - this.start.getTime()) / 1000 / 60;
+      return duration;
+    }
+
+    public get dayOfWeek(): string{
+      const dayIndex = this.start.getDay();
+      return t($config.store.config.time.days[dayIndex]);
+    }
+
+    public get date(): string {
+      return this.start.getDate().toString();
+    }
+    
+    public get month(): string{
+      const monthIndex = this.start.getMonth();
+      return t($config.store.config.time.months[monthIndex]);
+    }
+
+    public get startTime(): string{
+      const hours = this.start.getHours().toString().padStart(2, "0");
+      const minutes = this.start.getMinutes().toString().padStart(2, "0");
+      return `${hours}:${minutes}`;
+    }
+
+    public get endTime(): string{
+      const hours = this.end.getHours().toString().padStart(2, "0");
+      const minutes = this.end.getMinutes().toString().padStart(2, "0");
+      return `${hours}:${minutes}`;
+
+    }
+  }
 }
 

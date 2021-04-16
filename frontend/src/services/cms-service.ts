@@ -218,11 +218,10 @@ class CMSService {
     this.formatExternalMedias(event);
 
     // build **when** array
-    event.when = event.when.map (w => {
+    event.when = event.when.map ((w, index) => {
       const v = w.value;
       const start = new Date(`${v.startDate} ${v.startHour}`);
       const end = new Date(`${v.endDate} ${v.endHour}`);
-      const duration = (end.getTime() - start.getTime()) / 1000 / 60;
       const cancel = v.cancel;
       
       // extract eventLocation if present
@@ -232,8 +231,11 @@ class CMSService {
         eventLocation = this.eventLocations.find(e => e._id === geoId) as CMS.EventLocation;
       }
 
-      return { start, end, duration, cancel, eventLocation };
+      const id = index;
+      return new CMS.When(id, start, end, cancel, eventLocation);
     });
+
+    event.when.sort((a, b) => a.start - b.start);
 
     event.medias = null; // TODO handle this
 

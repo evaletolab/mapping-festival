@@ -51,5 +51,30 @@
     "baseUrl": "https://iziapi.ch/mappingDev/index",
     "uploadsPath": "/storage/uploads",
     "authToken": "690a8296407bdd55ae785e519d02fe"
+  },
+  "time":{
+    "days":[
+      {"fr": "dimanche", "en": "sunday"}, 
+      {"fr": "lundi", "en": "monday"}, 
+      {"fr": "mardi", "en": "tuesday"}, 
+      {"fr": "mercredi", "en": "wednesday"}, 
+      {"fr": "jeudi", "en": "thursday"}, 
+      {"fr": "vendredi", "en": "friday"}, 
+      {"fr": "samedi", "en": "saturday"} 
+    ], 
+    "months": [
+      {"fr": "janvier", "en": "january"}, 
+      {"fr": "février", "en": "february"}, 
+      {"fr": "mars", "en": "march"}, 
+      {"fr": "avril", "en": "april"}, 
+      {"fr": "mai", "en": "may"}, 
+      {"fr": "juin", "en": "june"}, 
+      {"fr": "juillet", "en": "july"}, 
+      {"fr": "août", "en": "august"}, 
+      {"fr": "septembre", "en": "september"}, 
+      {"fr": "octobre", "en": "october"}, 
+      {"fr": "novembre", "en": "november"}, 
+      {"fr": "décembre", "en": "december"} 
+    ]
   }
 }

@@ -66,8 +66,8 @@
 
 body {
     display: block;
-    position: fixed;
-    overflow: hidden; 
+    /* position: fixed; */
+    /* overflow: hidden;  */
 
 
     /* -webkit-animation: fadein 2s; 
