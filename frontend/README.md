@@ -1,4 +1,4 @@
-# CMS-frontend
+# Mapping-festival-21-frontend
 
 ## Project setup
 ```
@@ -14,6 +14,13 @@ npm run serve
 ```
 npm run build
 ```
+
+### chunk size reporting
+```
+npm run build -- --report
+```
+
+This will produce file ./dist/report.html
 
 ### Run your unit tests
 ```
