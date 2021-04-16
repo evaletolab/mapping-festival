@@ -28,7 +28,7 @@ export namespace CMS {
   }
 
   
-  export type mediaPlatformType = ("youtube"|"video"|"img"|"audio"|"soundcloud"|"vimeo");
+  export type mediaPlatformType = ("youtube"|"video"|"img"|"audio"|"soundCloud"|"vimeo");
   export interface ExternalMedia {
     name: string,
     platform: mediaPlatformType,
