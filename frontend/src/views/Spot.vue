@@ -96,6 +96,14 @@ export default class Spot extends mixins(Translatable) {
     console.log("events", result);
     return result;
   }
+  
+  mounted(){
+    document.body.classList.add('body-scroll');
+  }
+
+  beforeDestroy() {
+    document.body.classList.remove('body-scroll');
+  }
 
   themeTertiary(theme) {
     return this.config.themes[theme].tertiary;

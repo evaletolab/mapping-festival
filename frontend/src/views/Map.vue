@@ -108,6 +108,11 @@ export default class Map extends mixins(Translatable) {
   }
 
   mounted(){
+    document.body.classList.add('body-scroll');
+  }
+
+  beforeDestroy() {
+    document.body.classList.remove('body-scroll');
   }
 
   zoomUpdate(zoom: number) {

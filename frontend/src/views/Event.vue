@@ -94,6 +94,13 @@ export default class Event extends mixins(Translatable) {
     return $config.store.config;
   }
 
+  mounted(){
+    document.body.classList.add('body-scroll');
+  }
+
+  beforeDestroy() {
+    document.body.classList.remove('body-scroll');
+  }
 
   themeTertiary(theme) {
     return this.config.themes[theme].tertiary;
