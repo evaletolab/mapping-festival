@@ -14,7 +14,7 @@
 
 
     <div class="grid">
-      <div class="event" v-for="event in events" :key="event._id" @click="gotoEvent(event)">
+      <div class="event" v-for="event in events" :key="event._id" @click="onEvent(event)">
         <div class="when">{{ getWhen(event).start |shortdate }} </div>
         <div class="title">{{ t(event.title) }} </div>
         
@@ -89,9 +89,7 @@ export default class EventList extends mixins(Translatable) {
     document.body.classList.remove('body-scroll');
   }
 
-  gotoEvent(event: CMS.Event) {
-    this.$router.push({ path: `/events/${event.slug}` });
-  }
+
 
   async mounted(){
     this.selected = this.$route.query.selected as string;
@@ -99,7 +97,12 @@ export default class EventList extends mixins(Translatable) {
   }
 
   async onBack() {
-    this.$router.go(-1);
+    // this.$router.go(-1);
+    this.$router.push({ path: '/' });
+  }
+
+  async onEvent(event: CMS.Event) {
+    this.$router.push({ path: `/events/${event.slug}` });
   }
 
   async onLoad(slug: string) {

@@ -43,6 +43,11 @@
   flex-flow: row wrap;
   z-index: 2;    
   position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+
+
   width: 100vw;
   .toolbar-section-start,
   .toolbar-section-end
@@ -104,6 +109,8 @@
     border: none;
     cursor: pointer;
     outline: 0;
+    color: var(--font-color);
+
     svg{
       width: 34px;
     }
