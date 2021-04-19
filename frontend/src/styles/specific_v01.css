@@ -84,7 +84,7 @@ body {
 
 canvas {
 
-    z-index: 0;
+    z-index: -1;
 
     mix-blend-mode: overlay;
     opacity: 1;
