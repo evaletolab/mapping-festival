@@ -182,6 +182,15 @@ class CMSService {
       const platform = socialMedia.value.platform;
       const url = socialMedia.value.url;
       return { platform, url };
+    }).sort((a, b) => {
+      // sort social media according to hypeness
+      const sortOrder = ["instagram", "facebook", "twitter", "linkedin"];
+      const indexA = sortOrder.indexOf(a.platform);
+      const indexB = sortOrder.indexOf(b.platform);
+      if(indexA < 0 || indexB < 0){
+        return 0;
+      }
+      return indexA - indexB; 
     });
   }
   

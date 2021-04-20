@@ -9,7 +9,7 @@
     <div style="height:100px" />
     <ul>
       <li>{{artist.firstname}} {{artist.lastname}} <span v-if="artist.artistName">aka {{artist.artistName}}</span> </li>
-      <li><a href="artist.artistWebsite">{{artist.artistWebsite}}</a></li>
+      <li><a :href="artist.artistWebsite" target="_blank" rel="noopener noreferrer">{{artist.artistWebsite}}</a></li>
     </ul>
 
     <h4>Bio</h4>
@@ -41,6 +41,11 @@
     <div v-for="image in externalImages" :key="image._id">
       <img :src="image.url" /> 
     </div>
+
+    <h5>social media</h5>
+    <div class="social-media" v-for="media in socialMedia" :key="media.platform">
+      <SocialIcons :name="media.platform" :url="media.url"/> 
+    </div>
   </div>
 </template>
 
@@ -58,6 +63,10 @@
   img{
     width:100%;
   }
+  .social-media{
+    display: inline-block;
+    margin-right: 20px;
+  }
 </style>
 
 <script lang="ts">
@@ -70,6 +79,7 @@ import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import VideoPlayer from '../components/VideoPlayer.vue';
 import SoundCloud from 'vue-soundcloud-player';
+import SocialIcons from '../components/SocialIcons.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -77,7 +87,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, VideoPlayer, SoundCloud,
+    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SocialIcons,
   }
 })
 export default class Artist extends mixins(Translatable) {
@@ -140,6 +150,11 @@ export default class Artist extends mixins(Translatable) {
 
   get externalImages(): CMS.ExternalMedia[]{
     const result = this.artist.externalMedias.filter(m => m.platform === "img");
+    return result;
+  }
+
+  get socialMedia(): CMS.SocialMedia[]{
+    const result = this.artist.socialMedias;
     return result;
   }
 
