@@ -72,10 +72,11 @@ class CMSService {
     }
 
     const baseUrl = $config.store.config.cms.baseUrl;
+    console.log("base", baseUrl);
     
     // load eventLocations
     {
-      const eventsUrl = `${baseUrl}/api/collections/get/localisations`;
+      const eventsUrl = `${baseUrl}/collections/get/localisations`;
       const eventLocations = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["name", "content"];
       this.cms.eventLocations = eventLocations.entries
@@ -87,7 +88,7 @@ class CMSService {
     
     // load artists
     {
-      const eventsUrl = `${baseUrl}/api/collections/get/artists`;
+      const eventsUrl = `${baseUrl}/collections/get/artists`;
       const artists = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["content"];
       this.cms.artists = artists.entries
@@ -99,7 +100,7 @@ class CMSService {
 
     // load events (must be loaded last)
     {
-      const eventsUrl = `${baseUrl}/api/collections/get/events`;
+      const eventsUrl = `${baseUrl}/collections/get/events`;
       const events = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["title", "header", "content", "hardware", "notes"]
       this.cms.events = events.entries
