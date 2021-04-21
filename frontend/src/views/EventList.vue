@@ -15,7 +15,7 @@
 
     <div class="grid">
       <div class="event" v-for="event in events" :key="event._id" @click="onEvent(event)">
-        <div class="when">{{ getWhen(event).start |shortdate }} </div>
+        <div class="when" v-if="event.when.length">{{ getWhen(event).start |shortdate }} </div>
         <div class="title">{{ t(event.title) }} </div>
         
       </div>
@@ -64,6 +64,7 @@ export default class EventList extends mixins(Translatable) {
   }
 
   getWhen(event: CMS.Event) {
+    console.log('---- DBG',event.when)
     return event.when[0];
   }
 

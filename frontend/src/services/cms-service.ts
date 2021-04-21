@@ -126,7 +126,7 @@ class CMSService {
       return;
     }
 
-    obj.localMedias = obj.localMedias.map(localMedia => {
+    obj.localMedias = obj.localMedias.filter(media => media.value[""]).map(localMedia => {
       const lm = localMedia.value;
       
       let result: any = {
@@ -227,7 +227,7 @@ class CMSService {
     this.formatExternalMedias(event);
 
     // build **when** array
-    event.when = event.when.map ((w, index) => {
+    event.when = (event.when||[]).map ((w, index) => {
       const v = w.value;
       const start = new Date(`${v.startDate} ${v.startHour}`);
       const end = new Date(`${v.endDate} ${v.endHour}`);
@@ -248,7 +248,7 @@ class CMSService {
 
     event.medias = null; // TODO handle this
 
-    event.artists = event.artists.map(a =>{
+    event.artists = (event.artists||[]).map(a =>{
       const artist = this.cms.artists.find(artst => artst._id === a._id);
       const lastname = artist?.lastname || "";
       const slug = artist?.slug || "";
