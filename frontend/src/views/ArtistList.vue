@@ -57,7 +57,13 @@ export default class ArtistList extends Vue {
   }
 
   get sortedArtists(): CMS.Artist[] {
-    return $artist.all.sort((a, b) => a.lastname.localeCompare(b.lastname));
+    const result = $artist.all.sort((a, b) =>{
+      const aName = a.lastname || a.firstname || "";
+      const bName = b.lastname || b.firstname || "";
+      return aName.localeCompare(bName);
+    });
+    console.log("sorted artists", result);
+    return result;
   }
 
   themeTertiary(theme) {
@@ -69,6 +75,11 @@ export default class ArtistList extends Vue {
   }
 
   mounted(){
+    document.body.classList.add('body-scroll');
+  }
+
+  beforeDestroy() {
+    document.body.classList.remove('body-scroll');
   }
 
   async onBack() {

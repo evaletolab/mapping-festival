@@ -98,8 +98,10 @@ export namespace CMS {
       fr:string,
       en:string
     }
+    cover: LocalMedia | null,
     active:boolean,
     street: string,
+    website: string,
     postalcode: string,
     city: string,
     tag: string,
@@ -114,6 +116,7 @@ export namespace CMS {
     _id: string,
     slug:string,
     active: boolean,
+    cover: LocalMedia | null,
     firstname:string,
     lastname:string,
     artistName:string,
@@ -135,6 +138,7 @@ export namespace CMS {
     _id: string,
     slug: string,
     active: boolean,
+    cover: LocalMedia | null,
     type: eventType,
     subType: eventSubType,
     title:{

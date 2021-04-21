@@ -260,6 +260,7 @@ class CMSService {
     });
 
     event.created = event._created;
+    event.cover = event.cover || null;
 
     event.subType = event.subType || null;
 
@@ -279,7 +280,9 @@ class CMSService {
     eventLocation.tag = geo.tag || "";
     eventLocation.coordinates = geo.location ? latLng(geo.location.lat, geo.location.lng) : null;
 
-
+    eventLocation.cover = eventLocation.cover || null;
+    eventLocation.website = eventLocation.website || null;
+    
     delete eventLocation.geo;
     eventLocation = this.addMeta(eventLocation);
 
@@ -298,6 +301,7 @@ class CMSService {
     artist.firstname = artist.firstname || "";
     artist.lastname = artist.lastname || "";
     artist.artistname = artist.artistname || null;
+    artist.cover = artist.cover || null;
     return artist as CMS.Artist;
   }
 }

@@ -96,7 +96,6 @@ export default class Artist extends mixins(Translatable) {
     return $config.store.config;
   }
 
-
   themeTertiary(theme) {
     return this.config.themes[theme].tertiary;
   }
