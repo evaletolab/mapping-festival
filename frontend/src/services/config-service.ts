@@ -94,7 +94,6 @@ class ConfigService {
     });
   }
 
-
   storageGet(key: string) {
     try {
       const item = localStorage.getItem(key);

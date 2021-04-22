@@ -12,6 +12,7 @@ import EventList from '../views/EventList.vue'
 import Landing from '../views/Landing.vue'
 import Spot from '../views/Spot.vue'
 import NotFound from '../views/NotFound.vue'
+import Diagnostics from '../views/Diagnostics.vue'
 import Map from '../views/Map.vue';
 
 Vue.use(VueRouter)
@@ -61,6 +62,11 @@ const routes: Array<RouteConfig> = [
     //   name: 'Content',
     //   components: { l2 : Content}  
     // }]
+  },
+  {
+    path: '/__diagnostics',
+    name: 'Diagnostics',
+    component: Diagnostics,
   },
   {
     path: '/404',

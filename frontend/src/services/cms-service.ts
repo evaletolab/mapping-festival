@@ -3,6 +3,7 @@ import { Vue } from 'vue-property-decorator';
 import { $config } from "./config-service";
 import axios from 'axios';
 import { latLng } from 'leaflet';
+import { t } from './i18n';
 
 
 function getAxiosOptions(){
@@ -35,8 +36,14 @@ class CMSService {
     eventLocations: [],
   };
 
+  _diagnostics: string[] = [];
+
   constructor() {
     this.cms = Vue.observable(this.cms);
+  }
+
+  public get diagnostics(): string[]{
+    return this._diagnostics;
   }
 
   public get events(): CMS.Event[]{
@@ -51,6 +58,11 @@ class CMSService {
     return this.cms.artists;
   }
 
+  private _logError(error){
+    console.warn(error);
+    this._diagnostics.push(error);
+  }
+
   public async loadAll(force?: boolean){
     if(!force && this.cms.events.length) {
       return;
@@ -59,12 +71,15 @@ class CMSService {
     const config = Object.assign({}, getAxiosOptions()) as any;
 
     const fixTranslations = (entry, keys) => {
+      if(!entry) return;
+
       for(const key of keys){
         if(key in entry){
           entry[key] = this.extractTranslation(entry, key);
           delete entry[`${key}_fr`];
         }else{
-          console.warn("object", entry, "does not contain key", key);
+          const errorMsg = `object ${entry._id} does not contain key ${key}`; 
+          this._logError(errorMsg);
         }
       }
 
@@ -72,7 +87,6 @@ class CMSService {
     }
 
     const baseUrl = $config.store.config.cms.baseUrl;
-    console.log("base", baseUrl);
     
     // load eventLocations
     {
@@ -106,6 +120,7 @@ class CMSService {
       this.cms.events = events.entries
         .map(entry => fixTranslations(entry, localizedKeys))
         .map(this.formatEvent.bind(this))
+        .filter(item => !!item.when) // events with no when are invalid
         .filter(item => item.active);
       console.log("events", this.cms.events);
     }
@@ -227,6 +242,13 @@ class CMSService {
     this.formatLocalMedias(event);
     this.formatExternalMedias(event);
 
+
+    // if no whens we are invalid
+    if(!event.when || event.when.length == 0){
+      const errorMsg = `event with title <strong>${t(event.title)}</strong> is invalid (has zero whens);`
+      this._logError(errorMsg);
+    }
+
     // build **when** array
     event.when = (event.when||[]).map ((w, index) => {
       const v = w.value;
@@ -280,6 +302,13 @@ class CMSService {
     eventLocation.city = geo.city || "";
     eventLocation.tag = geo.tag || "";
     eventLocation.coordinates = geo.location ? latLng(geo.location.lat, geo.location.lng) : null;
+
+    if(!eventLocation.street){
+      this._logError(`eventlocation with name ${t(eventLocation.name)} has no street address`);
+    }
+    if(!eventLocation.coordinates){
+      this._logError(`eventlocation with name ${t(eventLocation.name)} has no coordinates`);
+    }
 
     eventLocation.cover = eventLocation.cover || null;
     eventLocation.website = eventLocation.website || null;
