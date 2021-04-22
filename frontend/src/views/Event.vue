@@ -7,6 +7,7 @@
     <Toolbar/>
 
     <div style="height: 80px" />
+    <PrimaryMenu />
 
     <h1>{{t(event.title)}} ({{event.type}} / {{event.subType}})</h1>
 
@@ -78,6 +79,8 @@ import { $config, $event } from '../services';
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import VideoPlayer from '../components/VideoPlayer.vue';
+import PrimaryMenu from '../components/PrimaryMenu.vue';
+
 import SoundCloud from 'vue-soundcloud-player';
 
 import { mixins } from 'vue-class-component';
@@ -86,7 +89,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, VideoPlayer, SoundCloud
+    CMSIcons, Toolbar, PrimaryMenu, VideoPlayer, SoundCloud
   }
 })
 export default class Event extends mixins(Translatable) {

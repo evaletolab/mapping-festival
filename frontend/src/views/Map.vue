@@ -1,6 +1,8 @@
 <template>
   <div class="map">
     <Toolbar />
+    <div style="height:80px" />
+    <PrimaryMenu />
     <div class="map-container">
 
       <l-map ref="myMap"
@@ -58,6 +60,7 @@ import { $config, $eventLocation } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
+import PrimaryMenu from '../components/PrimaryMenu.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
@@ -68,7 +71,7 @@ import { currentLangStore, Lang } from '../services/i18n';
 
 @Component({
   components: {
-    CMSIcons,Toolbar, LMap, LTileLayer, LMarker, LIcon,
+    CMSIcons,Toolbar, PrimaryMenu, LMap, LTileLayer, LMarker, LIcon,
   }
 })
 export default class Map extends mixins(Translatable) {
@@ -93,7 +96,7 @@ export default class Map extends mixins(Translatable) {
 
   get eventLocationsForList(): CMS.EventLocation[]{
     const result = $eventLocation.all().sort((a, b) => {
-      return b.name[currentLangStore.lang].localeCompare(a.name[currentLangStore.lang])
+      return a.name[currentLangStore.lang].localeCompare(b.name[currentLangStore.lang])
     });
 
     return result;

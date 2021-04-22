@@ -2,6 +2,7 @@
   <div class="spot spiegel margin-top1">
     <Toolbar />
     <div style="height:80px" />
+    <PrimaryMenu />
     <h1>{{t(eventLocation.name)}}</h1>
     <p v-html="t(eventLocation.content)"></p>
 
@@ -55,6 +56,7 @@ import { $config, $eventLocation } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
+import PrimaryMenu from '../components/PrimaryMenu.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
@@ -63,7 +65,7 @@ import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet';
 
 @Component({
   components: {
-    CMSIcons,Toolbar, LMap, LTileLayer, LMarker, LIcon,
+    CMSIcons,Toolbar, PrimaryMenu, LMap, LTileLayer, LMarker, LIcon,
   }
 })
 export default class Spot extends mixins(Translatable) {

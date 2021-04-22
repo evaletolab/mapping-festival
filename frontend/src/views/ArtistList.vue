@@ -7,6 +7,7 @@
     <Toolbar />
     
     <div style="height:80px" />
+    <PrimaryMenu />
 
     <ul>
       <li v-for="artist in sortedArtists" :key="artist._id">
@@ -44,11 +45,12 @@ import { $config, $artist } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
+import PrimaryMenu from '../components/PrimaryMenu.vue';
 
 
 @Component({
   components: {
-    CMSIcons, Toolbar, 
+    CMSIcons, Toolbar, PrimaryMenu,
   }
 })
 export default class ArtistList extends Vue {

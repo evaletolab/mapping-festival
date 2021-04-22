@@ -7,6 +7,9 @@
     <Toolbar />
 
     <div style="height:100px" />
+
+    <PrimaryMenu />
+
     <ul>
       <li>{{artist.firstname}} {{artist.lastname}} <span v-if="artist.artistName">aka {{artist.artistName}}</span> </li>
       <li><a :href="artist.artistWebsite" target="_blank" rel="noopener noreferrer">{{artist.artistWebsite}}</a></li>
@@ -77,6 +80,7 @@ import { $config, $artist } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
+import PrimaryMenu from '../components/PrimaryMenu.vue';
 import VideoPlayer from '../components/VideoPlayer.vue';
 import SoundCloud from 'vue-soundcloud-player';
 import SocialIcons from '../components/SocialIcons.vue';
@@ -87,7 +91,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SocialIcons,
+    CMSIcons, Toolbar, PrimaryMenu, VideoPlayer, SoundCloud, SocialIcons,
   }
 })
 export default class Artist extends mixins(Translatable) {
