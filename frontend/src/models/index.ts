@@ -178,11 +178,11 @@ export namespace CMS {
     // creator:string,    
   }
 
-  export interface Caldendar {
+  export interface Calendar {
     day: string;
     month: string;
     event: Event[];
-    _id: string;
+    _id: number; // copied from When id
   }
 
   export type Content = (Artist) ;

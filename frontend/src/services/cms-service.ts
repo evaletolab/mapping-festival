@@ -60,7 +60,7 @@ class CMSService {
     return this.cms.artists;
   }
 
-  public getCalendarFrom(events?: CMS.Event[]): CMS.Caldendar[] {
+  public getCalendarFrom(events?: CMS.Event[]): CMS.Calendar[] {
     const calendar = {};
     (events||this.events).forEach(event =>{      
       const times = (event.when||[]).slice();
@@ -86,7 +86,7 @@ class CMSService {
       calendar[key].events = calendar[key].events.sort((a,b)=>{
         return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
       });
-      return calendar[key] as CMS.Caldendar;
+      return calendar[key] as CMS.Calendar;
     })
   }
 
@@ -312,6 +312,20 @@ class CMSService {
     // build **when** array
     event.when = (event.when||[]).map ((w, index) => {
       const v = w.value;
+      
+      // handle errors
+      const mustBeSetProperties = ["startDate", "startHour", "endDate", "endHour"]; 
+      let errors = "";
+      for (let prop of mustBeSetProperties){
+        if(!v[prop]){
+          errors += `| ${prop} is missing |`;
+        }
+      }
+      if(errors){
+        this._logError(`invalid When for event with title ${t(event.title)} -> ${errors}`);
+      }
+      
+
       const start = new Date(`${v.startDate} ${v.startHour}`);
       const end = new Date(`${v.endDate} ${v.endHour}`);
       const cancel = v.cancel;
