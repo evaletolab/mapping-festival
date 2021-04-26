@@ -13,10 +13,11 @@
           :class="{'selected':menu.selected}" 
           :key="index"
           @click="onEventCategory(menu.name)" >{{(menu.name)}}</a>
+        <a class="today" @click="onToday">today</a>          
     </section>
 
 
-    <div class="grid" v-for="elem in calendar" :key="elem._id" :id="elem.selector">
+    <div class="grid" v-for="elem in calendar" :key="elem._id" :id="elem._id">
       <h1>{{elem.date}}.{{elem.month}}</h1>
       <div class="event" 
            :style="{ backgroundImage: 'url(' + (event.cover || defaultCover) + ')' }"
@@ -158,6 +159,17 @@ export default class EventList extends mixins(Translatable) {
 
   async onSave() {
     //
+  }
+
+  async onToday($event) {
+    $event.stopPropagation();
+    const dest = this.calendar[3];
+    const element = document.getElementById(dest._id);
+    if(!element) {
+      return;
+    }
+    element.scrollIntoView({ behavior: 'smooth' });
+
   }
 
   @Watch('$route', { immediate: true, deep: true })
