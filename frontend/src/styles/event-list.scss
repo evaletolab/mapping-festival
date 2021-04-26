@@ -94,9 +94,19 @@
       padding: 4px;
       min-height: 140px;
       max-width: 130px;
+      overflow: hidden;
       @media (max-width:475px) {
         flex: 1 0 calc( 50% - 16px );
         max-width: calc( 50% - 16px );
+      }
+
+      .title {
+        color: deeppink;
+        font-weight: 400;
+      }
+      .type {
+        color: blue;
+        font-weight: 200;
       }
     }
   }

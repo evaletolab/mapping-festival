@@ -18,9 +18,14 @@
 
     <div class="grid" v-for="elem in calendar" :key="elem._id" :id="elem.selector">
       <h1>{{elem.date}}.{{elem.month}}</h1>
-      <div class="event" v-for="event in elem.events" :key="getRandomId(event)" @click="onEvent(event)">
+      <div class="event" 
+           :style="{ backgroundImage: 'url(' + (event.cover || defaultCover) + ')' }"
+           v-for="event in elem.events" 
+           :key="getRandomId(event)" 
+           @click="onEvent(event)">
         <div class="when">{{ event.when[0].startTime }} </div>
         <div class="title">{{ t(event.title) }} </div>      
+        <div class="type">{{ (event.type) }} </div>      
       </div>
     </div>
 
@@ -53,6 +58,8 @@ export default class EventList extends mixins(Translatable) {
   // "emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
   private selected = '';
   private cache = {};
+
+  defaultCover = "https://via.placeholder.com/150";
 
   get events() {
     if(this.cache['events_'+this.selected]){
