@@ -60,12 +60,34 @@ class CMSService {
     return this.cms.artists;
   }
 
-  public getCalendar(): CMS.Caldendar[] {
-    const events = [] as CMS.Caldendar[];
-    this.events.forEach(event =>{
-      (event.when||[]).forEach(when => events.push({ when, event }))
+  public getCalendarFrom(events?: CMS.Event[]): CMS.Caldendar[] {
+    const calendar = {};
+    (events||this.events).forEach(event =>{      
+      const times = (event.when||[]).slice();
+      times.forEach(when => {
+        const date = when.date;
+        const month = when.month;
+        const key = date+'.'+month;
+        const _id = when._id;
+        const time = when.startTime;
+        const ms = when._id;
+        const selector = date + '.' + month;
+        if(!calendar[key]) {
+          calendar[key] = {_id,selector,time,date,month,events:[]};          
+        }
+        //
+        // only one time per event
+        event.when = [when];
+        calendar[key].events.push(event);
+      });        
     })
-    return events;
+    const keys = Object.keys(calendar);
+    return keys.map(key => {
+      calendar[key].events = calendar[key].events.sort((a,b)=>{
+        return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
+      });
+      return calendar[key] as CMS.Caldendar;
+    })
   }
 
   private _logError(error){
@@ -302,7 +324,10 @@ class CMSService {
       }
 
       const id = index;
-      return new CMS.When(id, start, end, cancel, eventLocation);
+      if(isNaN(start.getTime())) {
+        console.log('---FIXME invalid date',event,w)
+      }
+      return new CMS.When(start, end, cancel, eventLocation);
     });
 
     event.when.sort((a, b) => a.start - b.start);

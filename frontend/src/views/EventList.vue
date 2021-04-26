@@ -9,15 +9,18 @@
     </section>
 
     <section class="secondary">
-        <router-link v-for="(menu) in getMenu('secondary')" :class="{'selected':menu.selected}" :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
+        <a v-for="(menu,index) in categories" 
+          :class="{'selected':menu.selected}" 
+          :key="index"
+          @click="onEventCategory(menu.name)" >{{(menu.name)}}</a>
     </section>
 
 
-    <div class="grid">
-      <div class="event" v-for="event in events" :key="event._id" @click="onEvent(event)">
-        <div class="when" v-if="event.when.length">{{ getWhen(event).start |shortdate }} </div>
-        <div class="title">{{ t(event.title) }} </div>
-        
+    <div class="grid" v-for="elem in calendar" :key="elem._id" :id="elem.selector">
+      <h1>{{elem.date}}.{{elem.month}}</h1>
+      <div class="event" v-for="event in elem.events" :key="getRandomId(event)" @click="onEvent(event)">
+        <div class="when">{{ event.when[0].startTime }} </div>
+        <div class="title">{{ t(event.title) }} </div>      
       </div>
     </div>
 
@@ -49,24 +52,48 @@ export default class EventList extends mixins(Translatable) {
   //
   // "emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
   private selected = '';
+  private cache = {};
 
   get events() {
-    return $cms.cms.events.filter(event => {
-      if(!this.selected || this.selected == ''){
+    if(this.cache['events_'+this.selected]){
+      return this.cache['events_'+this.selected]
+    }
+
+    return this.cache['events_'+this.selected] = $cms.cms.events.filter(event => {
+      if(!this.selected || this.selected == '' || this.selected == 'all'){
         return event;
       }
       return event.type == this.selected;
     })
   }
 
+  get calendar() {
+    if(this.cache['calendar_'+this.selected]){
+      return this.cache['calendar_'+this.selected]
+    }
+    return this.cache['calendar_'+this.selected] = $cms.getCalendarFrom(this.events).sort((a,b)=>{
+      return a._id - b._id;
+    });
+  }
+
+  get categories() {
+    if(this.cache['categories']){
+      return this.cache['categories'];
+    }
+    const elems = {'all':{selected:true,name:'all'}};
+    this.events.forEach(event => elems[event.type] = {name:event.type});
+
+    return this.cache['categories'] = Object.keys(elems).map(cat => (elems[cat]));
+  }
+
   get config(){
     return $config.store.config;
   }
 
-  getWhen(event: CMS.Event) {
-    console.log('---- DBG',event.when)
-    return event.when[0];
+  getRandomId(event){
+    return Math.random()*10000|0;
   }
+
 
   getMenu(layout) {
     const menu = [... $config.getMenu(layout)];
@@ -100,6 +127,18 @@ export default class EventList extends mixins(Translatable) {
   async onBack() {
     // this.$router.go(-1);
     this.$router.push({ path: '/' });
+  }
+
+  async onEventCategory(name) {
+    this.categories.forEach(cat => {
+      cat.selected = false;
+      if(cat.name === name) {
+        cat.selected = true;
+      }
+    });
+    this.selected = name;
+    this.$forceUpdate();
+
   }
 
   async onEvent(event: CMS.Event) {

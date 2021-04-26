@@ -73,10 +73,19 @@
   .grid {
     display: flex;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    border-bottom: 1px solid #eee;
+    h1{
+      display: block;
+      width: 100%;
+      text-transform: uppercase;
+      font-size: xx-large;
+    }
     .event {
-      flex: 1;
-      width: 49%;
-      background-color: #eee;
+      flex: 1 0 150px;
+      background-color: #fff;
+      color: black;
       background: url(https://via.placeholder.com/150) no-repeat;
       background-size: cover;
       background-position: center;
@@ -84,8 +93,11 @@
       margin: 4px;
       padding: 4px;
       min-height: 140px;
-      max-width: 150px;
-      
+      max-width: 130px;
+      @media (max-width:475px) {
+        flex: 1 0 calc( 50% - 16px );
+        max-width: calc( 50% - 16px );
+      }
     }
   }
 }
