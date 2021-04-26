@@ -12,7 +12,11 @@
 
     <ul>
       <li>{{artist.firstname}} {{artist.lastname}} <span v-if="artist.artistName">aka {{artist.artistName}}</span> </li>
-      <li><a :href="artist.artistWebsite" target="_blank" rel="noopener noreferrer">{{artist.artistWebsite}}</a></li>
+      <li v-if="artist.artistWebsite" >
+        <a :href="artist.artistWebsite" target="_blank" rel="noopener noreferrer">
+          {{artist.artistWebsite}}
+        </a>
+      </li>
     </ul>
 
     <h4>Bio</h4>

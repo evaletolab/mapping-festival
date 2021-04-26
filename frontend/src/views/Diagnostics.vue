@@ -11,6 +11,8 @@
       <div v-if="diagnostics.length == 0"><p>No errors found</p></div>
       <div v-else v-for="(msg, index) in diagnostics" :key="index">
         <p v-html="msg" />
+        <p>------------------------------------------------------</p>
+        <br>
       </div>
   </div>
 </template>

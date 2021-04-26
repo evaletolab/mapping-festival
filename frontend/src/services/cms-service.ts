@@ -38,6 +38,8 @@ class CMSService {
 
   _diagnostics: string[] = [];
 
+  private _artistSlugs: Set<string> = new Set<string>();
+
   constructor() {
     this.cms = Vue.observable(this.cms);
   }
@@ -218,12 +220,40 @@ class CMSService {
     });
   }
   
-  private formatSlug(obj:any): void{
+  private formatSlugFromCMS(obj:any): void{
     if(!obj.slug) {
+      this._logError(`this object should have a slug ${JSON.stringify(obj)}` );
       return;
     }
     const parts = obj.slug.split('/');
     obj.slug = parts[parts.length - 1];
+  }
+
+  private generateSlugForArtist(obj:any): void{
+
+    const convertToSlug = (text) => text.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
+    let slug = "";
+    if(obj.artistName){
+      slug = obj.artistName;
+    }else if(obj.firstname){
+      slug = obj.firstname;
+      if(obj.lastname){
+        slug = `${obj.lastname}-${slug}`;
+      }
+    }
+
+    if(!slug){
+      this._logError(`this artist has no valid slug ${JSON.stringify(obj)}`);
+      return;
+    }
+
+    while(this._artistSlugs.has(slug)){
+      this._logError(`generating unduplicated slug for artist ${JSON.stringify(obj)}`);
+      slug += obj._id;
+    }
+    this._artistSlugs.add(slug);
+
+    obj.slug = convertToSlug(slug.trim());
   }
 
   private addMeta(obj:any){
@@ -246,7 +276,7 @@ class CMSService {
 
   private formatEvent(event: any): CMS.Event{
 
-    this.formatSlug(event);
+    this.formatSlugFromCMS(event);
     this.formatLocalMedias(event);
     this.formatExternalMedias(event);
 
@@ -302,7 +332,7 @@ class CMSService {
 
   private formatEventLocation(eventLocation:any): CMS.EventLocation{
 
-    this.formatSlug(eventLocation);
+    this.formatSlugFromCMS(eventLocation);
 
     const geo = eventLocation.geo;
     eventLocation.street = geo.street || "";
@@ -329,7 +359,7 @@ class CMSService {
 
   private formatArtist(artist:any): CMS.Artist{
     
-    this.formatSlug(artist);
+    this.generateSlugForArtist(artist);
     this.formatLocalMedias(artist);
     this.formatExternalMedias(artist);
     this.formatSocialMedias(artist);

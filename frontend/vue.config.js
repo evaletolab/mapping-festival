@@ -23,6 +23,7 @@ module.exports = {
       // swSrc is required in InjectManifest mode.
       // swSrc: 'dev/sw.js',
       // ...other Workbox options...
+      exclude: [".htaccess"]
     }
 
   }
