@@ -26,13 +26,12 @@
         </template>
       </MapLibre>
 
-      <h2>{{t({fr:"Lieux", en:"Spots"})}}</h2>
-
-      <ul v-for="evtLocation in eventLocationsForList" :key="evtLocation._id" >
-        <li><router-link :to="`/spot/${evtLocation.slug}`" >{{t(evtLocation.name)}}</router-link></li>
-      </ul>
-
     </div>
+    <h2>{{t({fr:"Lieux", en:"Spots"})}}</h2>
+
+    <ul v-for="evtLocation in eventLocationsForList" :key="evtLocation._id" >
+      <li><router-link :to="`/spot/${evtLocation.slug}`" >{{t(evtLocation.name)}}</router-link></li>
+    </ul>
   </div>
 </template>
 
@@ -133,15 +132,23 @@ export default class Map extends mixins(Translatable) {
   }
 
   onMarkerClick(eventLocation: CMS.EventLocation){
-    // const eventLocation = $eventLocation.eventLocationWithId(markerId) as CMS.EventLocation;
-    // this.$router.push({path: `/spot/${eventLocation.slug}`});
     console.log("onMarkerClick", eventLocation._id);
-    this.selectedEventLocation = eventLocation;
-    this.showPopup = true;
+
+    if(this.selectedEventLocation && this.selectedEventLocation._id === eventLocation._id){
+      this.navigateToSelectedEventLocation();
+    }else{
+      this.selectedEventLocation = eventLocation;
+      this.showPopup = true;
+    }
+  }
+
+  navigateToSelectedEventLocation(){
+    this.$router.push({path:`/spot/${(this.selectedEventLocation as CMS.EventLocation).slug}`});
   }
 
   onPopupSelectionRequest(){
     console.log("popup selection request");
+    this.navigateToSelectedEventLocation();
   }
 
   onPopupCloseRequest(){

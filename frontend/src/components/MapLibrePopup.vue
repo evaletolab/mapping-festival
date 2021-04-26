@@ -7,22 +7,33 @@
             </div>
         </div>
         <button @click.stop="broadcastCloseRequest">x</button>
+        <div class="tip" ></div>
     </div>
 </template>
 
 <style scoped>
     .popup{
-        width: 300px;
-        height: 100px;
+        width: 200px;
+        height: 80px;
         background-color: white;
         z-index: 20;
+        cursor:pointer;
+    }
+
+    .tip{
+      position: absolute;
+      bottom:-15px;
+      left: 90px;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 20px solid white;
     }
 
     .article-container{
-        display: flex;
-        width: 280px;
-        height: 80px;
         padding: 10px;
+        padding-top: 25px;
     }
 
     .hidden{
@@ -41,7 +52,6 @@
         background-color: grey;
     }
     .description{
-        padding-left: 5px;
     }
     h3, p{
         margin:0;
@@ -51,6 +61,13 @@
         position:absolute;
         right:5px;
         top: 5px;
+        background-color:#eee;
+        border:1px solid #aaa;
+        display:inline-block;
+        cursor:pointer;
+        color:#555;
+        padding:0px 4px;
+        text-decoration:none;
     }
 </style>
 
@@ -115,7 +132,7 @@ export default class MapLibrePopup extends mixins(Translatable) {
         const options: MarkerOptions = {
             element: this.$refs.popupElement as HTMLElement,
             anchor: 'bottom',
-            offset: [0, -20]
+            offset: [0, -75]
         };
         this.popup = new mapboxgl.Marker(options)
             .setLngLat(genevaCoords as LngLatLike)
