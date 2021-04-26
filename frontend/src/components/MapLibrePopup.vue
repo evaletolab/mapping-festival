@@ -3,8 +3,7 @@
     <div class="popup" v-bind:class="{hidden: !visible }" @click.stop="onSelectionRequest" ref="popupElement">
         <div class="article-container">
             <div class="description">
-                <h3>a spot</h3>
-                <p>a spot description</p>
+                <p v-if="eventLocation">{{t(eventLocation.name)}}</p>
             </div>
         </div>
         <button @click.stop="broadcastCloseRequest">x</button>
@@ -46,6 +45,7 @@
     }
     h3, p{
         margin:0;
+        color:black;
     }
     button{
         position:absolute;
@@ -64,8 +64,12 @@ import { genevaCoords } from '../lib/geoUtils';
 // @ts-ignore
 import { mapEventProvider } from '../lib/mapEventProvider.js';
 
+import { CMS } from "@/models";
+import { mixins } from 'vue-class-component';
+import { Translatable } from '@/mixins';
+
 @Component
-export default class MapLibrePopup extends Vue {
+export default class MapLibrePopup extends mixins(Translatable) {
 
     @Prop({default: () => genevaCoords}) private coordinates!: mapboxgl.LngLatLike;
 
@@ -77,6 +81,9 @@ export default class MapLibrePopup extends Vue {
 
     @Prop({default:0}) id!: number;
     @Prop({default: true}) clickable!: boolean;
+
+    @Prop({}) eventLocation!: CMS.EventLocation;
+
     // export let isLast = false;
     // export let isCurrent = false;
     // export let showRadius = false;
@@ -89,12 +96,26 @@ export default class MapLibrePopup extends Vue {
         return "/map/SpotMarker.svg";
     }
 
+    @Watch('visible')
+    onVisibilityChange(val: boolean, oldVal: boolean){
+        console.log("-------------------------vis change", val);
+    }
+    
+    @Watch('eventLocation')
+    onEventLocationChange(val: CMS.EventLocation, oldVal: CMS.EventLocation){
+        console.log("------------------------- eventLocation change", val);
+        if(this.popup){
+            this.popup.setLngLat(this.eventLocation.coordinates);
+        }
+    }
+
     @Watch('map')
     onMapChanged(val: Map, oldVal: Map) {
         console.log("mounting popup--------------------------------");
         const options: MarkerOptions = {
             element: this.$refs.popupElement as HTMLElement,
-            anchor: 'left',
+            anchor: 'bottom',
+            offset: [0, -20]
         };
         this.popup = new mapboxgl.Marker(options)
             .setLngLat(genevaCoords as LngLatLike)

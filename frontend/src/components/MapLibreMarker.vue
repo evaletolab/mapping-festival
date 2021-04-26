@@ -44,19 +44,21 @@
 /* eslint-disable */
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 
-import mapboxgl, { Map, Marker, MarkerOptions } from "maplibre-gl";
+import mapboxgl, { Map, Marker, MarkerOptions, Popup } from "maplibre-gl";
 // @ts-ignore
 import { genevaCoords } from '../lib/geoUtils';
 // @ts-ignore
 
-@Component
-export default class MapLibreMarker extends Vue {
+import { CMS } from "@/models";
 
+@Component
+export default class MapLibreEventLocationMarker extends Vue {
+
+    @Prop() private eventLocation!: CMS.EventLocation;
     @Prop({default: () => genevaCoords}) private coordinates!: mapboxgl.LngLatLike;
 
     // @InjectReactive() map!: Map;
     @Prop() map!: Map;
-    
 
     @Prop({default:0}) id!: number;
     @Prop({default: true}) clickable!: boolean;
@@ -94,7 +96,7 @@ export default class MapLibreMarker extends Vue {
     onClick(e: any){
         if(!this.clickable) return;
         console.log("on marker click");
-        this.$emit("selectionRequest", {});
+        this.$emit("selectionRequest", this.eventLocation);
     }
 
     beforeDestroy() {

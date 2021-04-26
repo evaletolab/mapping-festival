@@ -12,7 +12,16 @@
         <template slot-scope="{map}">
           <MapLibreMarker v-for="evtLocation in eventLocationsForMarkers" :key="evtLocation.id"  
             :map="map" 
+            :eventLocation="evtLocation"
             :coordinates="evtLocation.coordinates"
+            v-on:selectionRequest="onMarkerClick"
+          />
+          <MapLibrePopup
+            :map="map"
+            :visible="showPopup"
+            v-on:selectionRequest="onPopupSelectionRequest" 
+            v-on:closeRequest="onPopupCloseRequest"
+            :eventLocation="selectedEventLocation"
           />
         </template>
       </MapLibre>
@@ -50,25 +59,28 @@ import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
 import MapLibre from '../components/MapLibre.vue';
 import MapLibreMarker from '../components/MapLibreMarker.vue';
+import MapLibrePopup from '../components/MapLibrePopup.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
 import { getBbox } from '../lib/geoUtils';
 import { mapEventProvider } from '../lib/mapEventProvider';
 
-import  { LatLng, latLng } from 'leaflet';
-import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet';
 import { currentLangStore, Lang } from '../services/i18n';
 
 
 @Component({
   components: {
-    CMSIcons,Toolbar, PrimaryMenu, MapLibre, MapLibreMarker,
+    CMSIcons,Toolbar, PrimaryMenu, MapLibre, MapLibreMarker, MapLibrePopup,
   }
 })
 export default class Map extends mixins(Translatable) {
   startZoom = 12;
   center = [6.140561571463678, 46.203032099805];
+
+  selectedEventLocation: CMS.EventLocation | null = null;
+
+  showPopup = false;
 
   get config(){
     return $config.store.config;
@@ -120,10 +132,23 @@ export default class Map extends mixins(Translatable) {
     console.log(evt);
   }
 
-  markerClick(markerId){
-    const eventLocation = $eventLocation.eventLocationWithId(markerId) as CMS.EventLocation;
-    this.$router.push({path: `/spot/${eventLocation.slug}`});
+  onMarkerClick(eventLocation: CMS.EventLocation){
+    // const eventLocation = $eventLocation.eventLocationWithId(markerId) as CMS.EventLocation;
+    // this.$router.push({path: `/spot/${eventLocation.slug}`});
+    console.log("onMarkerClick", eventLocation._id);
+    this.selectedEventLocation = eventLocation;
+    this.showPopup = true;
   }
+
+  onPopupSelectionRequest(){
+    console.log("popup selection request");
+  }
+
+  onPopupCloseRequest(){
+    console.log("popup close request");
+    this.showPopup = false;
+  }
+
 
   async onBack() {
     this.$router.go(-1);
