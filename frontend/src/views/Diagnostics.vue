@@ -41,7 +41,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
-import { $config, $cms } from '../services';
+import { $config, $cms, $cockpit } from '../services';
 
 import Toolbar from '../components/Toolbar.vue';
 
@@ -57,7 +57,7 @@ export default class Diagnostics extends Vue {
   }
 
   get diagnostics(): string[]{
-    return $cms.diagnostics;
+    return $cockpit.diagnostics;
   }
 
   themeTertiary(theme) {

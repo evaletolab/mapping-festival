@@ -79,7 +79,7 @@ export default class EventList extends mixins(Translatable) {
     if(this.cache['calendar_'+this.selected]){
       return this.cache['calendar_'+this.selected]
     }
-    return this.cache['calendar_'+this.selected] = $cms.getCalendarFrom(this.events).sort((a,b)=>{
+    return this.cache['calendar_'+this.selected] = $cms.getCalendarFrom(this.events).sort((a: any,b: any)=>{
       return a._id - b._id;
     });
   }
