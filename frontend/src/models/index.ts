@@ -1,7 +1,5 @@
 /* eslint-disable */
 
-import { LatLng } from 'leaflet';
-
 import { t } from '../services/i18n';
 import { $config } from '../services/config-service';
 
@@ -91,6 +89,8 @@ export namespace CMS {
   type Lat = number;
   type Lng = number;
 
+  export type Coordinate = [Lng, Lat];
+
   export interface EventLocation {
     _id:string
     slug:string,
@@ -105,7 +105,7 @@ export namespace CMS {
     postalcode: string,
     city: string,
     tag: string,
-    coordinates: LatLng, 
+    coordinates: Coordinate, 
     content: {
       fr:string,
       en:string,

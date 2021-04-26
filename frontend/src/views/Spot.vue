@@ -89,7 +89,7 @@ export default class Spot extends mixins(Translatable) {
     return $config.store.config;
   }
 
-  get center(): LatLng {
+  get center(): CMS.Coordinate {
     return this.eventLocation.coordinates;
   }
 

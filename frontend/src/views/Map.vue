@@ -5,29 +5,17 @@
     <PrimaryMenu />
     <div class="map-container">
 
-      <l-map ref="myMap"
-        :zoom="zoom"
-        :center="center"
-        :options="mapOptions"
-        style="height: 80%"
-        @update:center="centerUpdate"
-        @update:zoom="zoomUpdate"
-      > 
-        <l-tile-layer
-          :url="url"
-          :attribution="attribution"
-        />
-        <l-marker 
-          v-for="evtLocation in eventLocationsForMarkers" :key="evtLocation._id" 
-          :lat-lng="evtLocation.coordinates" 
-          @click="markerClick(evtLocation._id)">
-           <l-icon
-            :icon-size="[84, 146]"
-            :icon-anchor="[42, 73]"
-            icon-url="/map/SpotMarker.svg"
+      <MapLibre 
+        :bounds="bounds"
+        v-on:loaded="onMapLoaded"
+      >
+        <template slot-scope="{map}">
+          <MapLibreMarker v-for="evtLocation in eventLocationsForMarkers" :key="evtLocation.id"  
+            :map="map" 
+            :coordinates="evtLocation.coordinates"
           />
-        </l-marker>
-      </l-map>
+        </template>
+      </MapLibre>
 
       <h2>{{t({fr:"Lieux", en:"Spots"})}}</h2>
 
@@ -45,7 +33,6 @@
     width: 100vw;
   }
   .map-container{
-    padding-top: 80px;
     width: 100%;
     height: 70vh;
   }
@@ -61,8 +48,13 @@ import { $config, $eventLocation } from '../services';
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
+import MapLibre from '../components/MapLibre.vue';
+import MapLibreMarker from '../components/MapLibreMarker.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
+
+import { getBbox } from '../lib/geoUtils';
+import { mapEventProvider } from '../lib/mapEventProvider';
 
 import  { LatLng, latLng } from 'leaflet';
 import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet';
@@ -71,22 +63,23 @@ import { currentLangStore, Lang } from '../services/i18n';
 
 @Component({
   components: {
-    CMSIcons,Toolbar, PrimaryMenu, LMap, LTileLayer, LMarker, LIcon,
+    CMSIcons,Toolbar, PrimaryMenu, MapLibre, MapLibreMarker,
   }
 })
 export default class Map extends mixins(Translatable) {
-  zoom = 14;
-  currentZoom = 14;
-  center = latLng(46.2044, 6.1432);
-  currentCenter = latLng(46.2044, 6.1432);
-  url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  attribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
-  mapOptions = {
-    zoomSnap: 0.5
-  };
+  startZoom = 12;
+  center = [6.140561571463678, 46.203032099805];
 
   get config(){
     return $config.store.config;
+  }
+
+  get bounds(): any[]{
+    const coordinates = this.eventLocationsForMarkers.map(evtLocation => evtLocation.coordinates);
+    console.log("coordinates", coordinates);
+    const result = getBbox(coordinates);
+    console.log("bounds", result);
+    return result;
   }
 
   get eventLocationsForMarkers(): CMS.EventLocation[]{
@@ -118,12 +111,13 @@ export default class Map extends mixins(Translatable) {
     document.body.classList.remove('body-scroll');
   }
 
-  zoomUpdate(zoom: number) {
-    this.currentZoom = zoom;
+  onMapLoaded(map:Map){
+    console.log("map is loaded");
+    // mapEventProvider.addListener(this.onMapEvent);
   }
 
-  centerUpdate(center: LatLng) {
-    this.currentCenter = center;
+  onMapEvent(evt: any){
+    console.log(evt);
   }
 
   markerClick(markerId){

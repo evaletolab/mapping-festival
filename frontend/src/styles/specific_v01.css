@@ -82,7 +82,7 @@ body {
 
 /*******************************/
 
-canvas {
+.cable-gl-canvas {
 
     z-index: -1;
 

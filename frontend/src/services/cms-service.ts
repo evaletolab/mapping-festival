@@ -331,7 +331,7 @@ class CMSService {
     eventLocation.postalcode = geo.postalcode || "";
     eventLocation.city = geo.city || "";
     eventLocation.tag = geo.tag || "";
-    eventLocation.coordinates = geo.location ? latLng(geo.location.lat, geo.location.lng) : null;
+    eventLocation.coordinates = geo.location ? [geo.location.lng, geo.location.lat] : null;
 
     if(!eventLocation.street){
       this._logError(`eventlocation with name ${t(eventLocation.name)} has no street address`);
