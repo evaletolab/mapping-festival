@@ -75,7 +75,7 @@ export default class EventList extends mixins(Translatable) {
     })
   }
 
-  get calendar() {
+  get calendar(): CMS.Calendar[] {
     if(this.cache['calendar_'+this.selected]){
       return this.cache['calendar_'+this.selected]
     }
@@ -164,7 +164,7 @@ export default class EventList extends mixins(Translatable) {
   async onToday($event) {
     $event.stopPropagation();
     const dest = this.calendar[3];
-    const element = document.getElementById(dest._id);
+    const element = document.getElementById(dest._id.toString());
     if(!element) {
       return;
     }

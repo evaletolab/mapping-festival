@@ -35,8 +35,6 @@ class CMSService {
     eventLocations: [],
   };
 
-  private _artistSlugs: Set<string> = new Set<string>();
-
   constructor() {
     this.cms = Vue.observable(this.cms);
   }
@@ -53,7 +51,7 @@ class CMSService {
     return this.cms.artists;
   }
 
-  public getCalendarFrom(events?: CMS.Event[]): CMS.Caldendar[] {
+  public getCalendarFrom(events?: CMS.Event[]): CMS.Calendar[] {
     const calendar = {};
     (events||this.events).forEach(event =>{      
       const times = (event.when||[]).slice();
@@ -79,7 +77,7 @@ class CMSService {
       calendar[key].events = calendar[key].events.sort((a,b)=>{
         return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
       });
-      return calendar[key] as CMS.Caldendar;
+      return calendar[key] as CMS.Calendar;
     })
   }
 
@@ -130,7 +128,6 @@ class CMSService {
       // console.log("events", this.cms.events);
     }
   }
-
 }
 
 //
