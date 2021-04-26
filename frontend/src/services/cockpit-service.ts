@@ -2,7 +2,6 @@ import { CMS } from "@/models";
 import { Vue } from 'vue-property-decorator';
 import { $config } from "./config-service";
 import axios from 'axios';
-import { latLng } from 'leaflet';
 import { t } from './i18n';
 
 
@@ -242,7 +241,7 @@ class CockpitService {
     eventLocation.postalcode = geo.postalcode || "";
     eventLocation.city = geo.city || "";
     eventLocation.tag = geo.tag || "";
-    eventLocation.coordinates = geo.location ? latLng(geo.location.lat, geo.location.lng) : null;
+    eventLocation.coordinates = geo.location ? [geo.location.lng, geo.location.lat] : null;
 
     if(!eventLocation.street){
       this.logError(`eventlocation with name ${t(eventLocation.name)} has no street address`);

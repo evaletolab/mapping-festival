@@ -2,7 +2,6 @@ import { CMS } from "@/models";
 import { Vue } from 'vue-property-decorator';
 import { $config } from "./config-service";
 import axios from 'axios';
-import { latLng } from 'leaflet';
 import { t } from './i18n';
 
 
