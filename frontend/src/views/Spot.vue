@@ -4,29 +4,35 @@
     <div style="height:80px" />
     <PrimaryMenu />
     <h1>{{t(eventLocation.name)}}</h1>
+    <ul>
+      <li v-if="eventLocation.street">{{eventLocation.street}}</li>
+      <li v-if="eventLocation.postalcode">
+        {{eventLocation.postalcode}} <span v-if="eventLocation.city"> {{eventLocation.city}}</span>
+      </li>
+      <li v-if="eventLocation.website">
+        <a :href="eventLocation.website" target="_blank" rel="noopener noreferrer">
+          {{eventLocation.website}}
+        </a>
+      </li>
+    </ul>
     <p v-html="t(eventLocation.content)"></p>
 
+
+    <img v-if="eventLocation.cover" :src="eventLocation.cover.sizes.headerimage.path" /> 
+
     <div v-if="!!eventLocation.coordinates" class="map-container">
-      <l-map ref="myMap"
-        :zoom="zoom"
-        :center="center"
-        :options="mapOptions"
-        style="height: 80%"
+      <MapLibre 
+        :startCoordinates="eventLocation.coordinates"
         :interactive="false"
-        @update:zoom="zoomUpdate"
-      > 
-        <l-tile-layer
-          :url="url"
-          :attribution="attribution"
-        />
-        <l-marker :lat-lng="center">
-          <l-icon
-            :icon-size="[84, 146]"
-            :icon-anchor="[42, 73]"
-            icon-url="/map/SpotMarker.svg"
+      >
+        <template slot-scope="{map}">
+          <MapLibreMarker 
+            :map="map" 
+            :eventLocation="eventLocation"
+            :coordinates="eventLocation.coordinates"
           />
-        </l-marker>
-      </l-map>
+        </template>
+      </MapLibre>
     </div>
 
     <h2>Events</h2>
@@ -57,40 +63,21 @@ import { $config, $eventLocation } from '../services';
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
+import MapLibre from '../components/MapLibre.vue';
+import MapLibreMarker from '../components/MapLibreMarker.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
-import  { LatLng, latLng } from 'leaflet';
-import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet';
 
 @Component({
   components: {
-    CMSIcons,Toolbar, PrimaryMenu, LMap, LTileLayer, LMarker, LIcon,
+    CMSIcons,Toolbar, PrimaryMenu, MapLibre, MapLibreMarker 
   }
 })
 export default class Spot extends mixins(Translatable) {
 
-  zoom = 14;
-  currentZoom = 14;
-  url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  attribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
-  mapOptions = {
-    zoomSnap: 0.5,
-    dragging: false,
-    doubleClickZoom: false,
-    boxZoom: false,
-    keyboard: false,
-    scrollWheelZoom: "center",
-    touchZoom: "center",
-    minZoom: 10,
-  };
-
   get config(){
     return $config.store.config;
-  }
-
-  get center(): LatLng {
-    return this.eventLocation.coordinates;
   }
 
   get events(): CMS.Event[]{
@@ -135,10 +122,6 @@ export default class Spot extends mixins(Translatable) {
   
   get eventLocation(): CMS.EventLocation {
     return $eventLocation.eventLocationWithSlug(this.$route.params.spotslug) as CMS.EventLocation;
-  }
-
-  zoomUpdate(zoom: number) {
-    this.currentZoom = zoom;
   }
 
   async onBack() {
