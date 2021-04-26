@@ -60,6 +60,36 @@ class CMSService {
     return this.cms.artists;
   }
 
+  public getCalendarFrom(events?: CMS.Event[]): CMS.Calendar[] {
+    const calendar = {};
+    (events||this.events).forEach(event =>{      
+      const times = (event.when||[]).slice();
+      times.forEach(when => {
+        const date = when.date;
+        const month = when.month;
+        const key = date+'.'+month;
+        const _id = when._id;
+        const time = when.startTime;
+        const ms = when._id;
+        const selector = date + '.' + month;
+        if(!calendar[key]) {
+          calendar[key] = {_id,selector,time,date,month,events:[]};          
+        }
+        //
+        // only one time per event
+        event.when = [when];
+        calendar[key].events.push(event);
+      });        
+    })
+    const keys = Object.keys(calendar);
+    return keys.map(key => {
+      calendar[key].events = calendar[key].events.sort((a,b)=>{
+        return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
+      });
+      return calendar[key] as CMS.Calendar;
+    })
+  }
+
   private _logError(error){
     console.warn(error);
     this._diagnostics.push(error);
@@ -282,6 +312,20 @@ class CMSService {
     // build **when** array
     event.when = (event.when||[]).map ((w, index) => {
       const v = w.value;
+      
+      // handle errors
+      const mustBeSetProperties = ["startDate", "startHour", "endDate", "endHour"]; 
+      let errors = "";
+      for (let prop of mustBeSetProperties){
+        if(!v[prop]){
+          errors += `| ${prop} is missing |`;
+        }
+      }
+      if(errors){
+        this._logError(`invalid When for event with title ${t(event.title)} -> ${errors}`);
+      }
+      
+
       const start = new Date(`${v.startDate} ${v.startHour}`);
       const end = new Date(`${v.endDate} ${v.endHour}`);
       const cancel = v.cancel;
@@ -294,7 +338,10 @@ class CMSService {
       }
 
       const id = index;
-      return new CMS.When(id, start, end, cancel, eventLocation);
+      if(isNaN(start.getTime())) {
+        console.log('---FIXME invalid date',event,w)
+      }
+      return new CMS.When(start, end, cancel, eventLocation);
     });
 
     event.when.sort((a, b) => a.start - b.start);

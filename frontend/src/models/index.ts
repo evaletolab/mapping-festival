@@ -178,6 +178,13 @@ export namespace CMS {
     // creator:string,    
   }
 
+  export interface Calendar {
+    day: string;
+    month: string;
+    event: Event[];
+    _id: number; // copied from When id
+  }
+
   export type Content = (Artist) ;
 
   // export interface Editor {
@@ -192,15 +199,25 @@ export namespace CMS {
   //   published: boolean;
   // }
 
-  export class When
-  {
+  export class When {
+    _id;
+    year;
     constructor(
-      private _id:number,
       private _start: Date, 
       private _end: Date, 
       private _cancel: boolean, 
       private _eventLocation: EventLocation | null) 
-    {}
+    {
+      const _1970 = new Date(0);
+      if(isNaN(_start.getTime())){
+        this._start = _1970;
+      }
+      if(isNaN(_end.getTime())){
+        this._end = _1970;
+      }
+      this._id = this._start.getTime();
+      this.year = this._start.getFullYear();
+    }
 
     public get id(): number {
       return this._id;
@@ -230,12 +247,20 @@ export namespace CMS {
     }
 
     public get date(): string {
-      return this.start.getDate().toString();
+      // 2 digits
+      return ("0" + this.start.getDate()).slice(-2);
+      //return this.start.getDate().toString();
     }
     
-    public get month(): string{
+    public get month(): string{      
       const monthIndex = this.start.getMonth();
       return t($config.store.config.time.months[monthIndex]);
+    }
+
+    public get startTimeWeight(): number{
+      const hours = this.start.getHours();
+      const minutes = this.start.getMinutes();
+      return hours * 60 + minutes;
     }
 
     public get startTime(): string{
