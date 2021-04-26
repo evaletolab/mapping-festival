@@ -58,6 +58,14 @@ class CMSService {
     return this.cms.artists;
   }
 
+  public getCalendar(): CMS.Caldendar[] {
+    const events = [] as CMS.Caldendar[];
+    this.events.forEach(event =>{
+      (event.when||[]).forEach(when => events.push({ when, event }))
+    })
+    return events;
+  }
+
   private _logError(error){
     console.warn(error);
     this._diagnostics.push(error);

@@ -178,6 +178,11 @@ export namespace CMS {
     // creator:string,    
   }
 
+  export interface Caldendar {
+    when: When;
+    event: Event;
+  }
+
   export type Content = (Artist) ;
 
   // export interface Editor {
