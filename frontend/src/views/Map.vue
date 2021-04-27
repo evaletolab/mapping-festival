@@ -30,7 +30,7 @@
     <h2>{{t({fr:"Lieux", en:"Spots"})}}</h2>
 
     <ul v-for="evtLocation in eventLocationsForList" :key="evtLocation._id" >
-      <li><router-link :to="`/spot/${evtLocation.slug}`" >{{t(evtLocation.name)}}</router-link></li>
+      <li><router-link :to="`/map/${evtLocation.slug}`" >{{t(evtLocation.name)}}</router-link></li>
     </ul>
   </div>
 </template>

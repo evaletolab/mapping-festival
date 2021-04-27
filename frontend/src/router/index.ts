@@ -54,16 +54,6 @@ const routes: Array<RouteConfig> = [
     component: Spot
   },
   {
-    path: '/content/:slug',
-    name: 'Modules',
-    component: Content,
-    // children:[{
-    //   path: ':slug',
-    //   name: 'Content',
-    //   components: { l2 : Content}  
-    // }]
-  },
-  {
     path: '/__diagnostics',
     name: 'Diagnostics',
     component: Diagnostics,

@@ -48,7 +48,7 @@ function getAxiosOptions(){
 export async function getMapStyle(){
     if(mapStyle) return mapStyle;
 
-    const esriMapStyle = (await axios.get("/map/mapstyle.json", getAxiosOptions())).data;
+    const esriMapStyle = (await axios.get("/map_assets/mapstyle.json", getAxiosOptions())).data;
     mapStyle = await adaptEsriMapStyle(esriMapStyle);
 
     return mapStyle;

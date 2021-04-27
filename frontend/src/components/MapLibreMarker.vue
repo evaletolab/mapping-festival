@@ -71,7 +71,7 @@ export default class MapLibreEventLocationMarker extends Vue {
     marker!: Marker;
 
     get markerUrl(): string{
-        return "/map/SpotMarker_2.svg";
+        return "/map_assets/SpotMarker_2.svg";
     }
 
     @Watch('map')
