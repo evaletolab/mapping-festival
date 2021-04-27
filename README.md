@@ -23,3 +23,9 @@ Yeah !
 * `src/models`
 * `src/router`
 
+
+# project links
+* backend https://iziapi.ch/mappingDev/index
+* dev http://mapping.demainelalune.ch/
+* beta http://
+* stable http://
