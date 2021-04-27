@@ -13,7 +13,7 @@ class ConfigService {
   // https://fr.vuejs.org/v2/guide/reactivity.html
   private _store: any;
   // private _baseUrl = process.env.BASE_URL;
-  private _cmsBaseUrl = "https://iziapi.ch/mappingDev/index/api";
+  private _cmsBaseUrl = "https://iziapi.ch/mappingDev/index";
 
   private _lang = 'fr';
  
@@ -58,7 +58,7 @@ class ConfigService {
 
   async get(force?: boolean){
     if(!this._store.config.done && !force) {
-      const url = `${this._cmsBaseUrl}/singletons/get/config`;
+      const url = `${this._cmsBaseUrl}/api/singletons/get/config`;
       const res = await axios.get(url ,defaultAxios);
       this._store.config = res.data.content;
       this._store.config.cms.baseUrl = this._cmsBaseUrl; // sanity check!

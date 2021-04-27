@@ -46,13 +46,40 @@ class CockpitService {
     };
   }
 
-  formatLocalMedias(obj:any){
+  absolutePathForLocalMedia(relPath){
+    if(!relPath) return null;
+
+    const baseUrl = $config.store.config.cms.baseUrl;
+    const uploadsPath = $config.store.config.cms.uploadsPath;
+    const result =`${baseUrl}${uploadsPath}${relPath}`;
+    return result;
+  }
+
+  formatLocalMedia(obj:any): CMS.LocalMedia{
+
+    obj.path = this.absolutePathForLocalMedia(obj.path);
+
+    if(obj.sizes){
+      for(const prop in obj.sizes){
+        const path = obj.sizes[prop].path;
+        obj.sizes[prop].path = this.absolutePathForLocalMedia(path);
+      }
+    }
+      // console.log("path", result.path);
+
+    obj.created = new Date(obj.created * 1000);
+    obj.modified = new Date(obj.modified * 1000);
+    return obj;
+  }
+
+  formatLocalMediaCollection(obj:any){
     if(!obj.localMedias){
       obj.localMedias = [];
       return;
     }
 
     obj.localMedias = obj.localMedias.filter(media => media.value[""]).map(localMedia => {
+      // f33up format support
       const lm = localMedia.value;
       
       let result: any = {
@@ -68,13 +95,11 @@ class CockpitService {
         result[attr] = lm[""][attr];
       });
 
-      const baseUrl = $config.store.config.cms.baseUrl;
-      const uploadsPath = $config.store.config.cms.uploadsPath;
-      result.path = `${baseUrl}${uploadsPath}${result.path}`;
+      result.path = this.absolutePathForLocalMedia(result.path);
 
       for(const prop in result.sizes){
         const path = result.sizes[prop].path;
-        result.sizes[prop].path = `${baseUrl}${uploadsPath}${path}`;
+        result.sizes[prop].path = this.absolutePathForLocalMedia(path);
       }
       // console.log("path", result.path);
 
@@ -84,7 +109,7 @@ class CockpitService {
     });
   }
 
-  formatExternalMedias(obj:any){
+  formatExternalMediaCollection(obj:any){
     if(!obj.externalMedias){
       obj.externalMedias = [];
       return;
@@ -98,7 +123,7 @@ class CockpitService {
     });
   }
 
-  formatSocialMedias(obj:any){
+  formatSocialMediaCollection(obj:any){
     if(!obj.socialMedias){
       obj.socialMedias = [];
       return;
@@ -176,8 +201,8 @@ class CockpitService {
   formatEvent(locations, artists, event: any): CMS.Event{
 
     this.formatSlugFromCMS(event);
-    this.formatLocalMedias(event);
-    this.formatExternalMedias(event);
+    this.formatLocalMediaCollection(event);
+    this.formatExternalMediaCollection(event);
 
 
     // if no whens we are invalid
@@ -223,7 +248,7 @@ class CockpitService {
     });
 
     event.created = event._created;
-    event.cover = event.cover || null;
+    event.cover = event.cover ? this.formatLocalMedia(event.cover) : null;
 
     event.subType = event.subType || null;
 
@@ -250,7 +275,7 @@ class CockpitService {
       this.logError(`eventlocation with name ${t(eventLocation.name)} has no coordinates`);
     }
 
-    eventLocation.cover = eventLocation.cover || null;
+    eventLocation.cover = eventLocation.cover ? this.formatLocalMedia(eventLocation.cover) : null;
     eventLocation.website = eventLocation.website || null;
     
     delete eventLocation.geo;
@@ -262,17 +287,22 @@ class CockpitService {
   formatArtist(artist:any): CMS.Artist{
     
     this.generateSlugForArtist(artist);
-    this.formatLocalMedias(artist);
-    this.formatExternalMedias(artist);
-    this.formatSocialMedias(artist);
+    this.formatLocalMediaCollection(artist);
+    this.formatExternalMediaCollection(artist);
+    this.formatSocialMediaCollection(artist);
 
     artist.created = artist._created;
     artist = this.addMeta(artist);
     artist.firstname = artist.firstname || "";
     artist.lastname = artist.lastname || "";
     artist.artistname = artist.artistname || null;
-    artist.cover = artist.cover || null;
+    artist.cover = artist.cover ? this.formatLocalMedia(artist.cover) : null;
     return artist as CMS.Artist;
+  }
+
+  formatPage(page: any): CMS.Page{
+    this.formatSlugFromCMS(page);
+    return page as CMS.Page;
   }
 
   formatTranslations (entry, keys){

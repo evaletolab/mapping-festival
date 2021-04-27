@@ -44,12 +44,12 @@ const routes: Array<RouteConfig> = [
     component: Artist
   },
   {
-    path: '/spot',
+    path: '/map',
     name: 'Map',
     component: Map
   },
   {
-    path: '/spot/:spotslug?',
+    path: '/map/:spotslug?',
     name: 'Spot',
     component: Spot
   },

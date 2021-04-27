@@ -22,6 +22,7 @@ interface CMS_Map{
   events: CMS.Event[];
   artists: CMS.Artist[];
   eventLocations: CMS.EventLocation[];
+  pages: CMS.Page[];
 }
 
 
@@ -33,9 +34,8 @@ class CMSService {
     events: [],
     artists: [],
     eventLocations: [],
+    pages: [],
   };
-
-  private _artistSlugs: Set<string> = new Set<string>();
 
   constructor() {
     this.cms = Vue.observable(this.cms);
@@ -95,7 +95,7 @@ class CMSService {
     
     // load eventLocations
     {
-      const eventsUrl = `${baseUrl}/collections/get/localisations`;
+      const eventsUrl = `${baseUrl}/api/collections/get/localisations`;
       const eventLocations = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["name", "content"];
       this.cms.eventLocations = eventLocations.entries
@@ -107,7 +107,7 @@ class CMSService {
     
     // load artists
     {
-      const eventsUrl = `${baseUrl}/collections/get/artists`;
+      const eventsUrl = `${baseUrl}/api/collections/get/artists`;
       const artists = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["content"];
       this.cms.artists = artists.entries
@@ -116,10 +116,22 @@ class CMSService {
         .filter(item => item.active);
       // console.log("artists", this.cms.artists);
     }
+    
+    // load pages
+    {
+      const eventsUrl = `${baseUrl}/api/collections/get/pages`;
+      const events = (await axios.get(eventsUrl, config)).data;
+      const localizedKeys = ["title", "header", "content"];
+      this.cms.pages = events.entries
+        .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
+        .map(entry => $cockpit.formatPage(entry))
+        .filter(item => item.active);
+      // console.log("pages", this.cms.pages);
+    }
 
     // load events (must be loaded last)
     {
-      const eventsUrl = `${baseUrl}/collections/get/events`;
+      const eventsUrl = `${baseUrl}/api/collections/get/events`;
       const events = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["title", "header", "content", "hardware", "notes"]
       this.cms.events = events.entries

@@ -185,6 +185,28 @@ export namespace CMS {
     _id: number; // copied from When id
   }
 
+
+  export interface Page {
+    _id: string,
+    slug: string,
+    active: boolean,
+    cover: LocalMedia | null,
+    type: eventType,
+    subType: eventSubType,
+    title:{
+      fr:string,
+      en:string
+    },
+    header:{
+      fr:string,
+      en:string
+    },
+    content:{
+      fr:string,
+      en:string
+    },
+  }
+
   export type Content = (Artist) ;
 
   // export interface Editor {

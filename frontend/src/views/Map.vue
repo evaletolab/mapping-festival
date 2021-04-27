@@ -143,7 +143,7 @@ export default class Map extends mixins(Translatable) {
   }
 
   navigateToSelectedEventLocation(){
-    this.$router.push({path:`/spot/${(this.selectedEventLocation as CMS.EventLocation).slug}`});
+    this.$router.push({path:`/map/${(this.selectedEventLocation as CMS.EventLocation).slug}`});
   }
 
   onPopupSelectionRequest(){

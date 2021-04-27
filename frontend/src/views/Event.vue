@@ -33,7 +33,7 @@
       <p>{{when.dayOfWeek}} {{when.date}} {{when.month}}</p>
       <p>{{when.startTime}} - {{when.endTime}}</p>
       <p v-if="!!when.eventLocation"> 
-        <router-link :to="`/spot/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
+        <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
       </p>
       <br>
     </div>
