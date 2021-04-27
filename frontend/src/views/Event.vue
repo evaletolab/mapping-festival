@@ -11,7 +11,8 @@
 
     <h1>{{t(event.title)}} ({{event.type}} / {{event.subType}})</h1>
 
-
+    <img v-if="event.cover" :src="event.cover.sizes.headerimage.path" /> 
+    
     <div v-html="t(event.header)"></div>
    
     <ul>

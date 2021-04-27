@@ -19,6 +19,8 @@
       </li>
     </ul>
 
+    <img v-if="artist.cover" :src="artist.cover.path" /> 
+    
     <h4>Bio</h4>
     <div v-html="t(artist.content)" />
 
