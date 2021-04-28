@@ -69,6 +69,24 @@
     }
   }
 
+  section.top{
+    position: fixed;
+    bottom: 50px; 
+    left: calc( 50% - 16px );       
+    button{
+      padding: 2px 2px;
+      width: 36px;
+      height: 36px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      outline: 0;
+      background: var(--font-color);
+      color: black;
+      border-radius: 50%;
+    }
+  }
+
   
   .grid {
     display: flex;

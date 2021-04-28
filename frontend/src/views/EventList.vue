@@ -8,28 +8,7 @@
       </p>
     </section>
 
-    <section class="secondary">
-        <a v-for="(menu,index) in categories" 
-          :class="{'selected':menu.selected}" 
-          :key="index"
-          @click="onEventCategory(menu.name)" >{{(menu.name)}}</a>
-        <a class="today" @click="onToday">today</a>          
-    </section>
-
-
-    <div class="grid" v-for="elem in calendar" :key="elem._id" :id="elem._id">
-      <h1>{{elem.date}}.{{elem.month}}</h1>
-      <div class="event" 
-           :style="{ backgroundImage: 'url(' + (event.cover || defaultCover) + ')' }"
-           v-for="event in elem.events" 
-           :key="getRandomId(event)" 
-           @click="onEvent(event)">
-        <div class="when">{{ event.when[0].startTime }} </div>
-        <div class="title">{{ t(event.title) }} </div>      
-        <div class="type">{{ (event.type) }} </div>      
-      </div>
-    </div>
-
+    <Calendar limit="yes" gotop="yes"/>
   </div>
 </template>
 
@@ -47,59 +26,20 @@ import { Translatable } from '../mixins';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
+import Calendar from '../components/Calendar.vue';
 
 
 @Component({
   components: {
-    CMSIcons, Toolbar
+    CMSIcons, Toolbar,Calendar
   }
 })
 export default class EventList extends mixins(Translatable) {
-  //
-  // "emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
-  private selected = '';
-  private cache = {};
 
-  defaultCover = "https://via.placeholder.com/150";
-
-  get events() {
-    if(this.cache['events_'+this.selected]){
-      return this.cache['events_'+this.selected]
-    }
-
-    return this.cache['events_'+this.selected] = $cms.cms.events.filter(event => {
-      if(!this.selected || this.selected == '' || this.selected == 'all'){
-        return event;
-      }
-      return event.type == this.selected;
-    })
-  }
-
-  get calendar(): CMS.Calendar[] {
-    if(this.cache['calendar_'+this.selected]){
-      return this.cache['calendar_'+this.selected]
-    }
-    return this.cache['calendar_'+this.selected] = $cms.getCalendarFrom(this.events).sort((a: any,b: any)=>{
-      return a._id - b._id;
-    });
-  }
-
-  get categories() {
-    if(this.cache['categories']){
-      return this.cache['categories'];
-    }
-    const elems = {'all':{selected:true,name:'all'}};
-    this.events.forEach(event => elems[event.type] = {name:event.type});
-
-    return this.cache['categories'] = Object.keys(elems).map(cat => (elems[cat]));
-  }
+  today = new Date();
 
   get config(){
     return $config.store.config;
-  }
-
-  getRandomId(event){
-    return Math.random()*10000|0;
   }
 
 
@@ -111,7 +51,6 @@ export default class EventList extends mixins(Translatable) {
     menu[(itemIdx == -1)? 0:itemIdx].selected = true;
     return menu;
   }
-
 
   themeTertiary(theme) {
     return this.config.themes[theme].tertiary;
@@ -125,10 +64,7 @@ export default class EventList extends mixins(Translatable) {
     document.body.classList.remove('body-scroll');
   }
 
-
-
   async mounted(){
-    this.selected = this.$route.query.selected as string;
     document.body.classList.add('body-scroll');
   }
 
@@ -138,15 +74,8 @@ export default class EventList extends mixins(Translatable) {
   }
 
   async onEventCategory(name) {
-    this.categories.forEach(cat => {
-      cat.selected = false;
-      if(cat.name === name) {
-        cat.selected = true;
-      }
-    });
-    this.selected = name;
-    this.$forceUpdate();
-
+    const label = (name||'all').toLowerCase();
+    this.$router.replace({ query: { selected: label }}).catch(()=>{});    
   }
 
   async onEvent(event: CMS.Event) {
@@ -161,21 +90,6 @@ export default class EventList extends mixins(Translatable) {
     //
   }
 
-  async onToday($event) {
-    $event.stopPropagation();
-    const dest = this.calendar[3];
-    const element = document.getElementById(dest._id.toString());
-    if(!element) {
-      return;
-    }
-    element.scrollIntoView({ behavior: 'smooth' });
-
-  }
-
-  @Watch('$route', { immediate: true, deep: true })
-  async onRouteUpdate(to) {
-    this.selected = this.$route.query.selected as string;
-  }
 
 }
 </script>
