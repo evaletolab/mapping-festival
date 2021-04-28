@@ -34,6 +34,7 @@
         float: left;
         font-weight: 700;
       }
+
       &:not(.selected)::after {
         content: "⚫";
         margin-top: 5px;
@@ -66,6 +67,11 @@
         font-weight: 700;
         border-bottom: 4px solid var(--font-color);
       }
+
+      &.fas:not(.fa-selected){
+        color: #777!important;
+      }
+
     }
   }
 

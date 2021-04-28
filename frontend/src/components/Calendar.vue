@@ -1,13 +1,14 @@
 <template>
   <div class="calendar">
     <section class="secondary">
+        <a class="fas fa-sliders-h" :class="{'fa-selected':isAll}" @click="onAll"></a> 
         <a v-for="(menu,index) in eventTypes" 
           :class="{'selected':menu.selected}" 
           :key="index"
           @click="onEventCategory(menu.name)" >{{(menu.name)}}</a>
         <a class="today" @click="onToday">today</a>          
     </section>
-    <section v-if="gotop" class="top">
+    <section v-if="gotop" class="top" @click="onTop">
       <button >
         <i class="fas fa-arrow-up fa-2x"></i>
       </button>
@@ -50,11 +51,13 @@ export default class Calendar extends mixins(Translatable)  {
   private selected = '';
   private cache = {};
   private now = Date.now();
+  private isAll = true;
   
   @Prop() readonly limit!: boolean;
   @Prop() readonly gotop!: boolean;
 
   defaultCover = "https://via.placeholder.com/150";
+
 
   get events() {
     const label = (this.selected||'').toLowerCase();
@@ -98,8 +101,8 @@ export default class Calendar extends mixins(Translatable)  {
     // local cache
     if(this.cache['eventTypes']){
       return this.cache['eventTypes'];
-    }
-    const elems = {'all':{selected:(!this.selected),name:'all'}};
+    }    
+    const elems = {};
     CMS.eventTypeLabel.forEach(label => {
       (elems[label.toLowerCase()] = {selected:(label.toLowerCase() === this.selected),name:label})
     });
@@ -116,6 +119,10 @@ export default class Calendar extends mixins(Translatable)  {
     this.selected = this.$route.query.selected as string;
   }
 
+  async onAll(){
+    this.$router.replace({ query: { selected: 'all' }}).catch(()=>{});    
+  }
+  
   async onEventCategory(name) {
     const label = (name||'all').toLowerCase();
     this.$router.replace({ query: { selected: label }}).catch(()=>{});    
@@ -123,6 +130,15 @@ export default class Calendar extends mixins(Translatable)  {
 
   async onEvent(event: CMS.Event) {
     this.$router.push({ path: `/events/${event.slug}` });
+  }
+
+  async onTop($event) {
+    const dest = this.calendar[0];
+    const element = document.getElementById(dest._id.toString());
+    if(!element) {
+      return;
+    }
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 
   async onToday($event) {
@@ -146,6 +162,7 @@ export default class Calendar extends mixins(Translatable)  {
       });     
       this.selected = label;
     }
+    this.isAll = !this.eventTypes.some(type => type.selected==true);
   }
 
 }
