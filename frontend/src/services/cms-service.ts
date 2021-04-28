@@ -53,6 +53,10 @@ class CMSService {
     return this.cms.artists;
   }
 
+  public get pages(): CMS.Page[]{
+    return this.cms.pages;
+  }
+
   public getCalendarFrom(events?: CMS.Event[]): CMS.Calendar[] {
     const calendar = {};
     (events||this.events).forEach(event =>{      

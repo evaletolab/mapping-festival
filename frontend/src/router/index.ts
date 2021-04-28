@@ -14,6 +14,7 @@ import Spot from '../views/Spot.vue'
 import NotFound from '../views/NotFound.vue'
 import Diagnostics from '../views/Diagnostics.vue'
 import Map from '../views/Map.vue';
+import Page from '../views/Page.vue';
 
 Vue.use(VueRouter)
 
@@ -52,6 +53,17 @@ const routes: Array<RouteConfig> = [
     path: '/map/:spotslug?',
     name: 'Spot',
     component: Spot
+  },
+  {
+    path: '/pages/:pageslug?',
+    name: 'Page',
+    component: Page
+  },
+  // helper routes point
+  {
+    path: '/contact',
+    name: 'Contact',
+    redirect: {path: '/pages/contact'},
   },
   {
     path: '/__diagnostics',

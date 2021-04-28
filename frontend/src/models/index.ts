@@ -190,9 +190,6 @@ export namespace CMS {
     _id: string,
     slug: string,
     active: boolean,
-    cover: LocalMedia | null,
-    type: eventType,
-    subType: eventSubType,
     title:{
       fr:string,
       en:string
