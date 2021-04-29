@@ -19,7 +19,7 @@
     <div class="grid" v-for="elem in calendar" :key="elem._id" :id="elem._id">
       <h1>{{elem.date}}.{{elem.month}}</h1>
       <div class="event" 
-           :style="{ backgroundImage: 'url(' + (event.cover || defaultCover) + ')' }"
+           :style="{ backgroundImage: 'url(' + ((event.cover && event.cover.path) || defaultCover) + ')' }"
            v-for="event in elem.events" 
            :key="getRandomId(event)" 
            @click="onEvent(event)">
