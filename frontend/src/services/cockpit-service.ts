@@ -1,7 +1,6 @@
 import { CMS } from "@/models";
-import { Vue } from 'vue-property-decorator';
 import { $config } from "./config-service";
-import axios from 'axios';
+import DiagnosticsLogger from "../helpers/DiagnosticsLogger";
 import { t } from './i18n';
 
 
@@ -22,19 +21,14 @@ function getAxiosOptions(){
 class CockpitService {
 
   private _artistSlugs: Set<string> = new Set<string>();
-  private _diagnostics: string[] = [];
+  private _diagnosticsLogger: DiagnosticsLogger = new DiagnosticsLogger();
 
   constructor() {
   }
 
   public get diagnostics(): string[]{
-    return this._diagnostics;
+    return this._diagnosticsLogger.messages;
   }
-
-  logError(error){
-    console.warn(error);
-    this._diagnostics.push(error);
-  }  
 
   extractTranslation(map, key){
     const _en = map[key];
@@ -147,7 +141,7 @@ class CockpitService {
   
   formatSlugFromCMS(obj:any): void{
     if(!obj.slug) {
-      this.logError(`this object should have a slug ${JSON.stringify(obj)}` );
+      this._diagnosticsLogger.log(`this object should have a slug ${JSON.stringify(obj)}` );
       return;
     }
     const parts = obj.slug.split('/');
@@ -167,12 +161,12 @@ class CockpitService {
     }
 
     if(!slug){
-      this.logError(`this artist has no valid slug ${JSON.stringify(obj)}`);
+      this._diagnosticsLogger.log(`this artist has no valid slug ${JSON.stringify(obj)}`);
       return;
     }
 
     while(this._artistSlugs.has(slug)){
-      this.logError(`generating unduplicated slug for artist ${JSON.stringify(obj)}`);
+      this._diagnosticsLogger.log(`generating unduplicated slug for artist ${JSON.stringify(obj)}`);
       slug += obj._id;
     }
     this._artistSlugs.add(slug);
@@ -208,12 +202,13 @@ class CockpitService {
     // if no whens we are invalid
     if(!event.when || event.when.length == 0){
       const errorMsg = `event with title <strong>${t(event.title)}</strong> is invalid (has zero whens);`
-      this.logError(errorMsg);
+      this._diagnosticsLogger.log(errorMsg);
     }
 
     // build **when** array
     event.when = (event.when||[]).map ((w, index) => {
       const v = w.value;
+
       const start = new Date(`${v.startDate} ${v.startHour}`);
       const end = new Date(`${v.endDate} ${v.endHour}`);
       const cancel = v.cancel;
@@ -226,9 +221,28 @@ class CockpitService {
       }
 
       const id = index;
-      if(isNaN(start.getTime())) {
-        console.log('---FIXME invalid date',event,w)
+      {
+        // date validation
+
+        // start is present
+        if(isNaN(start.getTime())) {
+          this._diagnosticsLogger.log(`event with title ${t(event.title)} has invalid start date and/or invalid start time`);
+          console.log('---FIXME invalid date',event,w)
+        }
+
+        // end is present
+        if(isNaN(end.getTime())){
+          this._diagnosticsLogger.log(`event with title ${t(event.title)} has invalid end date and/or invalid end time`);
+        }
+        
+        // end is after start 
+        if(!isNaN(start.getTime()) && !isNaN(end.getTime())){
+          if(start.getTime() >= end.getTime()){
+            this._diagnosticsLogger.log(`event with title ${t(event.title)} has ends before is starts`);
+          }
+        }
       }
+
       return new CMS.When(start, end, cancel, eventLocation);
     });
 
@@ -269,10 +283,10 @@ class CockpitService {
     eventLocation.coordinates = geo.location ? [geo.location.lng, geo.location.lat] : null;
 
     if(!eventLocation.street){
-      this.logError(`eventlocation with name ${t(eventLocation.name)} has no street address`);
+      this._diagnosticsLogger.log(`eventlocation with name ${t(eventLocation.name)} has no street address`);
     }
     if(!eventLocation.coordinates){
-      this.logError(`eventlocation with name ${t(eventLocation.name)} has no coordinates`);
+      this._diagnosticsLogger.log(`eventlocation with name ${t(eventLocation.name)} has no coordinates`);
     }
 
     eventLocation.cover = eventLocation.cover ? this.formatLocalMedia(eventLocation.cover) : null;
@@ -314,7 +328,7 @@ class CockpitService {
         delete entry[`${key}_fr`];
       }else{
         const errorMsg = `object ${entry._id} does not contain key ${key}`; 
-        this.logError(errorMsg);
+        this._diagnosticsLogger.log(errorMsg);
       }
     }
 
