@@ -42,7 +42,7 @@
 
 
   /* helpers settings */
-  --helper-color-alpha: 0.2;
+  --helper-color-alpha: 0;
 
   /* font basics settings*/
   --font-size: calc((1vmin + 1.5vmax) * .8);
@@ -220,10 +220,10 @@ body{
 
 .spiegel{
   background-color: rgba(200,220,220,var(--helper-color-alpha));
-  width: var(--spiegel-width);
+  width: min(var(--spiegel-width), 1100px);
   margin: 0 0 calc(var(--line-height) - var(--image-to-x)) var(--margin-left);
   line-height: var(--line-height);
-
+  
 }
 
 
@@ -267,7 +267,6 @@ body{
 
 
 
-
   /* ****************************************** */
   /* ********** text main definitions ********* */
   /* ****************************************** */
@@ -278,6 +277,10 @@ p{
   margin:0;
   margin-bottom: var(--line-height);
 
+}
+
+.clear{
+  clear:both;
 }
 
 
