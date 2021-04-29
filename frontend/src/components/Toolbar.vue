@@ -110,7 +110,7 @@
     transition: all 200ms;      
     width: 100vw;
     height: 69px;
-    box-shadow: 0 2px 3px -1px rgba(0,0,0,.1);
+    -box-shadow: 0 2px 3px -1px rgba(0,0,0,.1);
 
     &.exited {
       transform: translateY(69px);            
