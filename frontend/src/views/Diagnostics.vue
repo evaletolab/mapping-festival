@@ -18,9 +18,6 @@
 </template>
 
 <style >
- :root{
-    --main-font-color: white;
- }
 </style>
 
 <style lang="scss" scoped>

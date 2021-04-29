@@ -216,7 +216,7 @@ export default class Toolbar extends Vue {
   scrollDirection = 0;
   darkMode = false;
   @Prop() tiny!:boolean;
-  @Prop({default:true}) main!:boolean;
+  main = true;
 
   async mounted(){
     //

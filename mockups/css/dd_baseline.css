@@ -48,6 +48,8 @@
   --font-size: calc((1vmin + 1.5vmax) * .8);
   --line-height: calc(var(--font-size) * 1.26);
   --font-color: #fff;
+  --main-font-color: white;
+
  
   /* text alignement properties */
   --text-to-baseline: calc(var(--line-height) * -.39 );
