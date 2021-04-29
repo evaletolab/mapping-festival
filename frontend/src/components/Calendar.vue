@@ -20,8 +20,8 @@
       <h1>{{elem.date}}.{{elem.month}}</h1>
       <div class="event" 
            :style="{ backgroundImage: 'url(' + ((event.cover && event.cover.path) || defaultCover) + ')' }"
-           v-for="event in elem.events" 
-           :key="getRandomId(event)" 
+           v-for="(event,index) in elem.events" 
+           :key="index" 
            @click="onEvent(event)">
         <div class="when">{{ event.when[0].startTime }} </div>
         <div class="title">{{ t(event.title) }} </div>      
