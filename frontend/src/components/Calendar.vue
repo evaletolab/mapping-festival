@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar" :class="clazz">
+  <div class="calendar">
     <section class="secondary">
         <a class="fas fa-sliders-h" :class="{'fa-selected':isAll}" @click="onAll"></a> 
         <a v-for="(menu,index) in eventTypes" 
