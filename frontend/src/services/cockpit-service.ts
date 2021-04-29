@@ -311,6 +311,7 @@ class CockpitService {
     artist.lastname = artist.lastname || "";
     artist.artistname = artist.artistname || null;
     artist.cover = artist.cover ? this.formatLocalMedia(artist.cover) : null;
+    artist.country = artist.country || "";
     return artist as CMS.Artist;
   }
 

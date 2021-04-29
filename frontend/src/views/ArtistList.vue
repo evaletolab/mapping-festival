@@ -8,11 +8,20 @@
     
     <PrimaryMenu i18n="on"/>
 
-    <ul>
-      <li v-for="artist in sortedArtists" :key="artist._id">
-        <router-link :to="`/artists/${artist.slug}`">{{ artist.firstname }} {{ artist.lastname }}</router-link>
-      </li>
-    </ul>
+    <div class="flex-grid">
+      <div class="col-one">
+        <ul>
+          <li>menu item 1</li>
+          <li>menu item 2</li>
+          <li>menu item 3</li>
+          <li>menu item 4</li>
+        </ul>
+      </div>
+      <div class="col-two">
+        <ArtistCard v-for="artist in sortedArtists" :key="artist._id" :artist="artist" />
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -23,6 +32,26 @@
   .artist{
     margin-top: 69px;
   }
+
+  .flex-grid {
+    display: flex;
+    justify-content: flex-start;
+    max-width: 1024px;
+  }
+  .col-one {
+    flex: 1;
+    max-width: 180px;
+  }
+  .col-two{
+    flex: 2;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+  @media (max-width: 414px) {
+  .flex-grid {
+    display: block;
+  }
+}
 </style>
 
 <script lang="ts">
@@ -34,11 +63,12 @@ import { $config, $artist } from '../services';
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
+import ArtistCard from '../components/ArtistCard.vue';
 
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu,
+    CMSIcons, Toolbar, PrimaryMenu, ArtistCard,
   }
 })
 export default class ArtistList extends Vue {
@@ -48,11 +78,10 @@ export default class ArtistList extends Vue {
 
   get sortedArtists(): CMS.Artist[] {
     const result = $artist.all.sort((a, b) =>{
-      const aName = a.lastname || a.firstname || "";
-      const bName = b.lastname || b.firstname || "";
+      const aName = a.artistName || a.lastname || a.firstname || "";
+      const bName = b.artistName || b.lastname || b.firstname || "";
       return aName.localeCompare(bName);
     });
-    console.log("sorted artists", result);
     return result;
   }
 

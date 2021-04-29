@@ -121,6 +121,7 @@ export namespace CMS {
     lastname:string,
     artistName:string,
     artistWebsite: string,
+    country: string,
     content:{
       fr:string,
       en:string
