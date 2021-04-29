@@ -1,0 +1,61 @@
+
+.landing{
+  ul.navigation{
+    padding: 0;
+    list-style: none;
+    li{
+      &::after {
+        content: "⚫";
+        float: right;
+        margin-top: 5px;
+      }
+      &:last-child {
+        border-bottom: 1px solid #333;
+      }
+
+      margin: 0 20px ;
+      padding: 20px 0;
+      border-top: 1px solid #333;
+      
+      a{
+        text-decoration: none;
+        font-size: 30px;
+        color: black;
+        font-weight: 600;          
+      }
+    }
+  }
+
+  footer{
+    a {
+      margin-right: 10px;
+    }    
+    a:last-child {
+      margin-right: 0px;
+    }
+  }
+  .sociallinks {
+    a{
+      margin-bottom: 30px;
+    }
+    a::after{
+      content: " — ";
+      color: white;
+      text-decoration: none!important;
+      position: absolute;
+      margin-top: 5px;
+    }
+    a:last-child {
+      &::after {
+        content: "";
+      }
+    }
+  }
+
+  button.lang {
+    border: none;
+    margin: 0 10px;
+    outline: none;
+  }
+}
+  

@@ -1,8 +1,11 @@
 /* eslint-disable */
-// TODO: discuss i18n with client
+
+import { t } from '../services/i18n';
+import { $config } from '../services/config-service';
+
 export namespace CMS {
   
-  export enum AssetType
+  export enum MimeType
   {
       PNG = 'image/png',
       SVG = 'image/svg+xml',
@@ -11,14 +14,60 @@ export namespace CMS {
       MP3 = 'audio/mpeg'
   }
 
-  export interface Asset {
-      type: AssetType;
-      url: string;
-  }
-
   export interface Config {
     version: string;
     themes: any;
+  }
+
+  export type socialPlatformType = ("facebook"|"twitter"|"instagram"|"linkedin");
+  export interface SocialMedia {
+    platform: socialPlatformType,
+    url:string,
+  }
+
+  
+  export type mediaPlatformType = ("youtube"|"video"|"img"|"audio"|"soundCloud"|"vimeo");
+  export interface ExternalMedia {
+    name: string,
+    platform: mediaPlatformType,
+    url:string,
+  }
+
+  export interface SizeVariant {
+    path: string,
+    width: number,
+    height: number,
+    size: number,
+  }
+
+  export interface LocalMedia{
+    _id: string,
+    name: string,
+    path: string,
+    title: string,
+    mime: string,
+    description: string,
+    tags: string[],
+    size: number
+    image: boolean,
+    video: boolean,
+    audio: boolean,
+    archive: boolean,
+    document: boolean,
+    code: boolean,
+    created: Date,
+    modified: Date,
+    width: number,
+    height: number,
+    colors: string[],
+
+    sizes:{
+      small: SizeVariant,
+      thumbs: SizeVariant,
+      headerimage: SizeVariant,
+      full: SizeVariant,
+    },
+  
   }
 
   //
@@ -30,37 +79,68 @@ export namespace CMS {
     updated?: Date;
   }
 
-  export type mediaType = ("video"|"image"|"audio"|"soundcloud"|"vimeo");
-  export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
+  // export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
+  export const eventTypeLabel = ["Installation", "Live", "Masterclass", "Collection"] as const;
+  export type eventType = typeof eventTypeLabel[number];
+
+  const _eventSubType = ["Parcours urbain", "Exposition", "Performance", "Nighclubbing", "Concert", "Workshop", "Table ronde", "Masterclass", "mappingTV"] as const;
+  export type  eventSubType = typeof _eventSubType[number];
+  
+  type Lat = number;
+  type Lng = number;
+
+  export type Coordinate = [Lng, Lat];
 
   export interface EventLocation {
-    lng:number,
-    lat:number,
+    _id:string
     slug:string,
-    street:string
-    postalCode:string,
-    city:string
+    name:{
+      fr:string,
+      en:string
+    }
+    cover: LocalMedia | null,
+    active:boolean,
+    street: string,
+    website: string,
+    postalcode: string,
+    city: string,
+    tag: string,
+    coordinates: Coordinate, 
+    content: {
+      fr:string,
+      en:string,
+    }
   }
 
   export interface Artist {
     _id: string,
-    name:string,
-    slug:[string],
+    slug:string,
+    active: boolean,
+    cover: LocalMedia | null,
+    firstname:string,
+    lastname:string,
+    artistName:string,
+    artistWebsite: string,
     content:{
       fr:string,
       en:string
     },  
-    medias:{label:string,url:string,type:mediaType}[],  
-    links:{url:string,label:string,css:string}[],  
-    published: Date,
+    localMedias: LocalMedia[],
+    externalMedias: ExternalMedia[],
+    socialMedias: SocialMedia[],
+
+    // published: Date,
     created: Date,
-    active: boolean,
-    signature:string,
-    creator:string,
+    // signature:string,
+    // creator:string,
   }
   export interface Event {
     _id: string,
+    slug: string,
+    active: boolean,
+    cover: LocalMedia | null,
     type: eventType,
+    subType: eventSubType,
     title:{
       fr:string,
       en:string
@@ -78,31 +158,50 @@ export namespace CMS {
       en:string
     },  
     notes:{
-      fr:string,
-      en:string
+      fr: string,
+      en: string
     },  
-    year:number,
-    when:[{
-      start:Date,
-      end:Date,
-      duration: number,
-      cancel: boolean
-    }],
+    year: number,
+    when: When[],
     price: number,
     limit: number,
-    geo: EventLocation,
-    medias:[
-      { label: string, url: string,type:mediaType }
-    ],
     artists:[{
-      name:string,
-      slug:string
+      lastname: string,
+      slug: string,
+      _id: string
     }],
-    published: Date,
+    localMedias: LocalMedia[],
+    externalMedias: ExternalMedia[],
+    // published: Date,
     created: Date,
+    // signature:string,
+    // creator:string,    
+  }
+
+  export interface Calendar {
+    day: string;
+    month: string;
+    event: Event[];
+    _id: number; // copied from When id
+  }
+
+
+  export interface Page {
+    _id: string,
+    slug: string,
     active: boolean,
-    signature:string,
-    creator:string,    
+    title:{
+      fr:string,
+      en:string
+    },
+    header:{
+      fr:string,
+      en:string
+    },
+    content:{
+      fr:string,
+      en:string
+    },
   }
 
   export type Content = (Artist) ;
@@ -118,6 +217,83 @@ export namespace CMS {
   //   time: Date|number;
   //   published: boolean;
   // }
-  
+
+  export class When {
+    _id;
+    year;
+    constructor(
+      private _start: Date, 
+      private _end: Date, 
+      private _cancel: boolean, 
+      private _eventLocation: EventLocation | null) 
+    {
+      const _1970 = new Date(0);
+      if(isNaN(_start.getTime())){
+        this._start = _1970;
+      }
+      if(isNaN(_end.getTime())){
+        this._end = _1970;
+      }
+      this._id = this._start.getTime();
+      this.year = this._start.getFullYear();
+    }
+
+    public get id(): number {
+      return this._id;
+    }
+
+    public get start(): Date{
+      return this._start;
+    }
+
+    public get end(): Date{
+      return this._end;
+    }
+
+    public get eventLocation(): CMS.EventLocation | null {
+      return this._eventLocation; 
+    }
+
+    // returns duration in minutes
+    public get duration(): number{
+      const duration = (this.end.getTime() - this.start.getTime()) / 1000 / 60;
+      return duration;
+    }
+
+    public get dayOfWeek(): string{
+      const dayIndex = this.start.getDay();
+      return t($config.store.config.time.days[dayIndex]);
+    }
+
+    public get date(): string {
+      // 2 digits
+      return ("0" + this.start.getDate()).slice(-2);
+      //return this.start.getDate().toString();
+    }
+    
+    public get month(): string{      
+      const monthIndex = this.start.getMonth();
+      return t($config.store.config.time.months[monthIndex]);
+    }
+
+    public get startTimeWeight(): number{
+      const hours = this.start.getHours();
+      const minutes = this.start.getMinutes();
+      return hours * 60 + minutes;
+    }
+
+    public get startTime(): string{
+      const hours = this.start.getHours().toString().padStart(2, "0");
+      const minutes = this.start.getMinutes().toString().padStart(2, "0");
+      return `${hours}:${minutes}`;
+    }
+
+    public get endTime(): string{
+      const hours = this.end.getHours().toString().padStart(2, "0");
+      const minutes = this.end.getMinutes().toString().padStart(2, "0");
+      return `${hours}:${minutes}`;
+
+    }
+  }
 }
 

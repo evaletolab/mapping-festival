@@ -1,7 +1,11 @@
 export { $config } from './config-service';
 export { $cms } from './cms-service';
+export { $event } from './event-service';
+export { $artist } from './artist-service';
+export { $eventLocation } from './eventLocation-service';
 export { $user } from './user-service';
-
+export { $page } from './page-service';
+export { $cockpit } from './cockpit-service';
 
 //
 // FIXME, validate usage of rxjs, store or vuex. What is the better store ?

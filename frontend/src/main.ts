@@ -1,29 +1,45 @@
 
 
+import '@fortawesome/fontawesome-free/css/all.css'
+
 import Vue from 'vue';
-// import VueCompositionApi from '@vue/composition-api'
-// Vue.use(VueCompositionApi)
+import './registerServiceWorker';
 
-import Editor from 'vue-editor-js/src';
-Vue.use(Editor);
-
-import './registerServiceWorker'
-import App from './App.vue'
+import './registerServiceWorker';
+import App from './App.vue';
 import './ts/class-component-hooks.ts';
-import router from './router'
+import router from './router';
 
-
-console.log('--- INIT main');
 Vue.config.productionTip = false
 
 
 import '@/main.scss'
+import "@/styles/dd_baseline_v04.css"; /* Typographic styles */
+import "@/styles/specific_v01.css";    /* Waiting page specific styles */
 
-import { $config, $user } from '@/services';
-const load = [$config.get(),$user.get()];
+// leaflet css
+// import 'leaflet/dist/leaflet.css';
 
-Promise.all(load).
-then(() => {
+
+import VuePlyr from 'vue-plyr';
+import 'vue-plyr/dist/vue-plyr.css';
+
+import { $config, $user, $cms } from '@/services';
+
+//
+// filters
+Vue.filter('shortdate', function(value) {
+  const d = new Date(value);
+  return d.getDate()+'.'+d.getMonth()+'.'+d.getFullYear();
+});
+
+const load = [$config.get(), $user.get()];
+
+Promise.all(load)
+.then(() => $cms.loadAll())
+.then(() => {
+  Vue.use(VuePlyr);
+
   new Vue({
     router,
     render: h => h(App)
@@ -33,3 +49,20 @@ then(() => {
   console.log("error", e);
 })
 
+//
+// Init CABLES
+//const CABLES  is loaded on index.html;
+declare const CABLES; 
+
+document.addEventListener('CABLES.jsLoaded', function(event) {
+  const showError = (id,msg) => alert('An error occured: ' + id + ', ' + msg);
+  CABLES.patch = new CABLES.Patch({
+      patch: CABLES.exportedPatch,
+      prefixAssetPath: '',
+      glCanvasId: 'glcanvas',
+      glCanvasResizeToWindow: false,
+      onError: showError,
+      onPatchLoaded: () => {},
+      onFinishedLoading: () =>{},
+  });
+});

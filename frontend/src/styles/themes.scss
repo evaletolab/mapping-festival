@@ -1,0 +1,47 @@
+
+//
+// global color themes (--css-values are defined in config-service.js
+.theme-1 {
+  .primary-on-text { color: var(--theme-1-primary)!important;}
+  .secondary-on-text { color: var(--theme-1-secondary)!important;}
+  .tertiary-on-text { color: var(--theme-1-tertiary)!important; }
+
+  .primary { background-color: var(--theme-1-primary)!important; color: white!important }
+  .secondary { background-color: var(--theme-1-secondary)!important; color: white!important; }
+  .tertiary { background-color: var(--theme-1-tertiary)!important; }
+}
+
+.theme-2 {
+  .primary { background-color: var(--theme-2-primary)!important;color: white!important; }
+  .secondary { background-color: var(--theme-2-secondary)!important;color: white!important; }
+  .tertiary { background-color: var(--theme-2-tertiary)!important; }
+
+  .primary-on-text { color: var(--theme-2-primary)!important;}
+  .secondary-on-text { color: var(--theme-2-secondary)!important;}
+  .tertiary-on-text { color: var(--theme-2-tertiary)!important; }
+}
+
+.theme-3 {
+  .primary { background-color: var(--theme-3-primary)!important;color: white!important; }
+  .secondary { background-color: var(--theme-3-secondary)!important;color: white!important; }
+  .tertiary { background-color: var(--theme-3-tertiary)!important; }
+
+  .primary-on-text { color: var(--theme-3-primary)!important;}
+  .secondary-on-text { color: var(--theme-3-secondary)!important;}
+  .tertiary-on-text { color: var(--theme-3-tertiary)!important; }  
+}
+
+.theme-4 {
+  .primary { background-color: var(--theme-4-primary)!important;color: white!important; }
+  .secondary { background-color: var(--theme-4-secondary)!important;color: white!important; }
+  .tertiary { background-color: var(--theme-4-tertiary)!important; }
+
+  .primary-on-text { color: var(--theme-4-primary)!important;}
+  .secondary-on-text { color: var(--theme-4-secondary)!important;}
+  .tertiary-on-text { color: var(--theme-4-tertiary)!important; }
+}
+
+
+
+
+

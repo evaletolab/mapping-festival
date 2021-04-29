@@ -4,7 +4,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Hammer from 'hammerjs';
-import debounce from 'lodash.debounce';
+// import debounce from 'lodash.debounce';
 
 @Component({
   components: {  }

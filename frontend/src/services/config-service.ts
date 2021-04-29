@@ -1,16 +1,19 @@
 import Vue from "vue";
 import axios from 'axios';
-import Airtable from 'airtable';
 
 const defaultAxios = {
   headers: { 'Cache-Control': 'no-cache' }
 };
 
+
+
+
 class ConfigService {
   // More about store
   // https://fr.vuejs.org/v2/guide/reactivity.html
   private _store: any;
-  private _baseUrl = process.env.BASE_URL;
+  // private _baseUrl = process.env.BASE_URL;
+  private _cmsBaseUrl = "https://iziapi.ch/mappingDev/index";
 
   private _lang = 'fr';
  
@@ -52,10 +55,13 @@ class ConfigService {
     }
     return this.config.i18n[this._lang][key];
   }  
+
   async get(force?: boolean){
     if(!this._store.config.done && !force) {
-      const res = await axios.get(this._baseUrl + 'config.json',defaultAxios);
-      this._store.config = res.data;
+      const url = `${this._cmsBaseUrl}/api/singletons/get/config`;
+      const res = await axios.get(url ,defaultAxios);
+      this._store.config = res.data.content;
+      this._store.config.cms.baseUrl = this._cmsBaseUrl; // sanity check!
       console.log('--',this._store.config);
       this._store.config.done = true;
 
@@ -63,25 +69,16 @@ class ConfigService {
       //
       // generate root colors
       this.generateColors(this._store.config.themes);
-
-      //
-      // configure Airtable instance 
-      const air = this._store.config.airtable;
-      if(!air || !air.key) {
-        console.log('-- DBG missing airtable config');
-        return;
-      }
-
-      const config = {
-        endpointUrl: 'https://api.airtable.com',
-        apiKey: air.key
-      } as any;
-      Airtable.configure(config);
-      air.base = Airtable.base(air.base); 
     }
 
+    console.log("config loaded");
     return this._store.config;
   }  
+
+  getMenu(layout) {
+    const menu = this._store.config.menu || [];
+    return menu.filter(menu => menu.layout == layout && menu.active); 
+  }
 
   generateColors(themes){
     const root = document.documentElement;
@@ -97,29 +94,25 @@ class ConfigService {
     });
   }
 
-
-  async storageGet(key: string) {
-    return new Promise((resolve, reject) => {
-      try {
-        const item = localStorage.getItem(key);
-        const parsed = JSON.parse(item as string);
-        resolve(parsed);
-      } catch (err) {
-        return reject(err);
-      }
-    });
+  storageGet(key: string) {
+    try {
+      const item = localStorage.getItem(key);
+      const parsed = JSON.parse(item as string);
+      return parsed;
+    } catch (err) {
+      return null;
+    }
   }
 
-  async storageSet(key: string, value: any) {
-    return new Promise((resolve, reject) => {
-      try {
-        localStorage.setItem(key, JSON.stringify(value));
-        resolve(value);
-      } catch (err) {
-        reject(err);
-      }
-    });
+  storageSet(key: string, value: any) : boolean {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
+  
 }
 
 //

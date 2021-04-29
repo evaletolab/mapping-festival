@@ -6,15 +6,48 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" >
     <meta name="apple-mobile-web-app-capable" content="yes">
 
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-control" content="no-cache, max-age=0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta itemprop="name" content="Mapping Festival Geneva">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="<%= BASE_URL %>/img/altbck.png">
+
+
+<!-- Primary Meta Tags -->
+    <title>Mapping Festival 2051</title>
+    <meta name="title" content="Mapping Festival 2051">
+    <meta name="description" content="Considered as a unique platform of production and diffusion in Switzerland, the mapping festival is a major event in the fields of image generation, technological creation and exploration, attracting both professional and general audience.">
+
+<!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://2051.mappingfestival.com">
+    <meta property="og:title" content="Mapping Festival 2051">
+    <meta property="og:description" content="Considered as a unique platform of production and diffusion in Switzerland, the mapping festival is a major event in the fields of image generation, technological creation and exploration, attracting both professional and general audience.">
+    <meta property="og:image" content="<%= BASE_URL %>/img/altbck.png">
+
+<!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://2051.mappingfestival.com">
+    <meta property="twitter:title" content="Mapping Festival 2051">
+    <meta property="twitter:description" content="Considered as a unique platform of production and diffusion in Switzerland, the mapping festival is a major event in the fields of image generation, technological creation and exploration, attracting both professional and general audience.">
+    <meta property="twitter:image" content="<%= BASE_URL %>/img/altbck.png">
+
+
+
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>      
     </noscript>
+
+    <canvas class="cable-gl-canvas" id="glcanvas"></canvas>
     <div id="app"></div>
+    <!-- <script type="text/javascript" src="<%= BASE_URL %>cable/cable.patch.js" async></script> -->
+
     <!-- built files will be auto injected -->
   </body>
 </html>

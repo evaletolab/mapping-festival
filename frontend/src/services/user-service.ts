@@ -9,7 +9,7 @@ class UserService {
     return this._user;
   }
 
-  async createUser(username: string): Promise<CMS.User> {
+  createUser(username: string): CMS.User {
     const user = {
       id: this.getDeviceID(),
       name: username,
@@ -18,7 +18,8 @@ class UserService {
     
     this._user = user;
     console.log('---DBG',user)
-    return await $config.storageSet(this._STORAGE_USER,user) as CMS.User;
+    $config.storageSet(this._STORAGE_USER,user);
+    return user as CMS.User;
   }
 
   getDeviceID() {

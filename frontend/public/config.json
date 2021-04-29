@@ -1,28 +1,80 @@
 {
-  "version" : "v0.2.0",
-  "icons":{
-    "VIDEO": "video",
-    "PODCAST": "podcast",
-    "INFOGRAPHIC": "infographie",
-    "MARKDOWN": "cours"
+  "logo":"/img/logo.png",
+  "landing":{
+    "title1":{"fr":"2051 <br>is near","en":"2051 <br>est proche"},
+    "title2":{"fr":"festival\ndes arts\ntechnologiques\net déviants","en":"deviant art\nfestival"},
+    "title3":{"fr":"13 — 23.5<br>genève","en":"13 — 23.5<br>geneva"},
+    "help":{
+      "name":{"fr":"bénévoles&#8239;!","en":"volunteers&#8239;!"},
+      "link":"https://docs.google.com/forms/d/e/1FAIpQLSeqzDLxisp0UboBNDx6G6IvQo2oYRfvwPPT1_rZ7Wo-E_mMmA/viewform"
+    }
   },
+  "footer":{
+  },
+
+  "menu":[    
+    {"layout":"secondary","name":{ "fr": "live", "en":"live"},"link":"/events?selected=live","weight":0,"active":true},
+    {"layout":"secondary","name":{ "fr": "lieux", "en":"location"},"link":"/spot","weight":0,"active":true},
+    {"layout":"secondary","name":{ "fr": "expo", "en":"expo"},"link":"/events?selected=expo","weight":0,"active":true},
+    {"layout":"secondary","name":{ "fr": "events", "en":"events"},"link":"/events","weight":0,"active":true},
+    {"layout":"secondary","name":{ "fr": "workshop", "en":"workshop"},"link":"/events?selected=workshop","weight":0,"active":true},
+    {"layout":"secondary","name":{ "fr": "artists", "en":"artists"},"link":"/artists","weight":0,"active":true},
+
+    {"layout":"footer","name":{ "fr": "contact", "en":"contact"},"link":"mailto:elvis@mappingfestival.com","weight":0,"active":true},
+    {"layout":"footer","name":{ "fr": "lieux", "en":"spots"},"link":"/spot","weight":0,"active":true},
+    {"layout":"footer","name":{ "fr": "events", "en":"events"},"link":"/events","weight":0,"active":true},
+    {"layout":"footer","name":{ "fr": "artistes", "en":"artists"},"link":"/artists","weight":0,"active":true},
+    {"layout":"footer","name":{ "fr": "workshop", "en":"workshop"},"link":"/events?selected=workshop","weight":0,"active":true},
+
+    {"layout":"social","name":{ "fr": "fbook", "en":"fbook"},"link":"https://www.facebook.com/mappingfest","weight":0,"active":true},
+    {"layout":"social","name":{ "fr": "insta", "en":"insta"},"link":"https://www.instagram.com/mappingfestival","weight":0,"active":true},
+    {"layout":"social","name":{ "fr": "vimeo", "en":"vimeo"},"link":"https://vimeo.com/mappingfestival","weight":0,"active":true},
+    {"layout":"social","name":{ "fr": "nft", "en":"nft"},"link":"https://opensea.com","weight":0,"active":false},
+
+    {"layout":"primary","name":{ "fr": "Agenda", "en":"Calendar"},"link":"/events","weight":0,"active":true},
+    {"layout":"primary","name":{ "fr": "Lieu", "en":"Spot"},"link":"/spot","weight":0,"active":true},
+    {"layout":"primary","name":{ "fr": "Artistes", "en":"Artists"},"link":"/artists","weight":0,"active":true}
+
+  ],
+
+  "notFound":{
+    "message": {"fr": "cette ressource n'existe pas", "en": "this resource does not exist"}
+  },
+
   "themes": {
     "1": { "primary":"#6900FF","secondary":"#260063", "tertiary":"#BBB8FF"},
     "2": { "primary":"#FFBC00","secondary":"#FF8D00", "tertiary":"#FFF9C5"},
     "3": { "primary":"#00D6B2","secondary":"#00A585", "tertiary":"#D9FFF8"},
     "4": { "primary":"#FF0049","secondary":"#A5003F", "tertiary":"#FF85A2"}
   },
-  "airtable": {
-    "key" : "--",
-    "base" : "appdgQusWVGxQVipj"
+  "cms": {
+    "baseUrl": "https://iziapi.ch/mappingDev/index",
+    "uploadsPath": "/storage/uploads",
+    "authToken": "690a8296407bdd55ae785e519d02fe"
   },
-  "i18n":{
-    "fr":{
-      "landing_title1":"Bienvenue!"
-    },
-    "de":{
-      "landing_title1":"Bienvenue!"
-    }
+  "time":{
+    "days":[
+      {"fr": "dimanche", "en": "sunday"}, 
+      {"fr": "lundi", "en": "monday"}, 
+      {"fr": "mardi", "en": "tuesday"}, 
+      {"fr": "mercredi", "en": "wednesday"}, 
+      {"fr": "jeudi", "en": "thursday"}, 
+      {"fr": "vendredi", "en": "friday"}, 
+      {"fr": "samedi", "en": "saturday"} 
+    ], 
+    "months": [
+      {"fr": "janvier", "en": "january"}, 
+      {"fr": "février", "en": "february"}, 
+      {"fr": "mars", "en": "march"}, 
+      {"fr": "avril", "en": "april"}, 
+      {"fr": "mai", "en": "may"}, 
+      {"fr": "juin", "en": "june"}, 
+      {"fr": "juillet", "en": "july"}, 
+      {"fr": "août", "en": "august"}, 
+      {"fr": "septembre", "en": "september"}, 
+      {"fr": "octobre", "en": "october"}, 
+      {"fr": "novembre", "en": "november"}, 
+      {"fr": "décembre", "en": "december"} 
+    ]
   }
-
 }
