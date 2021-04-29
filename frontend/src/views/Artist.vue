@@ -6,7 +6,6 @@
     <!-- TOOLBAR -->
     <Toolbar />
 
-    <div style="height:100px" />
 
     <PrimaryMenu />
 
@@ -60,14 +59,6 @@
 
 <style lang="scss" scoped>
   .artist{
-    // top: 0;
-    // right: 0;
-    // bottom: 0;
-    // margin: 0;
-    // z-index: 2;
-    // height: 100vh;
-    // width: 100vw;    
-    // padding-top:0;    
   }
   img{
     width:100%;

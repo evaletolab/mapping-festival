@@ -1,5 +1,20 @@
   //
   // global tools
+  html {
+    -webkit-overflow-scrolling: touch;
+    overflow: scrolls;
+  }
+
+  body{
+      margin: 0;
+      overflow-y: auto;
+  }
+  
+  button {
+    outline: 0;
+  }
+
+  
   .body-scroll {
     overflow-y: auto!important;
     position: relative;
@@ -35,101 +50,6 @@
     .show-lg        {display: block;}
     .hide-lg        {display: none;}
   }
-
-//
-// common style for toolbar, can be overhided on Component.vue
-.toolbar {
-  -border-radius: 0 0 18px 18px;
-  flex-flow: row wrap;
-  z-index: 2;    
-  position: fixed;
-  top:0;
-  left: 0;
-  right: 0;
-
-
-  width: 100vw;
-  .toolbar-section-start,
-  .toolbar-section-end
-  {
-    display: flex;
-    align-items: center;
-    flex: 1;    
-  }
-
-  .toolbar-section-end {
-    justify-content: flex-end;
-    order: 10;    
-  }
-
-  .toolbar-section-start {
-    justify-content: flex-start;
-    order: 0;    
-  }
-
-  .toolbar-title{
-    text-align: center;
-    font-size: 17px;
-    letter-spacing: -0.01em;
-    line-height: 22px;
-    margin-top: 22px;
-    margin-bottom: 7px;
-    margin-left: 6px;
-    font-weight: 900;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 100%;
-    &.tight {
-      margin: 0;
-    }
-    &.title-left{
-      text-align: left;
-    }
-    .progress{
-      width: 90px;
-      height: 25px;
-      margin: auto;        
-    }
-  }
-
-  .toolbar-row {
-    width: 100%;
-    min-height: 38px;
-    display: flex;
-    align-items: center;
-    align-content: center;
-  }
-
-  button{
-    padding: 2px 2px;
-    width: 36px;
-    height: 36px;        
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: 0;
-    color: var(--font-color);
-
-    svg{
-      width: 34px;
-    }
-
-    &.end{
-      margin-right: 10px;
-      margin-top: 15px;
-    }
-    &.start{
-      margin-left: 10px;
-      margin-top: 15px;
-    }
-  }
-
-}
-
-.toolbar-row + .toolbar-row {
-  margin-top: -12px;
-}
 
 
 

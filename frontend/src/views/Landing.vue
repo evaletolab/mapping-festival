@@ -1,10 +1,9 @@
 <template>
   <div class="landing">
-    
-
+    <toolbar tiny="true" />
     <!--------------- Main wrapper --------------------->
 
-    <div class="spiegel margin-top1">
+    <div class="header spiegel margin-top1">
         <h1 class="width7">mp<br>pngfst
             <br>vl</h1>
         <h2 class="width6 indent3" v-html="t(config.landing.title3)"/>
@@ -14,24 +13,21 @@
         <h4 class="width3 indent1 margin-top1">
             <div class="item" v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
         </h4>
-
-        <a :href="config.landing.help.link">
-          <div class="volunteer-sticker height5 width3 align-center">
-              <div class="margin-top1" v-html="t(config.landing.help.name)" />
-          </div>
-        </a>
     </div>
+    <PrimaryMenu class="spiegel" />
+    <Calendar limit="yes" gotop="yes" class="spiegel"/>
+
     <!--------------------- Social links --------------------------->
-    <div class="sociallinks">
+    <div class="sociallinks hide" >
       <p>
         <a v-for="(menu) in cfg.getMenu('social')" :key="menu.link" :href="menu.link" target="_new">{{t(menu.name)}}</a>           
       </p>
     </div>
     <!--------------------- Footer --------------------------->
-    <footer>
+    <footer class="hide">
       <p>
         <router-link v-for="menu in cfg.getMenu('footer')" :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
-        <LanguageSelector class="lang" />
+        
       </p>
     </footer>
 
@@ -54,18 +50,23 @@
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
+import { mixins } from 'vue-class-component';
+
 import { $config, $cms } from '../services';
 import { Translatable } from '../mixins';
 
 import CMSIcons from '../components/CMSIcons.vue';
-import LanguageSelector from '../components/LanguageSelector.vue';
+import Toolbar from '../components/Toolbar.vue';
+import Calendar from '../components/Calendar.vue';
+import PrimaryMenu from '../components/PrimaryMenu.vue';
 
-import { mixins } from 'vue-class-component';
 
 @Component({
   components: {
     CMSIcons,
-    LanguageSelector,
+    PrimaryMenu,
+    Toolbar,
+    Calendar
   },
 })
 export default class Landing extends mixins(Translatable) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar">
+  <div class="calendar" :class="clazz">
     <section class="secondary">
         <a class="fas fa-sliders-h" :class="{'fa-selected':isAll}" @click="onAll"></a> 
         <a v-for="(menu,index) in eventTypes" 
@@ -8,7 +8,8 @@
           @click="onEventCategory(menu.name)" >{{(menu.name)}}</a>
         <a class="today" @click="onToday">today</a>          
     </section>
-    <section v-if="gotop" class="top" @click="onTop">
+    <section v-if="gotop" class="top" @click="onTop"
+            :class="{'exited': (scrollDirection > 0) }">
       <button >
         <i class="fas fa-arrow-up fa-2x"></i>
       </button>
@@ -32,7 +33,109 @@
 </template>
 
 <style lang="scss">
-  @import "../styles/event-list.scss";
+  section.secondary{
+    display: flex;
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid #666;
+    overflow: hidden;
+    overflow-x: auto;    
+    margin-bottom: 20px;
+    font-size: 17px;
+
+    a{
+      cursor: pointer;
+      text-transform: lowercase;
+      color: var(--font-color);
+      margin: 0 3px ;
+      padding: 10px 0px;
+      padding-bottom: 0;
+      text-decoration: none;
+      line-height: 40px;
+      align-self: flex-end;
+      border-bottom: 4px solid transparent;
+      letter-spacing: -.4px;
+  
+      &.selected{
+        font-weight: 700;
+        border-bottom: 4px solid var(--font-color);
+      }
+
+      &.fas:not(.fa-selected){
+        color: #777!important;
+      }
+
+    }
+  }
+
+  section.top{
+    position: fixed;
+    bottom: -60px; 
+    left: calc( 50% - 16px );       
+
+
+    transform: translateY(0);
+    transition: all 200ms;      
+
+    &.exited {
+      transform: translateY(-70px);            
+    }
+
+    button{
+      padding: 2px 2px;
+      width: 36px;
+      height: 36px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      outline: 0;
+      background: var(--font-color);
+      color: var(--body-color);
+      border-radius: 50%;
+    }
+  }
+    
+  .grid {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    border-bottom: 1px solid #eee;
+    h1{
+      display: block;
+      width: 100%;
+      text-transform: uppercase;
+      font-size: xx-large;
+    }
+    .event {
+      flex: 1 0 150px;
+      background-color: #fff;
+      color: black;
+      background: url(https://via.placeholder.com/150) no-repeat, #ddd;
+      background-size: cover;
+      background-position: center;
+      border-radius: 4px;
+      margin: 4px;
+      padding: 4px;
+      min-height: 140px;
+      max-width: 130px;
+      overflow: hidden;
+      @media (max-width:475px) {
+        flex: 1 0 calc( 50% - 16px );
+        max-width: calc( 50% - 16px );
+      }
+
+      .title {
+        color: deeppink;
+        font-weight: 400;
+      }
+      .type {
+        color: blue;
+        font-weight: 200;
+      }
+    }
+  }
+
 </style>
 
 <script lang="ts">
@@ -52,9 +155,13 @@ export default class Calendar extends mixins(Translatable)  {
   private cache = {};
   private now = Date.now();
   private isAll = true;
+  private lastScrollTop = 0;
+  scrollDirection = 0;
+
   
   @Prop() readonly limit!: boolean;
   @Prop() readonly gotop!: boolean;
+  @Prop() readonly clazz: string;
 
   defaultCover = "https://via.placeholder.com/150";
 
@@ -115,9 +222,27 @@ export default class Calendar extends mixins(Translatable)  {
     return Math.random()*10000|0;
   }
 
-  async mounted() {
+  async mounted(){
     this.selected = this.$route.query.selected as string;
+    window.addEventListener("scroll", () => { 
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      //
+      // downscroll code
+      if (st > this.lastScrollTop){
+        this.scrollDirection = 1;
+      } 
+      //
+      // upscroll code
+      else {          
+        this.scrollDirection = -1;
+      }
+
+      //
+      // For Mobile or negative scrolling
+      this.lastScrollTop = st <= 0 ? 0 : st; 
+    }, false);
   }
+
 
   async onAll(){
     this.$router.replace({ query: { selected: 'all' }}).catch(()=>{});    

@@ -2,12 +2,11 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  <div class="artist spiegel margin-top1">
+  <div class="artist">
     <!-- TOOLBAR -->
     <Toolbar />
     
-    <div style="height:80px" />
-    <PrimaryMenu />
+    <PrimaryMenu i18n="on"/>
 
     <ul>
       <li v-for="artist in sortedArtists" :key="artist._id">
@@ -25,15 +24,7 @@
 
 <style lang="scss" scoped>
   .artist{
-    // position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    margin: 0;
-    z-index: 2;
-    height: 100vh;
-    width: 100vw;    
-    padding-top:0;    
+    margin-top: 69px;
   }
 </style>
 
