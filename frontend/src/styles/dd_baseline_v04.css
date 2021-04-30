@@ -47,9 +47,9 @@
   /* font basics settings*/
   --font-size: calc((1vmin + 1.5vmax) * .8);
   --line-height: calc(var(--font-size) * 1.26);
-  --font-color: #fff;
-  --main-font-color: white;
-  --body-color: black;
+  --font-color: black;
+  --main-font-color: black;
+  --body-color: white;
 
  
   /* text alignement properties */

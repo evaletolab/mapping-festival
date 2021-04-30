@@ -81,6 +81,8 @@
     transform: translateY(0);
     transition: all 200ms;      
 
+    z-index: 2;
+
     &.exited {
       transform: translateY(-70px);            
     }
@@ -104,7 +106,10 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     margin: 20px 0;
-    border-bottom: 1px solid #eee;
+    border-top: 1px solid var(--font-color);
+    &:first-child{
+      border-top: none;
+    }
     h1{
       display: block;
       width: 100%;
