@@ -18,7 +18,22 @@
         </ul>
       </div>
       <div class="col-two">
-        <ArtistCard v-for="artist in sortedArtists" :key="artist._id" :artist="artist" />
+        <div v-if="isMobileView">
+          <ArtistCard v-for="artist in sortedArtists" :key="artist._id" 
+          :artist="artist"
+          :mobileView="true" 
+          />
+        </div>
+        <div v-else>
+          <div v-for="artistSet in groupedArtists" :key="artistSet.letterId" >
+            <p class="letter-key">{{artistSet.letterId}}</p>
+            <ArtistCard v-for="artist in artistSet.artists" :key="artist._id" 
+            :artist="artist"
+            :mobileView="false" 
+            />
+            <hr>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -51,6 +66,15 @@
   .flex-grid {
     display: block;
   }
+
+  hr{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+  }
 }
 </style>
 
@@ -72,17 +96,22 @@ import ArtistCard from '../components/ArtistCard.vue';
   }
 })
 export default class ArtistList extends Vue {
+  screenWidth = 0;
   get config(){
     return $config.store.config;
   }
 
   get sortedArtists(): CMS.Artist[] {
-    const result = $artist.all.sort((a, b) =>{
-      const aName = a.artistName || a.lastname || a.firstname || "";
-      const bName = b.artistName || b.lastname || b.firstname || "";
-      return aName.localeCompare(bName);
-    });
-    return result;
+    return $artist.sorted;
+  }
+
+  get groupedArtists(): CMS.ArtistSetByLetter[] {
+    return $artist.setsByLetter;
+  }
+
+  get isMobileView(){
+    console.log("screen width", this.screenWidth);
+    return this.screenWidth < 500;
   }
 
   themeTertiary(theme) {
@@ -94,11 +123,26 @@ export default class ArtistList extends Vue {
   }
 
   mounted(){
+    console.log("artist list mounted")
     document.body.classList.add('body-scroll');
+    addEventListener('resize', this.onResize);
+    this.computeScreenWidth();
+
+    console.log($artist.setsByLetter);
   }
 
   beforeDestroy() {
+    console.log("artist list removed")
     document.body.classList.remove('body-scroll');
+    removeEventListener('resize', this.onResize);
+  }
+
+  computeScreenWidth(){
+    this.screenWidth = window.innerWidth;
+  }
+
+  onResize(){
+    this.computeScreenWidth();
   }
 
   async onBack() {

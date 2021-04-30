@@ -186,6 +186,11 @@ export namespace CMS {
     _id: number; // copied from When id
   }
 
+  export interface ArtistSetByLetter
+  {
+    letterId: string;
+    artists: Artist[];
+  }
 
   export interface Page {
     _id: string,

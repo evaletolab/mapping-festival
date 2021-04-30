@@ -1,11 +1,52 @@
 import { $cms } from './cms-service';
 import { CMS } from "@/models";
 
+
 class ArtistService
 {
 
     get all(): CMS.Artist[]{
         return $cms.artists;
+    }
+
+    get sorted(): CMS.Artist[]{
+        const result = this.all.sort((a, b) =>{
+        const aName = this.artistSortingName(a);
+        const bName = this.artistSortingName(b);
+        return aName.localeCompare(bName);
+        });
+        return result;
+    }
+
+    get setsByLetter(): CMS.ArtistSetByLetter[]{
+        let result: CMS.ArtistSetByLetter[] = []
+
+        const artistMap = {};
+        for(let artist of this.sorted){
+            const artistFirstLetter = this.artistSortingName(artist)[0];
+            console.log("key", artistFirstLetter);
+            if(artistFirstLetter in artistMap){
+                console.log("key", artistFirstLetter, "is in", artistMap);
+                artistMap[artistFirstLetter].push(artist);
+            }else{
+                artistMap[artistFirstLetter] = [artist];
+            }
+        }
+
+        const keys = Object.keys(artistMap).sort();
+        for(let key of keys){
+            result.push({
+                letterId: key,
+                artists: artistMap[key],
+            });
+        }
+
+        return result;
+    }
+
+    artistSortingName(artist: CMS.Artist): string{
+        const aName = artist.artistName || artist.lastname || artist.firstname || " ";
+        return aName;
     }
 
     artistWithSlug(slug: string): CMS.Artist | null {
