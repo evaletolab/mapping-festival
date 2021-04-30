@@ -8,6 +8,8 @@
     
     <PrimaryMenu i18n="on"/>
 
+    <!-- <VueCable /> -->
+
     <div class="flex-grid">
       <div class="col-one">
         <ul>
@@ -88,11 +90,12 @@ import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
 import ArtistCard from '../components/ArtistCard.vue';
+import VueCable from '../components/VueCable.vue';
 
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu, ArtistCard,
+    CMSIcons, Toolbar, PrimaryMenu, ArtistCard, VueCable
   }
 })
 export default class ArtistList extends Vue {
