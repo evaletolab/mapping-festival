@@ -23,8 +23,8 @@
            v-for="(event,index) in elem.events" 
            :key="index" 
            @click="onEvent(event)">
-        <div class="when">{{ event.when[0].startTime }} </div>
         <div class="title">{{ t(event.title) }} </div>      
+        <div class="when">{{ event.when[0].startTime }} </div>
         <div class="type">{{ (event.type) }} </div>      
       </div>
     </div>
@@ -36,12 +36,15 @@
   section.secondary{
     display: flex;
     width: 100%;
-    height: 50px;
+    height: 70px;
     border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
     overflow: hidden;
     overflow-x: auto;    
-    margin-bottom: 20px;
     font-size: 17px;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
 
     a{
       cursor: pointer;
@@ -52,10 +55,11 @@
       padding-bottom: 0;
       text-decoration: none;
       line-height: 40px;
-      align-self: flex-end;
       border-bottom: 4px solid transparent;
       letter-spacing: -.4px;
-  
+
+      -align-self: flex-end;
+
       &.selected{
         font-weight: 700;
         border-bottom: 4px solid var(--font-color);
@@ -105,33 +109,52 @@
       display: block;
       width: 100%;
       text-transform: uppercase;
-      font-size: xx-large;
+      font-size: 18px;
     }
     .event {
+      cursor: pointer;
       flex: 1 0 150px;
       background-color: #fff;
       color: black;
       background: url(https://via.placeholder.com/150) no-repeat, #ddd;
       background-size: cover;
       background-position: center;
-      border-radius: 4px;
+      border-radius: 0px;
       margin: 4px;
       padding: 4px;
       min-height: 140px;
       max-width: 130px;
       overflow: hidden;
+      position: relative;
       @media (max-width:475px) {
         flex: 1 0 calc( 50% - 16px );
         max-width: calc( 50% - 16px );
       }
 
       .title {
-        color: deeppink;
-        font-weight: 400;
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+        letter-spacing: -.2px;
       }
       .type {
-        color: blue;
+        color: white;        
+        background: black;
         font-weight: 200;
+        border-radius: 6px;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        font-size: 10px;
+        padding: 0px 4px;
+        opacity: .4;
+        transform: scale(.8);
+      }
+      .when{
+        -position: absolute;
+        bottom: 5px;
+        right: 5px;
+        color: white;        
       }
     }
   }

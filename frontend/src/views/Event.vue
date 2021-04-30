@@ -2,24 +2,26 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  <div class="event spiegel margin-top1">
+  <div class="event">
     <!-- TOOLBAR -->
     <Toolbar/>
 
-    <div style="height: 80px" />
-    <PrimaryMenu />
+    <!-- HEADER -->
+    <section class="header spiegel" :style="backgroundImage">
+      <p class="when">{{when|shortdate}}</p>    
+      <p class="title">{{t(event.title)}}</p>
+      <p class="type">{{event.type}} / {{event.subType}} / {{t(event.header)}}</p>    
+    </section>
 
-    <h1>{{t(event.title)}} ({{event.type}} / {{event.subType}})</h1>
+    <!-- ABOUT -->
+    <h4 class="width3 indent1 margin-top1">
+      <div class="item" v-for="(when,index) in event.when" :key="index">{{when.start|shortdate}} - {{when.startTime}}</div>
+      <div class="item"></div>
+      <div class="item">{{t({fr:"prix", en:"price"})}}: {{event.price || '--'}}</div>
+      <div class="item">{{t({fr:"limite", en:"limit"})}}: {{event.limit || '--'}}</div>
+    </h4>
 
-    <img v-if="event.cover" :src="event.cover.sizes.headerimage.path" /> 
-    
-    <div v-html="t(event.header)"></div>
-   
-    <ul>
-      <li v-if="event.price">{{t({fr:"prix", en:"price"})}}: {{event.price}}</li>
-      <li v-if="event.limit">{{t({fr:"limite", en:"limit"})}}: {{event.limit}}</li>
-    </ul>
-    <div v-html="t(event.content)"></div>
+    <div class="spiegel" v-html="t(event.content)"></div>
 
     <h2>Artists</h2>
     <ul v-for="artist in artists" :key="artist._id">
@@ -64,8 +66,36 @@
 </template>
 
 <style lang="scss" scoped>
-  .event{
+  .header{
+    position: relative;
+    height: calc( 100vh / 2 );
+    .when{
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      font-size: 40px;
+      font-weight: 600;      
+    }
+    .title{
+      position: absolute;
+      left: 20px;
+      top: 70px;
+      font-size: 40px;
+      font-weight: 500;      
+    }
+    .type{
+      position: absolute;
+      bottom: 50px;
+      text-align: center;
+      left: 30%;
+    }
+
   }
+
+  .event{
+    margin-top: 60px;
+  }
+
   img{
     width:100%;
   }
@@ -98,8 +128,33 @@ export default class Event extends mixins(Translatable) {
     return $config.store.config;
   }
 
+  get backgroundImage(){
+    const defaultImg = 'https://via.placeholder.com/450';
+    const cover = this.event.cover as any;
+    const image = (cover &&  cover.sizes) ? cover.sizes.headerimage.path:defaultImg;
+    return {
+      backgroundImage:  'url(' + image + ') ',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize :'cover'
+    };
+  }
+
+  //
+  // get first available date after now
+  get when(){
+    const now = Date.now();
+    const find = (this.event.when||[]).find(when => when._id > now );
+    return find ? find.start:null;
+  }
+
   mounted(){
     document.body.classList.add('body-scroll');
+    document.body.scrollTop = 0;
+    try{window.scrollTo(0,0);}catch(e){
+      //
+    }
+    
+
   }
 
   beforeDestroy() {

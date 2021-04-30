@@ -14,7 +14,6 @@
   .secondary{
     display: block;
     width: 100%;
-    height: 70px;
     border-top: 1px solid #666;
     button{
       background: transparent;

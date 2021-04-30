@@ -16,9 +16,6 @@
           <i class="fas fa-bars fa-2x"></i>
         </button>
       </div>
-    </div>
-
-    <div class="toolbar-row" v-if="main">
     </div>        
 
     <div class="toolbar-row" v-if="tiny">

@@ -59,13 +59,15 @@ class CMSService {
 
   public getCalendarFrom(events?: CMS.Event[]): CMS.Calendar[] {
     const calendar = {};
+    let counter = 10;
+
     (events||this.events).forEach(event =>{      
       const times = (event.when||[]).slice();
       times.forEach(when => {
         const date = when.date;
         const month = when.month;
         const key = date+'.'+month;
-        const _id = when._id;
+        const _id = when._id + (counter);
         const time = when.startTime;
         const ms = when._id;
         const selector = date + '.' + month;
@@ -74,6 +76,7 @@ class CMSService {
         }
         //
         // only one time per event
+        event._id = ''+(counter++);
         event.when = [when];
         calendar[key].events.push(event);
       });        
