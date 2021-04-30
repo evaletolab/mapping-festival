@@ -91,13 +91,11 @@
 }
 
 
-@media only screen 
-  and (min-width: 320px) 
-  and (max-width: 568px)
+@media only screen and (max-width: 400px)
   {
     :root {
-      -webkit-text-size-adjust: none;
-      --font-size: calc((1vmin + 1.5vmax) * 1.3);
+      /*-webkit-text-size-adjust: none;*/
+      --font-size: calc((1vmin + 1.5vmax) * 1.2);
   		--margin-left: calc((var(--line-height) * .1 ) - var(--text-to-baseline) + var(--image-to-x));
   		--margin-right: var(--margin-left);
     }
@@ -151,7 +149,7 @@ body{
 
   font-size: var(--font-size);
   line-height: var(--line-height);
-  transform: translateY(var(--text-to-baseline)); 
+  transform: translateY(var(--text-to-baseline));
   
   background: black;
   color: var(--font-color);
@@ -222,19 +220,16 @@ body{
 
 .spiegel{
   background-color: rgba(200,220,220,var(--helper-color-alpha));
-  /* width: min(var(--spiegel-width), 1100px); */
   width: var(--spiegel-width);
   margin: 0 0 calc(var(--line-height) - var(--image-to-x)) var(--margin-left);
   line-height: var(--line-height);
-  
-}
+  }
 
 
 
   /* ***************************************** */
   /* ***************** images **************** */
   /* ***************************************** */
-
 
 
 .image{
@@ -249,7 +244,6 @@ body{
   max-width: 100%;
   object-fit: cover;
   mix-blend-mode: multiply;
-
 }
 
 
@@ -279,11 +273,10 @@ p{
   background-color: rgba(200,180,220,var(--helper-color-alpha));
   margin:0;
   margin-bottom: var(--line-height);
-
 }
 
 .clear{
-  clear:both;
+  clear: both;
 }
 
 
@@ -446,7 +439,10 @@ h5{  /*  notes et addendum */
 .indent6{ margin-left: calc(var(--column-width) * 6 + var(--gutter-width) * 6); }
 .indent7{ margin-left: calc(var(--column-width) * 7 + var(--gutter-width) * 7); }
 
-  @media only screen and (max-width : 568px) {
+
+
+
+  @media only screen and (max-width: 568px) {
 
     .indent1, .indent2, .indent3 { margin-left: 0;}
     .indent4, .indent5, .indent6, .indent7, { margin-left: calc(var(--column-width) * 4 + var(--gutter-width) * 4);}
@@ -467,7 +463,7 @@ h5{  /*  notes et addendum */
 .width7{ width: calc(var(--column-width) * 7 + var(--gutter-width) * 6); }
 .width8{ width: calc(var(--column-width) * 8 + var(--gutter-width) * 7); }
 
-  @media only screen and (max-width : 568px) {
+  @media only screen and (max-width: 568px) {
 
     .width1, .width2, .width3, .width4{ width: calc(var(--column-width) * 4 + var(--gutter-width) * 3); }
     .width5, .width6, .width7, .width8{ width: calc(var(--column-width) * 8 + var(--gutter-width) * 7); }
