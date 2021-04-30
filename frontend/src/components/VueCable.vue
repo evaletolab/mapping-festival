@@ -52,7 +52,7 @@ export default class VueCable extends Vue {
 
   initCables(){
     console.log("init-------------------------------------", CABLES);
-    if(CABLES){
+    if(window.CABLES){
       new CABLES.Patch({
         patch: CABLES.exportedPatch,
         prefixAssetPath: '',
@@ -66,12 +66,17 @@ export default class VueCable extends Vue {
   }
 
   loadJS(){
-    console.log("loading patch------------------------")
-    const scriptTag = document.createElement('script');
-    scriptTag.setAttribute('src', "/cable/cable.patch.js");
-    this.$el.appendChild(scriptTag);
-    scriptTag.onload = this.initCables;
-    //document.addEventListener('CABLES.jsLoaded', this.initCables); // does not fire...
+    if(window.CABLES){
+      this.initCables();
+    }else{
+      console.log("loading patch------------------------");
+      const scriptTag = document.createElement('script');
+      scriptTag.setAttribute('src', "/cable/cable.patch.js");
+      this.$el.appendChild(scriptTag);
+      scriptTag.onload = this.initCables;
+      //document.addEventListener('CABLES.jsLoaded', this.initCables); // does not fire...
+    }
+
   }
 }
 </script>

@@ -24,9 +24,7 @@ class ArtistService
         const artistMap = {};
         for(let artist of this.sorted){
             const artistFirstLetter = this.artistSortingName(artist)[0];
-            console.log("key", artistFirstLetter);
             if(artistFirstLetter in artistMap){
-                console.log("key", artistFirstLetter, "is in", artistMap);
                 artistMap[artistFirstLetter].push(artist);
             }else{
                 artistMap[artistFirstLetter] = [artist];
