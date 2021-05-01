@@ -7,7 +7,7 @@
   /*            online@delcourt.ch           */
   /*                                         */
   /*                                         */
-  /*    v0.4                                 */
+  /*    v0.5                                 */
 
 
 
@@ -42,10 +42,11 @@
 
 
   /* helpers settings */
-  --helper-color-alpha: 0;
+  --helper-color-alpha: 0.0;
 
   /* font basics settings*/
-  --font-size: calc((1vmin + 1.5vmax) * .8);
+  --font-size-max: 22px;
+  --font-size: min(calc((1vmin + 1.5vmax) * .8), var(--font-size-max));
   --line-height: calc(var(--font-size) * 1.26);
   --font-color: #fff;
   --main-font-color: white;
@@ -56,6 +57,7 @@
   --image-to-x: calc(var(--line-height) * .35);
 
   /* Spiegel base */
+  --spiegel-max-width: 1200px;
   --margin-width: 2;  /* (in terms of line-height) */
   --columns-count: 8;
 
@@ -75,11 +77,12 @@
 
 
   /* margins properties */
-  --margin-left: calc((var(--line-height) * var(--margin-width) ) - var(--text-to-baseline) + var(--image-to-x));
+  --margin-left: max(calc((var(--line-height) * var(--margin-width) ) - var(--text-to-baseline) + var(--image-to-x)), (calc(100vw - var(--spiegel-max-width)) / 2));
   --margin-right: var(--margin-left);
 
   /* spiegel / gutter / columns properties */
   --spiegel-width: calc(100vw - var(--margin-left) - var(--margin-right));
+    
   --gutter-width: calc(var(--line-height) + var(--text-to-baseline));
   --column-width: calc( var(--spiegel-width) / var(--columns-count) - (var(--gutter-width) * ( var(--columns-count) - 1 ) / var(--columns-count))) ;
 
@@ -354,7 +357,7 @@ h4{  /*  infos techniques */
 h5{  /*  notes et addendum */
 
   background-color: rgba(220,200,100,var(--helper-color-alpha));
-  margin:0;
+  margin-top:0;
   margin-bottom: calc(var(--line-height) - 8px);
 
   font-size: calc(var(--font-size) * .8);
@@ -546,3 +549,52 @@ h5{  /*  notes et addendum */
     margin: 0;
     padding:calc(var(--gutter-width)*.5);
     }
+
+
+
+  /* * * * *  links  * * * * * */
+
+  a {
+      color: var(--main-font-color);
+      text-decoration: underline;
+  }
+
+  a:hover,
+  a:active {
+      color: #a3b0e4;
+  }
+
+
+  /* * * * * links to buttons * * * * * */
+
+  a.button {
+    position: relative;
+    /* display: block; */
+    /* width: auto; */
+
+    font-family: 'inter';
+    font-size: .82rem;
+    font-weight: 600;
+    color:rgb(78, 78, 78);
+    text-align: center;
+
+    background-color: none;
+
+    color: white;
+    padding: .3rem ;
+
+    text-decoration: none;
+    text-transform: none;
+
+    /* border-radius: .25rem; */
+    border: 1px solid rgb(143, 143, 143);
+
+    /*
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(167, 167, 167, 0.5);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(167, 167, 167, 0.5);
+    box-shadow: 0px 0px 8px 0px rgba(167, 167, 167, 0.5);
+    */
+
+  }
+  
+

@@ -57,28 +57,30 @@
 
     <div class="spiegel margin-top1">
 
-        <h1 class="width7">mp<br>pngfst
-            <br>vl</h1>
-        <h2 class="width6 indent3">
-            13 — 23.5<br>
-            genève
-        </h2>
+        <h1>
+            mp<br>
+            pngfst<br>
+            vl<br>
+            2051<br>
+            </h1>
+            
+            <br>
+            
+            <h2 class="align-left indent1">13 — 23.5<br>
+            genève<br></h2>
+            
+            <br>
+            
+            <h2>festival des arts<br>
+            technologiques et déviants</h2>
+            
+            <br><br>
 
-        <h1 class="margin-top1 indent1">2051 <br>is near</h1>
 
-
-
-        <h4 class="width3 indent3 margin-top1">
-            <div class="item">festival</div>
-            <div class="item">des arts</div>
-            <div class="item">technologiques</div>
-            <div class="item">et déviants</div>
-        </h4>
-
-
-        <a href="api-expo.html">
-            <div class="api-sticker height5 width3 align-center">
-                <div class="vcenter">Exposition à l'API</div>
+                    <p class="width4 indent2">Exposition en collaboration avec l'API du 1er mai au 6 juin 2021.</p>
+                    <a href="api-expo.html">
+            <div class="api-sticker height5 width3 margin-top1 indent3">
+                <div class="vcenter">--></div>
             </div>
         </a>
 
@@ -124,8 +126,6 @@
 
 
 <!--------------------- scripts --------------------------->
-
-
 
 <script>
 
@@ -196,36 +196,7 @@ if(checkIsMobileOrTablet()){
 
 </script>
 
-<!--
-<script>
 
-/******************************************/
-/********* Fetching random image   ********/
-/******************************************/
-
-const randIndex = (maxIndex) => Math.floor(Math.random() * maxIndex);
-// random backdrop script
-fetch('backdrops.json')
-.then(response => response.json())
-.then(data => {
-    const url = data[randIndex(data.length)];
-    document.querySelector('.backdrop').style.backgroundImage = `url(${url})`;
-    document.querySelector('.shade').style.backgroundImage = `url(${url})`;
-
-
-/*********    Output image ref    ********/
-
-    var fields = url.split(/[(\/)|(\-)|(\.)]/);
-/*  var dir = fields[0];
-    var filename_begin = fields[1]; */
-    var imgNum = fields[2];
-/*  var extension = fields[3]; */
-    document.getElementById("filename").innerHTML = imgNum;
-
-});
-
-</script>
--->
 
 </body>
 </html>
