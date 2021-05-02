@@ -3,23 +3,23 @@
 }
 
 body {
-  background: #000000c7;
+  background: #000000;
   /* padding: 5px;*/ 
   height: 100vh;
-  margin: 0;
+  /*margin: 0;*/
 }
 
 .page-wrap {
-  background: white;
+  background:none;
   height: calc(100vh - 10px);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
   display: grid;
   grid-template-columns: minmax(10px, 1fr) minmax(10px, 3fr);
   grid-template-rows: min-content min-content 1fr min-content;
-  gap: 1px;
+  gap: 0px;
 }
 .page-wrap > * {
-  padding: 1rem;
+  /*padding: 1rem;*/
 }
 
 @media (max-width: 600px) {
@@ -41,7 +41,7 @@ body {
 .page-sidebar {
   grid-column: 1/2;
   grid-row: 2/4;
-  background: #e1bee7;
+  background: #aaaaaa;
 }
 
 .page-sub-nav {
@@ -51,7 +51,7 @@ body {
 
 .page-main {
   grid-column: 2/3;
-  background: #493a47a8;
+  background:none;
 }
 
 .page-footer {

@@ -36,24 +36,16 @@
 
         <!-- CSS -->
 
-        <!--<link rel="stylesheet" href="css/reset.css">-->
+        <link rel="stylesheet" href="css/reset.css">
         <link rel="stylesheet" href="css/page.css">
-        <link rel="stylesheet" href="css/dd_baseline.css">
+        <link rel="stylesheet" href="css/cardsgrid.css">
+        
+        <link rel="stylesheet" href="css/dd_baselinev06.css">
         <!-- <link rel="stylesheet" href="css/specific_v01.css">-->
 
 
         <style>
-            :root {
-            /* helpers settings */
-            /*--spiegel-max-width: 50%;*/
-            --margin-left: 0;  /* (in terms of line-height) */
-            /* spiegel / gutter / columns properties !!!!! MUST RECALCULATE*/ 
-            /*--spiegel-width: calc(100vw - var(--margin-left) - var(--margin-right));*/
-            --gutter-width: calc(var(--line-height) + var(--text-to-baseline));
-            --column-width: calc( var(--spiegel-width) / var(--columns-count) - (var(--gutter-width) * ( var(--columns-count) - 1 ) / var(--columns-count))) ;
-            /* helpers settings */
-            --helper-color-alpha: 0.25;
-            }
+
         </style>
 
 
@@ -66,6 +58,28 @@
         <div class="page-wrap">
 
             <header class="page-header">
+
+                <!-- Visual Column guides helpers -->
+
+                <div class="column-guides-wrapper">
+                    <div class="column-display">1</div>
+                    <div class="gutter-display">.</div>
+                    <div class="column-display">2</div>
+                    <div class="gutter-display">.</div>
+                    <div class="column-display">3</div>
+                    <div class="gutter-display">.</div>
+                    <div class="column-display">4</div>
+                    <div class="gutter-display">.</div>
+                    <div class="column-display">5</div>
+                    <div class="gutter-display">.</div>
+                    <div class="column-display">6</div>
+                    <div class="gutter-display">.</div>
+                    <div class="column-display">7</div>
+                    <div class="gutter-display">.</div>
+                    <div class="column-display">8</div>
+                </div>
+
+                <!-- -------------------------------- -->
                 <h2>
                     mp<br>
                     pngfst<br>
@@ -74,13 +88,9 @@
                 </h2>
             </header>
             <nav class="page-sub-nav">
-                <div class="item">filtres</div>
+                <div class="item">[Current view] / [otherview1 / otherview2] —— filtres</div>
             </nav>
             <main class="page-main">
-                <!--
-                    <article>
-                      <details>-->
-
 
                 <!-- Visual Column guides helpers -->
 
@@ -105,7 +115,7 @@
                 <!-- -------------------------------- -->
 
 
-                <div class="spiegel margin-top2 baseline-guides">
+                <div class="spiegel margin-top1 baseline-guides">
                     <h1>
                         mp<br>
                         pngfst<br>
@@ -235,6 +245,185 @@
                 </div>
 
 
+                <!-- Cards grid -->
+
+                <!-- practicing grid... ddelk -->
+
+<div class="day-wrapper">
+  
+    <div class="day-title">  Date — 12.5 </div>
+    
+  <div class="grid-container grid-container--fit">
+    <div class="grid-element">
+      event 1 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 2 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 3 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 4 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    
+  </div> <!-- /* grid container */ -->  
+  </div> <!-- /* day-wrapper */ -->
+  
+  <hr>
+  
+  <div class="day-wrapper">
+    
+    <div class="day-title">  Date — 13.5 </div>
+    
+  <div class="grid-container grid-container--fit">
+    <div class="grid-element">
+      event 1 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 2 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+   
+    
+  </div> <!-- /* grid container */ -->
+  </div> <!-- /* day-wrapper */ -->
+  
+  <hr>
+  
+  
+  <div class="day-wrapper">
+    
+    <div class="day-title">  Date — 14.5 </div>
+    
+  <div class="grid-container grid-container--fit">
+    <div class="grid-element">
+      event 1 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 2 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 3 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 4 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 5 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 6 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 7 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+  </div> <!-- /* grid container */ -->
+  </div> <!-- /* day-wrapper */ -->
+  
+  <hr>
+  
+  
+  
+  <div class="day-wrapper">
+    
+    <div class="day-title">  Date — 15.5 </div>
+    
+  <div class="grid-container grid-container--fit">
+    <div class="grid-element">
+      event 1 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 2 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+    
+    <div class="grid-element">
+      event 3 — title<br>
+      event-type<br>
+      artist<br>
+      date<br>
+      location<br>
+    </div>
+   
+    
+  </div> <!-- /* grid container */ -->
+  </div> <!-- /* day-wrapper */ -->
+  
+  <hr>
+
                 <!-- container -->
 
 
@@ -263,9 +452,16 @@
 
 
             <aside class="page-sidebar">
+                [Main navigation menu]<br><br>
                 <div class="item">agenda</div>
                 <div class="item">carte</div>
-                <div class="item">artiste</div>
+                <div class="item">artiste</div><br><br>
+
+                [Oher pages and links]<br><br>
+                <div class="item">about</div>
+                <div class="item">contact</div>
+                <div class="item">archives</div><br><br>
+
             </aside>
 
 
