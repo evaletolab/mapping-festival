@@ -34,56 +34,66 @@
 
 
 
+<!-- CSS -->
 
-    <style>
+    <link rel="stylesheet" href="css/dd_baseline.css">
+
+<style>
+
+.canvas-wrapper{
+    /*background-color: brown;*/
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top:0;
+    z-index:-2;
+}
+
+canvas {
+
+    height: 100vh;
+    width: 100vw; 
+
+    position: absolute;
+    display:static;
+    top:0;
+    margin-top: -4rem;
+
+    /*touch-action: none;*/
+    z-index: -2;
+
+    mix-blend-mode: overlay;
+    opacity: .15;
+
+}
+
+</style>
 
 
-
-    canvas {
-
-      height: 100vh;
-      width: 100vw; 
-
-      position: absolute;
-      display:static;
-      top:0;
-      margin-top: -4rem;
-
-      /*touch-action: none;*/
-      z-index: -2;
-
-      mix-blend-mode: overlay;
-      opacity: .15;
-
-    }
-
-    </style>
-
-
-
-  <link rel="stylesheet" href="css/dd_baseline.css">
 
 </head>
 
 
 
 
-
-
-
-
-
-
+<!--------------- Body ---------------->
 
 <body class="baseline-guides">
 
-<!--------------- Backdrop + Canvas ---------------->
 
-<!-- <div class="backdrop"></div> -->
 
-<canvas id="glcanvas"></canvas>
-<!-- <div class="shade"></div> -->
 
+<!--------------- Canvas ---------------->
+
+<div class="canvas-wrapper">
+    <!-- <div class="backdrop"></div> -->
+    <canvas id="glcanvas"></canvas>
+    <!-- <div class="shade"></div> -->
+</div>
+
+
+
+<!--------------- Spiegel ---------------->
 
 <div class="spiegel margin-top2">
 
