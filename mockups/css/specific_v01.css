@@ -186,7 +186,7 @@ a:active {
 
 
 
-footer {
+footer_temp {
 
     z-index: 6;
     border: var(--border-width) solid rgb(43, 226, 83);
@@ -200,7 +200,6 @@ footer {
      -ms-animation: fadein 2s; /* Internet Explorer */
       -o-animation: fadein 2s; /* Opera < 12.1 */
          animation: fadein 2s;
-
 
 }
 
@@ -237,10 +236,10 @@ color: black;
 .api-sticker{
 
     position: absolute;
-/*bottom: 15%;
-left: 5%;*/
-float:left;
-clear:both;
+    /*bottom: 15%;
+    left: 5%;*/
+    float:left;
+    clear:both;
 
     background-color: rgba(255, 255, 255, 0);
     border: 2px solid white;

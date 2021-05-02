@@ -82,7 +82,6 @@
 
   /* spiegel / gutter / columns properties */
   --spiegel-width: calc(100vw - var(--margin-left) - var(--margin-right));
-    
   --gutter-width: calc(var(--line-height) + var(--text-to-baseline));
   --column-width: calc( var(--spiegel-width) / var(--columns-count) - (var(--gutter-width) * ( var(--columns-count) - 1 ) / var(--columns-count))) ;
 
