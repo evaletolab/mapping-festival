@@ -13,7 +13,50 @@
 </template>
 
 <style lang="scss">
-  @import "../styles/event-list.scss";
+.events{
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: var(--font-color);
+  margin: 0;
+  z-index: 2;
+  height: 100vh;
+  width: 100vw;    
+  padding-top:80px;    
+  margin-top: 0px;
+
+  section.primary{
+    display: block;
+    width: 100%;
+    height: 70px;
+    border-top: 1px solid #666;
+    a{
+      text-transform: lowercase;
+      float: right;
+      color: var(--font-color);
+      margin: 0 10px ;
+      padding: 10px 0;
+      text-decoration: none;
+      line-height: 50px;
+
+      &.selected{
+        font-size: 30px;
+        float: left;
+        font-weight: 700;
+      }
+
+      &:not(.selected)::after {
+        content: "⚫";
+        margin-top: 5px;
+        margin-left: 10px;
+      }  
+    }
+  }
+}
+
+
+
 </style>
 
 <script lang="ts">
