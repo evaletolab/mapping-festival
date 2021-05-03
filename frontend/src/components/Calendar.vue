@@ -16,8 +16,7 @@
     </section>
 
 
-    <div class="day-wrapper width" v-for="elem in calendar" :key="elem._id" :id="elem._id">
-
+    <div class="day-wrapper width8" v-for="elem in calendar" :key="elem._id" :id="elem._id">
 
       <div class="day-title">
         {{elem.date}}.{{elem.month}}
