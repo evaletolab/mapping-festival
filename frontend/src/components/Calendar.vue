@@ -16,34 +16,25 @@
     </section>
 
 
-    <div class="grid" v-for="elem in calendar" :key="elem._id" :id="elem._id">
-
-      <div class="day-wrapper">
-
-        <div class="day-title">
-          {{elem.date}}.{{elem.month}}
-        </div><!-- day-title -->
-
-  
-<div class="div.grid-container grid-container--fit">
+    <div class="day-wrapper width" v-for="elem in calendar" :key="elem._id" :id="elem._id">
 
 
-      <div class="grid-element" 
-           :style="{ backgroundImage: 'url(' + ((event.cover && event.cover.path) || defaultCover) + ')' }"
-           v-for="(event,index) in elem.events" 
-           :key="index" 
-           @click="onEvent(event)">
-        <div class="title">{{ t(event.title) }} </div>      
-        <div class="when">{{ event.when[0].startTime }} </div>
-        <div class="type">{{ (event.type) }} </div>      
-      </div>
+      <div class="day-title">
+        {{elem.date}}.{{elem.month}}
+      </div><!-- day-title -->
 
-
-
+      <div class="grid-container grid-container--fit">
+        <div class="grid-element" 
+            :style="{ backgroundImage: 'url(' + ((event.cover && event.cover.path) || defaultCover) + ')' }"
+            v-for="(event,index) in elem.events" 
+            :key="index" 
+            @click="onEvent(event)">
+          <div class="title">{{ t(event.title) }} </div>      
+          <div class="when">{{ event.when[0].startTime }} </div>
+          <div class="type">{{ (event.type) }} </div>      
+        </div>
       </div> <!-- grid-container -->
     </div> <!-- day-wrapper -->
-
-    </div>
   </div>
 
 </template>
