@@ -9,7 +9,7 @@
 
     <div class="dot">•</div>
   </div>    
-  <div v-else class="artist-card-desktop">
+  <div v-else class="artist-card-desktop" @click="navigateToArtist">
     <img class="portrait-desktop" :src="coverDesktop" />
 
     <div v-html="artistNameDesktop" class="artist-name-desktop">
@@ -125,6 +125,7 @@ export default class ArtistCard extends Vue {
   }
 
   navigateToArtist(){
+    console.log("on click----------------------------");
     this.$router.push({path: `/artists/${this.artist.slug}`});
   }
 }

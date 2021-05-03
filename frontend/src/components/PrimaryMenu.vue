@@ -93,7 +93,7 @@ export default class PrimaryMenu extends mixins(Translatable) {
     const layout = "primary";
     let menu = [... $config.getMenu(layout)];
     const path = this.$router.currentRoute.fullPath;
-    // console.log("full path", path);
+    console.log("full path ------------------------", path);
     menu.forEach(item => item.selected = false);
     const itemIdx = menu.findIndex(item => item.link.indexOf(path)>-1);
     
@@ -121,6 +121,21 @@ export default class PrimaryMenu extends mixins(Translatable) {
           newMenuItem.name.fr = "Diags";
           newMenuItem.name.en = "Diags";
           newMenuItem.link = '/__diagnostics';
+          break;
+        case "Artist":
+          newMenuItem.name.fr = "Artiste";
+          newMenuItem.name.en = "Artist";
+          newMenuItem.link = this.$router.currentRoute.fullPath;
+          break;
+        case "Spot":
+          newMenuItem.name.fr = "Lieu";
+          newMenuItem.name.en = "Spot";
+          newMenuItem.link = this.$router.currentRoute.fullPath;
+          break;
+        case "Event":
+          newMenuItem.name.fr = "Event";
+          newMenuItem.name.en = "Event";
+          newMenuItem.link = this.$router.currentRoute.fullPath;
           break;
         case "NotFound":
           newMenuItem.name.fr = "404";

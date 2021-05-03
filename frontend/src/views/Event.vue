@@ -26,7 +26,7 @@
     <h2>Artists</h2>
     <div v-for="artist in artists" :key="artist._id">
       <img class="image image-align-left width2" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
-      <h2>{{artistName}}<sup>{{artist.country}}</sup></h2>
+      <h2>{{artist.fullname}}<sup>{{artist.country}}</sup></h2>
       <div v-html="t(artist.content)" />
     </div>
 
@@ -188,8 +188,8 @@ export default class Event extends mixins(Translatable) {
     return $event.eventWithSlug(this.$route.params.event) as CMS.Event;
   }
 
-  get artists(): CMS.Artist[]{
-    return $event.artistsForEvent(this.event);
+  get artists(): CMS.ArtistWrap[]{
+    return $event.artistsForEvent(this.event).map(a => new CMS.ArtistWrap(a))
   }
 
   get whens(): CMS.When[]{

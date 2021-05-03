@@ -1,8 +1,8 @@
 <template>
   <div class="not-found spiegel margin-top1">
-    <Toolbar />
+    <!-- <Toolbar />
 
-    <div style="height:100px" />
+    <div style="height:100px" /> -->
     <h2>{{t(config.notFound.message)}}</h2>
   </div>
     
