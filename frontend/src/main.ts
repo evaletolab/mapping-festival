@@ -13,12 +13,11 @@ import router from './router';
 Vue.config.productionTip = false
 
 
-import '@/main.scss'
-import "@/styles/dd_baseline_v04.css"; /* Typographic styles */
-// import "@/styles/specific_v01.css";    /* Waiting page specific styles */
 
-// leaflet css
-// import 'leaflet/dist/leaflet.css';
+import "@/styles/reset.css";
+import "@/styles/page.css";
+import "@/styles/cardsgrid.css";
+import "@/styles/dd_baseline.css"; 
 
 
 import VuePlyr from 'vue-plyr';
