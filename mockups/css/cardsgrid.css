@@ -10,14 +10,17 @@
   }
   
   .grid-container--fit {
-    /* note to self, try auto-fit */
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* note to self, correct this fit fill mess */
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
   
-  
+  .grid-container--fill {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
   .grid-element {
     background-color: grey;
-    padding: 10px;
+    padding: calc(var(--gutter-width)/2);
     margin: var(--gutter-width) var(--gutter-width) 0 0;
     color: #fff;
     /*border: 1px solid #fff;*/

@@ -42,7 +42,7 @@
 
 
   /* helpers settings */
-  --helper-color-alpha: 0.0;
+  --helper-color-alpha: 0.35;
 
   /* font basics settings*/
   --font-size-max: 22px;
@@ -380,7 +380,7 @@ h5{  /*  notes et addendum */
 .item{
   width: 100%;
   height: calc(var(--line-height) - 1px);
-  border-bottom: 1px solid var(--font-color);;
+  border-bottom: 1px solid var(--font-color);
 }
 
 .prule{

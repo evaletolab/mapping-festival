@@ -75,14 +75,17 @@
   /*     .    .    .    .    .    .    .     */
 
 
+  /* gutter */
+  --gutter-width: calc(var(--line-height) + var(--text-to-baseline));
+
 
   /* margins properties */
-  --margin-left: max(calc((var(--line-height) * var(--margin-width) ) - var(--text-to-baseline) + var(--image-to-x)), (calc(100% - var(--spiegel-max-width)) / 2 * var(--margin-width)));
+  --margin-left: var(--gutter-width);
+              /*   --margin-left: max(calc((var(--line-height) * var(--margin-width) ) - var(--text-to-baseline) + var(--image-to-x)), (calc(100% - var(--spiegel-max-width)) / 2 * var(--margin-width))); */
   --margin-right: var(--margin-left);
 
-  /* spiegel / gutter / columns properties */
+  /* spiegel /  / columns properties */
   --spiegel-width: calc(100% - var(--margin-left) - var(--margin-right));
-  --gutter-width: calc(var(--line-height) + var(--text-to-baseline));
   --column-width: calc( var(--spiegel-width) / var(--columns-count) - (var(--gutter-width) * ( var(--columns-count) - 1 ) / var(--columns-count))) ;
 
   /* baseline grid properties */
@@ -357,7 +360,7 @@ h5{  /*  notes et addendum */
 
   background-color: rgba(220,200,100,var(--helper-color-alpha));
   margin-top:0;
-  margin-bottom: calc(var(--line-height) - 8px);
+  margin-bottom: calc(var(--line-height) - 4px);
 
   font-size: calc(var(--font-size) * .8);
   line-height: var(--line-height);
@@ -388,6 +391,7 @@ h5{  /*  notes et addendum */
   height: 0px;
   background-color: none;
   border-bottom: 1px solid white;
+  margin-top: -1px;
 }
 
 .overflow-hidden{
@@ -398,8 +402,8 @@ h5{  /*  notes et addendum */
 
   background-color: rgba(200,210,170,var(--helper-color-alpha));
 
-  font-size: calc(var(--font-size) * 1.5);
-  line-height: calc(var(--line-height) * 1.25);
+  font-size: calc(var(--font-size) * 1.25);
+  line-height: calc(var(--line-height) * 1);
 
   margin:0;
 
