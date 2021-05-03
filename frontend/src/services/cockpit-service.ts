@@ -227,7 +227,7 @@ class CockpitService {
         // start is present
         if(isNaN(start.getTime())) {
           this._diagnosticsLogger.log(`event with title ${t(event.title)} has invalid start date and/or invalid start time`);
-          console.log('---FIXME invalid date',event,w)
+          // console.log('---FIXME invalid date',event,w)
         }
 
         // end is present
