@@ -8,7 +8,7 @@
       </p>
     </section>
 
-    <Calendar limit="yes" gotop="yes"/>
+    <Calendar  gotop="yes"/>
   </div>
 </template>
 
