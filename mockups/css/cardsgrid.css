@@ -18,7 +18,7 @@
   .grid-element {
     background-color: grey;
     padding: 10px;
-    margin: 5px;
+    margin: var(--gutter-width) var(--gutter-width) 0 0;
     color: #fff;
     /*border: 1px solid #fff;*/
     height: 200px;

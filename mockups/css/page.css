@@ -1,3 +1,7 @@
+
+
+
+
 * {
   box-sizing: border-box;
 }
@@ -36,17 +40,22 @@ body {
 .page-header {
   grid-column: 1/-1;
   background: #ffcdd250;
+  padding: var(--gutter-width);
+
 }
 
 .page-sidebar {
   grid-column: 1/2;
   grid-row: 2/4;
   background: #aaaaaa;
+  padding: var(--gutter-width);
 }
 
 .page-sub-nav {
   grid-column: 2/3;
   background: #bbdefb;
+  padding: var(--gutter-width);
+
 }
 
 .page-main {
@@ -57,6 +66,8 @@ body {
 .page-footer {
   grid-column: 1/-1;
   background: #ffecb3;
+  padding: var(--gutter-width);
+
 }
 
 details p {
