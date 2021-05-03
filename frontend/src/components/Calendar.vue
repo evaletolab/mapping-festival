@@ -17,8 +17,18 @@
 
 
     <div class="grid" v-for="elem in calendar" :key="elem._id" :id="elem._id">
-      <h1>{{elem.date}}.{{elem.month}}</h1>
-      <div class="event" 
+
+      <div class="day-wrapper">
+
+        <div class="day-title">
+          {{elem.date}}.{{elem.month}}
+        </div><!-- day-title -->
+
+  
+<div class="div.grid-container grid-container--fit">
+
+
+      <div class="grid-element" 
            :style="{ backgroundImage: 'url(' + ((event.cover && event.cover.path) || defaultCover) + ')' }"
            v-for="(event,index) in elem.events" 
            :key="index" 
@@ -27,6 +37,12 @@
         <div class="when">{{ event.when[0].startTime }} </div>
         <div class="type">{{ (event.type) }} </div>      
       </div>
+
+
+
+      </div> <!-- grid-container -->
+    </div> <!-- day-wrapper -->
+
     </div>
   </div>
 
