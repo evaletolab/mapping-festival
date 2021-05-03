@@ -25,7 +25,7 @@
 
       <div class="grid-container grid-container--fit">
         <div class="grid-element" 
-            :style="{ backgroundImage: 'url(' + ((event.cover && event.cover.path) || defaultCover) + ')' }"
+            :style="getBackground(event)"
             v-for="(event,index) in elem.events" 
             :key="index" 
             @click="onEvent(event)">
@@ -206,6 +206,25 @@ export default class Calendar extends mixins(Translatable)  {
     return this.cache['eventTypes'] = Object.keys(elems).map(cat => (elems[cat]));
   }
   
+  getBackground(event) {
+
+    //{ backgroundImage: 'url(' + ((event.cover && event.cover.sizes.small.path) || defaultCover) + ')' }
+    const defaultImg = 'https://via.placeholder.com/450';
+    const cover = event.cover as any;
+
+    //
+    // with cover
+    const image = (cover &&  cover.sizes) ? cover.sizes.small.path:defaultImg;    
+    
+    // with colors
+    // -- linear-gradient(#e66465, #9198e5);
+    const colors = (cover && cover.colors) ? cover.colors : ['']
+    return {
+      backgroundImage:  'url(' + image + ') ',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize :'cover',
+    };
+  }
 
   getRandomId(event){
     return Math.random()*10000|0;
