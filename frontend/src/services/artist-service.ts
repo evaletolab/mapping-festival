@@ -42,6 +42,14 @@ class ArtistService
         return result;
     }
 
+    artistName(artist: CMS.Artist): string{
+        const artistName = artist.artistName ? `${artist.artistName} ` : "";
+        const firstname = artist.firstname ? `${artist.firstname}` : "";
+        const lastname = artist.lastname ? ` ${artist.lastname}` : "";
+
+        return `${artistName}${firstname}${lastname}`;
+    }
+
     artistSortingName(artist: CMS.Artist): string{
         const aName = artist.artistName || artist.lastname || artist.firstname || " ";
         return aName;

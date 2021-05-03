@@ -24,11 +24,11 @@
     <div class="spiegel" v-html="t(event.content)"></div>
 
     <h2>Artists</h2>
-    <ul v-for="artist in artists" :key="artist._id">
-      <li>
-        <router-link :to="`/artists/${artist.slug}`">{{artist.firstname}} {{artist.lastname}} {{artist.artistName}}</router-link>
-      </li>
-    </ul>
+    <div v-for="artist in artists" :key="artist._id">
+      <img class="image image-align-left width2" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
+      <h2>{{artistName}}<sup>{{artist.country}}</sup></h2>
+      <div v-html="t(artist.content)" />
+    </div>
 
     <h2>{{t({fr:"Horaires", en:"Timetable"})}}</h2>
 
@@ -96,9 +96,6 @@
     margin-top: 60px;
   }
 
-  img{
-    width:100%;
-  }
 </style>
 
 <script lang="ts">
