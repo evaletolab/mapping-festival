@@ -4,38 +4,26 @@
   <!--         ---------         -->  
   <div class="artist">
     <!-- TOOLBAR -->
-    <Toolbar />
+    <!-- <Toolbar /> -->
     
-    <PrimaryMenu i18n="on"/>
+    <!-- <PrimaryMenu i18n="on"/> -->
 
     <!-- <VueCable /> -->
 
-    <div class="flex-grid">
-      <div class="col-one">
-        <ul>
-          <li>menu item 1</li>
-          <li>menu item 2</li>
-          <li>menu item 3</li>
-          <li>menu item 4</li>
-        </ul>
-      </div>
-      <div class="col-two">
-        <div v-if="isMobileView">
-          <ArtistCard v-for="artist in sortedArtists" :key="artist._id" 
-          :artist="artist"
-          :mobileView="true" 
-          />
-        </div>
-        <div v-else>
-          <div v-for="artistSet in groupedArtists" :key="artistSet.letterId" >
-            <p class="letter-key">{{artistSet.letterId}}</p>
-            <ArtistCard v-for="artist in artistSet.artists" :key="artist._id" 
-            :artist="artist"
-            :mobileView="false" 
-            />
-            <hr>
-          </div>
-        </div>
+    <div v-if="isMobileView">
+      <ArtistCard v-for="artist in sortedArtists" :key="artist._id" 
+      :artist="artist"
+      :mobileView="true" 
+      />
+    </div>
+    <div v-else>
+      <div v-for="artistSet in groupedArtists" :key="artistSet.letterId" >
+        <p class="letter-key">{{artistSet.letterId}}</p>
+        <ArtistCard v-for="artist in artistSet.artists" :key="artist._id" 
+        :artist="artist"
+        :mobileView="false" 
+        />
+        <hr>
       </div>
     </div>
 

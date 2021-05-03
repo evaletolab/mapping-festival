@@ -76,10 +76,18 @@ export default class PrimaryMenu extends mixins(Translatable) {
   getMenu(layout) {
     const menu = [... $config.getMenu(layout)];
     const path = this.$router.currentRoute.fullPath;
-    const itemIdx = menu.findIndex(item => item.link.indexOf(path)>-1);
     menu.forEach(item => item.selected = false);
-    menu[(itemIdx == -1)? 0:itemIdx].selected = true;
+    const itemIdx = menu.findIndex(item => item.link.indexOf(path)>-1);
+    // we can be on a page from the pages collection
+    if(itemIdx >= 0) menu[itemIdx].selected = true;
+
+    //supa cryptic
+    // menu[(itemIdx == -1)? 0:itemIdx].selected = true;
     return menu;
+  }
+
+  beforeUpdate(){
+
   }
 
   async onBack() {
