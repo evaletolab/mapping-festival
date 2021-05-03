@@ -119,7 +119,6 @@
     
   .grid {
     &:first-child{
-      border-top: none;
     }
     .event {
       cursor: pointer;
