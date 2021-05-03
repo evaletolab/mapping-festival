@@ -118,64 +118,20 @@
   }
     
   .grid {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    margin: 20px 0;
-    border-top: 1px solid var(--font-color);
     &:first-child{
       border-top: none;
     }
-    h1{
-      display: block;
-      width: 100%;
-      text-transform: uppercase;
-      font-size: 18px;
-    }
     .event {
       cursor: pointer;
-      flex: 1 0 150px;
-      background-color: #fff;
-      color: black;
       background: url(https://via.placeholder.com/150) no-repeat, #ddd;
       background-size: cover;
       background-position: center;
-      border-radius: 0px;
-      margin: 4px;
-      padding: 4px;
-      min-height: 140px;
-      max-width: 130px;
       overflow: hidden;
       position: relative;
-      @media (max-width:475px) {
-        flex: 1 0 calc( 50% - 16px );
-        max-width: calc( 50% - 16px );
-      }
 
-      .title {
-        color: white;
-        font-weight: 600;
-        font-size: 16px;
-        letter-spacing: -.2px;
-      }
       .type {
-        color: white;        
-        background: black;
-        font-weight: 200;
-        border-radius: 6px;
-        position: absolute;
-        bottom: 5px;
-        left: 5px;
-        font-size: 10px;
-        padding: 0px 4px;
-        opacity: .4;
-        transform: scale(.8);
       }
       .when{
-        -position: absolute;
-        bottom: 5px;
-        right: 5px;
-        color: white;        
       }
     }
   }
