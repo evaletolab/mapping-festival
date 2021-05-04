@@ -69,3 +69,48 @@
 }
 
 
+  /*                                         */
+  /*                    icons                */
+  /*                                         */
+
+
+
+.ui-icon {
+  background-color: blueviolet;
+   display: inline-block;
+    background-color: none;
+    height: calc(var(--line-height)*1.5);
+    width: calc(var(--line-height)*1.5);
+    left: calc(var(--gutter-width)/4);
+
+}
+
+.ui-icon.small {
+  background-color: none;
+  height: calc(var(--line-height));
+  width: calc(var(--line-height));
+}
+
+
+.ui-icon.big {
+  background-color: none;
+  height: calc(var(--line-height)*2);
+  width: calc(var(--line-height)*2);
+}
+
+
+
+.ui-icon img{
+  width: 100%;
+  height: 100%;
+}
+
+.ui-icon.invert{
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.ui-icon.align-right{
+  right: calc(var(--gutter-width)/4);
+}
+
