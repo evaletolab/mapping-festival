@@ -58,7 +58,7 @@ Les unités de base concernant l'espacement sont:
 .height2
 .height…n
 
-.indent1 	 (marge gauche, en terme de nombre de *colonnes de texte*)
+.indent1 	(marge gauche, en terme de nombre de *colonnes de texte*)
 .indent2
 .indent…7
 
@@ -70,7 +70,7 @@ Ainsi que:
 .align-center
 .justify
 
-.vcenter
+.vcenter 	(alignement vertical)
 
 
       ****** Note: si la variable .height manque sur une image, 

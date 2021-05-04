@@ -1,0 +1,70 @@
+
+:root{
+
+  /*                                         */
+  /*       these are your base settings.     */
+  /*                                         */
+
+  /* color settings */
+
+  --ui-background-color: white;
+  --ui-font-color: black;
+  --ui-border-color: black;
+
+  --ui-hover-background-color: grey;
+  --ui-hover-text-color:white;
+
+  
+}
+
+  /*                                         */
+  /*                   buttons               */
+  /*                                         */
+
+.ui-button{
+  position: relative;
+  display: inline-block;
+  background-color: var(--ui-background-color);
+  color: var(--ui-font-color);
+  border: 1px solid var(--ui-border-color);
+  padding: var(--image-to-x);
+  margin: -1px 0 0 0 ;
+}
+
+
+.ui-button:hover,
+.ui-button:active {
+  background-color: var(--ui-hover-background-color);
+    color:var(--ui-hover-text-color);
+}
+
+.ui-button.menu{
+  border-left: 0px;
+  border-right: 0px;
+
+}
+
+.ui-button.block{
+  display: block;
+}
+
+.ui-button.noborder{
+  border: 0px;
+
+}
+
+.ui-button p{
+  font-size: calc(var(--font-size) * 1);
+  line-height: calc(var(--line-height) * 1);
+  font-weight: 470;
+}
+
+.ui-button p.small{
+  font-size: calc(var(--font-size) * .75);
+  line-height: calc(var(--line-height) * .75);
+  font-weight: 470;
+}
+
+
+
+

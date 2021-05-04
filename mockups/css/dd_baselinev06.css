@@ -424,7 +424,14 @@ h5{  /*  notes et addendum */
 .align-center{ text-align: center; }
 .justify{ text-align: justify; }
 
+
 .vcenter{ 
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.vhcenter{ 
   position: absolute;
   top: 50%;
   left:50%;
