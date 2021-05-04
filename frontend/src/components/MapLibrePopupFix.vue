@@ -32,7 +32,8 @@
     padding-left: 10px;
     border: 1px solid var(--font-color);
 
-    background-color: var(--body-color);
+    /* background-color: var(--body-color); */
+    background-color: black;
   }
   
   .hidden{
