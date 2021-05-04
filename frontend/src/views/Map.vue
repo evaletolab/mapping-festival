@@ -1,8 +1,8 @@
 <template>
   <div class="map">
-    <Toolbar />
+    <!-- <Toolbar />
     <div style="height:80px" />
-    <PrimaryMenu />
+    <PrimaryMenu /> -->
 
     <!-- height of map is dynamically computed -->
     <div ref="map" :style="mapHeightStyle" class="map-container">
@@ -45,7 +45,7 @@
 
 <style lang="scss" scoped>
   .map {
-    width: 100vw;
+    width: 100%;
   }
 
   .map-container{

@@ -1,8 +1,9 @@
 <template>
   <div class="spot spiegel margin-top1">
-    <Toolbar />
+    <!-- <Toolbar />
     <div style="height:80px" />
-    <PrimaryMenu />
+    <PrimaryMenu /> -->
+    
     <h1>{{t(eventLocation.name)}}</h1>
     <ul>
       <li v-if="eventLocation.street">{{eventLocation.street}}</li>

@@ -4,11 +4,11 @@
   <!--         ---------         -->  
   <div class="page spiegel margin-top1">
     <!-- TOOLBAR -->
-    <Toolbar />
+    <!-- <Toolbar />
 
     <div style="height:100px" />
 
-    <PrimaryMenu />
+    <PrimaryMenu /> -->
 
     <h1>{{t(page.title)}}</h1>
 

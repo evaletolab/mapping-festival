@@ -1,7 +1,7 @@
 <template>
   <div class="primary-menu">
     <section class="secondary">
-        <router-link v-for="(menu) in getMenu('primary')" :class="{'selected':menu.selected}" :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
+        <router-link v-for="(menu) in menuCollection" :class="{'selected':menu.selected}" :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
         <LanguageSelector v-if="i18n" />
     </section>
   </div>
@@ -56,8 +56,10 @@
 <script lang="ts">
 import { Translatable } from '@/mixins';
 import { mixins } from 'vue-class-component';
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { $config, $cms } from '../services';
+import { Route } from 'vue-router';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { $config, $cms, $page } from '../services';
+import { CMS } from '../models'
 import LanguageSelector from './LanguageSelector.vue';
 
 @Component({
@@ -66,6 +68,15 @@ import LanguageSelector from './LanguageSelector.vue';
 export default class PrimaryMenu extends mixins(Translatable) {
   @Prop() readonly i18n!:boolean;
 
+  key = 0; // haxor
+
+  @Watch('$route', { immediate: true, deep: true })
+  onRouteChange(to:Route, from:Route) {
+    console.log("route changed");
+    // this.$forceUpdate();
+    this.key++;
+  }
+
   mounted(){
   }
 
@@ -73,12 +84,70 @@ export default class PrimaryMenu extends mixins(Translatable) {
     return $config.store.config;
   }
 
-  getMenu(layout) {
-    const menu = [... $config.getMenu(layout)];
+  get menuCollection() {
+
+    ////// 
+    // HAXOR, why why why (needed else route /artists does not update correctly)
+    let _BOU = this.key + "getting mad";
+    
+    const layout = "primary";
+    let menu = [... $config.getMenu(layout)];
     const path = this.$router.currentRoute.fullPath;
-    const itemIdx = menu.findIndex(item => item.link.indexOf(path)>-1);
+    console.log("full path ------------------------", path);
     menu.forEach(item => item.selected = false);
-    menu[(itemIdx == -1)? 0:itemIdx].selected = true;
+    const itemIdx = menu.findIndex(item => item.link.indexOf(path)>-1);
+    
+    if(itemIdx >= 0) {
+      menu[itemIdx].selected = true;
+    }else{
+      // selected not found so we are on special page
+      let newMenuItem = {
+        link: "/",
+        name:{
+          fr: "",
+          en: "",
+        },
+        selected: true,
+      }
+      switch(this.$router.currentRoute.name){
+        case "Page":
+          {
+            let page = $page.pageWithSlug(this.$router.currentRoute.params.pageslug) as CMS.Page;
+            newMenuItem.name = page.title;
+            newMenuItem.link = `/pages/${page.slug}`;
+          }
+          break;
+        case "Diagnostics":
+          newMenuItem.name.fr = "Diags";
+          newMenuItem.name.en = "Diags";
+          newMenuItem.link = '/__diagnostics';
+          break;
+        case "Artist":
+          newMenuItem.name.fr = "Artiste";
+          newMenuItem.name.en = "Artist";
+          newMenuItem.link = this.$router.currentRoute.fullPath;
+          break;
+        case "Spot":
+          newMenuItem.name.fr = "Lieu";
+          newMenuItem.name.en = "Spot";
+          newMenuItem.link = this.$router.currentRoute.fullPath;
+          break;
+        case "Event":
+          newMenuItem.name.fr = "Event";
+          newMenuItem.name.en = "Event";
+          newMenuItem.link = this.$router.currentRoute.fullPath;
+          break;
+        case "NotFound":
+          newMenuItem.name.fr = "404";
+          newMenuItem.name.en = "404";
+          newMenuItem.link = '/404';
+          break;
+      }
+      menu = [newMenuItem, ...menu];
+    }
+
+    //supa cryptic
+    // menu[(itemIdx == -1)? 0:itemIdx].selected = true;
     return menu;
   }
 

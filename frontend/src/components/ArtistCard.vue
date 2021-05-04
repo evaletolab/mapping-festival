@@ -1,6 +1,6 @@
 <template>
   <div v-if="mobileView" class="artist-card-mobile" @click="navigateToArtist">
-    <img class="portrait-mobile" :src="coverMobile" />
+    <LazyImg class="portrait-mobile" :src="coverMobile" />
 
     <div class="artist-name-mobile">
       <span v-if="artist.artistName">{{artist.artistName}}</span>
@@ -9,8 +9,8 @@
 
     <div class="dot">•</div>
   </div>    
-  <div v-else class="artist-card-desktop">
-    <img class="portrait-desktop" :src="coverDesktop" />
+  <div v-else class="artist-card-desktop" @click="navigateToArtist">
+    <LazyImg class="portrait-desktop" :src="coverDesktop" />
 
     <div v-html="artistNameDesktop" class="artist-name-desktop">
 
@@ -77,9 +77,10 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { CMS } from "../models";
 import { $config } from '../services';
+import LazyImg from './LazyImg.vue';
 
 @Component({
-  components: { }
+  components: { LazyImg }
 })
 export default class ArtistCard extends Vue {
   @Prop() artist!: CMS.Artist;
@@ -125,6 +126,7 @@ export default class ArtistCard extends Vue {
   }
 
   navigateToArtist(){
+    console.log("on click----------------------------");
     this.$router.push({path: `/artists/${this.artist.slug}`});
   }
 }

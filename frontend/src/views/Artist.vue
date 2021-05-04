@@ -4,13 +4,13 @@
   <!--         ---------         -->  
   <div class="artist spiegel margin-top1">
     <!-- TOOLBAR -->
-    <Toolbar />
+    <!-- <Toolbar />
 
 
-    <PrimaryMenu />
+    <PrimaryMenu /> -->
 
     <ul>
-      <li>{{artist.firstname}} {{artist.lastname}} <span v-if="artist.artistName">aka {{artist.artistName}}</span> </li>
+      <li>{{artist.fullname}}</li>
       <li v-if="artist.artistWebsite" >
         <a :href="artist.artistWebsite" target="_blank" rel="noopener noreferrer">
           {{artist.artistWebsite}}
@@ -131,8 +131,9 @@ export default class Artist extends mixins(Translatable) {
     document.body.classList.remove('body-scroll');
   }
 
-  get artist(): CMS.Artist {
-    return $artist.artistWithSlug(this.$route.params.artist) as CMS.Artist;
+  get artist(): CMS.ArtistWrap {
+    const artist = $artist.artistWithSlug(this.$route.params.artist) as CMS.Artist;
+    return new CMS.ArtistWrap(artist);
   }
 
   get externalVideos(): CMS.ExternalMedia[] {

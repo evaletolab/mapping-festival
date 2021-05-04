@@ -135,6 +135,64 @@ export namespace CMS {
     // signature:string,
     // creator:string,
   }
+
+  export class ArtistWrap{
+    constructor(private _artist: Artist){
+
+    }
+    get _id(): string{
+      return this._artist._id;
+    }
+    get slug(): string{
+      return this._artist.slug;
+    }
+    get active(): boolean{
+      return this._artist.active;
+    }
+    get cover(): LocalMedia | null{
+      return this._artist.cover;
+    }
+    get firstname(): string{
+      return this._artist.firstname;
+    }
+    get lastname(): string{
+      return this._artist.lastname;
+    }
+    get artistName(): string{
+      return this._artist.artistName;
+    }
+    get artistWebsite(): string{
+      return this._artist.artistWebsite;
+    }
+    get country(): string {
+      return this._artist.country;
+    }
+    get content(): {fr: string, en: string} {
+      return this._artist.content;
+    }
+    get localMedias(): LocalMedia[] {
+      return this._artist.localMedias;
+    }
+    get externalMedias(): ExternalMedia[] {
+      return this._artist.externalMedias;
+    }
+    get socialMedias(): SocialMedia[] {
+      return this._artist.socialMedias;
+    }
+    get created(): Date {
+      return this._artist.created;
+    }
+
+    get fullname(): string{
+        const artistName = this.artistName ? `${this.artistName} ` : "";
+        const firstname = this.firstname ? `${this.firstname}` : "";
+        const lastname = this.lastname ? ` ${this.lastname}` : "";
+
+        return `${artistName}${firstname}${lastname}`;
+    }
+
+  }
+
   export interface Event {
     _id: string,
     slug: string,
