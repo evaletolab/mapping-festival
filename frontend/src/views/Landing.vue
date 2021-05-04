@@ -1,6 +1,5 @@
 <template>
   <div class="landing">
-    <toolbar tiny="true" />
     <!--------------- Main wrapper --------------------->
 
     <div class="header spiegel margin-top1">

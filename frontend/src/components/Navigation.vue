@@ -59,7 +59,10 @@
             <br>
             <br>
 
-            <div class="item">Français/English</div>
+            <div class="item">
+              <language-selector class=""/>
+            </div>
+            <div class="item hide">Français/English</div>
             <div class="item">Night mode</div>
 
 
@@ -81,6 +84,13 @@
         min-height: 100vh;
         width: 25%;        
     }
+    .item{
+      a{
+        width: 100%;
+        display: block;
+        text-decoration: none;  
+      }
+    }
 }
 
 </style>
@@ -94,9 +104,10 @@ import { CMS } from "../models";
 import { $config, $page } from '../services';
 
 import PrimaryMenu from './PrimaryMenu.vue';
+import LanguageSelector from './LanguageSelector.vue';
 
 @Component({
-  components: { PrimaryMenu, }
+  components: { PrimaryMenu, LanguageSelector }
 })
 export default class Navigation extends mixins(Translatable) {
 
@@ -125,7 +136,7 @@ export default class Navigation extends mixins(Translatable) {
     const layout = "footer";
     let menu = [... $config.getMenu(layout)];
     const path = this.$router.currentRoute.fullPath;
-    console.log("full path", path);
+    console.log("nav full path", path);
     menu.forEach(item => item.selected = false);
 
     return menu;
