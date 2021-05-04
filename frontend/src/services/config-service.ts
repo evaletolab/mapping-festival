@@ -94,6 +94,42 @@ class ConfigService {
     });
   }
 
+  //
+  // Detects if device is on iOS
+  isIos() {
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    return /iphone|ipad|ipod/.test( userAgent ) ;
+  }
+
+  //
+  // is Safari
+  isSafari() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return /^((?!chrome|android).)*safari/i.test(userAgent);
+  }
+
+  isAndroid() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return /android/i.test(userAgent);
+  }
+
+  //
+  // Detects if device is in standalone mode
+  isInStandaloneMode(){ 
+    const $window = window as any;    
+    const standalone = (window.matchMedia('(display-mode: standalone)').matches);
+    return ($window.navigator.standalone) || standalone;
+  }
+
+  //
+  // Detects if device is in standalone mode
+  isMobile(){ 
+    const $window = window as any;    
+    const mobile = (window.matchMedia('(max-width: 426px)').matches);
+    return mobile;
+  }
+
+
   storageGet(key: string) {
     try {
       const item = localStorage.getItem(key);

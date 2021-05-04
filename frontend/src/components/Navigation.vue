@@ -42,7 +42,8 @@
         </main>
 
             <!-- --------------- aside  ----------------- -->
-        <aside class="page-sidebar">[Main navigation menu]
+        <aside class="page-sidebar" :class="{'sticky': (stickyNav > 0)}">
+            [Main navigation menu]
             <br>
             <br>
             <div class="item" v-for="menu in primaryMenu" :key="menu.link">
@@ -79,7 +80,16 @@
 </template>
 
 
-<style scoped>
+<style lang="scss" scoped>
+.page-sidebar {
+    &.sticky{
+        position: fixed;
+        top: 0px;
+        min-height: 100vh;
+        z-index: -1;
+        width: 25%;        
+    }
+}
 
 </style>
 
@@ -97,6 +107,9 @@ import PrimaryMenu from './PrimaryMenu.vue';
   components: { PrimaryMenu, }
 })
 export default class Navigation extends mixins(Translatable) {
+
+  private lastScrollTop = 100;
+  stickyNav = 0;
 
   get config(){
     return $config.store.config;
@@ -117,6 +130,25 @@ export default class Navigation extends mixins(Translatable) {
   }
 
   mounted(){
+    window.addEventListener("scroll", () => { 
+      const isMobile = $config.isMobile();
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      //
+      // downscroll code
+      if (st > this.lastScrollTop && !isMobile){
+        this.stickyNav = 1;
+      } 
+      //
+      // upscroll code
+      else {          
+        this.stickyNav = -1;
+      }
+
+      //
+      // For Mobile or negative scrolling
+      // this.lastScrollTop = st <= 0 ? 0 : st; 
+    }, false);
+
   }
 
 }
