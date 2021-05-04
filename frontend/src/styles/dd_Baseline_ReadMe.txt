@@ -5,7 +5,7 @@
   /*            online@delcourt.ch           */
   /*                                         */
   /*                                         */
-  /*    v0.6                                 */
+  /*    v0.7                                 */
 
 
 
@@ -71,6 +71,7 @@ Ainsi que:
 .justify
 
 .vcenter 	(alignement vertical)
+.vhcenter (alignement vertical et horizontal)
 
 
       ****** Note: si la variable .height manque sur une image, 
