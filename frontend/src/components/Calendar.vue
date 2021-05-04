@@ -1,7 +1,7 @@
 <template>
   <div class="calendar">
     <section class="secondary">
-        <a class="fas fa-sliders-h" :class="{'fa-selected':isAll}" @click="onAll"></a> 
+        <a class="fas" :class="{'fa-selected fa-times':!isAll, 'fa-selected fa-sliders-h':isAll }" @click="onAll"></a> 
         <a v-for="(menu,index) in eventTypes" 
           :class="{'selected':menu.selected}" 
           :key="index"
@@ -213,7 +213,7 @@ export default class Calendar extends mixins(Translatable)  {
     //
     // with cover
     const image = (cover &&  cover.sizes) ? cover.sizes.small.path:defaultImg;    
-    
+
     // with colors
     // -- linear-gradient(#e66465, #9198e5);
     const colors = (cover && cover.colors) ? cover.colors : ['']
