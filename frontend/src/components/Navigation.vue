@@ -65,16 +65,9 @@
 
             <br>
             <br>
-
-            <p>
-                <a class="" href="mailto:elvis@mappingfestival.com">contact</a><br>
-                <a class="" href="https://www.facebook.com/mappingfest">fbook</a><br>
-                <a class="" href="https://www.instagram.com/mappingfestival/">insta</a><br>
-                <a class="" href="https://vimeo.com/mappingfestival">vimeo</a><br><br>
-                <a class="" href="https://docs.google.com/forms/d/e/1FAIpQLSeqzDLxisp0UboBNDx6G6IvQo2oYRfvwPPT1_rZ7Wo-E_mMmA/viewform">
-                bénévoles</a>
-            </p>
-
+            <div class="item" v-for="menu in footerMenu" :key="menu.link">
+                <RouterLink :to="menu.link">{{t(menu.name)}}</RouterLink>
+            </div>
         </aside>
     </div>
 </template>
@@ -86,7 +79,6 @@
         position: fixed;
         top: 0px;
         min-height: 100vh;
-        z-index: -1;
         width: 25%;        
     }
 }
@@ -127,6 +119,17 @@ export default class Navigation extends mixins(Translatable) {
 
   get secondaryMenu(){
       return $page.pageLinks;
+  }
+
+  get footerMenu() {
+    const layout = "footer";
+    let menu = [... $config.getMenu(layout)];
+    const path = this.$router.currentRoute.fullPath;
+    console.log("full path", path);
+    menu.forEach(item => item.selected = false);
+
+    return menu;
+
   }
 
   mounted(){

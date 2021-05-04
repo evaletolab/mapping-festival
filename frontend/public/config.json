@@ -21,15 +21,10 @@
     {"layout":"secondary","name":{ "fr": "artists", "en":"artists"},"link":"/artists","weight":0,"active":true},
 
     {"layout":"footer","name":{ "fr": "contact", "en":"contact"},"link":"mailto:elvis@mappingfestival.com","weight":0,"active":true},
-    {"layout":"footer","name":{ "fr": "lieux", "en":"spots"},"link":"/spot","weight":0,"active":true},
-    {"layout":"footer","name":{ "fr": "events", "en":"events"},"link":"/events","weight":0,"active":true},
-    {"layout":"footer","name":{ "fr": "artistes", "en":"artists"},"link":"/artists","weight":0,"active":true},
-    {"layout":"footer","name":{ "fr": "workshop", "en":"workshop"},"link":"/events?selected=workshop","weight":0,"active":true},
-
-    {"layout":"social","name":{ "fr": "fbook", "en":"fbook"},"link":"https://www.facebook.com/mappingfest","weight":0,"active":true},
-    {"layout":"social","name":{ "fr": "insta", "en":"insta"},"link":"https://www.instagram.com/mappingfestival","weight":0,"active":true},
-    {"layout":"social","name":{ "fr": "vimeo", "en":"vimeo"},"link":"https://vimeo.com/mappingfestival","weight":0,"active":true},
-    {"layout":"social","name":{ "fr": "nft", "en":"nft"},"link":"https://opensea.com","weight":0,"active":false},
+    {"layout":"footer","name":{ "fr": "fbook", "en":"fbook"},"link":"https://www.facebook.com/mappingfest","weight":0,"active":true},
+    {"layout":"footer","name":{ "fr": "insta", "en":"insta"},"link":"https://www.instagram.com/mappingfestival","weight":0,"active":true},
+    {"layout":"footer","name":{ "fr": "vimeo", "en":"vimeo"},"link":"https://vimeo.com/mappingfestival","weight":0,"active":true},
+    {"layout":"footer","name":{ "fr":"bénévoles&#8239;!","en":"volunteers&#8239;!"},"link":"https://docs.google.com/forms/d/e/1FAIpQLSeqzDLxisp0UboBNDx6G6IvQo2oYRfvwPPT1_rZ7Wo-E_mMmA/viewform","weight":0,"active":true},
 
     {"layout":"primary","name":{ "fr": "Agenda", "en":"Calendar"},"link":"/events","weight":0,"active":true},
     {"layout":"primary","name":{ "fr": "Lieu", "en":"Spot"},"link":"/spot","weight":0,"active":true},
