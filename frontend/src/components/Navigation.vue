@@ -108,7 +108,7 @@ import PrimaryMenu from './PrimaryMenu.vue';
 })
 export default class Navigation extends mixins(Translatable) {
 
-  private lastScrollTop = 100;
+  private lastScrollTop = 85;
   stickyNav = 0;
 
   get config(){
