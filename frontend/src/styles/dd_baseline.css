@@ -154,7 +154,8 @@ body{
 
   font-size: var(--font-size);
   line-height: var(--line-height);
-  transform: translateY(var(--text-to-baseline));
+  /* Bug with child element
+  transform: translateY(var(--text-to-baseline));*/
   
   background: black;
   color: var(--font-color);
