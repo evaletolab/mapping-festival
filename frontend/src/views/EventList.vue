@@ -22,8 +22,8 @@
   margin: 0;
   z-index: 2;
   height: 100vh;
-  width: 100vw;    
-  padding-top:80px;    
+  width: 100%;    
+  -padding-top:80px;    
   margin-top: 0px;
 
   section.primary{

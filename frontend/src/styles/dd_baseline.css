@@ -50,6 +50,8 @@
   --line-height: calc(var(--font-size) * 1.26);
   --font-color: #fff;
   --main-font-color: white;
+  --body-color: black;
+  --nav-header-height: 230px;
 
  
   /* text alignement properties */
@@ -157,7 +159,7 @@ body{
   /* Bug with child element
   transform: translateY(var(--text-to-baseline));*/
   
-  background: black;
+  background: var(--body-color);
   color: var(--font-color);
   margin: 0;
   width: auto;

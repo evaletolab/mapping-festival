@@ -37,13 +37,15 @@
 
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
   section.secondary{
     display: flex;
     width: 100%;
     height: 70px;
-    border-top: 1px solid #666;
-    border-bottom: 1px solid #666;
+    border-top: 1px solid var(--font-color);
+    border-bottom: 1px solid var(--font-color);
+    margin-bottom: var(--gutter-width);
+    margin-top: -1px;
     overflow: hidden;
     overflow-x: auto;    
     font-size: 17px;
@@ -59,15 +61,15 @@
       padding: 10px 0px;
       padding-bottom: 0;
       text-decoration: none;
-      line-height: 40px;
-      border-bottom: 4px solid transparent;
+      line-height: 30px;
+      border-bottom: 3px solid transparent;
       letter-spacing: -.4px;
 
       -align-self: flex-end;
 
       &.selected{
         font-weight: 700;
-        border-bottom: 4px solid var(--font-color);
+        border-bottom: 3px solid var(--font-color);
       }
 
       &.fas:not(.fa-selected){

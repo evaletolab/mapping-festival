@@ -1,20 +1,7 @@
 <template>
   <div class="landing">
     <!--------------- Main wrapper --------------------->
-
-    <div class="header spiegel margin-top1">
-        <h1 class="width7">mp<br>pngfst
-            <br>vl</h1>
-        <h2 class="width6 indent3" v-html="t(config.landing.title3)"/>
-
-        <h1 class="margin-top1 indent1" v-html="t(config.landing.title1)"/>
-
-        <h4 class="width3 indent1 margin-top1">
-            <div class="item" v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
-        </h4>
-    </div>
-    <PrimaryMenu class="spiegel" />
-    <Calendar limit="yes" gotop="yes" class="spiegel"/>
+    <calendar limit="yes" gotop="yes" />
 
     <!--------------------- Social links --------------------------->
     <div class="sociallinks hide" >

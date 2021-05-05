@@ -59,7 +59,7 @@ class CMSService {
 
   public getCalendarFrom(events?: CMS.Event[]): CMS.Calendar[] {
     const calendar = {};
-    let counter = 10;
+    let counter = 10;    
 
     (events||this.events).forEach(event =>{      
       const times = (event.when||[]).slice();

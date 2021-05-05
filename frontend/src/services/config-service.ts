@@ -148,6 +148,20 @@ class ConfigService {
       return false;
     }
   }
+
+  toggleDarkMode() {
+      let darkMode = this.storageGet('dark-mode');
+      darkMode = !darkMode;
+
+      const root = document.documentElement;
+      const fcolor = darkMode ? 'white':'black';
+      const bcolor = darkMode ? 'black':'white';
+      root.style.setProperty('--font-color', fcolor);
+      root.style.setProperty('--main-font-color', fcolor);
+      root.style.setProperty('--body-color', bcolor);  
+
+      this.storageSet('dark-mode',darkMode);
+  }
   
 }
 

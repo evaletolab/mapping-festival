@@ -107,7 +107,7 @@
 
     transform: translateY(0);
     transition: all 200ms;      
-    width: 100vw;
+    width: 100%;
     height: 69px;
     -box-shadow: 0 2px 3px -1px rgba(0,0,0,.1);
 

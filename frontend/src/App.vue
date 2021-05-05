@@ -3,13 +3,17 @@
     <!--------------- Backdrop + Canvas ---------------->
     <!-- <div class="backdrop"></div> -->
     <!-- <div class="shade"></div> -->
+    <!--
     <NavigationDesktop v-if="!isMobileView" >
       <router-view/>
     </NavigationDesktop>
     <NavigationMobile v-else >
       <router-view/>
     </NavigationMobile>
-
+    -->
+    <NavigationDesktop>
+      <router-view/>
+    </NavigationDesktop>
   </div>
 </template>
 
