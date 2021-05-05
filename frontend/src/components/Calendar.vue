@@ -175,7 +175,8 @@ export default class Calendar extends mixins(Translatable)  {
     }
 
     return this.cache['events_'+label] = $cms.cms.events.filter(event => {
-      if(!label || label == '' || label == 'all'){
+      // remove "Parcours Urbain" from set of all
+      if(!label || label == '' || label == 'all' && event.type != "Parcours urbain"){
         return event;
       }
       return (event.type||'').toLowerCase() == this.selected;

@@ -64,7 +64,7 @@ class CMSService {
     (events||this.events).forEach(event =>{      
       const times = (event.when||[]).slice();
       times.forEach(when => {
-        const date = when.date;
+        const date: string = when.date;
         const month = when.month;
         const key = date+'.'+month;
         const _id = when._id + (counter);

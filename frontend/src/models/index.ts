@@ -80,7 +80,7 @@ export namespace CMS {
   }
 
   // export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
-  export const eventTypeLabel = ["Installation", "Live", "Masterclass", "Collection"] as const;
+  export const eventTypeLabel = ["Installation", "Live", "Masterclass", "Collection", "Parcours urbain"] as const;
   export type eventType = typeof eventTypeLabel[number];
 
   const _eventSubType = ["Parcours urbain", "Exposition", "Performance", "Nighclubbing", "Concert", "Workshop", "Table ronde", "Masterclass", "mappingTV"] as const;
@@ -301,6 +301,12 @@ export namespace CMS {
       if(isNaN(_end.getTime())){
         this._end = _1970;
       }
+
+      const dayStartingHour = 6; // not 00 hours but 6 in the morning
+      
+      this._start = this.__computeDayIfDayStartsAt(this._start, dayStartingHour);
+      this._end = this.__computeDayIfDayStartsAt(this._end, dayStartingHour);
+      
       this._id = this._start.getTime();
       this.year = this._start.getFullYear();
     }
@@ -360,6 +366,17 @@ export namespace CMS {
       const minutes = this.end.getMinutes().toString().padStart(2, "0");
       return `${hours}:${minutes}`;
 
+    }
+    
+    private __computeDayIfDayStartsAt(date: Date, startingHour: number): Date{
+
+      if(date.getHours() < startingHour){
+        const oneDayMillis =  60 * 60 * 24 * 1000;
+        let result = new Date(date.getTime() - oneDayMillis);
+        return result;
+      }else{
+        return this.start;
+      }
     }
   }
 }
