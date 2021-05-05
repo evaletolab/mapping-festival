@@ -1,13 +1,7 @@
 <template>
   <div class="events">
     <!-- TOOLBAR -->
-    <!-- <Toolbar /> -->
-    <!-- <section class="primary">
-      <p>
-        <router-link v-for="(menu) in getMenu('primary')" :class="{'selected':menu.selected}" :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
-      </p>
-    </section> -->
-
+    <toolbar class="hide-lg hide-md" />
     <Calendar  gotop="yes"/>
   </div>
 </template>

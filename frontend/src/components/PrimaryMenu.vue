@@ -1,7 +1,7 @@
 <template>
   <div class="primary-menu">
     <section class="secondary">
-        <a class="selected">{{t(menuActive.name)}}</a>
+        <a class="selected hide-sm">{{t(menuActive.name)}}</a>
         <router-link v-for="(menu) in menuCollection"  :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
     </section>
   </div>

@@ -1,5 +1,18 @@
 <template>
   <div class="landing">
+    <div class="header ">
+      <div class="title ">
+        <h1 class="width7">mp<br>pngfst<br>vl</h1>
+        <h1 class="margin-top1" v-html="t(config.landing.title1)"/>
+      </div>
+
+      <h4 class="width3  align-right">
+          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
+          <div  v-html="t(config.landing.title3)" />
+      </h4>
+      <primary-menu class="" />
+    </div>
+
     <!--------------- Main wrapper --------------------->
     <calendar limit="yes" gotop="yes" />
 

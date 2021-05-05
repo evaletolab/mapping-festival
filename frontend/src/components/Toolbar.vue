@@ -109,9 +109,8 @@
     transition: all 200ms;      
     width: 100%;
     height: 69px;
-    -box-shadow: 0 2px 3px -1px rgba(0,0,0,.1);
 
-    background-color: black;
+    background-color: var(--body-color);
 
     &.exited {
       transform: translateY(69px);            

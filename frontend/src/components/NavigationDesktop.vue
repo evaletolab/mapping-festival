@@ -4,19 +4,6 @@
         <!-- --------------- main  ----------------- -->
 
         <main class="page-main">
-            <div class="header ">
-              <div class="title ">
-                <h1 class="width7">mp<br>pngfst<br>vl</h1>
-                <h1 class="margin-top1" v-html="t(config.landing.title1)"/>
-              </div>
-
-              <h4 class="width3  align-right">
-                  <div class="-item" v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
-                  <div class="" v-html="t(config.landing.title3)" />
-              </h4>
-              <primary-menu class="" />
-            </div>
-
             <slot></slot>    
         </main>
 
@@ -73,42 +60,6 @@
   background:none;
   @media (max-width:476px) {
     grid-column: 1/3;    
-  }
-
-  .header{
-    /** BUG width overflow */
-    overflow: hidden;
-    height: var(--nav-header-height);
-    margin-top: var(--gutter-width);
-    margin-right: var(--gutter-width);
-    border-bottom: 1px solid var(--font-color);
-    position: relative;
-    .align-right{
-      float: right;
-    }
-
-    .title{
-      position: absolute;
-      top: 0;
-      left: 0;        
-      @media (min-width:476px) {
-        display: none;
-      }
-  
-    }
-    @media (max-width:476px) {
-      height: calc( var(--nav-header-height) * 1.65 );
-    }
-
-    .primary-menu{
-      margin-bottom: -1px;
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      border-top: none!important;
-      margin: 0;    
-    }
-    
   }
 
 }
