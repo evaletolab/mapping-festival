@@ -114,7 +114,7 @@ import LanguageSelector from './LanguageSelector.vue';
 @Component({
   components: { PrimaryMenu, LanguageSelector }
 })
-export default class Navigation extends mixins(Translatable) {
+export default class NavigationDesktop extends mixins(Translatable) {
 
   private lastScrollTop = 85;
   stickyNav = 0;
