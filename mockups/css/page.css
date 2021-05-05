@@ -44,7 +44,7 @@ body {
   grid-column: 1/2;
   grid-row: 2/4;
   background: #aaaaaa;
-  padding: var(--gutter-width);
+  padding: 0 var(--gutter-width) 0 var(--gutter-width);
   position: sticky;
 }
 
