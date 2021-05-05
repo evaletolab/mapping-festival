@@ -247,6 +247,15 @@ class CockpitService {
       }
 
       return new CMS.When(start, end, cancel, eventLocation);
+    }).filter(w => {
+      //////////////////
+      // remove multiday whens 
+      // i.e. when lasting more than 24 hours
+      const aDayInMinutes = 24 * 60;
+      if(w.duration >= aDayInMinutes){
+        this._diagnosticsLogger.log(`event with title ${t(event.title)} has multi day when (was rejected)`);
+      }
+      return w.duration < aDayInMinutes;
     });
 
     event.when.sort((a, b) => a.start - b.start);
