@@ -54,6 +54,11 @@
     align-items: center;
     justify-content: flex-start;
 
+    position: sticky;
+    top: -1px;
+    z-index: 1;
+    background: var(--body-color);
+
     a{
       cursor: pointer;
       text-transform: lowercase;
