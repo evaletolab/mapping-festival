@@ -441,11 +441,18 @@ h5{  /*  notes et addendum */
   transform: translate(-50%, -50%);
 }
 
-@media only screen and (min-width: 568px) {
+
+.shift-left{
+  margin-left: calc(-3 * var(--column-width) - 2 * var(--gutter-width));
+}
+
+@media only screen and (max-width: 568px) {
   
   .shift-left{
-    margin-left: calc(-3 * var(--column-width) - 2 * var(--gutter-width));
+    margin-left: 0;
   }
+
+}
 
 
 
@@ -562,7 +569,7 @@ h5{  /*  notes et addendum */
   margin-left:0;
   object-fit: cover;
   overflow: hidden;
-  z-index: -1;
+  /*z-index: -1;*/
   }
 
   .info-container > p {
