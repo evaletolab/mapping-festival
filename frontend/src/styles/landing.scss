@@ -37,13 +37,14 @@
       height: calc( var(--nav-header-height) * 1.65 );
     }
 
-    .primary-menu{
+    .destination{
       margin-bottom: -1px;
       position: absolute;
-      bottom: 0;
-      width: 100%;
-      border-top: none!important;
-      margin: 0;    
+      bottom: 30px;
+      margin: 0;
+      
+      font-size: 30px;
+      font-weight: 700;      
     }
     
   }

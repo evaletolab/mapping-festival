@@ -16,6 +16,10 @@
           <router-link v-for="(menu) in menuCollection"  :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
       </div>
 
+      <div class="destination hide-sm">
+        {{t(destination.name)}}
+      </div>
+
     </div>
 
     <!--------------- Main wrapper --------------------->
@@ -76,6 +80,7 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
 export default class Landing extends mixins(Translatable) {
   cfg = $config;
 
+  destination = {};
   //
   // return not active menu items
   get menuCollection() {
@@ -95,6 +100,8 @@ export default class Landing extends mixins(Translatable) {
       item.selected = item.link.indexOf(path) > -1;
     });
     
+    this.destination = menu.find(item => item.selected);
+
     return menu.filter(item => !item.selected);
   }
 
