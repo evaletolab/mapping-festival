@@ -26,7 +26,8 @@ import { $config, $user, $cms } from '@/services';
 // filters
 Vue.filter('shortdate', function(value) {
   const d = new Date(value);
-  return d.getDate()+'.'+d.getMonth()+'.'+d.getFullYear();
+  const result = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+  return result;
 });
 
 const load = [$config.get(), $user.get()];

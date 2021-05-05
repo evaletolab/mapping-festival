@@ -212,6 +212,9 @@ class CockpitService {
       const start = new Date(`${v.startDate} ${v.startHour}`);
       const end = new Date(`${v.endDate} ${v.endHour}`);
       const cancel = v.cancel;
+      // console.log(v.startDate, v.startHour, start);
+      // console.log(v.endDate, v.endHour, end);
+      // console.log("-------------------------");
       
       // extract eventLocation if present
       let eventLocation:CMS.EventLocation | null = null;

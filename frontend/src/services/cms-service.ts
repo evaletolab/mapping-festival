@@ -146,7 +146,7 @@ class CMSService {
         .map(entry => $cockpit.formatEvent(this.eventLocations,this.artists,entry))
         .filter(item => !!item.when) // events with no when are invalid
         .filter(item => item.active);
-      //console.log("events", this.cms.events);
+      // console.log("my events", this.cms.events;
     }
   }
 

@@ -304,8 +304,14 @@ export namespace CMS {
 
       const dayStartingHour = 6; // not 00 hours but 6 in the morning
       
+      const start = new Date(this._start.getTime());
+      const end = new Date(this._end.getTime());
+
       this._start = this.__computeDayIfDayStartsAt(this._start, dayStartingHour);
       this._end = this.__computeDayIfDayStartsAt(this._end, dayStartingHour);
+      // console.log("raw start and end", start, end);
+      // console.log("computed start and end", this._start, this._end);
+      // console.log("---------------------");
       
       this._id = this._start.getTime();
       this.year = this._start.getFullYear();
@@ -370,12 +376,12 @@ export namespace CMS {
     
     private __computeDayIfDayStartsAt(date: Date, startingHour: number): Date{
 
-      if(date.getHours() < startingHour){
+      if(date.getHours() >= startingHour){
+        return date;
+      }else{
         const oneDayMillis =  60 * 60 * 24 * 1000;
         let result = new Date(date.getTime() - oneDayMillis);
         return result;
-      }else{
-        return this.start;
       }
     }
   }
