@@ -15,18 +15,19 @@
       </button>
     </section>
 
-    <div class="day-wrapper width8" v-for="elem in calendar" :key="elem._id" :id="elem._id">
+    <div class="grid day-wrapper " v-for="elem in calendar" :key="elem._id" :id="elem._id">
 
       <div class="day-title">
         {{elem.date}}.{{elem.month}}
       </div><!-- day-title -->
 
       <div class="grid-container grid-container--fit">
-        <div class="grid-element" 
-            :style="getBackground(event)"
+        <div class="grid-element event" 
             v-for="(event,index) in elem.events" 
             :key="index" 
             @click="onEvent(event)">
+          <lazy-img :src="getBackground(event)" />
+
           <div class="title">{{ t(event.title) }} </div>      
           <div class="when">{{ event.when[0].startTime }} </div>
           <div class="type">{{ (event.type) }} </div>      
@@ -118,6 +119,12 @@
       background-position: center;
       overflow: hidden;
       position: relative;
+      padding: 0;
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
       .type {
       }
@@ -134,9 +141,10 @@ import { mixins } from 'vue-class-component';
 import { $config, $cms } from '../services';
 import { CMS } from "../models";
 import { Translatable } from '../mixins';
+import LazyImg from './LazyImg.vue';
 
 @Component({
-  components: {}
+  components: { LazyImg }
 })
 export default class Calendar extends mixins(Translatable)  {
   //
@@ -214,16 +222,16 @@ export default class Calendar extends mixins(Translatable)  {
 
     //
     // with cover
-    const image = (cover &&  cover.sizes) ? cover.sizes.small.path:defaultImg;    
+    return (cover &&  cover.sizes) ? cover.sizes.small.path:defaultImg;    
 
-    // with colors
-    // -- linear-gradient(#e66465, #9198e5);
-    const colors = (cover && cover.colors) ? cover.colors : ['']
-    return {
-      backgroundImage:  'url(' + image + ') ',
-      backgroundRepeat: 'no-repeat',
-      backgroundSize :'cover',
-    };
+    // // with colors
+    // // -- linear-gradient(#e66465, #9198e5);
+    // const colors = (cover && cover.colors) ? cover.colors : ['']
+    // return {
+    //   backgroundImage:  'url(' + image + ') ',
+    //   backgroundRepeat: 'no-repeat',
+    //   backgroundSize :'cover',
+    // };
   }
 
   getRandomId(event){
