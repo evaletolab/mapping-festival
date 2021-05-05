@@ -1,38 +1,40 @@
 <template>
-  <nav class="toolbar " :class="{'exited': (scrollDirection <= 0), 'tiny':tiny,'main':main }">
-    <div class="toolbar-row" v-if="main">
-      <div class="toolbar-section-start">
-        <button class="icon start" @click="onBack">
-          <i class="fas fa-arrow-left fa-2x"></i>
-        </button>
-      </div>
+  <div class="toolbar " :class="{'exited': (scrollDirection <= 0), 'tiny':tiny,'main':main }">
 
-      <div class="toolbar-title">
-        mppng2051
+    <nav >
+      <div class="toolbar-row" v-if="main">
+        <div class="toolbar-section-start">
+          <button class="icon start" @click="onBack">
+            <i class="fas fa-arrow-left fa-2x"></i>
+          </button>
+        </div>
+
+        <div class="toolbar-title">
+          mppng2051
+        </div>        
+
+        <div class="toolbar-section-end">
+          <button class="icon end">
+            <i class="fas fa-bars fa-2x"></i>
+          </button>
+        </div>
       </div>        
 
-      <div class="toolbar-section-end">
-        <button class="icon end">
+      <div class="toolbar-row" v-if="tiny">
+        <button class="icon" @click="onDark">
+          <i class="fas fa-moon fa-2x"></i>
+        </button>
+
+        <LanguageSelector class="i18n" />
+
+        <button class="icon end hide">
           <i class="fas fa-bars fa-2x"></i>
         </button>
       </div>
-    </div>        
 
-    <div class="toolbar-row" v-if="tiny">
-      <button class="icon" @click="onDark">
-        <i class="fas fa-moon fa-2x"></i>
-      </button>
-
-      <LanguageSelector class="i18n" />
-
-      <button class="icon end hide">
-        <i class="fas fa-bars fa-2x"></i>
-      </button>
-
-
-    </div>
-
-  </nav>
+    </nav>
+    <PrimaryMenu />
+  </div>
 
 </template>
 
@@ -97,9 +99,9 @@
   // common style for toolbar, can be overhided on Component.vue
   .toolbar {
     flex-flow: row wrap;
-    z-index: 2;    
+    z-index: 4;    
     position: fixed;
-    top:-69px;
+    top:-69px ;
     left: 0;
     right: 0;
 
@@ -108,6 +110,8 @@
     width: 100vw;
     height: 69px;
     -box-shadow: 0 2px 3px -1px rgba(0,0,0,.1);
+
+    background-color: black;
 
     &.exited {
       transform: translateY(69px);            
@@ -202,10 +206,11 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import LanguageSelector from '../components/LanguageSelector.vue';
+import PrimaryMenu from '../components/PrimaryMenu.vue';
 
 @Component({
   components: {
-    LanguageSelector
+    LanguageSelector, PrimaryMenu
   }
 })
 export default class Toolbar extends Vue {

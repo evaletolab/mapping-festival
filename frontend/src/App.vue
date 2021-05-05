@@ -3,9 +3,12 @@
     <!--------------- Backdrop + Canvas ---------------->
     <!-- <div class="backdrop"></div> -->
     <!-- <div class="shade"></div> -->
-    <Navigation >
+    <NavigationDesktop v-if="!isMobileView" >
       <router-view/>
-    </Navigation>
+    </NavigationDesktop>
+    <NavigationMobile v-else >
+      <router-view/>
+    </NavigationMobile>
 
   </div>
 </template>
@@ -22,26 +25,44 @@
 import { Route } from 'vue-router';
 import { Component, Vue } from 'vue-property-decorator';
 import { $config, $eventLocation } from './services';
-import Navigation from './components/Navigation.vue';
+import NavigationDesktop from './components/NavigationDesktop.vue';
+import NavigationMobile from './components/NavigationMobile.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
 
 @Component({
   components: {
-    Navigation
+    NavigationDesktop, NavigationMobile,
   }
 })
 export default class App extends mixins(Translatable) {
 
+  screenWidth = 0;
+  
   get config(){
     return $config.store.config;
   }
   
+  get isMobileView(){
+    console.log("screen width", this.screenWidth);
+    return this.screenWidth < 800;
+  }
+
   mounted(){
+    addEventListener('resize', this.onResize);
+    this.computeScreenWidth();
   }
 
   beforeDestroy() {
+    removeEventListener('resize', this.onResize);
+  }
+  computeScreenWidth(){
+    this.screenWidth = window.innerWidth;
+  }
+
+  onResize(){
+    this.computeScreenWidth();
   }
 
   themeTertiary(theme) {

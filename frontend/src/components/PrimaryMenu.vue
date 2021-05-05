@@ -10,6 +10,9 @@
 
 <style lang="scss" scoped>
 
+  .primary-menu{
+    background-color: black;
+  }
 
   .secondary{
     display: block;
