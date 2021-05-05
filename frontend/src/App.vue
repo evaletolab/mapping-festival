@@ -55,6 +55,11 @@ export default class App extends mixins(Translatable) {
 
   mounted(){
     addEventListener('resize', this.onResize);
+
+    //
+    // update app
+    addEventListener('swUpdated', this.onUpdateAvailable, { once: true })
+
     this.computeScreenWidth();
   }
 
@@ -68,6 +73,13 @@ export default class App extends mixins(Translatable) {
   onResize(){
     this.computeScreenWidth();
   }
+
+  onUpdateAvailable(event){
+    const registration = event.detail;
+    if (!registration || !registration.waiting) return
+    // Send message to SW to skip the waiting and activate the new SW
+    registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+  }  
 
   themeTertiary(theme) {
     return this.config.themes[theme].tertiary;
