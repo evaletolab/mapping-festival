@@ -67,8 +67,12 @@
 
 .page-sidebar {
     @media (max-width:476px) {
-      display: none;
+      transition: all 200ms;      
+      transform: translateX(- 100vw);
+      width: 100vw;
+      background-color: var(--body-color);
       &.display{
+        transform: translateX(0);
         position: fixed;
         top: 0;
         left: 0;
@@ -76,6 +80,7 @@
         height: 100vh;
         background: var(--body-color);
         display: block;     
+        z-index: 2;
         .header{
           border:none;
         }
