@@ -441,6 +441,11 @@ h5{  /*  notes et addendum */
   transform: translate(-50%, -50%);
 }
 
+.shift-left{
+  /*transform: translateX(calc(-3 * var(--column-width) * 1));*/
+  margin-left: calc(-3 * var(--column-width) * 1);
+}
+
 
   /* ************************************************ */
   /*       indents values [in terms of columns]       */
