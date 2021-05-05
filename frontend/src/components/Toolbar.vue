@@ -21,19 +21,20 @@
       </div>        
 
       <div class="toolbar-row" v-if="tiny">
-        <button class="icon" @click="onDark">
+        <button class="icon hide" @click="onDark">
           <i class="fas fa-moon fa-2x"></i>
         </button>
 
-        <LanguageSelector class="i18n" />
 
-        <button class="icon end hide">
-          <i class="fas fa-bars fa-2x"></i>
-        </button>
+        <div class="toolbar-section-end">
+          <button class="icon end " @click="onMenu">
+            <i class="fas fa-bars fa-2x"></i>
+          </button>
+        </div>
+
       </div>
 
     </nav>
-    <PrimaryMenu />
   </div>
 
 </template>
@@ -110,7 +111,7 @@
     width: 100%;
     height: 69px;
 
-    background-color: var(--body-color);
+    -background-color: var(--body-color);
 
     &.exited {
       transform: translateY(69px);            
@@ -255,6 +256,10 @@ export default class Toolbar extends Vue {
     root.style.setProperty('--font-color', fcolor);
     root.style.setProperty('--main-font-color', fcolor);
     root.style.setProperty('--body-color', bcolor);
+  }
+
+  async onMenu() {
+    this.$emit('click');
   }
 }
 </script>

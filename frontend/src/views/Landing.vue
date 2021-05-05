@@ -6,11 +6,16 @@
         <h1 class="margin-top1" v-html="t(config.landing.title1)"/>
       </div>
 
-      <h4 class="width3  align-right">
+      <h4 class="tagline  align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
-          <div  v-html="t(config.landing.title3)" />
+          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
       </h4>
-      <primary-menu class="" />
+  
+      <!-- EXTRA MENU SHORTCUT  -->
+      <div class="menu-short hide">
+          <router-link v-for="(menu) in menuCollection"  :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
+      </div>
+
     </div>
 
     <!--------------- Main wrapper --------------------->
@@ -70,6 +75,28 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
 })
 export default class Landing extends mixins(Translatable) {
   cfg = $config;
+
+  //
+  // return not active menu items
+  get menuCollection() {
+    //const page = $page.pageWithSlug(this.$router.currentRoute.params.pageslug) as CMS.Page;
+    //newMenuItem.name = page.title;
+
+    // FIXME, use this.key to force update content
+    const layout = "primary";
+    let menu = [... $config.getMenu(layout)];
+    const path = this.$router.currentRoute.path.toLowerCase();
+
+    menu.forEach(item => {      
+      // root case
+      if(path.length == 1) {
+         return item.selected = (item.link == path);
+      }
+      item.selected = item.link.indexOf(path) > -1;
+    });
+    
+    return menu.filter(item => !item.selected);
+  }
 
   async mounted(){
   }

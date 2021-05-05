@@ -4,11 +4,12 @@
         <!-- --------------- main  ----------------- -->
 
         <main class="page-main">
+          <toolbar tiny="on" class="hide-lg hide-md" @click="onMenu" />
           <slot></slot>    
         </main>
 
         <!-- --------------- aside  ----------------- -->
-        <aside class="page-sidebar ">
+        <aside class="page-sidebar " :class="{'display':displayMenu}">
             <!-- NAV HEADER -->
             <section class="header">
               <h1 class="width7">mp<br>pngfst
@@ -67,7 +68,21 @@
 .page-sidebar {
     @media (max-width:476px) {
       display: none;
+      &.display{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--body-color);
+        display: block;     
+        .header{
+          border:none;
+        }
+      }
+
     }
+
 
     section.header {
       height: var(--nav-header-height);
@@ -108,16 +123,18 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import { CMS } from "../models";
 import { $config, $page } from '../services';
 
+import Toolbar from './Toolbar.vue';
 import PrimaryMenu from './PrimaryMenu.vue';
 import LanguageSelector from './LanguageSelector.vue';
 
 @Component({
-  components: { PrimaryMenu, LanguageSelector }
+  components: { PrimaryMenu, LanguageSelector, Toolbar }
 })
 export default class Navigation extends mixins(Translatable) {
 
   private lastScrollTop = 85;
   stickyNav = 0;
+  displayMenu = false;
 
   get config(){
     return $config.store.config;
@@ -172,6 +189,10 @@ export default class Navigation extends mixins(Translatable) {
 
   onDark(){
     $config.toggleDarkMode();
+  }
+
+  onMenu() {
+    this.displayMenu = !this.displayMenu;
   }
 }
 </script>

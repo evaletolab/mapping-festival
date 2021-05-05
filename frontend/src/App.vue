@@ -76,9 +76,11 @@ export default class App extends mixins(Translatable) {
 
   onUpdateAvailable(event){
     const registration = event.detail;
-    if (!registration || !registration.waiting) return
+    //if (!registration || !registration.waiting) return
     // Send message to SW to skip the waiting and activate the new SW
-    registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    //registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    //refresh content from registerServiceWorker.ts
+    setTimeout(()=> window.location.reload(true),3000);
   }  
 
   themeTertiary(theme) {
