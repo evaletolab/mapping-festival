@@ -1,22 +1,18 @@
-
-
-
-
 * {
   box-sizing: border-box;
 }
 
 body {
-  background: #000000;
+  /*background: #ca8282;*/
   /* padding: 5px;*/ 
   height: 100vh;
   /*margin: 0;*/
 }
 
 .page-wrap {
-  background:none;
+  /*background:none;*/
   height: calc(100vh - 10px);
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
+  box-shadow: 0 0 3px rgb(172, 113, 113);
   display: grid;
   grid-template-columns: minmax(10px, 1fr) minmax(10px, 3fr);
   grid-template-rows: min-content min-content 1fr min-content;
@@ -39,7 +35,7 @@ body {
 
 .page-header {
   grid-column: 1/-1;
-  background: #ffcdd250;
+  background: #677583;
   padding: var(--gutter-width);
 
 }
@@ -61,7 +57,7 @@ body {
 
 .page-main {
   grid-column: 2/3;
-  background:none;
+  background:rgb(80, 80, 80);
 }
 
 .page-footer {

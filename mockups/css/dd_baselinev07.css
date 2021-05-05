@@ -241,14 +241,14 @@ body{
   position: relative;
   display: inline;
   float:left;
-  z-index: -1;
+  /*z-index: -1;*/
 
   margin: 0 var(--gutter-width) calc(var(--line-height) - var(--image-to-x)) 0;
   transform: translateY(var(--image-to-x));
 
   max-width: 100%;
   object-fit: cover;
-  mix-blend-mode: multiply;
+  /*mix-blend-mode: multiply;*/
 }
 
 
@@ -295,7 +295,7 @@ h1{ /*  grand titre */
   margin:0;
 
   font-family: 'Inter', sans-serif;
-  font-weight: 450;
+  font-weight: 470;
   font-family: 'inter';
 
 }
@@ -348,7 +348,7 @@ h4{  /*  infos techniques */
   line-height: var(--line-height);
 
   font-family: 'Inter', sans-serif;
-  font-weight: 400;
+  font-weight: 470;
   font-family: 'inter';
 
   border-top: 1px solid var(--font-color);;
@@ -370,7 +370,7 @@ h5{  /*  notes et addendum */
   font-family: inter;
 
   border-top: 1px solid var(--font-color);
-  border-bottom: 1px solid var(--font-color);
+  /*border-bottom: 1px solid var(--font-color);*/
 
 }
 
@@ -379,6 +379,9 @@ h5{  /*  notes et addendum */
   /* ******** extra text styling  ********** */
   /* *************************************** */
 
+  .underline{
+    text-decoration: underline;
+}
 
 .item{
   width: 100%;

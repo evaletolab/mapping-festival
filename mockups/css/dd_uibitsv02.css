@@ -13,9 +13,37 @@
 
   --ui-hover-background-color: grey;
   --ui-hover-text-color:white;
-
   
 }
+
+
+  /*                                         */
+  /*              UI font settings           */
+  /*                                         */
+
+
+
+.ui-font{
+  font-weight: 550;
+  font-size: calc(var(--font-size) * 1);
+  line-height: calc(var(--line-height) * 1);
+  background-color: rgba(200,180,220,var(--helper-color-alpha));
+  margin: 0 0 var(--line-height) 0
+}
+
+.ui-font.small{
+  font-size: calc(var(--font-size) * .75);
+  line-height: calc(var(--line-height) * 1);
+  margin-left: 1px;
+}
+
+
+.ui-font.big{
+  font-size: calc(var(--font-size) * 1.75);
+  line-height: calc(var(--line-height) * 1);
+  margin-left: -2px;
+}
+
 
   /*                                         */
   /*                   buttons               */
@@ -29,22 +57,39 @@
   border: 1px solid var(--ui-border-color);
   padding: var(--image-to-x);
   margin: -1px 0 0 0 ;
+
+  /*font-weight: 400;*/
+}
+
+.ui-button p,
+.ui-button.menu{
+  font-weight: 550;
 }
 
 
 .ui-button:hover,
 .ui-button:active {
   background-color: var(--ui-hover-background-color);
-    color:var(--ui-hover-text-color);
+    color: var(--ui-hover-text-color);
 }
 
 .ui-button.menu{
+  display: block;
+  background: none;
   border-left: 0px;
   border-right: 0px;
+  padding-left:0;
+  width: 100%;
+
 }
 
 .ui-button.block{
   display: block;
+}
+
+
+.ui-button.rounded{
+border-radius: 4px;
 }
 
 .ui-button.noborder{
@@ -55,13 +100,13 @@
 .ui-button p{
   font-size: calc(var(--font-size) * 1);
   line-height: calc(var(--line-height) * 1);
-  font-weight: 470;
+  /*font-weight: 470;*/
 }
 
 .ui-button p.small{
   font-size: calc(var(--font-size) * .75);
   line-height: calc(var(--line-height) * .75);
-  font-weight: 470;
+  /*font-weight: 470;*/
 }
 
 .border-bottom{
@@ -74,14 +119,12 @@
   /*                                         */
 
 
-
 .ui-icon {
-  background-color: blueviolet;
-   display: inline-block;
-    background-color: none;
-    height: calc(var(--line-height)*1.5);
-    width: calc(var(--line-height)*1.5);
-    left: calc(var(--gutter-width)/4);
+  /*background-color: rgba(137, 43, 226, 0.37);*/
+  display: inline-block;
+  background-color: none;
+  height: calc(var(--line-height)*1.5);
+  width: calc(var(--line-height)*1.5);
 
 }
 
@@ -91,14 +134,11 @@
   width: calc(var(--line-height));
 }
 
-
 .ui-icon.big {
   background-color: none;
   height: calc(var(--line-height)*2);
   width: calc(var(--line-height)*2);
 }
-
-
 
 .ui-icon img{
   width: 100%;
@@ -112,5 +152,33 @@
 
 .ui-icon.align-right{
   right: calc(var(--gutter-width)/4);
+}
+
+.ui-icon.align-left{
+  left: calc(var(--gutter-width)/4);
+}
+
+
+
+  /*                                         */
+  /*                 decorations             */
+  /*                                         */
+
+.shadow01{  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;  }
+.shadow02{  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;  }
+.shadow03{  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;  }
+.shadow04{  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;  }
+
+
+
+
+  /*                                         */
+  /*                 separator               */
+  /*                                         */
+
+.separator{
+  height: 0px;
+  border-top: 2px solid black;
+  margin-top: -1px;
 }
 
