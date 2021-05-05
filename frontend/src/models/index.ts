@@ -85,6 +85,8 @@ export namespace CMS {
 
   const _eventSubType = ["Parcours urbain", "Exposition", "Performance", "Nighclubbing", "Concert", "Workshop", "Table ronde", "Masterclass", "mappingTV"] as const;
   export type  eventSubType = typeof _eventSubType[number];
+
+  export type EventLocationType = "Standard" | "Parcours Urbain";
   
   type Lat = number;
   type Lng = number;
@@ -97,7 +99,8 @@ export namespace CMS {
     name:{
       fr:string,
       en:string
-    }
+    },
+    type: EventLocationType,
     cover: LocalMedia | null,
     active:boolean,
     street: string,

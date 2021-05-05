@@ -5,6 +5,8 @@
 <style type="text/css">
 	.st0{fill:#FFFFFF;}
 	.st1{fill:#1D1D1B;}
+	.st2{fill:none;stroke:#1D1D1B;stroke-width:3.5;stroke-miterlimit:10;}
+	.st3{fill:#FFFFFF;stroke:#1D1D1B;stroke-width:3.8981;stroke-miterlimit:10;}
 </style>
 <title>PhoneHeadphones_02</title>
 <path class="st0" d="M39.6,68.3c-0.9-0.9-22-22.7-22-39.1c0-13.3,10.8-24.1,24.1-24.1s24.1,10.8,24.1,24.1c0,16.5-21.1,38.2-22,39.1
@@ -13,5 +15,13 @@
 	c0-11.5,9.4-20.9,20.9-20.9C41.7,8.3,41.7,8.3,41.8,8.3 M41.8,2.3c-14.9-0.1-27,12-27.1,26.9c0,17.4,20.5,38.8,22.8,41.2l4.3,4.4
 	l4.3-4.4c2.3-2.4,22.8-23.8,22.8-41.2C68.8,14.3,56.7,2.2,41.8,2.3z"/>
 <circle class="st1" cx="41.7" cy="28.9" r="12"/>
-<circle class="st1" cx="41.7" cy="28.9" r="12.7"/>
+<g>
+	<line class="st2" x1="36.7" y1="67.6" x2="66.5" y2="26.9"/>
+	<line class="st2" x1="33.6" y1="60" x2="63.5" y2="19.3"/>
+	<line class="st2" x1="29.9" y1="53.3" x2="59.7" y2="12.7"/>
+	<line class="st2" x1="25" y1="48.2" x2="54.8" y2="7.5"/>
+	<line class="st2" x1="19.8" y1="43.4" x2="47.4" y2="5.8"/>
+	<line class="st2" x1="17.6" y1="34.6" x2="39.1" y2="5.2"/>
+</g>
+<circle class="st3" cx="41.7" cy="28.9" r="14.1"/>
 </svg>

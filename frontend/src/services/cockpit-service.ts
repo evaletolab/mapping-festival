@@ -281,6 +281,7 @@ class CockpitService {
     eventLocation.city = geo.city || "";
     eventLocation.tag = geo.tag || "";
     eventLocation.coordinates = geo.location ? [geo.location.lng, geo.location.lat] : null;
+    eventLocation.type = eventLocation.type || "Standard";
 
     if(!eventLocation.street){
       this._diagnosticsLogger.log(`eventlocation with name ${t(eventLocation.name)} has no street address`);
