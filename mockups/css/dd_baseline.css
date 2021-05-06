@@ -45,7 +45,7 @@
   --helper-color-alpha: 0;
 
   /* font basics settings*/
-  --font-size-max: 22px;
+  --font-size-max: 20px;
   --font-size: min(calc((1vmin + 1.5vmax) * .8), var(--font-size-max));
   --line-height: calc(var(--font-size) * 1.26);
   --font-color: #fff;
@@ -491,7 +491,7 @@ h5{  /*  notes et addendum */
 .margin-top12{margin-top: calc((var(--line-height) * 13) + var(--text-to-baseline));}
 .margin-top13{margin-top: calc((var(--line-height) * 14) + var(--text-to-baseline));}
 .margin-top14{margin-top: calc((var(--line-height) * 15) + var(--text-to-baseline));}
-
+.margin-top15{margin-top: calc((var(--line-height) * 16) + var(--text-to-baseline));}
 
   /* ************************************************ */
   /* image-heights values [in terms of lines of text] */
