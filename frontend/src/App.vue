@@ -42,7 +42,7 @@ import { Translatable } from '@/mixins';
 })
 export default class App extends mixins(Translatable) {
 
-  registration = null;
+  registration:any = null;
   updateExists = false;
   screenWidth = 0;
   
