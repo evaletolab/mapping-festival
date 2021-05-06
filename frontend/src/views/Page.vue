@@ -1,34 +1,89 @@
 <template>
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
-  <!--         ---------         -->  
-  <div class="page spiegel margin-top1">
+  <!--         ---------         -->    
+  <div class="page ">
+    <div class="header hide-sm">
+      <h4 class="tagline  align-right">
+          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
+          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
+      </h4>
+
+      <div class="destination">
+        {{t(page.title)}}
+      </div>
+    </div>
+
     <!-- TOOLBAR -->
-    <!-- <Toolbar />
+    <toolbar class="hide-lg hide-md" />
+    <div class="content spiegel margin-top1">
+      <p v-html="t(page.header)"></p>
+      
+      <p v-html="t(page.content)"></p>
 
-    <div style="height:100px" />
-
-    <PrimaryMenu /> -->
-
-    <h1>{{t(page.title)}}</h1>
-
-    <div v-html="t(page.header)"></div>
-    
-    <div v-html="t(page.content)"></div>
+    </div>
 
   </div>
 </template>
 
 <style lang="scss" scoped>
   .page{
-    // top: 0;
-    // right: 0;
-    // bottom: 0;
-    // margin: 0;
-    // z-index: 2;
-    // height: 100vh;
-    // width: 100vw;    
-    // padding-top:0;    
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    color: var(--font-color);
+    margin: 0;
+    z-index: 2;
+    height: 100vh;
+    width: 100%;    
+    margin-top: 0px;
+
+    .header{
+      /** BUG width overflow */
+      overflow: hidden;
+      height: var(--nav-header-height);
+      margin-top: var(--gutter-width);
+      margin-left: var(--gutter-width);
+      margin-right: var(--gutter-width);
+      border-bottom: 1px solid var(--font-color);
+      position: relative;
+      .align-right{
+        float: right;
+      }
+
+      .tagline{
+        border-top: none;
+        text-align: right;
+        @media (max-width:476px) {
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+          text-align: left;        
+        }      
+      }
+
+      @media (max-width:476px) {
+        height: calc( var(--nav-header-height) * 1.65 );
+      }
+
+      .destination{
+        margin-bottom: -1px;
+        position: absolute;
+        bottom: 30px;
+        margin: 0;
+        
+        font-size: 30px;
+        font-weight: 700;      
+      }
+
+    }
+
+    .content{
+      @media (max-width:425px) {
+        margin-top: 80px;        
+      }
+    }
   }
   img{
     width:100%;
@@ -91,12 +146,8 @@ export default class Page extends mixins(Translatable) {
   }
 
   mounted(){
-    document.body.classList.add('body-scroll');
   }
 
-  beforeDestroy() {
-    document.body.classList.remove('body-scroll');
-  }
 
   get page(): CMS.Page {
     return $page.pageWithSlug(this.$route.params.pageslug) as CMS.Page;

@@ -1,5 +1,16 @@
 <template>
   <div class="events">
+    <div class="header hide-sm">
+      <h4 class="tagline  align-right">
+          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
+          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
+      </h4>
+
+      <div class="destination">
+        Pouet!
+      </div>
+    </div>
+
     <!-- TOOLBAR -->
     <toolbar class="hide-lg hide-md" @exited="onToolbarExit"/>
     <Calendar  gotop="yes" :class="{'exited': toolbarExit}"/>
@@ -18,15 +29,54 @@
   height: 100vh;
   width: 100%;    
   margin-top: 0px;
-  @media (max-width:425px) {
+  .header{
+    /** BUG width overflow */
+    overflow: hidden;
+    height: var(--nav-header-height);
+    margin-top: var(--gutter-width);
+    margin-left: var(--gutter-width);
+    margin-right: var(--gutter-width);
+    border-bottom: 1px solid var(--font-color);
+    position: relative;
+    .align-right{
+      float: right;
+    }
+
+    .tagline{
+      border-top: none;
+      text-align: right;
+      @media (max-width:476px) {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        text-align: left;        
+      }      
+    }
+
+    @media (max-width:476px) {
+      height: calc( var(--nav-header-height) * 1.65 );
+    }
+
+    .destination{
+      margin-bottom: -1px;
+      position: absolute;
+      bottom: 30px;
+      margin: 0;
+      
+      font-size: 30px;
+      font-weight: 700;      
+    }
+
+  }
+
+  @media (max-width:426px) {
     .calendar {
       transition: all 200ms;      
       transform: translateY(0px);
       &.exited{
         transform: translateY(60px);
       }
-    }
-    
+    }  
   }
 
 
@@ -82,7 +132,7 @@ import Calendar from '../components/Calendar.vue';
   }
 })
 export default class EventList extends mixins(Translatable) {
-
+  
   today = new Date();
   toolbarExit = true;
 
