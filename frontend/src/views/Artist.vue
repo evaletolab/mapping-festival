@@ -23,12 +23,15 @@
     <h4>Bio</h4>
     <div v-html="t(artist.content)" />
 
+
     <h4>Events</h4>
-    <ul v-for="event in events" :key="event._id">
-      <li> 
-        <router-link :to="`/events/${event.slug}`">{{ t(event.title) }}</router-link>
-      </li>
-    </ul>
+    <div class="grid-container grid-container--fit">
+      <div class="grid-element event" 
+          v-for="event in events" :key="event._id">
+        <event-card :event="event" />
+      </div>
+    </div> 
+    <!-- <event-card v-for="event in events" :key="event._id" :event="event" /> -->
 
     <div v-if="mediaCount > 0">
       <h4>Medias</h4>
@@ -81,6 +84,7 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
 import VideoPlayer from '../components/VideoPlayer.vue';
 import SoundCloud from 'vue-soundcloud-player';
 import SocialIcons from '../components/SocialIcons.vue';
+import EventCard from '../components/EventCard.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -88,7 +92,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu, VideoPlayer, SoundCloud, SocialIcons,
+    CMSIcons, Toolbar, PrimaryMenu, VideoPlayer, SoundCloud, SocialIcons, EventCard
   }
 })
 export default class Artist extends mixins(Translatable) {

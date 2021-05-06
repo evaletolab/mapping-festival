@@ -16,6 +16,7 @@
         position: relative;
         width: 100%;
         height: 100%;
+        cursor: pointer;
     }
 
     .cover-event{
@@ -60,7 +61,6 @@ export default class ArtistCard extends mixins(Translatable) {
   }
   
   get coverDesktop(): string {
-    console.log("cov", this.event.cover);
     if(this.event.cover){
       return this.event.cover.sizes.small.path;
     }else{
