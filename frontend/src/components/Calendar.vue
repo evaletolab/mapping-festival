@@ -129,7 +129,9 @@
   .grid {
     width: calc(100% - 1em);
     margin-left: 0.5em;
-        
+    border-bottom: 1px solid black;
+    padding-bottom: 1em;        
+    
     &:first-child{
     }
     .event {
