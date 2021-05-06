@@ -36,12 +36,16 @@
       </MapLibre>
     </div>
 
-    <h2>Events</h2>
-    <ul v-for="event in events" :key="event._id">
-      <li>
-        <router-link :to="`/events/${event.slug}`">{{t(event.title)}}</router-link>
-      </li>
-    </ul>
+    <div v-if="events.length > 0">
+      <h4>Events</h4>
+      <div class="grid-container grid-container--fit">
+        <div class="grid-element event" 
+          v-for="event in events" :key="event._id">
+          <event-card :event="event" />
+        </div>
+      </div> 
+    </div>
+
   </div>
 </template>
 
@@ -66,13 +70,14 @@ import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
 import MapLibre from '../components/MapLibre.vue';
 import MapLibreMarker from '../components/MapLibreMarker.vue';
+import EventCard from '../components/EventCard.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
 
 @Component({
   components: {
-    CMSIcons,Toolbar, PrimaryMenu, MapLibre, MapLibreMarker 
+    CMSIcons,Toolbar, PrimaryMenu, MapLibre, MapLibreMarker, EventCard
   }
 })
 export default class Spot extends mixins(Translatable) {
