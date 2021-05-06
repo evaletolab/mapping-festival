@@ -21,8 +21,8 @@
       <div class="item" v-for="(when,index) in event.when" :key="index">{{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}</div>
       <!--
       <div class="item"></div> -->
-      <div class="item">{{t({fr:"prix", en:"price"})}}: {{event.price || '--'}}</div>
-      <div class="item">{{t({fr:"limite", en:"limit"})}}: {{event.limit || '--'}}</div>
+      <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
+      <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
     </h4>
 
     <div class="spiegel" v-html="t(event.content)"></div>
