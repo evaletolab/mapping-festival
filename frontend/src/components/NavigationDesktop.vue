@@ -27,14 +27,14 @@
 
             <!-- NAV PRIMARY CONTENT -->
             <div class="item" v-for="menu in primaryMenu" :key="menu.link">
-                <RouterLink @click.native="onMenu" :to="menu.link">{{t(menu.name)}}</RouterLink>
+                <RouterLink @click.native="onClose" :to="menu.link">{{t(menu.name)}}</RouterLink>
             </div>
             <br>
             <!-- NAV SECONDARY CONTENT -->
             <br>
             <br>
             <div class="item" v-for="menu in secondaryMenu" :key="menu.link">
-                <RouterLink @click.native="onMenu" :to="menu.link">{{t(menu.name)}}</RouterLink>
+                <RouterLink @click.native="onClose" :to="menu.link">{{t(menu.name)}}</RouterLink>
             </div>
             <br>
             <br>
@@ -51,7 +51,7 @@
             <br>
             <!-- NAV FOOTER CONTENT -->
             <div class="item" v-for="menu in footerMenu" :key="menu.link">
-                <RouterLink @click.native="onMenu" :to="menu.link">{{t(menu.name)}}</RouterLink>
+                <RouterLink @click.native="onClose" :to="menu.link">{{t(menu.name)}}</RouterLink>
             </div>
         </aside>
     </div>
@@ -235,6 +235,9 @@ export default class Navigation extends mixins(Translatable) {
   // - click on action
   onMenu() {
     document.body.classList.toggle('menu-open');
+  }
+  onClose() {
+    document.body.classList.remove('menu-open');
   }
 }
 </script>

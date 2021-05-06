@@ -45,13 +45,13 @@
   }
 
   @media only screen and (min-width: 767px) {
-    .hide-md    {display: none;}
+    .hide-md    {display: none!important;}
   }
   
 
   @media only screen and (min-width: 1024px) {
     .show-lg    {display: block;}
-    .hide-lg    {display: none;}
+    .hide-lg    {display: none!important;}
   }  
 
 

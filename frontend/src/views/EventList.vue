@@ -18,13 +18,17 @@
   height: 100vh;
   width: 100%;    
   margin-top: 0px;
-  .calendar {
-    transition: all 200ms;      
-    transform: translateY(0px);
-    &.exited{
-      transform: translateY(60px);
+  @media (max-width:425px) {
+    .calendar {
+      transition: all 200ms;      
+      transform: translateY(0px);
+      &.exited{
+        transform: translateY(60px);
+      }
     }
+    
   }
+
 
   section.primary{
     display: block;
