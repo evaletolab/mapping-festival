@@ -28,7 +28,7 @@
 <script lang="ts">
 import { Route } from 'vue-router';
 import { Component, Vue } from 'vue-property-decorator';
-import { $config, $eventLocation } from './services';
+import { $config } from './services';
 import NavigationDesktop from './components/NavigationDesktop.vue';
 import NavigationMobile from './components/NavigationMobile.vue';
 import { mixins } from 'vue-class-component';
@@ -42,6 +42,8 @@ import { Translatable } from '@/mixins';
 })
 export default class App extends mixins(Translatable) {
 
+  registration = null;
+  updateExists = false;
   screenWidth = 0;
   
   get config(){
@@ -75,18 +77,23 @@ export default class App extends mixins(Translatable) {
   }
 
   onUpdateAvailable(event){
-    const registration = event.detail;
-    //if (!registration || !registration.waiting) return
+      this.registration = event.detail
+      this.updateExists = true
+  }
+
+
+  onRefreshApp() {
+    this.updateExists = false
+    // Make sure we only send a 'skip waiting' message if the SW is waiting
+    if (!this.registration || !this.registration.waiting) return
     // Send message to SW to skip the waiting and activate the new SW
-    //registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    this.registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    //
     //refresh content from registerServiceWorker.ts
-    setTimeout(()=> window.location.reload(true),3000);
+    //setTimeout(()=> window.location.reload(true),3000);
   }  
 
-  themeTertiary(theme) {
-    return this.config.themes[theme].tertiary;
-  }
-  
+
   // *this* does not exist at this point
   beforeRouteEnter(to: Route, from: Route, next: any) {
   }
