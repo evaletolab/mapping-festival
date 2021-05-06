@@ -70,6 +70,12 @@
       box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%);      
     }
 
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
     a{
       cursor: pointer;
       text-transform: lowercase;
