@@ -22,7 +22,7 @@
     transition: all 200ms;      
     transform: translateY(0px);
     &.exited{
-      transform: translateY(40px);
+      transform: translateY(60px);
     }
   }
 

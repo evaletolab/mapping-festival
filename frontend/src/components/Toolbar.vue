@@ -14,7 +14,7 @@
         </div>        
 
         <div class="toolbar-section-end">
-          <button class="icon end">
+          <button class="icon end" @click="onMenu">
             <i class="fas fa-bars fa-2x"></i>
           </button>
         </div>
@@ -273,8 +273,11 @@ export default class Toolbar extends Vue {
     root.style.setProperty('--body-color', bcolor);
   }
 
+  //
+  // decorate body to inform sidenav in others components
   async onMenu() {
-    this.$emit('click');
+    //this.$emit('click');
+    document.body.classList.toggle('menu-open');
   }
 }
 </script>
