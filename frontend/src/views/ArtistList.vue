@@ -2,7 +2,7 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  <div class="artist">
+  <div class="artist" id="artists-top">
     <div class="header hide-sm">
       <h4 class="tagline  align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
@@ -16,7 +16,15 @@
 
     <!-- TOOLBAR -->
     <toolbar class="hide-lg hide-md" />
-    <div class="content spiegel margin-top1">
+
+    <section class="gotop" @click="onTop"
+            :class="{'exited': (scrollDirection > 0) }">
+      <button >
+        <i class="fas fa-arrow-up fa-2x"></i>
+      </button>
+    </section>
+
+    <div class="content spiegel margin-top1" >
       <div v-if="isMobileView">
         <ArtistCard v-for="artist in sortedArtists" :key="artist._id" 
         :artist="artist"
@@ -53,6 +61,36 @@
     }
 
   }
+
+
+  section.gotop{
+    position: fixed;
+    bottom: -60px; 
+    left: calc( 50% - 16px );       
+
+
+    transform: translateY(0);
+    transition: all 200ms;      
+
+    z-index: 2;
+
+    &.exited {
+      transform: translateY(-70px);            
+    }
+
+    button{
+      padding: 2px 2px;
+      width: 36px;
+      height: 36px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      outline: 0;
+      background: var(--font-color);
+      color: var(--body-color);
+      border-radius: 50%;
+    }
+  }  
 
   .flex-grid {
     display: flex;
@@ -106,6 +144,9 @@ import VueCable from '../components/VueCable.vue';
   }
 })
 export default class ArtistList extends mixins(Translatable)  {
+  private lastScrollTop = 0;
+  scrollDirection = 0;
+
   screenWidth = 0;
   get config(){
     return $config.store.config;
@@ -138,7 +179,24 @@ export default class ArtistList extends mixins(Translatable)  {
     addEventListener('resize', this.onResize);
     this.computeScreenWidth();
 
-    console.log($artist.setsByLetter);
+    window.addEventListener("scroll", () => { 
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      //
+      // downscroll code
+      if (st > this.lastScrollTop){
+        this.scrollDirection = 1;
+      } 
+      //
+      // upscroll code
+      else {          
+        this.scrollDirection = -1;
+      }
+
+      //
+      // For Mobile or negative scrolling
+      this.lastScrollTop = st <= 0 ? 0 : st; 
+    }, false);
+
   }
 
   beforeDestroy() {
@@ -162,6 +220,16 @@ export default class ArtistList extends mixins(Translatable)  {
   async onLoad(slug: string) {
     //
   }
+
+  async onTop($event) {
+    const element = document.getElementById('artists-top');
+    if(!element) {
+      return;
+    }
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+
+
 
   async onSave() {
     //

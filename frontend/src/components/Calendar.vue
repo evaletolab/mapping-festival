@@ -8,7 +8,7 @@
           @click="onEventCategory(menu.name)" >{{(menu.name)}}</a>
         <a class="today" @click="onToday">today</a>          
     </section>
-    <section v-if="gotop" class="top" @click="onTop"
+    <section v-if="gotop" class="gotop" @click="onTop"
             :class="{'exited': (scrollDirection > 0) }">
       <button >
         <i class="fas fa-arrow-up fa-2x"></i>
@@ -97,7 +97,7 @@
     }
   }
 
-  section.top{
+  section.gotop{
     position: fixed;
     bottom: -60px; 
     left: calc( 50% - 16px );       
@@ -131,7 +131,7 @@
     margin-left: 0.5em;
     border-bottom: 1px solid black;
     padding-bottom: 1em;        
-    
+
     &:first-child{
     }
     .event {
@@ -272,10 +272,6 @@ export default class Calendar extends mixins(Translatable)  {
     //   backgroundRepeat: 'no-repeat',
     //   backgroundSize :'cover',
     // };
-  }
-
-  getRandomId(event){
-    return Math.random()*10000|0;
   }
 
   async mounted(){
