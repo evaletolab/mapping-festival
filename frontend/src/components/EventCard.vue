@@ -1,28 +1,23 @@
 <template>
-    
-    <div class="grid-element" @click="navigateToEvent">
+    <div class="grid-element event-card" @click="navigateToEvent">
         <lazy-img class="cover-event" :src="coverDesktop" />
         
-        <div class="text event-date align-right">{{ event.when[0].startTime }}</div>
-        <div class="text event-title">{{ t(event.title) }}</div>
-        <div class="text artistname">artist</div>
-        <div class="text artist-country">CH / JP</div>
-        <div class="text event-location">location</div><br>
-        <br><div class="text event-type align-center">{{event.type}}</div>
-
-        <!-- <div class="description">
-            <div class="title">{{ t(event.title) }} </div>      
-            <div v-if="event.when.length > 0" class="when">{{ event.when[0].startTime }} </div>
-            <div class="type">{{ (event.type) }} </div>      
-        </div> -->
+        <div class="description"> 
+          <div class="text event-date align-right">{{ event.when[0].startTime }}</div>
+          <div class="text event-title">{{ t(event.title) }}</div>
+          <div v-for="artist in artists" :key="artist._id">
+            <div class="text artistname">{{artist.fullname}}</div>
+            <div class="text artist-country">{{artist.country}}</div>
+          </div>
+          <div v-if="location" class="text event-location">{{t(location)}}</div><br>
+          <br><div class="text event-type align-center">{{event.type}}</div>
+        </div>
     </div>
 </template>
 
 <style scoped>
     .event-card{
         position: relative;
-        width: 100%;
-        height: 100%;
         cursor: pointer;
     }
 
@@ -45,7 +40,7 @@ import { Translatable } from '@/mixins';
 import { mixins } from 'vue-class-component';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { CMS } from "../models";
-import { $config } from '../services';
+import { $config, $event, $artist } from '../services';
 import LazyImg from './LazyImg.vue';
 
 @Component({
@@ -57,6 +52,14 @@ export default class ArtistCard extends mixins(Translatable) {
 
   get config(){
     return $config.store.config;
+  }
+
+  get artists(): CMS.ArtistWrap[]{
+    return $event.artistsForEvent(this.event).map(a => new CMS.ArtistWrap(a));
+  }
+
+  get location(): { fr: string, en: string } | null{
+    return new CMS.EventWrap(this.event).location;
   }
 
   get coverMobile(): string {
