@@ -2,7 +2,7 @@
   <div class="landing">
     <div class="header ">
       <div class="title ">
-        <h1 class="width7">mp<br>pngfst<br>vl</h1>
+        <p class="">mp<br>pngfst<br>vl</p>
         <h1 class="margin-top1" v-html="t(config.landing.title1)"/>
       </div>
 
