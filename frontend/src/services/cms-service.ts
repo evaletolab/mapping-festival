@@ -61,6 +61,8 @@ class CMSService {
     const calendar = {};
     let counter = 10;    
 
+    console.log("events len ", events?.length);
+
     (events||this.events).forEach(event =>{      
       const times = (event.when||[]).slice();
       times.forEach(when => {
@@ -146,7 +148,7 @@ class CMSService {
         .map(entry => $cockpit.formatEvent(this.eventLocations,this.artists,entry))
         .filter(item => !!item.when) // events with no when are invalid
         .filter(item => item.active);
-      // console.log("my events", this.cms.events;
+      // console.log("my events", this.cms.events.filter(e => e.title.fr =="Lotus"));
     }
   }
 
