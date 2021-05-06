@@ -32,8 +32,7 @@
     padding-left: 10px;
     border: 1px solid var(--font-color);
 
-    /* background-color: var(--body-color); */
-    background-color: black;
+    background-color: var(--body-color);
   }
   
   .hidden{
@@ -51,6 +50,7 @@
     margin-left: 20px;
     margin-top: 20px;
     line-height: 0;
+    color: var(--font-color);
   }
 
   .dot{
