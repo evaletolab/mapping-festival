@@ -1,13 +1,20 @@
 <template>
     
-    <div class="event-card" @click="navigateToEvent">
+    <div class="grid-element" @click="navigateToEvent">
         <lazy-img class="cover-event" :src="coverDesktop" />
+        
+        <div class="text event-date align-right">{{ event.when[0].startTime }}</div>
+        <div class="text event-title">{{ t(event.title) }}</div>
+        <div class="text artistname">artist</div>
+        <div class="text artist-country">CH / JP</div>
+        <div class="text event-location">location</div><br>
+        <br><div class="text event-type align-center">{{event.type}}</div>
 
-        <div class="description">
+        <!-- <div class="description">
             <div class="title">{{ t(event.title) }} </div>      
             <div v-if="event.when.length > 0" class="when">{{ event.when[0].startTime }} </div>
             <div class="type">{{ (event.type) }} </div>      
-        </div>
+        </div> -->
     </div>
 </template>
 

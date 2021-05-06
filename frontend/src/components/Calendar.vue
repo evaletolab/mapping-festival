@@ -34,11 +34,7 @@
         </div>
       </div>  -->
       <div class="grid-container grid-container--fit">
-        <div class="grid-element event" 
-            v-for="(event,index) in elem.events" 
-            :key="index">
-          <event-card :event="event" />
-        </div>
+        <event-card v-for="(event, index) in elem.events" :key="index" :event="event" />
       </div> 
     </div> 
   </div>
