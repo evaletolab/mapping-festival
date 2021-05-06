@@ -26,16 +26,24 @@
             </section>
 
             <!-- NAV PRIMARY CONTENT -->
-            <div class="item" v-for="menu in primaryMenu" :key="menu.link">
-                <RouterLink @click.native="onClose" :to="menu.link">{{t(menu.name)}}</RouterLink>
-            </div>
+            <RouterLink v-for="menu in primaryMenu" :key="menu.link"  :to="menu.link">
+              <div class="ui-button height3 width8 menu"> 
+                <p class="vcenter">{{t(menu.name)}}</p> 
+                <div class="ui-icon vcenter align-right">
+                  <img src="/img/svg/dot.svg" alt="">
+                </div>
+              </div>
+            </RouterLink>
+
+            <div class="separator"></div>
             <br>
+
             <!-- NAV SECONDARY CONTENT -->
-            <br>
-            <br>
-            <div class="item" v-for="menu in secondaryMenu" :key="menu.link">
-                <RouterLink @click.native="onClose" :to="menu.link">{{t(menu.name)}}</RouterLink>
-            </div>
+            <RouterLink v-for="menu in secondaryMenu" :key="menu.link"  :to="menu.link">
+              <div class="ui-button height2 width8 menu noborder">    
+                <p class="vcenter small">{{t(menu.name)}}</p> 
+              </div>
+            </RouterLink>
             <br>
             <br>
 
@@ -158,6 +166,7 @@ import { Translatable } from '@/mixins';
 import { mixins } from 'vue-class-component';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { CMS } from "../models";
+import CMSIcons from '../components/CMSIcons.vue';
 import { $config, $page } from '../services';
 
 import Toolbar from './Toolbar.vue';
@@ -165,9 +174,11 @@ import PrimaryMenu from './PrimaryMenu.vue';
 import LanguageSelector from './LanguageSelector.vue';
 
 @Component({
-  components: { PrimaryMenu, LanguageSelector, Toolbar }
+  components: { 
+    PrimaryMenu, LanguageSelector, Toolbar, CMSIcons 
+  }
 })
-export default class Navigation extends mixins(Translatable) {
+export default class NavigationDesktop extends mixins(Translatable) {
 
   private lastScrollTop = 85;
   stickyNav = 0;
