@@ -18,7 +18,7 @@ import "@/styles/reset.css";
 import "@/styles/page.css";
 import "@/styles/cardsgrid.css";
 import "@/styles/dd_baseline.css"; 
-
+import "@/styles/dd_uibits.css";
 
 import { $config, $user, $cms } from '@/services';
 
