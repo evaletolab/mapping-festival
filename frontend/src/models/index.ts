@@ -240,6 +240,79 @@ export namespace CMS {
     // creator:string,    
   }
 
+  export class EventWrap
+  {
+    constructor(private _event: CMS.Event){}
+    get id(): string{
+      return this._event._id;
+    }
+    get slug(): string{
+      return this._event.slug;
+    }
+    get active(): boolean{
+      return this._event.active;
+    }
+    get cover(): LocalMedia | null{
+      return this._event.cover;
+    }
+    get type(): eventType{
+      return this._event.type;
+    }
+    get subType(): eventSubType{
+      return this._event.subType;
+    }
+    get title(): {fr: string, en: string} {
+      return this._event.title;
+    }
+    get header(): {fr: string, en: string} {
+      return this._event.header;
+    }
+    get content(): {fr: string, en: string} {
+      return this._event.content;
+    }
+    get hardware(): {fr: string, en: string} {
+      return this._event.hardware;
+    }
+    get notes(): {fr: string, en: string} {
+      return this._event.notes;
+    }
+    get year(): number {
+      return this._event.year;
+    }
+    get when(): When[] {
+      return this._event.when;
+    }
+    get price(): number{
+      return this._event.price;
+    }
+    get limit(): number{
+      return this._event.limit;
+    }
+    get artists(): { lastname: string, slug: string, _id: string }[] {
+      return this._event.artists;
+    }
+    get localMedias(): LocalMedia[]{
+      return this._event.localMedias;
+    }
+    get externalMedias(): ExternalMedia[]{
+      return this._event.externalMedias;
+    }
+    get created(): Date{
+      return this._event.created;
+    }
+
+    get location(): {fr: string, en:string} | null{
+      let result = null;      
+      for(const w of this.when){
+        if(w.eventLocation){
+          return w.eventLocation.name;
+        }
+      }
+
+      return result;
+    }
+  }
+
   export interface Calendar {
     day: string;
     month: string;
