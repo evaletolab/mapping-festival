@@ -208,9 +208,10 @@ class CockpitService {
     // build **when** array
     event.when = (event.when||[]).map ((w, index) => {
       const v = w.value;
+      // new Date("2021-05-06T16:25:00+02:00");
 
-      const start = new Date(`${v.startDate} ${v.startHour}`);
-      const end = new Date(`${v.endDate} ${v.endHour}`);
+      const start = new Date(`${v.startDate}T${v.startHour}:00+02:00`);
+      const end = new Date(`${v.endDate}T${v.endHour}:00+02:00`);
       const cancel = v.cancel;
       // console.log(v.startDate, v.startHour, start);
       // console.log(v.endDate, v.endHour, end);
