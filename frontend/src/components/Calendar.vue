@@ -143,7 +143,7 @@
 <script lang="ts">
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { mixins } from 'vue-class-component';
-import { $config, $cms } from '../services';
+import { $config, $cms, $event } from '../services';
 import { CMS } from "../models";
 import { Translatable } from '../mixins';
 import LazyImg from './LazyImg.vue';
@@ -170,40 +170,56 @@ export default class Calendar extends mixins(Translatable)  {
 
   get events() {
     const label = (this.selected||'').toLowerCase();
-    if(this.cache['events_'+label]){
-      return this.cache['events_'+label]
+
+    const key = `events_${label}`;
+
+    if(this.cache[key]){
+      console.log("returning cached data", `events_${label}`);
+      return this.cache[key]
     }
 
-    return this.cache['events_'+label] = $cms.cms.events.filter(event => {
-      // remove "Parcours Urbain" from set of all
-      if(!label || label == '' || label == 'all' && event.type != "Parcours urbain"){
+    return this.cache[key] = $cms.cms.events.filter(event => {
+      // if "all"
+      // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation 
+      if(!label || label == '' || label == 'all' && $event.eventIsOfSpecialTypeLive(event)){
         return event;
       }
-      return (event.type||'').toLowerCase() == this.selected;
-    })
+
+      const filterPredicate = (event.type||'').toLowerCase() == this.selected;
+
+      // console.log("event type", event.type.toLowerCase(), "selected", this.selected);
+      // console.log("filterPredicate", filterPredicate);
+      return filterPredicate;
+    });
   }
 
   get calendar(): CMS.Calendar[] {
     const label = this.selected||'all';
 
+    const key = `calendar_${label}`
+
     //
     // local cache
-    if(this.cache['calendar_'+label]){
-      return this.cache['calendar_'+label]
+    if(this.cache[key]){
+      return this.cache[key]
     }
 
-    this.cache['calendar_'+label] = $cms.getCalendarFrom(this.events).sort((a: any,b: any)=>{
+    // console.log("compute calendar for", label, "and events", this.events);
+    this.cache[key] = $cms.getCalendarFrom(this.events).sort((a: any,b: any)=>{
       return a._id - b._id;
     });
 
     //
     // only display events after now
     if (this.limit) {
-      this.cache['calendar_'+label] = this.cache['calendar_'+label].filter(cal=> {
+      this.cache[key] = this.cache[key].filter(cal=> {
         return cal._id>=this.now;
       });
     }
-    return this.cache['calendar_'+label];
+
+    console.log("final calendar collection", this.cache[key].length);
+
+    return this.cache[key];
   }
 
   get eventTypes() {
@@ -303,13 +319,18 @@ export default class Calendar extends mixins(Translatable)  {
   @Watch('$route', { immediate: true, deep: true })
   async onRouteUpdate(to) {
     const label = this.$route.query.selected as string;
+    console.log("label", label);
     if(label) {
       this.eventTypes.forEach(cat => {
         cat.selected = (cat.name.toLowerCase() === label);
       });     
       this.selected = label;
+      console.log("selected has changed to ", this.selected);
+    }else{
+      this.selected = 'all';
     }
     this.isAll = !this.eventTypes.some(type => type.selected==true);
+    console.log("this.isAll is ", this.isAll);
   }
 
 }
