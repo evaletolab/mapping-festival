@@ -10,7 +10,7 @@ class PageService
     get pageLinks(){
         return this.all().map(p => {
             return {
-                link: `/Pages/${p.slug}`,
+                link: `/pages/${p.slug}`,
                 name: p.title,
                 selected: false,
             };

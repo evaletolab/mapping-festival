@@ -2,7 +2,7 @@
   <div class="toolbar " :class="{'exited': (scrollDirection <= 0), 'tiny':tiny,'main':main }">
 
     <nav >
-      <div class="toolbar-row" v-if="main">
+      <div class="toolbar-row " v-if="main">
         <div class="toolbar-section-start">
           <button class="icon start" @click="onBack">
             <i class="fas fa-arrow-left fa-2x"></i>
@@ -14,26 +14,27 @@
         </div>        
 
         <div class="toolbar-section-end">
-          <button class="icon end">
+          <button class="icon end" @click="onMenu">
             <i class="fas fa-bars fa-2x"></i>
           </button>
         </div>
       </div>        
 
       <div class="toolbar-row" v-if="tiny">
-        <button class="icon" @click="onDark">
+        <button class="icon hide" @click="onDark">
           <i class="fas fa-moon fa-2x"></i>
         </button>
 
-        <LanguageSelector class="i18n" />
 
-        <button class="icon end hide">
-          <i class="fas fa-bars fa-2x"></i>
-        </button>
+        <div class="toolbar-section-end">
+          <button class="icon end " @click="onMenu">
+            <i class="fas fa-bars fa-2x"></i>
+          </button>
+        </div>
+
       </div>
 
     </nav>
-    <PrimaryMenu />
   </div>
 
 </template>
@@ -98,10 +99,13 @@
   //
   // common style for toolbar, can be overhided on Component.vue
   .toolbar {
-    flex-flow: row wrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+
     z-index: 4;    
     position: fixed;
-    top:-69px ;
+    top:-70px ;
     left: 0;
     right: 0;
 
@@ -109,8 +113,10 @@
     transition: all 200ms;      
     width: 100%;
     height: 69px;
+    &.main{
+      background-color: var(--body-color);
+    }
 
-    background-color: var(--body-color);
 
     &.exited {
       transform: translateY(69px);            
@@ -140,8 +146,6 @@
       font-size: 17px;
       letter-spacing: -0.01em;
       line-height: 22px;
-      margin-top: 22px;
-      margin-bottom: 7px;
       margin-left: 6px;
       font-weight: 900;
       text-overflow: ellipsis;
@@ -185,11 +189,9 @@
 
       &.end{
         margin-right: 10px;
-        margin-top: 15px;
       }
       &.start{
         margin-left: 10px;
-        margin-top: 15px;
       }
     }
 
@@ -214,6 +216,7 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
 })
 export default class Toolbar extends Vue {
   private lastScrollTop = 0;
+  private exited = true;
   scrollDirection = 0;
   darkMode = false;
   @Prop() tiny!:boolean;
@@ -240,6 +243,19 @@ export default class Toolbar extends Vue {
       //
       // For Mobile or negative scrolling
       this.lastScrollTop = st <= 0 ? 0 : st; 
+
+      //
+      // fire event
+      if(!this.exited && (this.scrollDirection <= 0)) {
+        this.exited = true;
+        this.$emit('exited', true);
+      }
+      if(this.exited && (this.scrollDirection > 0)) {
+        this.exited = false;
+        this.$emit('exited',false);
+      }
+
+
     }, false);
   }
 
@@ -255,6 +271,13 @@ export default class Toolbar extends Vue {
     root.style.setProperty('--font-color', fcolor);
     root.style.setProperty('--main-font-color', fcolor);
     root.style.setProperty('--body-color', bcolor);
+  }
+
+  //
+  // decorate body to inform sidenav in others components
+  async onMenu() {
+    //this.$emit('click');
+    document.body.classList.toggle('menu-open');
   }
 }
 </script>

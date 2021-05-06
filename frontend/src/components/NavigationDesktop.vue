@@ -1,5 +1,8 @@
 <template>
     <div class="page-wrap">
+        <button class="icon hide-lg hide-md" @click="onMenu">
+          <i class="fas fa-bars fa-2x"></i>
+        </button>          
 
         <!-- --------------- main  ----------------- -->
 
@@ -9,6 +12,11 @@
 
         <!-- --------------- aside  ----------------- -->
         <aside class="page-sidebar ">
+            <!-- NAV EXIT -->
+            <button class="icon hide-lg hide-md" @click="onMenu">
+              <i class="fas fa-times fa-2x"></i>
+            </button>          
+
             <!-- NAV HEADER -->
             <section class="header">
               <h1 class="width7">mp<br>pngfst
@@ -19,14 +27,14 @@
 
             <!-- NAV PRIMARY CONTENT -->
             <div class="item" v-for="menu in primaryMenu" :key="menu.link">
-                <RouterLink :to="menu.link">{{t(menu.name)}}</RouterLink>
+                <RouterLink @click.native="onClose" :to="menu.link">{{t(menu.name)}}</RouterLink>
             </div>
             <br>
             <!-- NAV SECONDARY CONTENT -->
             <br>
             <br>
             <div class="item" v-for="menu in secondaryMenu" :key="menu.link">
-                <RouterLink :to="menu.link">{{t(menu.name)}}</RouterLink>
+                <RouterLink @click.native="onClose" :to="menu.link">{{t(menu.name)}}</RouterLink>
             </div>
             <br>
             <br>
@@ -43,7 +51,7 @@
             <br>
             <!-- NAV FOOTER CONTENT -->
             <div class="item" v-for="menu in footerMenu" :key="menu.link">
-                <RouterLink :to="menu.link">{{t(menu.name)}}</RouterLink>
+                <RouterLink @click.native="onClose" :to="menu.link">{{t(menu.name)}}</RouterLink>
             </div>
         </aside>
     </div>
@@ -51,9 +59,20 @@
 
 
 <style lang="scss" scoped>
-.page-main-desktop{
-  overflow-y: scroll;
-}
+  button.icon {
+    padding: 2px 2px;
+    width: 36px;
+    height: 36px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: 0;
+    color: var(--font-color);      
+    position: absolute;
+    right: 15px;
+    top: 15px;    
+    z-index: 1;
+  }
 
 .page-main {
   grid-column: 2/2;
@@ -61,13 +80,46 @@
   @media (max-width:476px) {
     grid-column: 1/3;    
   }
+}
 
+body.menu-open .page-sidebar {
+  transform: translateX(0);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--body-color);
+  display: block;     
+  z-index: 2;
+  .header{
+    border:none;
+  }
 }
 
 .page-sidebar {
-    @media (max-width:476px) {
-      display: none;
+  @media (max-width:476px) {
+    transition: all 200ms;      
+    transform: translateX(- 100vw);
+    width: 100vw;
+    background-color: var(--body-color);
+    &.display{
+      transform: translateX(0);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--body-color);
+      display: block;     
+      z-index: 2;
+      .header{
+        border:none;
+      }
     }
+
+  }
+
 
     section.header {
       height: var(--nav-header-height);
@@ -108,16 +160,18 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import { CMS } from "../models";
 import { $config, $page } from '../services';
 
+import Toolbar from './Toolbar.vue';
 import PrimaryMenu from './PrimaryMenu.vue';
 import LanguageSelector from './LanguageSelector.vue';
 
 @Component({
-  components: { PrimaryMenu, LanguageSelector }
+  components: { PrimaryMenu, LanguageSelector, Toolbar }
 })
 export default class Navigation extends mixins(Translatable) {
 
   private lastScrollTop = 85;
   stickyNav = 0;
+  displayMenu = false;
 
   get config(){
     return $config.store.config;
@@ -172,6 +226,18 @@ export default class Navigation extends mixins(Translatable) {
 
   onDark(){
     $config.toggleDarkMode();
+  }
+
+  //
+  // toggle menu when:
+  // - click on burger
+  // - click on close
+  // - click on action
+  onMenu() {
+    document.body.classList.toggle('menu-open');
+  }
+  onClose() {
+    document.body.classList.remove('menu-open');
   }
 }
 </script>

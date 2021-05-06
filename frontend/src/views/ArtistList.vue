@@ -2,28 +2,44 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  <div class="artist">
-    <!-- TOOLBAR -->
-    <!-- <Toolbar /> -->
-    
-    <!-- <PrimaryMenu i18n="on"/> -->
+  <div class="artist" id="artists-top">
+    <div class="header hide-sm">
+      <h4 class="tagline  align-right">
+          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
+          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
+      </h4>
 
-    <!-- <VueCable /> -->
-
-    <div v-if="isMobileView">
-      <ArtistCard v-for="artist in sortedArtists" :key="artist._id" 
-      :artist="artist"
-      :mobileView="true" 
-      />
+      <div class="destination">
+        Artists
+      </div>
     </div>
-    <div v-else>
-      <div v-for="artistSet in groupedArtists" :key="artistSet.letterId" >
-        <p class="letter-key">{{artistSet.letterId}}</p>
-        <ArtistCard v-for="artist in artistSet.artists" :key="artist._id" 
+
+    <!-- TOOLBAR -->
+    <toolbar class="hide-lg hide-md" />
+
+    <section class="gotop" @click="onTop"
+            :class="{'exited': (scrollDirection > 0) }">
+      <button >
+        <i class="fas fa-arrow-up fa-2x"></i>
+      </button>
+    </section>
+
+    <div class="content spiegel margin-top1" >
+      <div v-if="isMobileView">
+        <ArtistCard v-for="artist in sortedArtists" :key="artist._id" 
         :artist="artist"
-        :mobileView="false" 
+        :mobileView="true" 
         />
-        <hr>
+      </div>
+      <div v-else>
+        <div v-for="artistSet in groupedArtists" :key="artistSet.letterId" >
+          <p class="letter-key">{{artistSet.letterId}}</p>
+          <ArtistCard v-for="artist in artistSet.artists" :key="artist._id" 
+          :artist="artist"
+          :mobileView="false" 
+          />
+          <hr>
+        </div>
       </div>
     </div>
 
@@ -35,8 +51,46 @@
 
 <style lang="scss" scoped>
   .artist{
-    margin-top: 69px;
+    .content{
+      @media (max-width:425px) {
+        margin-top: 80px;        
+      }
+      .letter-key{
+        font-weight: 700;        
+      }
+    }
+
   }
+
+
+  section.gotop{
+    position: fixed;
+    bottom: -60px; 
+    left: calc( 50% - 16px );       
+
+
+    transform: translateY(0);
+    transition: all 200ms;      
+
+    z-index: 2;
+
+    &.exited {
+      transform: translateY(-70px);            
+    }
+
+    button{
+      padding: 2px 2px;
+      width: 36px;
+      height: 36px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      outline: 0;
+      background: var(--font-color);
+      color: var(--body-color);
+      border-radius: 50%;
+    }
+  }  
 
   .flex-grid {
     display: flex;
@@ -73,6 +127,9 @@ import { Component, Vue } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
 import { $config, $artist } from '../services';
+import { mixins } from 'vue-class-component';
+import { Translatable } from '@/mixins';
+
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
@@ -86,7 +143,10 @@ import VueCable from '../components/VueCable.vue';
     CMSIcons, Toolbar, PrimaryMenu, ArtistCard, VueCable
   }
 })
-export default class ArtistList extends Vue {
+export default class ArtistList extends mixins(Translatable)  {
+  private lastScrollTop = 0;
+  scrollDirection = 0;
+
   screenWidth = 0;
   get config(){
     return $config.store.config;
@@ -119,7 +179,24 @@ export default class ArtistList extends Vue {
     addEventListener('resize', this.onResize);
     this.computeScreenWidth();
 
-    console.log($artist.setsByLetter);
+    window.addEventListener("scroll", () => { 
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      //
+      // downscroll code
+      if (st > this.lastScrollTop){
+        this.scrollDirection = 1;
+      } 
+      //
+      // upscroll code
+      else {          
+        this.scrollDirection = -1;
+      }
+
+      //
+      // For Mobile or negative scrolling
+      this.lastScrollTop = st <= 0 ? 0 : st; 
+    }, false);
+
   }
 
   beforeDestroy() {
@@ -143,6 +220,16 @@ export default class ArtistList extends Vue {
   async onLoad(slug: string) {
     //
   }
+
+  async onTop($event) {
+    const element = document.getElementById('artists-top');
+    if(!element) {
+      return;
+    }
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+
+
 
   async onSave() {
     //

@@ -30,7 +30,7 @@ export default class VideoPlayer extends Vue {
 
   mounted(){
     this.player = new Plyr(this.$refs.player as HTMLElement);
-    console.log("got player", this.player);
+    console.log("video url", this.externalMedia.url, "platform", this.externalMedia.platform);
     this.player.on("error", this.onError);
   }
 
@@ -45,7 +45,12 @@ export default class VideoPlayer extends Vue {
   }
 
   get videoId(){
-    return getVideoId(this.externalMedia.url).id;
+    let result = this.externalMedia.url;
+    if(this.externalMedia.url.startsWith('http')){
+      result = getVideoId(this.externalMedia.url).id as string;
+    }
+    console.log("video id", result);
+    return result;
   }
 
   // get resolveYoutubeSrc(): string{

@@ -1,40 +1,5 @@
 
 .landing{
-  .header{
-    /** BUG width overflow */
-    overflow: hidden;
-    height: var(--nav-header-height);
-    margin-top: var(--gutter-width);
-    margin-right: var(--gutter-width);
-    border-bottom: 1px solid var(--font-color);
-    position: relative;
-    .align-right{
-      float: right;
-    }
-
-    .title{
-      position: absolute;
-      top: 0;
-      left: 0;        
-      @media (min-width:476px) {
-        display: none;
-      }
-  
-    }
-    @media (max-width:476px) {
-      height: calc( var(--nav-header-height) * 1.65 );
-    }
-
-    .primary-menu{
-      margin-bottom: -1px;
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      border-top: none!important;
-      margin: 0;    
-    }
-    
-  }
 
 
   ul.navigation{

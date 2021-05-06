@@ -41,25 +41,23 @@
       <br>
     </div>
 
+    <div v-if="mediaCount > 0">
+      <h4>Medias</h4>
+      <div v-for="media in externalVideos" :key="media.url">
+        <VideoPlayer :externalMedia="media" />
+      </div>
 
-    <h4>Media</h4>
-    <h5>Videos</h5>
-    <div v-for="media in externalVideos" :key="media.url">
-      <VideoPlayer :externalMedia="media" />
-    </div>
+      <div v-for="media in externalSoundCloud" :key="media.url">
+        <SoundCloud :track="media.url" :mini="true" />
+      </div>
+      
+      <div v-for="image in localImages" :key="image._id">
+        <img :src="image.sizes.headerimage.path" /> 
+      </div>
 
-    <h5>Audio</h5>
-    <div v-for="media in externalSoundCloud" :key="media.url">
-      <SoundCloud :track="media.url" :mini="true" />
-    </div>
-    
-    <h5>images local (on cms with size variants)</h5>
-    <div v-for="image in localImages" :key="image._id">
-      <img :src="image.sizes.headerimage.path" /> 
-    </div>
-    <h5>images external</h5>
-    <div v-for="image in externalImages" :key="image._id">
-      <img :src="image.url" /> 
+      <div v-for="image in externalImages" :key="image._id">
+        <img :src="image.url" /> 
+      </div>
     </div>
 
   </div>
@@ -196,6 +194,10 @@ export default class Event extends mixins(Translatable) {
     const result = this.event.when;
     console.log("whens", result);
     return result;
+  }
+
+  get mediaCount(): number {
+    return this.externalVideos.length + this.externalSoundCloud.length + this.localImages.length + this.externalImages.length;
   }
   
   get externalVideos(): CMS.ExternalMedia[] {
