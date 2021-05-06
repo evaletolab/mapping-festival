@@ -30,29 +30,29 @@
       </li>
     </ul>
 
-    <h4>Media</h4>
-    <h5>Videos</h5>
-    <div v-for="media in externalVideos" :key="media.url">
-      <VideoPlayer :externalMedia="media" />
-    </div>
+    <div v-if="mediaCount > 0">
+      <h4>Medias</h4>
+      <div v-for="media in externalVideos" :key="media.url">
+        <VideoPlayer :externalMedia="media" />
+      </div>
 
-    <h5>Audio</h5>
-    <div v-for="media in externalSoundCloud" :key="media.url">
-      <SoundCloud :track="media.url" :mini="true" />
-    </div>
+      <div v-for="media in externalSoundCloud" :key="media.url">
+        <SoundCloud :track="media.url" :mini="true" />
+      </div>
     
-    <h5>images local (on cms with size variants)</h5>
-    <div v-for="image in localImages" :key="image._id">
-      <img :src="image.sizes.headerimage.path" /> 
-    </div>
-    <h5>images external</h5>
-    <div v-for="image in externalImages" :key="image._id">
-      <img :src="image.url" /> 
+      <div v-for="image in localImages" :key="image._id">
+        <img :src="image.sizes.headerimage.path" /> 
+      </div>
+      <div v-for="image in externalImages" :key="image._id">
+        <img :src="image.url" /> 
+      </div>
     </div>
 
-    <h5>social media</h5>
-    <div class="social-media" v-for="media in socialMedia" :key="media.platform">
-      <SocialIcons :name="media.platform" :url="media.url"/> 
+    <div v-if="socialMedia.length > 0">
+      <h4>social media</h4>
+      <div class="social-media" v-for="media in socialMedia" :key="media.platform">
+        <SocialIcons :name="media.platform" :url="media.url"/> 
+      </div>
     </div>
   </div>
 </template>
@@ -136,6 +136,10 @@ export default class Artist extends mixins(Translatable) {
     return new CMS.ArtistWrap(artist);
   }
 
+  get mediaCount(): number {
+    return this.externalVideos.length + this.externalSoundCloud.length + this.localImages.length + this.externalImages.length;
+  }
+  
   get externalVideos(): CMS.ExternalMedia[] {
     return this.artist.externalMedias.filter(m => m.platform == "youtube" || m.platform == "vimeo");
   }
