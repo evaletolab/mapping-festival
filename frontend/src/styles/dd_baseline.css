@@ -440,6 +440,14 @@ h5{  /*  notes et addendum */
   transform: translate(-50%, -50%);
 }
 
+@media only screen and (min-width: 568px) {
+  
+  .shift-left{
+    margin-left: calc(-3.5 * var(--column-width) - 2 * var(--gutter-width));
+  }
+
+}
+
 
   /* ************************************************ */
   /*       indents values [in terms of columns]       */

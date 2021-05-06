@@ -30,11 +30,19 @@
 <div class="spiegel">
     <h2>Artists</h2>
     <div v-for="artist in artists" :key="artist._id">
-      <img class="image image-align-left width2" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
+      
+      
+      <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
+      
       <h2>{{artist.fullname}}<sup>{{artist.country}}</sup></h2>
       <div v-html="t(artist.content)" />
     </div>
 
+          <p v-if="!!when.eventLocation"> 
+        <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
+      </p>
+
+<!--
     <h2>{{t({fr:"Horaires", en:"Timetable"})}}</h2>
 
     <div v-for="when in whens" :key="when.id">
@@ -45,6 +53,8 @@
       </p>
       <br>
     </div>
+
+    -->
 
     <div v-if="mediaCount > 0">
       <h4>Medias</h4>
