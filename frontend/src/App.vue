@@ -42,7 +42,7 @@ import { Translatable } from '@/mixins';
 })
 export default class App extends mixins(Translatable) {
 
-  registration = null;
+  registration:any = null;
   updateExists = false;
   screenWidth = 0;
   
@@ -78,7 +78,9 @@ export default class App extends mixins(Translatable) {
 
   onUpdateAvailable(event){
       this.registration = event.detail
-      this.updateExists = true
+      this.updateExists = true;
+      console.log('---DBG',this.registration);
+      this.onRefreshApp();
   }
 
 
@@ -88,9 +90,10 @@ export default class App extends mixins(Translatable) {
     if (!this.registration || !this.registration.waiting) return
     // Send message to SW to skip the waiting and activate the new SW
     this.registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+
     //
     //refresh content from registerServiceWorker.ts
-    //setTimeout(()=> window.location.reload(true),3000);
+    setTimeout(()=> window.location.reload(true),3000);
   }  
 
 
