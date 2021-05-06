@@ -4,7 +4,6 @@
         <!-- --------------- main  ----------------- -->
 
         <main class="page-main">
-          <toolbar tiny="on" class="hide-lg hide-md" @click="onMenu" />
           <slot></slot>    
         </main>
 

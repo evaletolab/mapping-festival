@@ -1,6 +1,6 @@
 <template>
   <div class="calendar">
-    <section class="secondary">
+    <section class="secondary filters">
         <a class="fas" :class="{'fa-selected fa-times':!isAll, 'fa-selected fa-sliders-h':isAll }" @click="onAll"></a> 
         <a v-for="(menu,index) in eventTypes" 
           :class="{'selected':menu.selected}" 
@@ -39,7 +39,7 @@
 </template>
 
 <style lang="scss" scoped>
-  section.secondary{
+  section.secondary.filters{
     display: flex;
     width: 100%;
     height: 70px;
@@ -59,18 +59,23 @@
     z-index: 1;
     background: var(--body-color);
 
+    @media (max-width:426px) {
+      box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%);      
+    }
+
     a{
       cursor: pointer;
       text-transform: lowercase;
       color: var(--font-color);
-      margin: 0 3px ;
+      margin: 0 8px ;
       padding: 10px 0px;
       padding-bottom: 0;
       text-decoration: none;
       line-height: 30px;
       border-bottom: 3px solid transparent;
       letter-spacing: -.4px;
-
+      white-space: nowrap;
+      
       -align-self: flex-end;
 
       &.selected{
@@ -115,6 +120,9 @@
   }
     
   .grid {
+    width: calc(100% - 1em);
+    margin-left: 0.5em;
+        
     &:first-child{
     }
     .event {

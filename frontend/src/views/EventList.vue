@@ -1,8 +1,8 @@
 <template>
   <div class="events">
     <!-- TOOLBAR -->
-    <toolbar class="hide-lg hide-md" />
-    <Calendar  gotop="yes"/>
+    <toolbar class="hide-lg hide-md" @exited="onToolbarExit"/>
+    <Calendar  gotop="yes" :class="{'exited': toolbarExit}"/>
   </div>
 </template>
 
@@ -17,8 +17,14 @@
   z-index: 2;
   height: 100vh;
   width: 100%;    
-  -padding-top:80px;    
   margin-top: 0px;
+  .calendar {
+    transition: all 200ms;      
+    transform: translateY(0px);
+    &.exited{
+      transform: translateY(40px);
+    }
+  }
 
   section.primary{
     display: block;
@@ -74,6 +80,7 @@ import Calendar from '../components/Calendar.vue';
 export default class EventList extends mixins(Translatable) {
 
   today = new Date();
+  toolbarExit = true;
 
   get config(){
     return $config.store.config;
@@ -121,6 +128,10 @@ export default class EventList extends mixins(Translatable) {
 
   async onLoad(slug: string) {
     //
+  }
+
+  async onToolbarExit($exited) {
+    this.toolbarExit = $exited;
   }
 
   async onSave() {
