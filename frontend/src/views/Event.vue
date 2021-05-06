@@ -7,22 +7,27 @@
     <Toolbar/>
 
     <!-- HEADER -->
-    <section class="header spiegel" :style="backgroundImage">
-      <p class="when">{{when|shortdate}}</p>    
-      <p class="title">{{t(event.title)}}</p>
-      <p class="type">{{event.type}} / {{event.subType}} / {{t(event.header)}}</p>    
+    <section class="header spiegel" :style="backgroundImage">    
+      <p class=" ui-font big align-right">{{when|shortdate}}</p>    <br><br> 
+
+      <p class="ui-font big">{{t(event.title)}}</p>  <br>
+
+      <p class="ui-font align-center">
+        <!-- {{event.type}} / --> {{event.subType}} <!-- {{t(event.header)}} --> </p>    
     </section>
 
     <!-- ABOUT -->
     <h4 class="width3 indent1 margin-top1">
-      <div class="item" v-for="(when,index) in event.when" :key="index">{{when.start|shortdate}} - {{when.startTime}}</div>
-      <div class="item"></div>
+      <div class="item" v-for="(when,index) in event.when" :key="index">{{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}</div>
+      <!--
+      <div class="item"></div> -->
       <div class="item">{{t({fr:"prix", en:"price"})}}: {{event.price || '--'}}</div>
       <div class="item">{{t({fr:"limite", en:"limit"})}}: {{event.limit || '--'}}</div>
     </h4>
 
     <div class="spiegel" v-html="t(event.content)"></div>
 
+<div class="spiegel">
     <h2>Artists</h2>
     <div v-for="artist in artists" :key="artist._id">
       <img class="image image-align-left width2" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
@@ -61,12 +66,20 @@
     </div>
 
   </div>
+
+  </div>
+  
 </template>
 
 <style lang="scss" scoped>
+
   .header{
     position: relative;
     height: calc( 100vh / 2 );
+    padding: var(--gutter-width);
+    padding-top:  calc(var(--gutter-width)*1.5);
+
+
     .when{
       position: absolute;
       right: 30px;
