@@ -47,6 +47,9 @@
       @media (max-width:425px) {
         margin-top: 80px;        
       }
+      .letter-key{
+        font-weight: 700;        
+      }
     }
 
   }
