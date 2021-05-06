@@ -39,46 +39,6 @@
     width: 100%;    
     margin-top: 0px;
 
-    .header{
-      /** BUG width overflow */
-      overflow: hidden;
-      height: var(--nav-header-height);
-      margin-top: var(--gutter-width);
-      margin-left: var(--gutter-width);
-      margin-right: var(--gutter-width);
-      border-bottom: 1px solid var(--font-color);
-      position: relative;
-      .align-right{
-        float: right;
-      }
-
-      .tagline{
-        border-top: none;
-        text-align: right;
-        @media (max-width:476px) {
-          position: absolute;
-          bottom: 0px;
-          left: 0px;
-          text-align: left;        
-        }      
-      }
-
-      @media (max-width:476px) {
-        height: calc( var(--nav-header-height) * 1.65 );
-      }
-
-      .destination{
-        margin-bottom: -1px;
-        position: absolute;
-        bottom: 30px;
-        margin: 0;
-        
-        font-size: 30px;
-        font-weight: 700;      
-      }
-
-    }
-
     .content{
       @media (max-width:425px) {
         margin-top: 80px;        

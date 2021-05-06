@@ -3,27 +3,35 @@
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
   <div class="artist">
-    <!-- TOOLBAR -->
-    <!-- <Toolbar /> -->
-    
-    <!-- <PrimaryMenu i18n="on"/> -->
+    <div class="header hide-sm">
+      <h4 class="tagline  align-right">
+          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
+          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
+      </h4>
 
-    <!-- <VueCable /> -->
-
-    <div v-if="isMobileView">
-      <ArtistCard v-for="artist in sortedArtists" :key="artist._id" 
-      :artist="artist"
-      :mobileView="true" 
-      />
+      <div class="destination">
+        Artists
+      </div>
     </div>
-    <div v-else>
-      <div v-for="artistSet in groupedArtists" :key="artistSet.letterId" >
-        <p class="letter-key">{{artistSet.letterId}}</p>
-        <ArtistCard v-for="artist in artistSet.artists" :key="artist._id" 
+
+    <!-- TOOLBAR -->
+    <toolbar class="hide-lg hide-md" />
+    <div class="content spiegel margin-top1">
+      <div v-if="isMobileView">
+        <ArtistCard v-for="artist in sortedArtists" :key="artist._id" 
         :artist="artist"
-        :mobileView="false" 
+        :mobileView="true" 
         />
-        <hr>
+      </div>
+      <div v-else>
+        <div v-for="artistSet in groupedArtists" :key="artistSet.letterId" >
+          <p class="letter-key">{{artistSet.letterId}}</p>
+          <ArtistCard v-for="artist in artistSet.artists" :key="artist._id" 
+          :artist="artist"
+          :mobileView="false" 
+          />
+          <hr>
+        </div>
       </div>
     </div>
 
@@ -35,7 +43,12 @@
 
 <style lang="scss" scoped>
   .artist{
-    margin-top: 69px;
+    .content{
+      @media (max-width:425px) {
+        margin-top: 80px;        
+      }
+    }
+
   }
 
   .flex-grid {
@@ -73,6 +86,9 @@ import { Component, Vue } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
 import { $config, $artist } from '../services';
+import { mixins } from 'vue-class-component';
+import { Translatable } from '@/mixins';
+
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
@@ -86,7 +102,7 @@ import VueCable from '../components/VueCable.vue';
     CMSIcons, Toolbar, PrimaryMenu, ArtistCard, VueCable
   }
 })
-export default class ArtistList extends Vue {
+export default class ArtistList extends mixins(Translatable)  {
   screenWidth = 0;
   get config(){
     return $config.store.config;

@@ -2,66 +2,96 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  <div class="artist spiegel margin-top1">
+  <div class="artist">
+
+    <div class="header hide-sm">
+      <h4 class="tagline  align-right">
+          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
+          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
+      </h4>
+
+      <div class="destination">
+        {{artist.fullname}}
+      </div>
+    </div>
+
     <!-- TOOLBAR -->
-    <!-- <Toolbar />
+    <toolbar class="hide-lg hide-md" />
+    <div class="content spiegel margin-top1">
+
+      <!-- ARTIST CONTENT -->
+      <ul>
+        <li v-if="artist.artistWebsite" >
+          <a :href="artist.artistWebsite" target="_blank" rel="noopener noreferrer">
+            {{artist.artistWebsite}}
+          </a>
+        </li>
+      </ul>
+
+      <img v-if="artist.cover" :src="artist.cover.path" /> 
+      
+      <h4>Bio</h4>
+      <div v-html="t(artist.content)" />
 
 
-    <PrimaryMenu /> -->
+      <h4>Events</h4>
+      <div class="grid-container grid-container--fit">
+        <div class="grid-element event" 
+            v-for="event in events" :key="event._id">
+          <event-card :event="event" />
+        </div>
+      </div> 
+      <!-- <event-card v-for="event in events" :key="event._id" :event="event" /> -->
 
-    <ul>
-      <li>{{artist.fullname}}</li>
-      <li v-if="artist.artistWebsite" >
-        <a :href="artist.artistWebsite" target="_blank" rel="noopener noreferrer">
-          {{artist.artistWebsite}}
-        </a>
-      </li>
-    </ul>
+      <div v-if="mediaCount > 0">
+        <h4>Medias</h4>
+        <div v-for="media in externalVideos" :key="media.url">
+          <VideoPlayer :externalMedia="media" />
+        </div>
 
-    <img v-if="artist.cover" :src="artist.cover.path" /> 
-    
-    <h4>Bio</h4>
-    <div v-html="t(artist.content)" />
-
-
-    <h4>Events</h4>
-    <div class="grid-container grid-container--fit">
-      <div class="grid-element event" 
-          v-for="event in events" :key="event._id">
-        <event-card :event="event" />
+        <div v-for="media in externalSoundCloud" :key="media.url">
+          <SoundCloud :track="media.url" :mini="true" />
+        </div>
+      
+        <div v-for="image in localImages" :key="image._id">
+          <img :src="image.sizes.headerimage.path" /> 
+        </div>
+        <div v-for="image in externalImages" :key="image._id">
+          <img :src="image.url" /> 
+        </div>
       </div>
-    </div> 
-    <!-- <event-card v-for="event in events" :key="event._id" :event="event" /> -->
 
-    <div v-if="mediaCount > 0">
-      <h4>Medias</h4>
-      <div v-for="media in externalVideos" :key="media.url">
-        <VideoPlayer :externalMedia="media" />
+      <div v-if="socialMedia.length > 0">
+        <h4>social media</h4>
+        <div class="social-media" v-for="media in socialMedia" :key="media.platform">
+          <SocialIcons :name="media.platform" :url="media.url"/> 
+        </div>
       </div>
 
-      <div v-for="media in externalSoundCloud" :key="media.url">
-        <SoundCloud :track="media.url" :mini="true" />
-      </div>
-    
-      <div v-for="image in localImages" :key="image._id">
-        <img :src="image.sizes.headerimage.path" /> 
-      </div>
-      <div v-for="image in externalImages" :key="image._id">
-        <img :src="image.url" /> 
-      </div>
     </div>
 
-    <div v-if="socialMedia.length > 0">
-      <h4>social media</h4>
-      <div class="social-media" v-for="media in socialMedia" :key="media.platform">
-        <SocialIcons :name="media.platform" :url="media.url"/> 
-      </div>
-    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
   .artist{
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    color: var(--font-color);
+    margin: 0;
+    z-index: 2;
+    height: 100vh;
+    width: 100%;    
+    margin-top: 0px;
+
+    .content{
+      @media (max-width:425px) {
+        margin-top: 80px;        
+      }
+    }
+
   }
   img{
     width:100%;
