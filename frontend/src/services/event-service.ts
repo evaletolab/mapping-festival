@@ -26,8 +26,6 @@ class EventService
         const result = event.type == "Masterclass" || event.type == "Performance" ||
         event.type == "Workshop" || event.type == "mppngTV";
 
-        console.log("is live", event.type, "result", result);
-
         return result;
     }
 }

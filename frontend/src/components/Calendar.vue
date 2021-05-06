@@ -21,7 +21,7 @@
         {{elem.date}}.{{elem.month}}
       </div><!-- day-title -->
 
-      <div class="grid-container grid-container--fit">
+      <!-- <div class="grid-container grid-container--fit">
         <div class="grid-element event" 
             v-for="(event,index) in elem.events" 
             :key="index" 
@@ -32,8 +32,15 @@
           <div class="when">{{ event.when[0].startTime }} </div>
           <div class="type">{{ (event.type) }} </div>      
         </div>
-      </div> <!-- grid-container -->
-    </div> <!-- day-wrapper -->
+      </div>  -->
+      <div class="grid-container grid-container--fit">
+        <div class="grid-element event" 
+            v-for="(event,index) in elem.events" 
+            :key="index">
+          <event-card :event="event" />
+        </div>
+      </div> 
+    </div> 
   </div>
 
 </template>
@@ -155,9 +162,10 @@ import { $config, $cms, $event } from '../services';
 import { CMS } from "../models";
 import { Translatable } from '../mixins';
 import LazyImg from './LazyImg.vue';
+import EventCard from './EventCard.vue';
 
 @Component({
-  components: { LazyImg }
+  components: { LazyImg, EventCard }
 })
 export default class Calendar extends mixins(Translatable)  {
   //

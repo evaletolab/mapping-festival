@@ -61,8 +61,6 @@ class CMSService {
     const calendar = {};
     let counter = 10;    
 
-    console.log("events len ", events?.length);
-
     (events||this.events).forEach(event =>{      
       const times = (event.when||[]).slice();
       times.forEach(when => {
