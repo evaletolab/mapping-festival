@@ -301,15 +301,22 @@ export namespace CMS {
       return this._event.created;
     }
 
-    get location(): {fr: string, en:string} | null{
-      let result = null;      
+    get eventLocation(): EventLocation | null{
       for(const w of this.when){
         if(w.eventLocation){
-          return w.eventLocation.name;
+          return w.eventLocation;
         }
       }
 
-      return result;
+      return null;
+    }
+
+    get location(): {fr: string, en:string} | null{
+      if(this.eventLocation) {
+        return this.eventLocation.name;
+      }else{
+        return null;
+      }
     }
   }
 

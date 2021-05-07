@@ -28,6 +28,11 @@
     <div class="spiegel" v-html="t(event.content)"></div>
 
     <div class="spiegel">
+      <h2>{{ t({fr: "Lieu", en: "Location"}) }}</h2>
+      <div class="grid">
+        <spot-card v-if="eventLocation" :eventLocation="eventLocation" />
+      </div>
+      
       <h2>Artists</h2>
       <div v-for="artist in artists" :key="artist._id">
         <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
@@ -35,9 +40,9 @@
         <div v-html="t(artist.content)" />
       </div>
 
-      <p v-if="!!when.eventLocation"> 
+      <!-- <p v-if="!!when.eventLocation"> 
           <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
-      </p>
+      </p> -->
 
   <!--
       <h2>{{t({fr:"Horaires", en:"Timetable"})}}</h2>
@@ -127,8 +132,8 @@ import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import VideoPlayer from '../components/VideoPlayer.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
-
 import SoundCloud from 'vue-soundcloud-player';
+import SpotCard from '../components/SpotCard.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -136,7 +141,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu, VideoPlayer, SoundCloud
+    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SpotCard
   }
 })
 export default class Event extends mixins(Translatable) {
@@ -205,6 +210,10 @@ export default class Event extends mixins(Translatable) {
   
   get event(): CMS.Event {
     return $event.eventWithSlug(this.$route.params.event) as CMS.Event;
+  }
+
+  get eventLocation(): CMS.EventLocation | null{
+    return new CMS.EventWrap(this.event).eventLocation;
   }
 
   get artists(): CMS.ArtistWrap[]{
