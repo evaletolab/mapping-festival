@@ -62,7 +62,8 @@ export default class EventCard extends mixins(Translatable) {
       return null;
     } 
 
-    const firstWhenOfDate = new CMS.EventWrap(this.event).getFirstWhenForDate(this.date);
+    const realEvt: CMS.Event = $event.eventWithId(this.event._id) as CMS.Event;
+    const firstWhenOfDate = new CMS.EventWrap(realEvt).getFirstWhenForDate(this.date);
 
     if(firstWhenOfDate){
       return `${firstWhenOfDate.startTime}-${firstWhenOfDate.endTime}`;
@@ -97,12 +98,9 @@ export default class EventCard extends mixins(Translatable) {
     }
   }
 
-  mounted(){
-    console.log("event card mounted", this.date);
-  }
-
   navigateToEvent(){
-    this.$router.push({path: `/events/${this.event.slug}`});
+    const queryParams = this.date ? `?when=${this.date.getFullYear()}-${this.date.getMonth() + 1}-${this.date.getDate()}` : '';
+    this.$router.push({path: `/events/${this.event.slug}${queryParams}`});
   }
 }
 </script>
