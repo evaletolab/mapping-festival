@@ -8,7 +8,7 @@
 
     <!-- HEADER -->
     <section class="header spiegel" :style="backgroundImage">    
-      <p class="ui-font big align-right ">{{when|shortdate}}</p>    <br><br> 
+      <p v-if="date" class="ui-font big align-right ">{{date|shortdate}}</p>    <br><br> 
       <p class="ui-font big ">{{t(event.title)}}</p>  <br>
       <p class="ui-font align-center">
         <!-- {{event.type}} / --> {{event.subType}} <!-- {{t(event.header)}} --> </p>    
@@ -145,6 +145,9 @@ import { Translatable } from '@/mixins';
   }
 })
 export default class Event extends mixins(Translatable) {
+
+  date: Date | null = null;
+
   get config(){
     return $config.store.config;
   }
@@ -160,13 +163,13 @@ export default class Event extends mixins(Translatable) {
     };
   }
 
-  //
-  // get first available date after now
-  get when(){
-    const now = Date.now();
-    const find = (this.event.when||[]).find(when => when._id > now );
-    return find ? find.start:null;
-  }
+  // //
+  // // get first available date after now
+  // get when(){
+  //   const now = Date.now();
+  //   const find = (this.event.when||[]).find(when => when._id > now );
+  //   return find ? find.start:null;
+  // }
 
   mounted(){
     document.body.classList.add('body-scroll');
@@ -175,6 +178,21 @@ export default class Event extends mixins(Translatable) {
       //
     }
     
+    if(this.$router.currentRoute.query.when){
+      const split = (this.$router.currentRoute.query.when as string).split("-");
+      if(split.length == 3){
+        const y = parseInt(split[0]);
+        const m = parseInt(split[1]);
+        const d = parseInt(split[2]);
+
+        if(m >0 && m <= 12){
+          const aDate = new Date(y, m - 1, d);
+          if(!isNaN(aDate.getTime())){
+            this.date = aDate;
+          }
+        }
+      }
+    }
 
   }
 
