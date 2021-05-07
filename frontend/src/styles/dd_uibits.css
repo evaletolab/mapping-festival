@@ -114,6 +114,33 @@ border-radius: 4px;
 }
 
 
+/* -------- filters -------- */
+.filters-button{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ui-button-auto-fit{
+  display: block;
+  width: max-content;
+}
+.ui-button-auto-fit p{
+  position: relative;
+  margin: 0;
+}
+
+.ui-button-auto-fit a{
+text-decoration: none;
+}
+
+/* --------------------------- */
+
+
+
+
+
+
+
   /*                                         */
   /*                    icons                */
   /*                                         */
