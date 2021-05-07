@@ -5,10 +5,9 @@
 <!--------------------- Head --------------------------->
 
 <head>
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/dd_baseline.css">
     <link rel="stylesheet" href="css/specific_v01.css">
-
-
 
     <meta charset="utf-8">
     <meta http-equiv="Cache-control" content="no-cache, max-age=0">
@@ -37,7 +36,26 @@
     <meta property="twitter:description" content="Considered as a unique platform of production and diffusion in Switzerland, the mapping festival is a major event in the fields of image generation, technological creation and exploration, attracting both professional and general audience.">
     <meta property="twitter:image" content="images/altbck.png">
 
-    <style></style>
+    <style>
+    .rotate10{
+    transform: rotate(-10deg);
+
+    }
+
+    .rotate-10{
+    transform: rotate(10deg);
+    }
+
+    @media only screen and (max-width: 568px) {
+
+        .rotate10{ transform: rotate(0deg); }
+
+    .rotate-10{ transform: rotate(0deg);}
+
+}
+
+
+    </style>
 
 </head>
 
@@ -59,58 +77,70 @@
 
     <div class="spiegel margin-top1">
 
-        <h1 class="width7">mp<br>pngfst
-            <br>vl</h1>
-        <h2 class="width6 indent3">
-            13 — 23.5<br>
-            genève
-        </h2>
+        <h1>
+            mp<br>
+            pngfst<br>
+            vl<br>
+            2051<br>
+            </h1>
+            
+            <br>
+            
+            <h2 class="align-left indent1">13 — 23.5<br>
+            genève<br></h2>
+            
+            <br>
+            
+            <h2>festival des arts<br>
+            technologiques et déviants</h2>
 
-        <h1 class="margin-top1 indent1">2051 <br>is near</h1>
-
-
-
-        <h4 class="width3 indent1 margin-top1">
-            <div class="item">festival</div>
-            <div class="item">des arts</div>
-            <div class="item">technologiques</div>
-            <div class="item">et déviants</div>
-        </h4>
-
-<!--
-        <h4 class="width4 indent3 margin-top1">
-            <div class="item">installations</div>
-            <div class="item">performances</div>
-            <div class="item">screenings</div>
-            <div class="item">workshops</div>
-        </h4> -->
-
-<a href="https://docs.google.com/forms/d/e/1FAIpQLSeqzDLxisp0UboBNDx6G6IvQo2oYRfvwPPT1_rZ7Wo-E_mMmA/viewform">
-    <div class="volunteer-sticker height5 width3 align-center">
-        <div class="margin-top1">bénévoles&#8239;!</div>
-    </div>
+ 
+        <!--<p class="width4 indent2">Exposition en collaboration avec l'API du 1er mai au 6 juin 2021.</p>-->
+        <a href="avprogramme.html">
+            <div class="api-sticker height5 width3 margin-top1 indent1 rotate10">
+                <div class="vcenter">Avant-programme&#8239;!</div>
+            </div>
         </a>
 
-    </div>
+        <a href="api-expo.html"><br>
+            <div class="volunteer-sticker height5 width3 margin-top10 align-center">
+                <div class="vcenter">Expo API&#8239;!</div>
+            </div>
+        </a>
 
+        <a href="https://etickets.infomaniak.com/shop/pNxRKptzTD/">
+            <div class="api-sticker height5 width3 margin-top5 indent3 ">
+                <div class="vcenter">Billets workshops!</div></div>
+        </a>
+
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeqzDLxisp0UboBNDx6G6IvQo2oYRfvwPPT1_rZ7Wo-E_mMmA/viewform">
+            <div class="volunteer-sticker height5 width3 margin-top15 indent3 rotate-10">
+        <div class="vcenter">Bénévoles&#8239;!</div></div>
+        </a>
+        
+
+</div>
     <!--------------------- Social links --------------------------->
 
 <div class="sociallinks">
     <p>
     <a href="https://www.facebook.com/mappingfest">fbook</a> —
     <a href="https://www.instagram.com/mappingfestival/">insta</a> — 
-    <a href="https://vimeo.com/mappingfestival">vimeo</a> 
+    <a href="https://vimeo.com/mappingfestival">vimeo</a> – 
+    <a href="mailto:elvis@mappingfestival.com">contact</a> — 
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeqzDLxisp0UboBNDx6G6IvQo2oYRfvwPPT1_rZ7Wo-E_mMmA/viewform">
+    bénévoles</a>
     </p>
 </div>
 
 
 
-<!--------------------- Footer --------------------------->
+<!--------------------- Footer --------------------------
 
 
     <footer>
         <p><a href="mailto:elvis@mappingfestival.com">contact</a></p>
-    </footer>
+    </footer>  -->
 
 
 
@@ -123,8 +153,6 @@
 
 
 <!--------------------- scripts --------------------------->
-
-
 
 <script>
 
@@ -195,36 +223,7 @@ if(checkIsMobileOrTablet()){
 
 </script>
 
-<!--
-<script>
 
-/******************************************/
-/********* Fetching random image   ********/
-/******************************************/
-
-const randIndex = (maxIndex) => Math.floor(Math.random() * maxIndex);
-// random backdrop script
-fetch('backdrops.json')
-.then(response => response.json())
-.then(data => {
-    const url = data[randIndex(data.length)];
-    document.querySelector('.backdrop').style.backgroundImage = `url(${url})`;
-    document.querySelector('.shade').style.backgroundImage = `url(${url})`;
-
-
-/*********    Output image ref    ********/
-
-    var fields = url.split(/[(\/)|(\-)|(\.)]/);
-/*  var dir = fields[0];
-    var filename_begin = fields[1]; */
-    var imgNum = fields[2];
-/*  var extension = fields[3]; */
-    document.getElementById("filename").innerHTML = imgNum;
-
-});
-
-</script>
--->
 
 </body>
 </html>

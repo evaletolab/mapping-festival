@@ -8,6 +8,8 @@
     
     <div style="height:80px" />
 
+      <p>version: {{version}}</p>
+
       <div v-if="diagnostics.length == 0"><p>No errors found</p></div>
       <div v-else v-for="(msg, index) in diagnostics" :key="index">
         <p v-html="msg" />
@@ -18,9 +20,6 @@
 </template>
 
 <style >
- :root{
-    --main-font-color: white;
- }
 </style>
 
 <style lang="scss" scoped>
@@ -44,7 +43,7 @@ import { CMS } from "../models";
 import { $config, $cms, $cockpit } from '../services';
 
 import Toolbar from '../components/Toolbar.vue';
-
+import cfg from '../../package.json';
 
 @Component({
   components: {
@@ -52,6 +51,9 @@ import Toolbar from '../components/Toolbar.vue';
   }
 })
 export default class Diagnostics extends Vue {
+
+  version = cfg.version;
+
   get config(){
     return $config.store.config;
   }

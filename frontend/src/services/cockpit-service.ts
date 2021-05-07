@@ -208,10 +208,14 @@ class CockpitService {
     // build **when** array
     event.when = (event.when||[]).map ((w, index) => {
       const v = w.value;
+      // new Date("2021-05-06T16:25:00+02:00");
 
-      const start = new Date(`${v.startDate} ${v.startHour}`);
-      const end = new Date(`${v.endDate} ${v.endHour}`);
+      const start = new Date(`${v.startDate}T${v.startHour}:00+02:00`);
+      const end = new Date(`${v.endDate}T${v.endHour}:00+02:00`);
       const cancel = v.cancel;
+      // console.log(v.startDate, v.startHour, start);
+      // console.log(v.endDate, v.endHour, end);
+      // console.log("-------------------------");
       
       // extract eventLocation if present
       let eventLocation:CMS.EventLocation | null = null;
@@ -227,7 +231,7 @@ class CockpitService {
         // start is present
         if(isNaN(start.getTime())) {
           this._diagnosticsLogger.log(`event with title ${t(event.title)} has invalid start date and/or invalid start time`);
-          console.log('---FIXME invalid date',event,w)
+          // console.log('---FIXME invalid date',event,w)
         }
 
         // end is present
@@ -244,6 +248,15 @@ class CockpitService {
       }
 
       return new CMS.When(start, end, cancel, eventLocation);
+    }).filter(w => {
+      //////////////////
+      // remove multiday whens 
+      // i.e. when lasting more than 24 hours
+      const aDayInMinutes = 24 * 60;
+      if(w.duration >= aDayInMinutes){
+        this._diagnosticsLogger.log(`event with title ${t(event.title)} has multi day when (was rejected)`);
+      }
+      return w.duration < aDayInMinutes;
     });
 
     event.when.sort((a, b) => a.start - b.start);
@@ -281,6 +294,7 @@ class CockpitService {
     eventLocation.city = geo.city || "";
     eventLocation.tag = geo.tag || "";
     eventLocation.coordinates = geo.location ? [geo.location.lng, geo.location.lat] : null;
+    eventLocation.type = eventLocation.type || "Standard";
 
     if(!eventLocation.street){
       this._diagnosticsLogger.log(`eventlocation with name ${t(eventLocation.name)} has no street address`);
@@ -311,6 +325,7 @@ class CockpitService {
     artist.lastname = artist.lastname || "";
     artist.artistname = artist.artistname || null;
     artist.cover = artist.cover ? this.formatLocalMedia(artist.cover) : null;
+    artist.country = artist.country || "";
     return artist as CMS.Artist;
   }
 

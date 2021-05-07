@@ -1,9 +1,8 @@
 <template>
-    <button @click="toggleLang">{{invertedCurrentLang}}</button>    
+    <a @click="toggleLang">{{invertedCurrentLang}}</a>    
 </template>
 
 <style lang="scss" scoped>
-
 </style>
 
 <script lang="ts">
@@ -16,7 +15,7 @@ import { currentLangStore, setLang, Lang } from '../services/i18n';
 export default class LanguageSelector extends Vue {
 
   get invertedCurrentLang(){
-    return currentLangStore.lang == Lang.fr ? "EN" : "FR";
+    return currentLangStore.lang == Lang.fr ? "English" : "Français";
   }
 
   toggleLang(){

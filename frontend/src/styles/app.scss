@@ -1,5 +1,20 @@
   //
   // global tools
+  html {
+    -webkit-overflow-scrolling: touch;
+    overflow: scrolls;
+  }
+
+  body{
+      margin: 0;
+      overflow-y: auto;
+  }
+  
+  button {
+    outline: 0;
+  }
+
+  
   .body-scroll {
     overflow-y: auto!important;
     position: relative;
@@ -19,119 +34,82 @@
     transition: none !important;
   }
   
-  .hide             {display : none!important;}
   [hidden]          {visibility: hidden;}
-  .show-sm          {display: none!important;}
+  .hide        {display: none!important;}
+  .show-sm     {display: none!important;}
+
   @media only screen and (max-width: 767px) {
-    .hide-sm        {display: none!important;}
-    .show-sm        {display: block!important;}
-    .inline-show-sm {display: inline-block!important;}
+    .hide-sm    {display: none!important;}
+    .show-sm     {display: block!important;}
+    .inline-show-sm     {display: inline-block!important;}
+  }
+
+  @media only screen and (min-width: 767px) {
+    .hide-md    {display: none!important;}
   }
   
-  @media only screen and (max-width: 1023px) {
-    .hide-md        {display: none;}
-  }
+
   @media only screen and (min-width: 1024px) {
-    .show-lg        {display: block;}
-    .hide-lg        {display: none;}
-  }
-
-//
-// common style for toolbar, can be overhided on Component.vue
-.toolbar {
-  -border-radius: 0 0 18px 18px;
-  flex-flow: row wrap;
-  z-index: 2;    
-  position: fixed;
-  top:0;
-  left: 0;
-  right: 0;
+    .show-lg    {display: block;}
+    .hide-lg    {display: none!important;}
+  }  
 
 
-  width: 100vw;
-  .toolbar-section-start,
-  .toolbar-section-end
-  {
-    display: flex;
-    align-items: center;
-    flex: 1;    
-  }
+  .page,
+  .event,
+  .events,
+  .artist,
+  .artists,
+  .landing {
 
-  .toolbar-section-end {
-    justify-content: flex-end;
-    order: 10;    
-  }
+    .header{
+      /** BUG width overflow */
+      overflow: hidden;
+      height: var(--nav-header-height);
+      margin-top: var(--gutter-width);
+      margin-left: var(--gutter-width);
+      margin-right: var(--gutter-width);
+      border-bottom: 1px solid var(--font-color);
+      position: relative;
+      .align-right{
+        float: right;
+      }
 
-  .toolbar-section-start {
-    justify-content: flex-start;
-    order: 0;    
-  }
+      .tagline{
+        border-top: none;
+        text-align: right;
+        @media (max-width:476px) {
+          position: absolute;
+          bottom: 0px;
+          left: 0px;
+          text-align: left;        
+        }      
+      }
 
-  .toolbar-title{
-    text-align: center;
-    font-size: 17px;
-    letter-spacing: -0.01em;
-    line-height: 22px;
-    margin-top: 22px;
-    margin-bottom: 7px;
-    margin-left: 6px;
-    font-weight: 900;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 100%;
-    &.tight {
-      margin: 0;
-    }
-    &.title-left{
-      text-align: left;
-    }
-    .progress{
-      width: 90px;
-      height: 25px;
-      margin: auto;        
-    }
-  }
+      @media (max-width:476px) {
+        height: calc( var(--nav-header-height) * 1.65 );
+      }
 
-  .toolbar-row {
-    width: 100%;
-    min-height: 38px;
-    display: flex;
-    align-items: center;
-    align-content: center;
-  }
+      .destination{
+        margin-bottom: -1px;
+        position: absolute;
+        bottom: 30px;
+        margin: 0;
+        
+        font-size: 30px;
+        font-weight: 700;      
+      }
 
-  button{
-    padding: 2px 2px;
-    width: 36px;
-    height: 36px;        
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: 0;
-    color: var(--font-color);
-
-    svg{
-      width: 34px;
+      .title{
+        position: absolute;
+        top: 0;
+        left: 0;        
+        @media (min-width:476px) {
+          display: none;
+        }
+      }
+  
     }
 
-    &.end{
-      margin-right: 10px;
-      margin-top: 15px;
-    }
-    &.start{
-      margin-left: 10px;
-      margin-top: 15px;
-    }
   }
-
-}
-
-.toolbar-row + .toolbar-row {
-  margin-top: -12px;
-}
-
-
-
-
 

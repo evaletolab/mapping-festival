@@ -11,15 +11,19 @@
 /*******************************/
 
 
+/*
+
 :root {
     --border-width: none;
     --imagename-opacity: .8;
   }
 
 @media only screen
-    and (max-width : 560px) {
+    and (max-width : 568px) {
 	:root {-webkit-text-size-adjust: none;}
 }
+
+*/
 
 /*******************************/
 
@@ -66,13 +70,11 @@ body {
     position: fixed;
     overflow: hidden;
 
-
     -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
        -moz-animation: fadein 2s; /* Firefox < 16 */
         -ms-animation: fadein 2s; /* Internet Explorer */
          -o-animation: fadein 2s; /* Opera < 12.1 */
             animation: fadein 2s;
-
 
     }
 
@@ -82,11 +84,11 @@ body {
 
 canvas {
 
-    z-index: 1;
+    touch-action: none;
+    z-index: -1;
 
-    mix-blend-mode: overlay;
-    opacity: 1;
-
+    /*mix-blend-mode: overlay;*/
+    opacity: .9;
 
     height: 100vh;
     width: 100vw; 
@@ -179,12 +181,12 @@ a {
 
 a:hover,
 a:active {
-    color: #b8aa84;
+    color: #a3b0e4;
 }
 
 
 
-footer {
+footer_temp {
 
     z-index: 6;
     border: var(--border-width) solid rgb(43, 226, 83);
@@ -199,11 +201,10 @@ footer {
       -o-animation: fadein 2s; /* Opera < 12.1 */
          animation: fadein 2s;
 
-
 }
 
 @media only screen 
-and (max-width : 560px) {
+and (max-width : 568px) {
     
     footer { bottom: 4rem; }
 }
@@ -211,8 +212,11 @@ and (max-width : 560px) {
 
 .volunteer-sticker{
 position: absolute;
-bottom: 15%;
-right: 5%;
+/*bottom: 15%;
+right: 5%;*/
+
+float:left;
+clear:both;
 
 background-color: rgba(255,255,255,0%);
 border: 2px solid white;
@@ -229,6 +233,29 @@ border: 1px solid black;
 color: black;
 }
 
+.api-sticker{
+
+    position: absolute;
+    /*bottom: 15%;
+    left: 5%;*/
+    float:left;
+    clear:both;
+
+    background-color: rgba(255, 255, 255, 0);
+    border: 2px solid white;
+    color: white;
+    z-index: 2000;
+    }
+    
+    .api-sticker:hover{
+    background-color: rgba(255,255,255,90%);
+    border: 1px solid black;
+    color: black;
+    }
+
+
+
+
 
 .sociallinks {
 
@@ -238,17 +265,18 @@ color: black;
 
     margin: 0 0 calc(var(--line-height) - var(--image-to-x)) var(--margin-left);
 
-    height: auto;
+
+    position: absolute;
+
+    height: 100%;
     width: auto;
+    
+    right: 0%;
     top: 50%;
     transform: translateY(-50%);
-    right: 0;
-    position: fixed;
-
-    margin:0;
 
     letter-spacing: .015rem;
-    text-align: left;
+    text-align: center;
 
     box-sizing: border-box;
     text-orientation: mixed;
@@ -264,33 +292,7 @@ color: black;
 
 }
 
-.img-ref {
-
-    z-index: 5;
-
-    opacity: var(--imagename-opacity);
-    border: var(--border-width) solid rgb(226, 43, 217);
-
-    height: auto;
-    width: auto;
-    bottom: 0;
-    left: 0;
-    position: fixed;
-
-    margin:0.15rem;
-    padding-bottom: .5rem;
-
-    font-size: .25rem;
-    line-height: 0;
-    letter-spacing: .015rem;
-    text-align: left;
-
-    box-sizing: border-box;
-    text-orientation: mixed;
-    writing-mode: vertical-lr;
-    direction: ltr;
 
 
-}
 
 

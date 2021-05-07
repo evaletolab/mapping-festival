@@ -80,11 +80,13 @@ export namespace CMS {
   }
 
   // export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
-  export const eventTypeLabel = ["Installation", "Live", "Masterclass", "Collection"] as const;
+  export const eventTypeLabel = ["Installation", "Performance", "Workshop", "Masterclass", "Collection virtuelle", "Parcours urbain", "mppngTV"] as const;
   export type eventType = typeof eventTypeLabel[number];
 
   const _eventSubType = ["Parcours urbain", "Exposition", "Performance", "Nighclubbing", "Concert", "Workshop", "Table ronde", "Masterclass", "mappingTV"] as const;
   export type  eventSubType = typeof _eventSubType[number];
+
+  export type EventLocationType = "Standard" | "Parcours Urbain";
   
   type Lat = number;
   type Lng = number;
@@ -97,7 +99,8 @@ export namespace CMS {
     name:{
       fr:string,
       en:string
-    }
+    },
+    type: EventLocationType,
     cover: LocalMedia | null,
     active:boolean,
     street: string,
@@ -121,6 +124,7 @@ export namespace CMS {
     lastname:string,
     artistName:string,
     artistWebsite: string,
+    country: string,
     content:{
       fr:string,
       en:string
@@ -134,6 +138,64 @@ export namespace CMS {
     // signature:string,
     // creator:string,
   }
+
+  export class ArtistWrap{
+    constructor(private _artist: Artist){
+
+    }
+    get _id(): string{
+      return this._artist._id;
+    }
+    get slug(): string{
+      return this._artist.slug;
+    }
+    get active(): boolean{
+      return this._artist.active;
+    }
+    get cover(): LocalMedia | null{
+      return this._artist.cover;
+    }
+    get firstname(): string{
+      return this._artist.firstname;
+    }
+    get lastname(): string{
+      return this._artist.lastname;
+    }
+    get artistName(): string{
+      return this._artist.artistName;
+    }
+    get artistWebsite(): string{
+      return this._artist.artistWebsite;
+    }
+    get country(): string {
+      return this._artist.country;
+    }
+    get content(): {fr: string, en: string} {
+      return this._artist.content;
+    }
+    get localMedias(): LocalMedia[] {
+      return this._artist.localMedias;
+    }
+    get externalMedias(): ExternalMedia[] {
+      return this._artist.externalMedias;
+    }
+    get socialMedias(): SocialMedia[] {
+      return this._artist.socialMedias;
+    }
+    get created(): Date {
+      return this._artist.created;
+    }
+
+    get fullname(): string{
+        const artistName = this.artistName ? `${this.artistName} ` : "";
+        const firstname = this.firstname ? `${this.firstname}` : "";
+        const lastname = this.lastname ? ` ${this.lastname}` : "";
+
+        return `${artistName}${firstname}${lastname}`;
+    }
+
+  }
+
   export interface Event {
     _id: string,
     slug: string,
@@ -178,6 +240,79 @@ export namespace CMS {
     // creator:string,    
   }
 
+  export class EventWrap
+  {
+    constructor(private _event: CMS.Event){}
+    get id(): string{
+      return this._event._id;
+    }
+    get slug(): string{
+      return this._event.slug;
+    }
+    get active(): boolean{
+      return this._event.active;
+    }
+    get cover(): LocalMedia | null{
+      return this._event.cover;
+    }
+    get type(): eventType{
+      return this._event.type;
+    }
+    get subType(): eventSubType{
+      return this._event.subType;
+    }
+    get title(): {fr: string, en: string} {
+      return this._event.title;
+    }
+    get header(): {fr: string, en: string} {
+      return this._event.header;
+    }
+    get content(): {fr: string, en: string} {
+      return this._event.content;
+    }
+    get hardware(): {fr: string, en: string} {
+      return this._event.hardware;
+    }
+    get notes(): {fr: string, en: string} {
+      return this._event.notes;
+    }
+    get year(): number {
+      return this._event.year;
+    }
+    get when(): When[] {
+      return this._event.when;
+    }
+    get price(): number{
+      return this._event.price;
+    }
+    get limit(): number{
+      return this._event.limit;
+    }
+    get artists(): { lastname: string, slug: string, _id: string }[] {
+      return this._event.artists;
+    }
+    get localMedias(): LocalMedia[]{
+      return this._event.localMedias;
+    }
+    get externalMedias(): ExternalMedia[]{
+      return this._event.externalMedias;
+    }
+    get created(): Date{
+      return this._event.created;
+    }
+
+    get location(): {fr: string, en:string} | null{
+      let result = null;      
+      for(const w of this.when){
+        if(w.eventLocation){
+          return w.eventLocation.name;
+        }
+      }
+
+      return result;
+    }
+  }
+
   export interface Calendar {
     day: string;
     month: string;
@@ -185,6 +320,11 @@ export namespace CMS {
     _id: number; // copied from When id
   }
 
+  export interface ArtistSetByLetter
+  {
+    letterId: string;
+    artists: Artist[];
+  }
 
   export interface Page {
     _id: string,
@@ -234,6 +374,18 @@ export namespace CMS {
       if(isNaN(_end.getTime())){
         this._end = _1970;
       }
+
+      const dayStartingHour = 6; // not 00 hours but 6 in the morning
+      
+      const start = new Date(this._start.getTime());
+      const end = new Date(this._end.getTime());
+
+      this._start = this.__computeDayIfDayStartsAt(this._start, dayStartingHour);
+      this._end = this.__computeDayIfDayStartsAt(this._end, dayStartingHour);
+      // console.log("raw start and end", start, end);
+      // console.log("computed start and end", this._start, this._end);
+      // console.log("---------------------");
+      
       this._id = this._start.getTime();
       this.year = this._start.getFullYear();
     }
@@ -293,6 +445,17 @@ export namespace CMS {
       const minutes = this.end.getMinutes().toString().padStart(2, "0");
       return `${hours}:${minutes}`;
 
+    }
+    
+    private __computeDayIfDayStartsAt(date: Date, startingHour: number): Date{
+
+      if(date.getHours() >= startingHour){
+        return date;
+      }else{
+        const oneDayMillis =  60 * 60 * 24 * 1000;
+        let result = new Date(date.getTime() - oneDayMillis);
+        return result;
+      }
     }
   }
 }

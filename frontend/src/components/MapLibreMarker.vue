@@ -11,8 +11,8 @@
 <style scoped>
     .spot-marker
     {
-        width:55px;
-        height:73px;
+        width:84px;
+        height:75px;
         opacity: 0; /* hack to hide marker before load */
     }
 
@@ -71,7 +71,12 @@ export default class MapLibreEventLocationMarker extends Vue {
     marker!: Marker;
 
     get markerUrl(): string{
-        return "/map_assets/SpotMarker_2.svg";
+        console.log("type---------------", this.eventLocation.type);
+        if(this.eventLocation.type == "Standard"){
+            return "/map_assets/SpotMarker.svg";
+        }else{
+            return "/map_assets/SpotMarkerPU.svg";
+        }
     }
 
     @Watch('map')

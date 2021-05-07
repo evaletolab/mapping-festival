@@ -13,16 +13,12 @@ import router from './router';
 Vue.config.productionTip = false
 
 
-import '@/main.scss'
-import "@/styles/dd_baseline_v04.css"; /* Typographic styles */
-import "@/styles/specific_v01.css";    /* Waiting page specific styles */
 
-// leaflet css
-// import 'leaflet/dist/leaflet.css';
-
-
-import VuePlyr from 'vue-plyr';
-import 'vue-plyr/dist/vue-plyr.css';
+import "@/styles/reset.css";
+import "@/styles/page.css";
+import "@/styles/cardsgrid.css";
+import "@/styles/dd_baseline.css"; 
+import "@/styles/dd_uibits.css";
 
 import { $config, $user, $cms } from '@/services';
 
@@ -30,7 +26,8 @@ import { $config, $user, $cms } from '@/services';
 // filters
 Vue.filter('shortdate', function(value) {
   const d = new Date(value);
-  return d.getDate()+'.'+d.getMonth()+'.'+d.getFullYear();
+  const result = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+  return result;
 });
 
 const load = [$config.get(), $user.get()];
@@ -38,8 +35,6 @@ const load = [$config.get(), $user.get()];
 Promise.all(load)
 .then(() => $cms.loadAll())
 .then(() => {
-  Vue.use(VuePlyr);
-
   new Vue({
     router,
     render: h => h(App)

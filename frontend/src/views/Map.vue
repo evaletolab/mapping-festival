@@ -1,10 +1,11 @@
 <template>
   <div class="map">
-    <Toolbar />
+    <!-- <Toolbar />
     <div style="height:80px" />
-    <PrimaryMenu />
-    <div class="map-container">
+    <PrimaryMenu /> -->
 
+    <!-- height of map is dynamically computed -->
+    <div ref="map" :style="mapHeightStyle" class="map-container">
       <MapLibre 
         :bounds="bounds"
         v-on:loaded="onMapLoaded"
@@ -16,33 +17,41 @@
             :coordinates="evtLocation.coordinates"
             v-on:selectionRequest="onMarkerClick"
           />
-          <MapLibrePopup
+          <!-- <MapLibrePopup
             :map="map"
             :visible="showPopup"
             v-on:selectionRequest="onPopupSelectionRequest" 
             v-on:closeRequest="onPopupCloseRequest"
             :eventLocation="selectedEventLocation"
-          />
+          /> -->
         </template>
       </MapLibre>
 
+      <MapLibrePopupFix 
+        :visible="showPopup"
+        v-on:selectionRequest="onPopupSelectionRequest" 
+        v-on:closeRequest="onPopupCloseRequest"
+        :eventLocation="selectedEventLocation" 
+      />
     </div>
-    <h2>{{t({fr:"Lieux", en:"Spots"})}}</h2>
+    <!-- <h2>{{t({fr:"Lieux", en:"Spots"})}}</h2>
 
     <ul v-for="evtLocation in eventLocationsForList" :key="evtLocation._id" >
       <li><router-link :to="`/map/${evtLocation.slug}`" >{{t(evtLocation.name)}}</router-link></li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
 
 <style lang="scss" scoped>
   .map {
-    width: 100vw;
+    width: 100%;
   }
+
   .map-container{
     width: 100%;
-    height: 70vh;
+    position: relative;
+    
   }
 </style>
 
@@ -59,6 +68,7 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
 import MapLibre from '../components/MapLibre.vue';
 import MapLibreMarker from '../components/MapLibreMarker.vue';
 import MapLibrePopup from '../components/MapLibrePopup.vue';
+import MapLibrePopupFix from '../components/MapLibrePopupFix.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
@@ -70,7 +80,7 @@ import { currentLangStore, Lang } from '../services/i18n';
 
 @Component({
   components: {
-    CMSIcons,Toolbar, PrimaryMenu, MapLibre, MapLibreMarker, MapLibrePopup,
+    CMSIcons,Toolbar, PrimaryMenu, MapLibre, MapLibreMarker, MapLibrePopupFix,
   }
 })
 export default class Map extends mixins(Translatable) {
@@ -80,6 +90,8 @@ export default class Map extends mixins(Translatable) {
   selectedEventLocation: CMS.EventLocation | null = null;
 
   showPopup = false;
+
+  height = 0;
 
   get config(){
     return $config.store.config;
@@ -106,6 +118,10 @@ export default class Map extends mixins(Translatable) {
     return result;
   }
 
+  get mapHeightStyle(){
+    return `height: ${this.height}px`;
+  }
+
   themeTertiary(theme) {
     return this.config.themes[theme].tertiary;
   }
@@ -116,23 +132,39 @@ export default class Map extends mixins(Translatable) {
 
   mounted(){
     document.body.classList.add('body-scroll');
+
+    window.addEventListener("resize", this.onResize);
+    this.computeMapContainerHeight();
   }
 
   beforeDestroy() {
     document.body.classList.remove('body-scroll');
+    window.removeEventListener("resize", this.onResize);
+    mapEventProvider.removeListener(this.onMapEvent);
+  }
+  
+  computeMapContainerHeight(){
+    const mapElement = this.$refs.map as HTMLElement;
+    const bbox = mapElement.getBoundingClientRect();
+    this.height = Math.abs(window.innerHeight - bbox.top);
+  }
+
+  onResize(){
+    this.computeMapContainerHeight();
   }
 
   onMapLoaded(map:Map){
     console.log("map is loaded");
-    // mapEventProvider.addListener(this.onMapEvent);
+    mapEventProvider.addListener(this.onMapEvent);
   }
 
   onMapEvent(evt: any){
-    console.log(evt);
+    if(evt.type == "click" && this.showPopup){
+      this.showPopup = false;
+    }
   }
 
   onMarkerClick(eventLocation: CMS.EventLocation){
-    console.log("onMarkerClick", eventLocation._id);
 
     if(this.selectedEventLocation && this.selectedEventLocation._id === eventLocation._id){
       this.navigateToSelectedEventLocation();

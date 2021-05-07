@@ -1,0 +1,83 @@
+.day-wrapper{
+    /*padding: 1em;*/
+    background-color: rgba(230, 230, 230, 0.068);
+    width: 100%;
+  }
+  
+  
+  .grid-container {
+      display: grid;
+  }
+  
+  .grid-container--fit {
+    /* note to self, correct this fit fill mess */
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .grid-container--fill {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .grid-element {
+    background-color: grey;
+    padding: calc(var(--gutter-width)/2);
+    margin: var(--gutter-width) var(--gutter-width) 0 0;
+    color: #fff;
+    /*border: 1px solid #fff;*/
+    height: 200px;
+  
+  }
+   
+  
+  /* typo */
+  .day-title{ 
+    margin: 0;
+    padding: var(--gutter-width);
+  }
+
+.grid-element .text{
+  /*transform: translateY(calc(var(--image-to-x) * -1));*/
+}
+
+.grid-element .text.event-date{
+  font-size: calc(var(--font-size)*.75);
+  line-height: var(--line-height);
+}
+
+.grid-element .text.event-title{
+  font-size: calc(var(--font-size)*1.25);
+  line-height: var(--line-height);
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.grid-element .text.artistname{
+  display:inline-block;
+  font-size: calc(var(--font-size)*1.25);
+  line-height: var(--line-height);
+}
+
+.grid-element .text.artist-country{
+  font-weight: 650;
+  display:inline-block;
+  font-size: calc(var(--font-size)*.5);
+  line-height: var(--line-height);
+  transform: translateY(calc(-1 * var(--image-to-x)));
+}
+
+.grid-element .text.event-location{
+  font-size: calc(var(--font-size)*.75);
+  line-height: var(--line-height);
+}
+
+.grid-element .text.event-type{
+  font-size: calc(var(--font-size)*.75);
+  line-height: var(--line-height);
+
+/*    position: absolute;
+  bottom: 0; */
+
+}
+
+
+

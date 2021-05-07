@@ -1,37 +1,41 @@
 <template>
   <div class="landing">
-    
+    <div class="header ">
+      <div class="title ">
+        <p class="">mp<br>pngfst<br>vl</p>
+        <h1 class="margin-top1" v-html="t(config.landing.title1)"/>
+      </div>
+
+      <h4 class="tagline  align-right">
+          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
+          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
+      </h4>
+  
+      <!-- EXTRA MENU SHORTCUT  -->
+      <div class="menu-short hide">
+          <router-link v-for="(menu) in menuCollection"  :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
+      </div>
+
+      <div class="destination hide-sm">
+        {{t(destination.name)}}
+      </div>
+
+    </div>
 
     <!--------------- Main wrapper --------------------->
+    <calendar limit="yes" gotop="yes" />
 
-    <div class="spiegel margin-top1">
-        <h1 class="width7">mp<br>pngfst
-            <br>vl</h1>
-        <h2 class="width6 indent3" v-html="t(config.landing.title3)"/>
-
-        <h1 class="margin-top1 indent1" v-html="t(config.landing.title1)"/>
-
-        <h4 class="width3 indent1 margin-top1">
-            <div class="item" v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
-        </h4>
-
-        <a :href="config.landing.help.link">
-          <div class="volunteer-sticker height5 width3 align-center">
-              <div class="margin-top1" v-html="t(config.landing.help.name)" />
-          </div>
-        </a>
-    </div>
     <!--------------------- Social links --------------------------->
-    <div class="sociallinks">
+    <div class="sociallinks hide" >
       <p>
         <a v-for="(menu) in cfg.getMenu('social')" :key="menu.link" :href="menu.link" target="_new">{{t(menu.name)}}</a>           
       </p>
     </div>
     <!--------------------- Footer --------------------------->
-    <footer>
+    <footer class="hide">
       <p>
         <router-link v-for="menu in cfg.getMenu('footer')" :key="menu.link" :to="menu.link" >{{t(menu.name)}}</router-link>
-        <LanguageSelector class="lang" />
+        
       </p>
     </footer>
 
@@ -54,22 +58,52 @@
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
+import { mixins } from 'vue-class-component';
+
 import { $config, $cms } from '../services';
 import { Translatable } from '../mixins';
 
 import CMSIcons from '../components/CMSIcons.vue';
-import LanguageSelector from '../components/LanguageSelector.vue';
+import Toolbar from '../components/Toolbar.vue';
+import Calendar from '../components/Calendar.vue';
+import PrimaryMenu from '../components/PrimaryMenu.vue';
 
-import { mixins } from 'vue-class-component';
 
 @Component({
   components: {
     CMSIcons,
-    LanguageSelector,
+    PrimaryMenu,
+    Toolbar,
+    Calendar
   },
 })
 export default class Landing extends mixins(Translatable) {
   cfg = $config;
+
+  destination = {};
+  //
+  // return not active menu items
+  get menuCollection() {
+    //const page = $page.pageWithSlug(this.$router.currentRoute.params.pageslug) as CMS.Page;
+    //newMenuItem.name = page.title;
+
+    // FIXME, use this.key to force update content
+    const layout = "primary";
+    let menu = [... $config.getMenu(layout)];
+    const path = this.$router.currentRoute.path.toLowerCase();
+
+    menu.forEach(item => {      
+      // root case
+      if(path.length == 1) {
+         return item.selected = (item.link == path);
+      }
+      item.selected = item.link.indexOf(path) > -1;
+    });
+    
+    this.destination = menu.find(item => item.selected);
+
+    return menu.filter(item => !item.selected);
+  }
 
   async mounted(){
   }
