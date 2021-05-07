@@ -51,7 +51,8 @@
 
             <!-- NAV FOOTER CONTENT -->
             <div class="menu-item-xs" v-for="menu in footerMenu" :key="menu.link">
-                <RouterLink @click.native="onClose()" :to="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</RouterLink>
+                <a v-if="externalLink(menu.link)" @click="onClose()" :href="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</a>
+                <RouterLink v-else @click.native="onClose()" :to="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</RouterLink>
             </div>
         </aside>
     </div>
@@ -226,6 +227,9 @@ export default class NavigationDesktop extends mixins(Translatable) {
 
     return menu;
 
+  }
+  externalLink(link){
+    return link.indexOf('http') === 0 || link.indexOf('mailto') === 0 ;
   }
 
   mounted(){
