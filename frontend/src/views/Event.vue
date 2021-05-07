@@ -205,7 +205,8 @@ export default class Event extends mixins(Translatable) {
     return {
       backgroundImage:  'url(' + image + ') ',
       backgroundRepeat: 'no-repeat',
-      backgroundSize :'cover'
+      backgroundSize :'cover',
+      backgroundPosition: '50%'
     };
   }
 
