@@ -17,7 +17,7 @@
       </div>
 
       <div class="destination hide-sm">
-        {{t(destination.name)}}
+        Live
       </div>
 
     </div>
