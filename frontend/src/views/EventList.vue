@@ -97,7 +97,7 @@ export default class EventList extends mixins(Translatable) {
   today = new Date();
   toolbarExit = true;
   defaultTitle = {
-    name:{fr:"Live",en:"Livre"}
+    name:{fr:"Live",en:"Live"}
   }
   currentTitle: any = {}
 
@@ -108,6 +108,7 @@ export default class EventList extends mixins(Translatable) {
 
   get title() {
     const menu = this.getMenu('primary').find(item => item.selected) || this.defaultTitle ;
+    console.log('-------------- DBG',menu.name)
     return menu.name;
   }
 
