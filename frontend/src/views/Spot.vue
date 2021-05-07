@@ -99,11 +99,14 @@ export default class Spot extends mixins(Translatable) {
   }
   
   mounted(){
-    document.body.classList.add('body-scroll');
+    // document.body.classList.add('body-scroll');
+    try{window.scrollTo(0,0);}catch(e){
+      //
+    }
   }
 
   beforeDestroy() {
-    document.body.classList.remove('body-scroll');
+    // document.body.classList.remove('body-scroll');
   }
 
   themeTertiary(theme) {
