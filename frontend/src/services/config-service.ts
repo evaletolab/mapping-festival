@@ -159,6 +159,10 @@ class ConfigService {
       root.style.setProperty('--font-color', fcolor);
       root.style.setProperty('--main-font-color', fcolor);
       root.style.setProperty('--body-color', bcolor);  
+      root.style.setProperty('--ui-background-color', bcolor);  
+      root.style.setProperty('--ui-font-color', fcolor);
+      root.style.setProperty('--ui-border-color', fcolor);      
+
 
       this.storageSet('dark-mode',darkMode);
   }
