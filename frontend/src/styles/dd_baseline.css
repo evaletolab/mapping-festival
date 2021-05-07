@@ -47,9 +47,9 @@
   --font-size-max: 22px;
   --font-size: min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max));
   --line-height: calc(var(--font-size) * 1.26);
-  --font-color: black;
-  --main-font-color: black;
-  --body-color: white;
+  --font-color: white;
+  --main-font-color: white;
+  --body-color: black;
   --nav-header-height: 230px;
 
  
@@ -250,7 +250,7 @@ body{
 
   max-width: 100%;
   object-fit: cover;
-  mix-blend-mode: multiply;
+  /* mix-blend-mode: multiply; */
 }
 
 

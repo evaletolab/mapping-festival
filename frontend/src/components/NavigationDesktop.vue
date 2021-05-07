@@ -29,7 +29,7 @@
               <div class="ui-button height3 width8 menu"> 
                 <p class="vcenter">{{t(menu.name)}}</p> 
                 <div class="ui-icon vcenter align-right">
-                  <img src="/img/svg/dot.svg" alt="">
+                  <img class="inverted" src="/img/svg/dot.svg" alt="">
                 </div>
               </div>
             </RouterLink>
@@ -47,7 +47,7 @@
             <div class="menu-item-xs">
               <language-selector class=""/>
             </div>
-            <div class="menu-item-xs" @click="onDark"><i class="fas fa-moon "></i> Night mode</div>
+            <!-- <div class="menu-item-xs" @click="onDark"><i class="fas fa-moon "></i> Night mode</div> -->
 
             <!-- NAV FOOTER CONTENT -->
             <div class="menu-item-xs" v-for="menu in footerMenu" :key="menu.link">
@@ -60,6 +60,10 @@
 
 
 <style lang="scss" scoped>
+
+  .inverted{
+    filter: invert(100%);
+  }
 
   .menu-item-xs {
     font-size: calc(var(--font-size) * .75);
