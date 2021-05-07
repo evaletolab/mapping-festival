@@ -108,7 +108,6 @@ export default class EventList extends mixins(Translatable) {
 
   get title() {
     const menu = this.getMenu('primary').find(item => item.selected) || this.defaultTitle ;
-    console.log('-------------- DBG',menu.name)
     return menu.name;
   }
 
