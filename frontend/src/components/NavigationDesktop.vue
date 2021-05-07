@@ -25,7 +25,7 @@
             </section>
 
             <!-- NAV PRIMARY CONTENT -->
-            <RouterLink v-for="menu in primaryMenu" :key="menu.link"  :to="menu.link">
+            <RouterLink v-for="menu in primaryMenu" :key="menu.link"  @click.native="onClose()" :to="menu.link">
               <div class="ui-button height3 width8 menu"> 
                 <p class="vcenter">{{t(menu.name)}}</p> 
                 <div class="ui-icon vcenter align-right">
@@ -39,7 +39,7 @@
 
             <!-- NAV SECONDARY CONTENT -->
             <div class="menu-item-xs" v-for="menu in secondaryMenu" :key="menu.link"  >
-              <RouterLink :to="menu.link"> {{t(menu.name)}}</RouterLink>
+              <RouterLink @click.native="onClose()" :to="menu.link"> {{t(menu.name)}}</RouterLink>
             </div>
 
 
