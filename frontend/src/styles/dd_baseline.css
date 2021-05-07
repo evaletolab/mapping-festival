@@ -45,7 +45,7 @@
 
   /* font basics settings*/
   --font-size-max: 22px;
-  --font-size: min(calc((1vmin + 1.5vmax) * .8), var(--font-size-max));
+  --font-size: min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max));
   --line-height: calc(var(--font-size) * 1.26);
   --font-color: black;
   --main-font-color: black;
@@ -346,11 +346,11 @@ h4{  /*  infos techniques */
   margin:0;
   margin-bottom: calc(var(--line-height) - 1px);
 
-  font-size: calc(var(--font-size) * .8);
+  font-size: calc(var(--font-size) * .85);
   line-height: var(--line-height);
 
   font-family: 'Inter', sans-serif;
-  font-weight: 400;
+  font-weight: 470;
   font-family: 'inter';
 
   border-top: 1px solid var(--font-color);;
@@ -364,7 +364,7 @@ h5{  /*  notes et addendum */
   margin-top:0;
   margin-bottom: calc(var(--line-height) - 4px);
 
-  font-size: calc(var(--font-size) * .8);
+  font-size: calc(var(--font-size) * .85);
   line-height: var(--line-height);
 
   font-family: 'Inter', sans-serif;
@@ -384,8 +384,8 @@ h5{  /*  notes et addendum */
 
 .item{
   width: 100%;
-  height: calc(var(--line-height) - 1px);
-  border-bottom: 1px solid var(--font-color);;
+  border-bottom: 1px solid var(--font-color);
+  margin-top: -1px;
 }
 
 .prule{

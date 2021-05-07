@@ -5,19 +5,20 @@
     <PrimaryMenu /> -->
     
     <h1>{{t(eventLocation.name)}}</h1>
+      <br>
     <ul>
-      <li v-if="eventLocation.street">{{eventLocation.street}}</li>
-      <li v-if="eventLocation.postalcode">
-        {{eventLocation.postalcode}} <span v-if="eventLocation.city"> {{eventLocation.city}}</span>
+      <li class="ui-font" v-if="eventLocation.street">{{eventLocation.street}}</li>
+      <li class="ui-font" v-if="eventLocation.postalcode">
+        {{eventLocation.postalcode}} <span class="ui-font" v-if="eventLocation.city"> {{eventLocation.city}}</span>
       </li>
       <li v-if="eventLocation.website">
-        <a :href="eventLocation.website" target="_blank" rel="noopener noreferrer">
+        <br>
+        <a class="ui-font small" :href="eventLocation.website" target="_blank" rel="noopener noreferrer">
           {{eventLocation.website}}
         </a>
       </li>
     </ul>
-    <p v-html="t(eventLocation.content)"></p>
-
+    <p class="margin-top1" v-html="t(eventLocation.content)"></p>
 
     <img v-if="eventLocation.cover" :src="eventLocation.cover.sizes.headerimage.path" /> 
 
@@ -37,7 +38,7 @@
     </div>
 
     <div v-if="events.length > 0">
-      <h4>Events</h4>
+      <h2 class="margin-top1">Events</h2>
       <div class="grid-container grid-container--fit">
         <div class="grid-element event" 
           v-for="event in events" :key="event._id">
@@ -52,6 +53,11 @@
 <style lang="scss" scoped>
   .spot{
   }
+
+  li{
+    padding:0;
+    margin:0;
+    }
 
   .map-container{
     width: 100%;

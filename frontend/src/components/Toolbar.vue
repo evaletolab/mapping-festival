@@ -10,8 +10,7 @@
         </div>
 
         <!-- <div class="toolbar-title"> -->
-                  <div class="ui-font align-center">
-
+        <div class="ui-font vhcenter">
           mppng2051
         </div>        
 

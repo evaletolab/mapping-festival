@@ -3,14 +3,15 @@
         <lazy-img class="cover-event" :src="coverDesktop" />
         
         <div class="description"> 
-          <div class="text event-date align-right">{{ event.when[0].startTime }}</div>
           <div class="text event-title">{{ t(event.title) }}</div>
           <div v-for="artist in artists" :key="artist._id">
             <div class="text artistname">{{artist.fullname}}</div>
             <div class="text artist-country">{{artist.country}}</div>
           </div>
-          <div v-if="location" class="text event-location">{{t(location)}}</div><br>
-          <br><div class="text event-type align-center">{{event.type}}</div>
+          <div v-if="location" class="text event-location">{{t(location)}}</div>
+          <div class="text event-date">{{ event.when[0].startTime }}—{{ event.when[0].endTime }}</div>
+          <br>
+          <div class="text event-type">{{event.type}}</div>
         </div>
     </div>
 </template>

@@ -11,8 +11,8 @@
   --ui-font-color: black;
   --ui-border-color: black;
 
-  --ui-hover-background-color: grey;
-  --ui-hover-text-color:white;
+  --ui-hover-background-color: rgb(240, 240, 240);
+  --ui-hover-text-color:rgb(120, 137, 145);
   
 }
 

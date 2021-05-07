@@ -19,10 +19,9 @@
 
             <!-- NAV HEADER -->
             <section class="header">
-              <h1 class="width7">mp<br>pngfst
-                  <br>vl</h1>
+              <h1 class="width7">mp<br>pngfst<br>vl<br>2051</h1>
 
-              <h1 class="margin-top1" v-html="t(config.landing.title1)"/>
+              <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
             </section>
 
             <!-- NAV PRIMARY CONTENT -->
@@ -36,11 +35,12 @@
             </RouterLink>
 
             <div class="separator"></div>
+
             <br>
 
             <!-- NAV SECONDARY CONTENT -->
             <RouterLink v-for="menu in secondaryMenu" :key="menu.link"  :to="menu.link">
-              <div class="ui-button height2 width8 menu noborder">    
+              <div class="ui-button height2 width4 noborder">    
                 <p class="vcenter small">{{t(menu.name)}}</p> 
               </div>
             </RouterLink>
@@ -55,7 +55,6 @@
             <div class="item" @click="onDark"><i class="fas fa-moon "></i> Night mode</div>
 
 
-            <br>
             <br>
             <!-- NAV FOOTER CONTENT -->
             <div class="item" v-for="menu in footerMenu" :key="menu.link">

@@ -19,8 +19,7 @@
 }
 
 .grid-element {
-  background-color: grey;
-  padding: calc(var(--gutter-width)/2);
+  /*background-color: grey;*/
   margin: var(--gutter-width) var(--gutter-width) 0 0;
   color: #fff;
   /*border: 1px solid #fff;*/
@@ -32,11 +31,14 @@
 /* typo */
 .day-title{ 
   margin: 0;
-  padding: var(--gutter-width);
+  /* padding: var(--gutter-width);*/
 }
 
 .grid-element .text{
 /*transform: translateY(calc(var(--image-to-x) * -1));*/
+/*padding: calc(var(--gutter-width)/2);*/
+width: auto;
+margin: auto;
 }
 
 .grid-element .text.event-date{
@@ -45,7 +47,7 @@ line-height: var(--line-height);
 }
 
 .grid-element .text.event-title{
-font-size: calc(var(--font-size)*1.25);
+font-size: calc(var(--font-size)*1.15);
 line-height: var(--line-height);
 margin-bottom: 0;
 padding: 0;
@@ -53,7 +55,7 @@ padding: 0;
 
 .grid-element .text.artistname{
 display:inline-block;
-font-size: calc(var(--font-size)*1.25);
+font-size: calc(var(--font-size)*1.15);
 line-height: var(--line-height);
 }
 
