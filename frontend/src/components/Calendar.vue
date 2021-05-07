@@ -6,7 +6,7 @@
           :class="{'selected':menu.selected}" 
           :key="index"
           @click="onEventCategory(menu.name)" >{{getTypeLabel(menu.name)}}</a>
-        <a class="today" @click="onToday">today</a>          
+        <!-- <a class="today" @click="onToday">today</a>           -->
     </section>
     <section v-if="gotop" class="gotop" @click="onTop"
             :class="{'exited': (scrollDirection > 0) }">
