@@ -9,7 +9,7 @@
             <div class="text artist-country">{{artist.country}}</div>
           </div>
           <div v-if="location" class="text event-location">{{t(location)}}</div>
-          <div class="text event-date">{{ event.when[0].startTime }}—{{ event.when[0].endTime }}</div>
+          <div v-if="timeStartAndEnd" class="text event-date">{{timeStartAndEnd}}</div>
           <br>
           <div class="text event-type">{{event.type}}</div>
         </div>
@@ -49,10 +49,29 @@ import LazyImg from './LazyImg.vue';
 })
 export default class EventCard extends mixins(Translatable) {
   @Prop() event!: CMS.Event;
+  @Prop() date!: Date | null;
 //   @Prop() mobileView!: boolean;
 
   get config(){
     return $config.store.config;
+  }
+
+  get timeStartAndEnd(): string | null{
+    if(!this.date){
+      console.log("no date----------------------------------", this.date);
+      return null;
+    } 
+
+    const realEvt: CMS.Event = $event.eventWithId(this.event._id) as CMS.Event;
+    const firstWhenOfDate = new CMS.EventWrap(realEvt).getFirstWhenForDate(this.date);
+
+    if(firstWhenOfDate){
+      return `${firstWhenOfDate.startTime}-${firstWhenOfDate.endTime}`;
+    }else{
+      console.log("no when found for date, event id ", this.date, this.event);
+    }
+
+    return null;
   }
 
   get artists(): CMS.ArtistWrap[]{
@@ -80,7 +99,8 @@ export default class EventCard extends mixins(Translatable) {
   }
 
   navigateToEvent(){
-    this.$router.push({path: `/events/${this.event.slug}`});
+    const queryParams = this.date ? `?when=${this.date.getFullYear()}-${this.date.getMonth() + 1}-${this.date.getDate()}` : '';
+    this.$router.push({path: `/events/${this.event.slug}${queryParams}`});
   }
 }
 </script>

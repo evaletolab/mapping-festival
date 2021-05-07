@@ -3,122 +3,168 @@
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
   <div class="event">
+
+    <div class="header hide-sm">
+      <h4 class="tagline  align-right">
+          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
+          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
+      </h4>
+
+      <div class="destination hide">
+        {{t(event.title)}}
+      </div>
+    </div>
+
     <!-- TOOLBAR -->
-    <Toolbar/>
+    <toolbar class="hide-lg hide-md" />
 
-    <!-- HEADER -->
-    <section class="header spiegel" :style="backgroundImage">    
-      <p v-if="date" class="ui-font big align-right ">{{date|shortdate}}</p>    <br><br> 
-      <p class="ui-font big ">{{t(event.title)}}</p>  <br>
-      <p class="ui-font align-center">
-        <!-- {{event.type}} / --> {{event.subType}} <!-- {{t(event.header)}} --> </p>    
-    </section>
+    <div class="content spiegel margin-top1">
 
-    <!-- ABOUT -->
-    <div class="spiegel">
-    <h4 class="width5 indent1 margin-top1">
-      <div class="item" v-for="(when,index) in event.when" :key="index">{{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}</div>
-      <!--
-      <div class="item"></div> -->
-      <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
-      <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
-    </h4>
-    </div>
+      <!-- HEADER -->
+      <section class="header-event spiegel" :style="backgroundImage">    
+        <p v-if="date" class="ui-font big align-right ">{{date|shortdate}}</p>    <br><br> 
+        <p class="ui-font big ">{{t(event.title)}}</p>  <br>
+        <p class="ui-font align-center">
+          <!-- {{event.type}} / --> {{event.subType}} <!-- {{t(event.header)}} --> </p>    
+      </section>
 
-    <div class="spiegel" v-html="t(event.content)"></div>
 
-    <div class="spiegel">
-      <h2>{{ t({fr: "Lieu", en: "Location"}) }}</h2>
-      <div class="grid">
-        <spot-card v-if="eventLocation" :eventLocation="eventLocation" />
-      </div>
-      
-      <h2>Artists</h2>
-      <div v-for="artist in artists" :key="artist._id">
-        <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
-        <h2>{{artist.fullname}}<sup>{{artist.country}}</sup></h2>
-        <div v-html="t(artist.content)" />
+      <!-- ABOUT -->
+      <div class="spiegel">
+      <h4 class="width5 margin-top1">
+        <div class="item" v-for="(when,index) in event.when" :key="index">
+          {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
+
+          <span v-if="eventLocation" > -> </span>
+          <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
+            {{t(eventLocation.name)}}
+          </router-link>
+
+        </div>
+        <!--
+        <div class="item"></div> -->
+        <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
+        <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
+      </h4>
       </div>
 
-      <!-- <p v-if="!!when.eventLocation"> 
-          <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
-      </p> -->
 
-  <!--
-      <h2>{{t({fr:"Horaires", en:"Timetable"})}}</h2>
+      <div class="spiegel" v-html="t(event.content)"></div>
 
-      <div v-for="when in whens" :key="when.id">
-        <p>{{when.dayOfWeek}} {{when.date}} {{when.month}}</p>
-        <p>{{when.startTime}} - {{when.endTime}}</p>
-        <p v-if="!!when.eventLocation"> 
-          <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
-        </p>
-        <br>
-      </div>
-
-      -->
-
-      <div v-if="mediaCount > 0">
-        <h4>Medias</h4>
-        <div v-for="media in externalVideos" :key="media.url">
-          <VideoPlayer :externalMedia="media" />
-      </div>
-
-      <div v-for="media in externalSoundCloud" :key="media.url">
-        <SoundCloud :track="media.url" :mini="true" />
-      </div>
+      <div class="spiegel">
+        <!-- <h2>{{ t({fr: "Lieu", en: "Location"}) }}</h2>
+        <div class="grid">
+          <spot-card v-if="eventLocation" :eventLocation="eventLocation" />
+        </div> -->
         
-      <div v-for="image in localImages" :key="image._id">
-        <img :src="image.sizes.headerimage.path" /> 
-      </div>
+        <h2>Artists</h2>
+        <div v-for="artist in artists" :key="artist._id">
+          <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
+          <h2>{{artist.fullname}}<sup>{{artist.country}}</sup></h2>
+          <div v-html="t(artist.content)" />
+        </div>
 
-      <div v-for="image in externalImages" :key="image._id">
-        <img :src="image.url" /> 
-      </div>
+        <!-- <p v-if="!!when.eventLocation"> 
+            <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
+        </p> -->
 
+    <!--
+        <h2>{{t({fr:"Horaires", en:"Timetable"})}}</h2>
+
+        <div v-for="when in whens" :key="when.id">
+          <p>{{when.dayOfWeek}} {{when.date}} {{when.month}}</p>
+          <p>{{when.startTime}} - {{when.endTime}}</p>
+          <p v-if="!!when.eventLocation"> 
+            <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
+          </p>
+          <br>
+        </div>
+
+        -->
+
+        <div v-if="mediaCount > 0">
+          <h4>Medias</h4>
+          <div v-for="media in externalVideos" :key="media.url">
+            <VideoPlayer :externalMedia="media" />
+        </div>
+
+        <div v-for="media in externalSoundCloud" :key="media.url">
+          <SoundCloud :track="media.url" :mini="true" />
+        </div>
+          
+        <div v-for="image in localImages" :key="image._id">
+          <img :src="image.sizes.headerimage.path" /> 
+        </div>
+
+        <div v-for="image in externalImages" :key="image._id">
+          <img :src="image.url" /> 
+        </div>
+
+        </div>
       </div>
-    </div>
       <br><br><br><br>
+    </div>
   </div>
   
 </template>
 
 <style lang="scss" scoped>
 
-  .header{
-    position: relative;
-    height: calc( 100vh / 2 );
-    padding: var(--gutter-width);
-    padding-top:  calc(var(--gutter-width)*1.5);
-    color: white;
-
-
-  .when{
-    position: absolute;
-    right: 30px;
-    top: 20px;
-    font-size: 40px;
-    font-weight: 600;      
-  }
-  .title{
-    position: absolute;
-    left: 20px;
-    top: 70px;
-    font-size: 40px;
-    font-weight: 500;      
-  }
-  .type{
-    position: absolute;
-    bottom: 50px;
-    text-align: center;
-    left: 30%;
-  }
-
-  }
-
   .event{
-    margin-top: 60px;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    color: var(--font-color);
+    margin: 0;
+    z-index: 2;
+    height: 100vh;
+    width: 100%;    
+    margin-top: 0px;
+
+    .content{
+      @media (max-width:425px) {
+        margin-top: 80px;        
+      }
+    }
+
+
+    .header-event{
+      position: relative;
+      height: calc( 100vh / 2 );
+      padding: var(--gutter-width);
+      padding-top:  calc(var(--gutter-width)*1.5);
+      color: white;
+
+
+    .when{
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      font-size: 40px;
+      font-weight: 600;      
+    }
+    .title{
+      position: absolute;
+      left: 20px;
+      top: 70px;
+      font-size: 40px;
+      font-weight: 500;      
+    }
+    .type{
+      position: absolute;
+      bottom: 50px;
+      text-align: center;
+      left: 30%;
+    }
+    }
+
+    .simple-link{
+      text-decoration: none;
+    }
+
   }
+
 
 </style>
 
@@ -159,7 +205,8 @@ export default class Event extends mixins(Translatable) {
     return {
       backgroundImage:  'url(' + image + ') ',
       backgroundRepeat: 'no-repeat',
-      backgroundSize :'cover'
+      backgroundSize :'cover',
+      backgroundPosition: '50%'
     };
   }
 

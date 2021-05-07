@@ -6,13 +6,27 @@ export enum Lang {
     en = 'en',
 }
 
+function initialLang() {
+    //
+    // i18n init, default is FR
+    const lang = navigator.language || navigator['userLanguage'];   
+    if (/^en\b/.test(lang)) {
+      return Lang.en;
+    }
+    if (/^fr\b/.test(lang)) {
+      return Lang.fr;
+    }
+    return Lang.en;
+}
+
+//
 // check if currentLang is set in storage
 const langStorageKey = "mapping-lang";
 let currentLang = $config.storageGet(langStorageKey);
 if(!currentLang || (currentLang.lang != Lang.fr && currentLang.lang != Lang.en)){
     // else assume we want english
     currentLang = {
-        lang: Lang.en,
+        lang: initialLang(),
     };
 }
 
@@ -31,3 +45,23 @@ export function t(obj){
     return value || "";
 }
 
+class i18nService {
+    constructor() {
+    }
+    get lang() {
+        return currentLangStore.lang;
+    }
+
+    set lang(value: Lang) {
+        setLang(value);
+    }
+
+    t(key) {
+        if(!$config.config.i18n) {
+            return '';
+        }
+        return $config.config.i18n[key][currentLangStore.lang];
+    }
+}
+
+export const $i18n = new i18nService();

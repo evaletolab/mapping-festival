@@ -70,18 +70,15 @@ class CMSService {
         const key = date+'.'+month;
         const _id = when._id + (counter);
         const time = when.startTime;
-        const ms = when._id;
+        const __date =  new Date(when.start.getTime());
         const selector = date + '.' + month;
         if(!calendar[key]) {
-          calendar[key] = {_id,selector,time,date,month,events:[]};          
+          calendar[key] = {_id,selector,time,date,month,events:[], __date};          
         }
-        //
-        // only one time per event
-        event._id = ''+(counter++);
         event.when = [when];
         calendar[key].events.push(event);
       });        
-    })
+    });
     const keys = Object.keys(calendar);
     return keys.map(key => {
       calendar[key].events = calendar[key].events.sort((a,b)=>{

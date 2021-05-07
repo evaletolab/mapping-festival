@@ -259,7 +259,7 @@ class CockpitService {
       return w.duration < aDayInMinutes;
     });
 
-    event.when.sort((a, b) => a.start - b.start);
+    event.when.sort((a, b) => a.start.getTime() - b.start.getTime());
 
     event.medias = null; // TODO handle this
 

@@ -52,6 +52,9 @@
 
 <style lang="scss" scoped>
   .spot{
+    img{
+      width: 100%;
+    }
   }
 
   li{

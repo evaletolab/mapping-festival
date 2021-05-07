@@ -25,7 +25,7 @@
             </section>
 
             <!-- NAV PRIMARY CONTENT -->
-            <RouterLink v-for="menu in primaryMenu" :key="menu.link"  :to="menu.link">
+            <RouterLink v-for="menu in primaryMenu" :key="menu.link"  @click.native="onClose()" :to="menu.link">
               <div class="ui-button height3 width8 menu"> 
                 <p class="vcenter">{{t(menu.name)}}</p> 
                 <div class="ui-icon vcenter align-right">
@@ -34,31 +34,25 @@
               </div>
             </RouterLink>
 
-            <div class="separator"></div>
-
-            <br>
+            <!-- SHOULD NEVER USE -->
+            <br/>
 
             <!-- NAV SECONDARY CONTENT -->
-            <RouterLink v-for="menu in secondaryMenu" :key="menu.link"  :to="menu.link">
-              <div class="ui-button height2 width4 noborder">    
-                <p class="vcenter small">{{t(menu.name)}}</p> 
-              </div>
-            </RouterLink>
-            <br>
-            <br>
+            <div class="menu-item-xs" v-for="menu in secondaryMenu" :key="menu.link"  >
+              <RouterLink @click.native="onClose()" :to="menu.link"> {{t(menu.name)}}</RouterLink>
+            </div>
+
 
             <!-- NAV ACTIONS CONTENT -->
-            <div class="item">
+            <div class="menu-item-xs">
               <language-selector class=""/>
             </div>
-            <div class="item hide">Français/English</div>
-            <div class="item" @click="onDark"><i class="fas fa-moon "></i> Night mode</div>
+            <div class="menu-item-xs" @click="onDark"><i class="fas fa-moon "></i> Night mode</div>
 
-
-            <br>
             <!-- NAV FOOTER CONTENT -->
-            <div class="item" v-for="menu in footerMenu" :key="menu.link">
-                <RouterLink @click.native="onClose" :to="menu.link">{{t(menu.name)}}</RouterLink>
+            <div class="menu-item-xs" v-for="menu in footerMenu" :key="menu.link">
+                <a v-if="externalLink(menu.link)" @click="onClose()" :href="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</a>
+                <RouterLink v-else @click.native="onClose()" :to="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</RouterLink>
             </div>
         </aside>
     </div>
@@ -66,6 +60,22 @@
 
 
 <style lang="scss" scoped>
+
+  .menu-item-xs {
+    font-size: calc(var(--font-size) * .75);
+    line-height: calc(var(--line-height) * .75);    
+    padding: 4px 2px;
+    font-weight: 550;
+    cursor: pointer;
+    i{
+      float: right;
+      margin-right: 5px;
+    }
+    a {
+      text-decoration: none;      
+    }
+  }
+
   button.icon {
     padding: 2px 2px;
     width: 36px;
@@ -132,7 +142,14 @@ body.menu-open .page-sidebar {
       height: var(--nav-header-height);
       display: block;
       border-bottom: 1px solid var(--font-color);      
-      margin-bottom: 50px;
+      @media (max-width:426px) {
+      height: 110px;
+      h1{
+        font-size: 22px;
+        line-height: 25px;
+      }
+        
+      }
     }
     grid-column: 1/2;
     grid-row: 1/2;
@@ -210,6 +227,9 @@ export default class NavigationDesktop extends mixins(Translatable) {
 
     return menu;
 
+  }
+  externalLink(link){
+    return link.indexOf('http') === 0 || link.indexOf('mailto') === 0 ;
   }
 
   mounted(){

@@ -5,8 +5,8 @@
         <a v-for="(menu,index) in eventTypes" 
           :class="{'selected':menu.selected}" 
           :key="index"
-          @click="onEventCategory(menu.name)" >{{(menu.name)}}</a>
-        <a class="today" @click="onToday">today</a>          
+          @click="onEventCategory(menu.name)" >{{getTypeLabel(menu.name)}}</a>
+        <!-- <a class="today" @click="onToday">today</a>           -->
     </section>
     <section v-if="gotop" class="gotop" @click="onTop"
             :class="{'exited': (scrollDirection > 0) }">
@@ -34,7 +34,7 @@
         </div>
       </div>  -->
       <div class="grid-container grid-container--fit">
-        <event-card v-for="(event, index) in elem.events" :key="index" :event="event" />
+        <event-card v-for="(event, index) in elem.events" :key="index" :event="event" :date="elem.__date" />
       </div> 
     </div> 
   </div>
@@ -162,7 +162,7 @@
 <script lang="ts">
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { mixins } from 'vue-class-component';
-import { $config, $cms, $event } from '../services';
+import { $config, $cms, $event, $i18n } from '../services';
 import { CMS } from "../models";
 import { Translatable } from '../mixins';
 import LazyImg from './LazyImg.vue';
@@ -255,6 +255,10 @@ export default class Calendar extends mixins(Translatable)  {
     
     return this.cache['eventTypes'] = Object.keys(elems).map(cat => (elems[cat]));
   }
+
+  getTypeLabel(type) {
+    return $i18n.t(type);
+  }
   
   getBackground(event) {
 
@@ -335,7 +339,6 @@ export default class Calendar extends mixins(Translatable)  {
   @Watch('$route', { immediate: true, deep: true })
   async onRouteUpdate(to) {
     const label = this.$route.query.selected as string;
-    console.log("label", label);
     if(label) {
       this.eventTypes.forEach(cat => {
         cat.selected = (cat.name.toLowerCase() === label);
@@ -345,8 +348,8 @@ export default class Calendar extends mixins(Translatable)  {
     }else{
       this.selected = 'all';
     }
+    this.$emit('calendar-update',this.selected);
     this.isAll = !this.eventTypes.some(type => type.selected==true);
-    console.log("this.isAll is ", this.isAll);
   }
 
 }

@@ -18,7 +18,7 @@
       </div>
 
       <div class="destination hide-sm">
-        {{t(destination.name)}}
+        Live
       </div>
 
     </div>
@@ -81,7 +81,7 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
 export default class Landing extends mixins(Translatable) {
   cfg = $config;
 
-  destination:{name: {fr: string, en: string}} = {name: {fr:"",en: ""}};
+  destination:{name: {fr: string, en: string}} = {name: {fr:"Live",en: "Live"}};
   //
   // return not active menu items
   get menuCollection() {

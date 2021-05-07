@@ -7,13 +7,13 @@
       </h4>
 
       <div class="destination">
-        Pouet!
+        {{t(title)}}
       </div>
     </div>
 
     <!-- TOOLBAR -->
     <toolbar class="hide-lg hide-md" @exited="onToolbarExit"/>
-    <Calendar  gotop="yes" :class="{'exited': toolbarExit}"/>
+    <Calendar  gotop="yes" :class="{'exited': toolbarExit}" @calendarUpdate="onCalendarUpdate"/>
   </div>
 </template>
 
@@ -79,7 +79,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { mixins } from 'vue-class-component';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
-import { $config, $cms } from '../services';
+import { $config, $cms, $i18n } from '../services';
 import { Translatable } from '../mixins';
 
 import CMSIcons from '../components/CMSIcons.vue';
@@ -96,16 +96,29 @@ export default class EventList extends mixins(Translatable) {
   
   today = new Date();
   toolbarExit = true;
+  defaultTitle = {
+    name:{fr:"Live",en:"Live"}
+  }
+  currentTitle: any = {}
+
 
   get config(){
     return $config.store.config;
   }
 
+  get title() {
+    const menu = this.getMenu('primary').find(item => item.selected) || this.defaultTitle ;
+    return menu.name;
+  }
 
   getMenu(layout) {
     const menu = [... $config.getMenu(layout)];
-    const path = this.$router.currentRoute.fullPath;
-    const itemIdx = menu.findIndex(item => item.link.indexOf(path)>-1);
+    const path = (this.$route.query.selected as string ||'').toLowerCase();
+
+    const itemIdx = menu.findIndex(item => {
+      const name = item.name['fr'].toLowerCase();
+      return name.indexOf(path)>-1;
+    });
     menu.forEach(item => item.selected = false);
     menu[(itemIdx == -1)? 0:itemIdx].selected = true;
     return menu;
@@ -125,6 +138,7 @@ export default class EventList extends mixins(Translatable) {
 
   async mounted(){
     document.body.classList.add('body-scroll');
+    this.currentTitle = this.title;
   }
 
   async onBack() {
@@ -151,6 +165,10 @@ export default class EventList extends mixins(Translatable) {
 
   async onSave() {
     //
+  }
+
+  async onCalendarUpdate() {
+    this.currentTitle = this.title;
   }
 
 
