@@ -75,9 +75,6 @@ class CMSService {
         if(!calendar[key]) {
           calendar[key] = {_id,selector,time,date,month,events:[]};          
         }
-        //
-        // only one time per event
-        event._id = ''+(counter++);
         event.when = [when];
         calendar[key].events.push(event);
       });        
