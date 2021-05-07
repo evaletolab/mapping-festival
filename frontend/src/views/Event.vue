@@ -17,7 +17,15 @@
     <!-- ABOUT -->
     <div class="spiegel">
     <h4 class="width5 indent1 margin-top1">
-      <div class="item" v-for="(when,index) in event.when" :key="index">{{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}</div>
+      <div class="item" v-for="(when,index) in event.when" :key="index">
+        {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
+
+        <span v-if="eventLocation" > -> </span>
+        <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
+          {{t(eventLocation.name)}}
+        </router-link>
+
+      </div>
       <!--
       <div class="item"></div> -->
       <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
@@ -25,13 +33,14 @@
     </h4>
     </div>
 
+
     <div class="spiegel" v-html="t(event.content)"></div>
 
     <div class="spiegel">
-      <h2>{{ t({fr: "Lieu", en: "Location"}) }}</h2>
+      <!-- <h2>{{ t({fr: "Lieu", en: "Location"}) }}</h2>
       <div class="grid">
         <spot-card v-if="eventLocation" :eventLocation="eventLocation" />
-      </div>
+      </div> -->
       
       <h2>Artists</h2>
       <div v-for="artist in artists" :key="artist._id">
@@ -113,8 +122,12 @@
     text-align: center;
     left: 30%;
   }
-
   }
+
+  .simple-link{
+    text-decoration: none;
+  }
+
 
   .event{
     margin-top: 60px;
