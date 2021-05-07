@@ -70,7 +70,6 @@ class CMSService {
         const key = date+'.'+month;
         const _id = when._id + (counter);
         const time = when.startTime;
-        const ms = when._id;
         const selector = date + '.' + month;
         if(!calendar[key]) {
           calendar[key] = {_id,selector,time,date,month,events:[]};          
@@ -78,7 +77,7 @@ class CMSService {
         event.when = [when];
         calendar[key].events.push(event);
       });        
-    })
+    });
     const keys = Object.keys(calendar);
     return keys.map(key => {
       calendar[key].events = calendar[key].events.sort((a,b)=>{
