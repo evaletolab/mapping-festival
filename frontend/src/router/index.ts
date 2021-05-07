@@ -1,19 +1,12 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
-
-import { $config, $user } from '@/services'
-
 import Artist from '../views/Artist.vue'
 import ArtistList from '../views/ArtistList.vue'
-import Content from '../views/Content.vue'
 import Event from '../views/Event.vue'
 import EventList from '../views/EventList.vue'
 import Landing from '../views/Landing.vue'
-import Spot from '../views/Spot.vue'
 import NotFound from '../views/NotFound.vue'
-import Diagnostics from '../views/Diagnostics.vue'
-import Map from '../views/Map.vue';
 import Page from '../views/Page.vue';
 
 Vue.use(VueRouter)
@@ -47,12 +40,15 @@ const routes: Array<RouteConfig> = [
   {
     path: '/map',
     name: 'Map',
-    component: Map
+    // route level code-splitting
+    // this generates a separate chunk (map.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "map" */ '../views/Map.vue')
   },
   {
     path: '/map/:spotslug?',
     name: 'Spot',
-    component: Spot
+    component: () => import(/* webpackChunkName: "spot" */ '../views/Spot.vue')
   },
   {
     path: '/pages/:pageslug?',
@@ -68,7 +64,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/__diagnostics',
     name: 'Diagnostics',
-    component: Diagnostics,
+    component: () => import(/* webpackChunkName: "diags" */ '../views/Diagnostics.vue')
   },
   {
     path: '/404',
