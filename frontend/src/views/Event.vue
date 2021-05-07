@@ -31,7 +31,7 @@
 
       <!-- ABOUT -->
       <div class="spiegel">
-      <h4 class="width5 indent1 margin-top1">
+      <h4 class="width5 margin-top1">
         <div class="item" v-for="(when,index) in event.when" :key="index">
           {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
 
