@@ -51,7 +51,7 @@
 
             <!-- NAV FOOTER CONTENT -->
             <div class="menu-item-xs" v-for="menu in footerMenu" :key="menu.link">
-                <RouterLink @click.native="onClose" :to="menu.link">{{t(menu.name)}}</RouterLink>
+                <a :href="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</a>
             </div>
         </aside>
     </div>
