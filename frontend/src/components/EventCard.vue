@@ -9,7 +9,7 @@
             <div class="text artist-country">{{artist.country}}</div>
           </div>
           <div v-if="location" class="text event-location">{{t(location)}}</div>
-          <div class="text event-date">{{ event.when[0].startTime }}—{{ event.when[0].endTime }}</div>
+          <div v-if="timeStartAndEnd" class="text event-date">{{timeStartAndEnd}}</div>
           <br>
           <div class="text event-type">{{event.type}}</div>
         </div>
@@ -49,10 +49,28 @@ import LazyImg from './LazyImg.vue';
 })
 export default class EventCard extends mixins(Translatable) {
   @Prop() event!: CMS.Event;
+  @Prop() date!: Date | null;
 //   @Prop() mobileView!: boolean;
 
   get config(){
     return $config.store.config;
+  }
+
+  get timeStartAndEnd(): string | null{
+    if(!this.date){
+      console.log("no date----------------------------------", this.date);
+      return null;
+    } 
+
+    const firstWhenOfDate = new CMS.EventWrap(this.event).getFirstWhenForDate(this.date);
+
+    if(firstWhenOfDate){
+      return `${firstWhenOfDate.startTime}-${firstWhenOfDate.endTime}`;
+    }else{
+      console.log("no when found for date, event id ", this.date, this.event);
+    }
+
+    return null;
   }
 
   get artists(): CMS.ArtistWrap[]{
@@ -77,6 +95,10 @@ export default class EventCard extends mixins(Translatable) {
     }else{
       return "https://via.placeholder.com/450";
     }
+  }
+
+  mounted(){
+    console.log("event card mounted", this.date);
   }
 
   navigateToEvent(){

@@ -70,9 +70,10 @@ class CMSService {
         const key = date+'.'+month;
         const _id = when._id + (counter);
         const time = when.startTime;
+        const __date =  new Date(when.start.getTime());
         const selector = date + '.' + month;
         if(!calendar[key]) {
-          calendar[key] = {_id,selector,time,date,month,events:[]};          
+          calendar[key] = {_id,selector,time,date,month,events:[], __date};          
         }
         event.when = [when];
         calendar[key].events.push(event);

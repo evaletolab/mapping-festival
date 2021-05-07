@@ -318,11 +318,39 @@ export namespace CMS {
         return null;
       }
     }
+
+    getFirstWhenForDate(date: Date): When | null{
+      if(!date) return null;
+      if(isNaN(date.getTime())) return null;
+
+      const targetYear = date.getFullYear();
+      const targetMonth = date.getMonth();
+      const targetDate = date.getDate();
+
+      const whens = this.when.filter(w => {
+        if(w.start.getFullYear() == targetYear &&
+          w.start.getMonth() == targetMonth &&
+          w.start.getDate() == targetDate ){
+            return true;
+          }else{
+            return false;
+          }
+      });
+
+      if(whens.length > 0){
+        return whens.sort((a: When,b: When) => a.start.getTime() - b.start.getTime())[0];
+
+      }else{
+        return null;
+      }
+
+    }
   }
 
   export interface Calendar {
     day: string;
     month: string;
+    __date: Date;
     event: Event[];
     _id: number; // copied from When id
   }
