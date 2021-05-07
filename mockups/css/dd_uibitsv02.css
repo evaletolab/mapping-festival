@@ -139,6 +139,7 @@ border-radius: 4px;
   min-width: 20px;
   margin-right: 5px;
 }
+
 .ui-button-auto-fit span img{
   display: block;
   height: 100%;
@@ -148,7 +149,6 @@ border-radius: 4px;
 .ui-button-auto-fit a{
 text-decoration: none;
 }
-
 
 
 /* --------------------------- */
