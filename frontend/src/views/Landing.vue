@@ -80,7 +80,7 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
 export default class Landing extends mixins(Translatable) {
   cfg = $config;
 
-  destination = {};
+  destination:{name: {fr: string, en: string}} = {name: {fr:"",en: ""}};
   //
   // return not active menu items
   get menuCollection() {
@@ -100,7 +100,10 @@ export default class Landing extends mixins(Translatable) {
       item.selected = item.link.indexOf(path) > -1;
     });
     
-    this.destination = menu.find(item => item.selected);
+    const menuItem = menu.find(item => item.selected);
+    if(menuItem){
+      this.destination = menuItem;
+    }
 
     return menu.filter(item => !item.selected);
   }

@@ -8,7 +8,7 @@
 
     <!-- HEADER -->
     <section class="header spiegel" :style="backgroundImage">    
-      <p class="ui-font big align-right ">{{when|shortdate}}</p>    <br><br> 
+      <p v-if="date" class="ui-font big align-right ">{{date|shortdate}}</p>    <br><br> 
       <p class="ui-font big ">{{t(event.title)}}</p>  <br>
       <p class="ui-font align-center">
         <!-- {{event.type}} / --> {{event.subType}} <!-- {{t(event.header)}} --> </p>    
@@ -28,6 +28,11 @@
     <div class="spiegel" v-html="t(event.content)"></div>
 
     <div class="spiegel">
+      <h2>{{ t({fr: "Lieu", en: "Location"}) }}</h2>
+      <div class="grid">
+        <spot-card v-if="eventLocation" :eventLocation="eventLocation" />
+      </div>
+      
       <h2>Artists</h2>
       <div v-for="artist in artists" :key="artist._id">
         <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
@@ -35,9 +40,9 @@
         <div v-html="t(artist.content)" />
       </div>
 
-      <p v-if="!!when.eventLocation"> 
+      <!-- <p v-if="!!when.eventLocation"> 
           <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
-      </p>
+      </p> -->
 
   <!--
       <h2>{{t({fr:"Horaires", en:"Timetable"})}}</h2>
@@ -127,8 +132,8 @@ import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import VideoPlayer from '../components/VideoPlayer.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
-
 import SoundCloud from 'vue-soundcloud-player';
+import SpotCard from '../components/SpotCard.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -136,10 +141,13 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu, VideoPlayer, SoundCloud
+    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SpotCard
   }
 })
 export default class Event extends mixins(Translatable) {
+
+  date: Date | null = null;
+
   get config(){
     return $config.store.config;
   }
@@ -155,13 +163,13 @@ export default class Event extends mixins(Translatable) {
     };
   }
 
-  //
-  // get first available date after now
-  get when(){
-    const now = Date.now();
-    const find = (this.event.when||[]).find(when => when._id > now );
-    return find ? find.start:null;
-  }
+  // //
+  // // get first available date after now
+  // get when(){
+  //   const now = Date.now();
+  //   const find = (this.event.when||[]).find(when => when._id > now );
+  //   return find ? find.start:null;
+  // }
 
   mounted(){
     document.body.classList.add('body-scroll');
@@ -170,6 +178,21 @@ export default class Event extends mixins(Translatable) {
       //
     }
     
+    if(this.$router.currentRoute.query.when){
+      const split = (this.$router.currentRoute.query.when as string).split("-");
+      if(split.length == 3){
+        const y = parseInt(split[0]);
+        const m = parseInt(split[1]);
+        const d = parseInt(split[2]);
+
+        if(m >0 && m <= 12){
+          const aDate = new Date(y, m - 1, d);
+          if(!isNaN(aDate.getTime())){
+            this.date = aDate;
+          }
+        }
+      }
+    }
 
   }
 
@@ -205,6 +228,10 @@ export default class Event extends mixins(Translatable) {
   
   get event(): CMS.Event {
     return $event.eventWithSlug(this.$route.params.event) as CMS.Event;
+  }
+
+  get eventLocation(): CMS.EventLocation | null{
+    return new CMS.EventWrap(this.event).eventLocation;
   }
 
   get artists(): CMS.ArtistWrap[]{

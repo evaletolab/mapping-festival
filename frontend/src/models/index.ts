@@ -80,7 +80,7 @@ export namespace CMS {
   }
 
   // export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
-  export const eventTypeLabel = ["Installation", "Performance", "Workshop", "Masterclass", "Collection virtuelle", "Parcours urbain", "mppngTV"] as const;
+  export const eventTypeLabel = ["Installation", "Performance", "Workshop", "Masterclass", "Parcours urbain", "mppngTV"] as const;
   export type eventType = typeof eventTypeLabel[number];
 
   const _eventSubType = ["Parcours urbain", "Exposition", "Performance", "Nighclubbing", "Concert", "Workshop", "Table ronde", "Masterclass", "mappingTV"] as const;
@@ -301,15 +301,22 @@ export namespace CMS {
       return this._event.created;
     }
 
-    get location(): {fr: string, en:string} | null{
-      let result = null;      
+    get eventLocation(): EventLocation | null{
       for(const w of this.when){
         if(w.eventLocation){
-          return w.eventLocation.name;
+          return w.eventLocation;
         }
       }
 
-      return result;
+      return null;
+    }
+
+    get location(): {fr: string, en:string} | null{
+      if(this.eventLocation) {
+        return this.eventLocation.name;
+      }else{
+        return null;
+      }
     }
   }
 

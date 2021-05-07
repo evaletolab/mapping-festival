@@ -47,7 +47,7 @@ import LazyImg from './LazyImg.vue';
 @Component({
   components: { LazyImg }
 })
-export default class ArtistCard extends mixins(Translatable) {
+export default class EventCard extends mixins(Translatable) {
   @Prop() event!: CMS.Event;
 //   @Prop() mobileView!: boolean;
 
@@ -80,7 +80,6 @@ export default class ArtistCard extends mixins(Translatable) {
   }
 
   navigateToEvent(){
-    console.log("on click----------------------------");
     this.$router.push({path: `/events/${this.event.slug}`});
   }
 }
