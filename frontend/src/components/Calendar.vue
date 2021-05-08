@@ -18,10 +18,14 @@
     <div class="grid day-wrapper " v-for="elem in calendar" :key="elem._id" :id="elem._id">
 
       <!-- <div class="day-title"> -->
-        <div class="prule margin-top1"/>
-      <div class="ui-font margin-top3">
+      <div class="prule margin-top1"/>
+      <div v-if="currentLang=='fr'" class="ui-font margin-top3">
         {{t(elem.dayname)}} {{elem.date}} {{t(elem.monthname)}}
-      </div><!-- day-title -->
+      </div>
+      <div v-else class="ui-font margin-top3">
+        {{t(elem.dayname)}} {{t(elem.monthname)}} {{elem.date}}th
+      </div>
+      <!-- day-title -->
 
       <!-- <div class="grid-container grid-container--fit">
         <div class="grid-element event" 
