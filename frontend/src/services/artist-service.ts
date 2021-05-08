@@ -11,10 +11,11 @@ class ArtistService
 
     get sorted(): CMS.Artist[]{
         const result = this.all.sort((a, b) =>{
-        const aName = this.artistSortingName(a);
-        const bName = this.artistSortingName(b);
-        return aName.localeCompare(bName);
+            const aName = this.artistSortingName(a);
+            const bName = this.artistSortingName(b);
+            return aName.toLocaleLowerCase().localeCompare(bName.toLocaleLowerCase());
         });
+        // result.forEach(a => console.log(this.artistSortingName(a)));
         return result;
     }
 
@@ -31,7 +32,7 @@ class ArtistService
             }
         }
 
-        const keys = Object.keys(artistMap).sort();
+        const keys = Object.keys(artistMap).sort((a, b) => a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase()));
         for(let key of keys){
             result.push({
                 letterId: key,
