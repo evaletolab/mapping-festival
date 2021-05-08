@@ -57,11 +57,13 @@
           <spot-card v-if="eventLocation" :eventLocation="eventLocation" />
         </div> -->
         
-        <h2>Artists</h2>
-        <div v-for="artist in artists" :key="artist._id">
-          <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450/000000/000000'">
-          <h2>{{artist.fullname}}<sup>{{artist.country}}</sup></h2>
-          <div v-html="t(artist.content)" />
+        <div v-if="artists.length > 0">
+          <h2>Artists</h2>
+          <div v-for="artist in artists" :key="artist._id">
+            <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450/000000/000000'">
+            <h2>{{artist.fullname}}<sup>{{artist.country}}</sup></h2>
+            <div v-html="t(artist.content)" />
+          </div>
         </div>
 
         <!-- <p v-if="!!when.eventLocation"> 
