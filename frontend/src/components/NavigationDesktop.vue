@@ -35,18 +35,23 @@
             </RouterLink>
 
             <!-- SHOULD NEVER USE -->
-            <br/>
+            <br>
 
             <!-- NAV SECONDARY CONTENT -->
             <div class="menu-item-xs" v-for="menu in secondaryMenu" :key="menu.link"  >
               <RouterLink @click.native="onClose()" :to="menu.link"> {{t(menu.name)}}</RouterLink>
             </div>
 
+            <br>
+
 
             <!-- NAV ACTIONS CONTENT -->
             <div class="menu-item-xs">
               <language-selector class=""/>
             </div>
+
+            <br>
+
             <!-- <div class="menu-item-xs" @click="onDark"><i class="fas fa-moon "></i> Night mode</div> -->
 
             <!-- NAV FOOTER CONTENT -->

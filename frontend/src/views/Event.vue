@@ -22,8 +22,15 @@
 
       <!-- HEADER -->
       <section class="header-event spiegel" :style="backgroundImage">    
-        <p v-if="date" class="ui-font big align-right ">{{date|shortdate}}</p>    <br><br> 
-        <p class="ui-font big ">{{t(event.title)}}</p>  <br>
+        <p v-if="date" class="ui-font big align-right ">{{date|shortdate}}</p>
+        <br>
+        <p class="ui-font big ">{{t(event.title)}} </p>
+        <div v-for="artist in artists" :key="artist._id">
+          <p class="ui-font big ">
+            {{artist.fullname}} <sup>{{artist.country}}</sup></p>
+        </div>
+
+
         <p class="ui-font align-center">
           <!-- {{event.type}} / --> {{event.subType}} <!-- {{t(event.header)}} --> </p>    
       </section>
