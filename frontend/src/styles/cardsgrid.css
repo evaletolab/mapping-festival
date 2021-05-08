@@ -1,6 +1,6 @@
 .day-wrapper{
   /*padding: 1em;*/
-  background-color: rgba(230, 230, 230, 0.068);
+  /*background-color: rgba(230, 230, 230, 0.068);*/
   width: 100%;
 }
 
@@ -30,8 +30,8 @@
 
 /* typo */
 .day-title{ 
-  margin: 0;
-  /* padding: var(--gutter-width);*/
+  /*margin: 0;*/
+  padding: var(--gutter-width);
 }
 
 .grid-element .text{

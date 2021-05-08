@@ -17,8 +17,10 @@
 
     <div class="grid day-wrapper " v-for="elem in calendar" :key="elem._id" :id="elem._id">
 
-      <div class="day-title">
-        {{elem.date}}.{{elem.month}}
+      <!-- <div class="day-title"> -->
+        <div class="prule margin-top1"/>
+      <div class="ui-font margin-top3">
+        {{elem.dayname}} {{elem.date}} {{elem.month}}
       </div><!-- day-title -->
 
       <!-- <div class="grid-container grid-container--fit">
@@ -138,7 +140,7 @@
     }
     .event {
       cursor: pointer;
-      background: url(https://via.placeholder.com/150) no-repeat, #ddd;
+      background: url(https://via.placeholder.com/150/000000/000000) no-repeat, #ddd;
       background-size: cover;
       background-position: center;
       overflow: hidden;

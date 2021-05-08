@@ -24,7 +24,7 @@
 
 
 .ui-font{
-  font-weight: 550;
+  font-weight: 520;
   font-size: calc(var(--font-size) * 1);
   line-height: calc(var(--line-height) * 1);
   background-color: rgba(200,180,220,var(--helper-color-alpha));
