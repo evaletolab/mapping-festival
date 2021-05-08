@@ -185,7 +185,7 @@ export default class Calendar extends mixins(Translatable)  {
   @Prop() readonly limit!: boolean;
   @Prop() readonly gotop!: boolean;
 
-  defaultCover = "https://via.placeholder.com/150";
+  defaultCover = "https://via.placeholder.com/150/000000/000000";
 
 
   get events() {

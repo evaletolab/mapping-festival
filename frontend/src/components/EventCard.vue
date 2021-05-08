@@ -86,7 +86,7 @@ export default class EventCard extends mixins(Translatable) {
     if(this.event.cover){
       return this.event.cover.sizes.thumbs.path;
     }else{
-      return "https://via.placeholder.com/80";
+      return "https://via.placeholder.com/80/000000/000000";
     }
   }
   
@@ -94,7 +94,7 @@ export default class EventCard extends mixins(Translatable) {
     if(this.event.cover){
       return this.event.cover.sizes.small.path;
     }else{
-      return "https://via.placeholder.com/450";
+      return "https://via.placeholder.com/450/000000/000000";
     }
   }
 

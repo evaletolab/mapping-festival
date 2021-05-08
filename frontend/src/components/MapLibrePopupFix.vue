@@ -85,7 +85,7 @@ export default class MapLibrePopupFix extends mixins(Translatable) {
         if(this.eventLocation && this.eventLocation.cover){
             return this.eventLocation.cover.sizes.thumbs.path;
         }else{
-            return "https://via.placeholder.com/80";
+            return "https://via.placeholder.com/80/000000/000000";
         }
     }
 

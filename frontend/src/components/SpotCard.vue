@@ -52,7 +52,7 @@ export default class SpotCard extends mixins(Translatable) {
     if(this.eventLocation.cover){
       return this.eventLocation.cover.sizes.small.path;
     }else{
-      return "https://via.placeholder.com/450";
+      return "https://via.placeholder.com/450/000000/000000";
     }
   }
 

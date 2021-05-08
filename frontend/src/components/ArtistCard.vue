@@ -94,7 +94,7 @@ export default class ArtistCard extends Vue {
     if(this.artist.cover){
       return this.artist.cover.sizes.thumbs.path;
     }else{
-      return "https://via.placeholder.com/80";
+      return "https://via.placeholder.com/80/000000/000000";
     }
   }
   
@@ -102,7 +102,7 @@ export default class ArtistCard extends Vue {
     if(this.artist.cover){
       return this.artist.cover.sizes.headerimage.path;
     }else{
-      return "https://via.placeholder.com/150";
+      return "https://via.placeholder.com/150/000000/000000";
     }
   }
 

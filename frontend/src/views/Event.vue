@@ -59,7 +59,7 @@
         
         <h2>Artists</h2>
         <div v-for="artist in artists" :key="artist._id">
-          <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
+          <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450/000000/000000'">
           <h2>{{artist.fullname}}<sup>{{artist.country}}</sup></h2>
           <div v-html="t(artist.content)" />
         </div>
@@ -199,7 +199,7 @@ export default class Event extends mixins(Translatable) {
   }
 
   get backgroundImage(){
-    const defaultImg = 'https://via.placeholder.com/450';
+    const defaultImg = 'https://via.placeholder.com/450/000000/000000';
     const cover = this.event.cover as any;
     const image = (cover &&  cover.sizes) ? cover.sizes.headerimage.path:defaultImg;
     return {
