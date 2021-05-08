@@ -278,6 +278,15 @@ class CockpitService {
     event.cover = event.cover ? this.formatLocalMedia(event.cover) : null;
 
     event.subType = event.subType || null;
+    
+    if(event.notes){
+      if(event.notes.fr){
+        event.notes.fr = event.notes.fr.replace(/\n/g, "<br>");
+      }
+      if(event.notes.en){
+        event.notes.en = event.notes.en.replace(/\n/g, "<br>");
+      }
+    }
 
     event = this.addMeta(event);
 

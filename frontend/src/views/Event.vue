@@ -51,6 +51,13 @@
 
       <div class="spiegel" v-html="t(event.content)"></div>
 
+      <p v-if="event.ticketUrl">
+        <a :href="event.ticketUrl">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
+      </p>
+
+      <p v-if="event.notes" v-html="t(event.notes)" />
+
+
       <div class="spiegel">
         <!-- <h2>{{ t({fr: "Lieu", en: "Location"}) }}</h2>
         <div class="grid">

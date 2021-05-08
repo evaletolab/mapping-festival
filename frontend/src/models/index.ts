@@ -227,6 +227,7 @@ export namespace CMS {
     when: When[],
     price: number,
     limit: number,
+    ticketUrl: string | null,
     artists:[{
       lastname: string,
       slug: string,
