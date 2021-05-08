@@ -20,7 +20,7 @@
       <!-- <div class="day-title"> -->
         <div class="prule margin-top1"/>
       <div class="ui-font margin-top3">
-        {{elem.dayname}} {{elem.date}} {{elem.month}}
+        {{t(elem.dayname)}} {{elem.date}} {{t(elem.monthname)}}
       </div><!-- day-title -->
 
       <!-- <div class="grid-container grid-container--fit">
@@ -213,6 +213,12 @@ export default class Calendar extends mixins(Translatable)  {
       // console.log("filterPredicate", filterPredicate);
       return filterPredicate;
     });
+  }
+
+  get currentLang(): string{
+    const result = $i18n.lang;
+    console.log("result", result);
+    return result;
   }
 
   get calendar(): CMS.Calendar[] {
