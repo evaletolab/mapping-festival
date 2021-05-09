@@ -49,6 +49,20 @@
         <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
       </h4>
 
+    <!-- Test Interval -->
+      <div v-if="event.when.length >= 2" class="spiegel">
+        <h4 class="width5 margin-top1">
+          <div class="interval" v-for="(interval, index) in intervals" :key="index">
+            {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+
+            <span v-if="interval.eventLocation" > -> </span>
+            <router-link v-if="interval.eventLocation" class="simple-link" :to="`/map/${interval.eventLocation.slug}`">
+              {{t(interval.eventLocation.name)}}
+            </router-link>
+
+          </div>
+        </h4>
+      </div>
 
       <p class="indent2" v-if="event.ticketUrl">
         <a :href="event.ticketUrl">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
@@ -246,6 +260,12 @@ export default class Event extends mixins(Translatable) {
     };
   }
 
+  get intervals(): CMS.Interval[]{
+    const intervals = new CMS.EventWrap(this.event).intervals;
+    console.log("intevals", intervals);
+    return intervals;
+  }
+
   // //
   // // get first available date after now
   // get when(){
@@ -276,6 +296,7 @@ export default class Event extends mixins(Translatable) {
         }
       }
     }
+
 
   }
 
