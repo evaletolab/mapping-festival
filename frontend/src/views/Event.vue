@@ -49,20 +49,6 @@
         <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
       </h4>
 
-    <!-- Test Interval -->
-      <div v-if="event.when.length >= 2" class="spiegel">
-        <h4 class="width5 margin-top1">
-          <div class="interval" v-for="(interval, index) in intervals" :key="index">
-            {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
-
-            <span v-if="interval.eventLocation" > -> </span>
-            <router-link v-if="interval.eventLocation" class="simple-link" :to="`/map/${interval.eventLocation.slug}`">
-              {{t(interval.eventLocation.name)}}
-            </router-link>
-
-          </div>
-        </h4>
-      </div>
 
       <p class="indent2" v-if="event.ticketUrl">
         <a :href="event.ticketUrl">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
@@ -82,18 +68,27 @@
       <div class="spiegel">
 
         <h5 class="indent2 width6 margin-top1">
+          <div v-if="event.when.length < 2" >
+            <div class="" v-for="(when,index) in event.when" :key="index">
 
-        <div class="" v-for="(when,index) in event.when" :key="index">
-
-          {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
-          <span v-if="eventLocation" >  --->  </span>
-          <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
-            {{t(eventLocation.name)}}
-          </router-link>
-
-        </div>
-      </h5>
-
+            {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
+            <span v-if="eventLocation" >  --->  </span>
+            <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
+              {{t(eventLocation.name)}}
+            </router-link>
+            </div>
+          </div>
+          <div v-else>
+            <div class="interval" v-for="(interval, index) in intervals" :key="index">
+              
+              {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+              <span v-if="eventLocation" >  --->  </span>
+              <router-link v-if="interval.eventLocation" class="simple-link" :to="`/map/${interval.eventLocation.slug}`">
+                {{t(interval.eventLocation.name)}}
+              </router-link>
+            </div>
+          </div>
+        </h5>
       </div>
 
 
