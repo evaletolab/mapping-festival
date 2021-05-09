@@ -288,6 +288,16 @@ class CockpitService {
       }
     }
 
+    if(event.header){
+      if(event.header.fr){
+        event.header.fr = event.header.fr.replace(/\n/g, "<br>");
+      }
+      if(event.header.en){
+        event.header.en = event.header.en.replace(/\n/g, "<br>");
+      }
+    }
+
+
     event = this.addMeta(event);
 
     return event as CMS.Event;

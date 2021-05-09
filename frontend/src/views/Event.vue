@@ -56,7 +56,7 @@
       </div>
 
       <br>
-
+      <p class="indent2 width5" v-html="t(event.header)" /> 
       <div class="spiegel" v-html="t(event.content)"></div>
 
       <!--
