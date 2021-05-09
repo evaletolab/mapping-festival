@@ -166,6 +166,9 @@ export default class Artist extends mixins(Translatable) {
 
   mounted(){
     document.body.classList.add('body-scroll');
+    try{window.scrollTo(0,0);}catch(e){
+      //
+    }
   }
 
   beforeDestroy() {
