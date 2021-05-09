@@ -56,10 +56,10 @@
       </div>
 
     <!-- Test Interval -->
-      <div v-if="event.when.length >= 3" class="spiegel">
+      <div v-if="event.when.length >= 2" class="spiegel">
         <h4 class="width5 margin-top1">
           <div class="interval" v-for="(interval, index) in intervals" :key="index">
-            {{interval.fromDate|shortdate}}-{{interval.toDate|shortdate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+            {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
 
             <span v-if="interval.eventLocation" > -> </span>
             <router-link v-if="interval.eventLocation" class="simple-link" :to="`/map/${interval.eventLocation.slug}`">

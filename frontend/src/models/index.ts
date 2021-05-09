@@ -299,6 +299,22 @@ export namespace CMS {
     get endTimeAsStr(): string{
       return this.dailySchedule.to.toString(); 
     }
+
+    get shortDate(): string{
+      const toShortDate = (value) =>{
+        const d = new Date(value);
+        const result = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+        return result;
+      }
+
+      if(this.fromDate.getDate() == this.toDate.getDate() && 
+        this.fromDate.getMonth() == this.toDate.getMonth() &&
+        this.fromDate.getFullYear() == this.toDate.getFullYear()){
+          return `${toShortDate(this.fromDate)}`;
+        }else{
+          return `${toShortDate(this.fromDate)}-${toShortDate(this.toDate)}`;
+        }
+    }
   }
 
   export class EventWrap
@@ -399,7 +415,7 @@ export namespace CMS {
       }
 
       
-      console.log("current", currentInterval);
+      // console.log("current", currentInterval);
       for(let i = 1; i < this.when.length; i++){
         currentWhen = this.when[i];
 
