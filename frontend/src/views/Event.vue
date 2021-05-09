@@ -257,6 +257,11 @@ export default class Event extends mixins(Translatable) {
       }
     }
 
+    if(this.event.when.length >= 3){
+      const intervals = new CMS.EventWrap(this.event).intervals;
+      console.log("intevals", intervals);
+    }
+
   }
 
   beforeDestroy() {
