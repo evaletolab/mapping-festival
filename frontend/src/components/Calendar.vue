@@ -21,8 +21,7 @@
       <br>
       <h1 class="capitalize" v-if="currentLang=='fr'">
         {{t(elem.dayname)}} {{elem.date}} {{t(elem.monthname)}}
-      </h1>  
-          
+      </h1>      
       <h1 class="capitalize" v-else>
         {{t(elem.dayname)}} {{t(elem.monthname)}} {{elem.date}}th
       </h1>
