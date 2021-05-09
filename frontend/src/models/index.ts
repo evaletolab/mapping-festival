@@ -241,7 +241,7 @@ export namespace CMS {
     // creator:string,    
   }
 
-  class Time{
+  export class Time{
     constructor(
       public readonly hours: number,
       public readonly minutes:number){}
@@ -253,9 +253,13 @@ export namespace CMS {
     public equals(other: Time): boolean{
       return this.hours === other.hours && this.minutes === other.minutes;
     }
+
+    public toString(): string{
+      return `${this.hours.toString().padStart(2, '0')}:${this.minutes.toString().padStart(2, '0')}`;
+    }
   }
 
-  class DailySchedule{
+  export class DailySchedule{
     constructor(public from: Time, public to: Time) {}
 
     public static NewFromWhen(when: When): DailySchedule{
@@ -270,19 +274,31 @@ export namespace CMS {
     }
   }
 
-  class Interval{
+  export class Interval{
     public readonly fromDate: Date;
     public toDate: Date;
     public readonly dailySchedule: DailySchedule;
+    public readonly eventLocation: EventLocation | null;
 
     constructor(
       _fromDate: Date,
       _toDate: Date,
-      _dailySchedule: DailySchedule){
+      _dailySchedule: DailySchedule,
+      _eventLocation: EventLocation | null)
+    {
         this.fromDate = new Date(_fromDate.getTime());
         this.toDate = new Date(_toDate.getTime());
         this.dailySchedule = _dailySchedule;
-      }
+        this.eventLocation = _eventLocation;
+    }
+
+    get startTimeAsStr(): string{
+      return this.dailySchedule.from.toString(); 
+    }
+    
+    get endTimeAsStr(): string{
+      return this.dailySchedule.to.toString(); 
+    }
   }
 
   export class EventWrap
@@ -374,7 +390,7 @@ export namespace CMS {
       const fromDate = currentWhen.start;
       const toDate = currentWhen.end;
       const dailySchedule = DailySchedule.NewFromWhen(currentWhen);
-      let currentInterval = new Interval(fromDate, toDate, dailySchedule);
+      let currentInterval = new Interval(fromDate, toDate, dailySchedule, currentWhen.eventLocation);
 
       const computeNextDay = (date: Date) =>{
         const result = new Date(date.getTime());
@@ -402,7 +418,7 @@ export namespace CMS {
           // check if nextWhen has the same DailySchedule
           const nextWhenDailySchedule = DailySchedule.NewFromWhen(currentWhen);
           // console.log("nextWhenDS", nextWhenDailySchedule, "currentinterval.ds", currentInterval.dailySchedule);
-          if(nextWhenDailySchedule.equals(currentInterval.dailySchedule)){
+          if(nextWhenDailySchedule.equals(currentInterval.dailySchedule) && currentWhen.eventLocation === currentInterval.eventLocation){
             // we are in a continuation of interval
             // we extend currentInterval.toDate
             currentInterval.toDate = new Date(currentWhen.start.getTime());
@@ -424,7 +440,7 @@ export namespace CMS {
             const fromDate = currentWhen.start;
             const toDate = currentWhen.end;
             const dailySchedule = DailySchedule.NewFromWhen(currentWhen);
-            currentInterval = new Interval(fromDate, toDate, dailySchedule);
+            currentInterval = new Interval(fromDate, toDate, dailySchedule, currentWhen.eventLocation);
             // we must still check if we are the last day of the collection
             if(i == this.when.length - 1){
               // console.log("end of collection");
@@ -441,7 +457,7 @@ export namespace CMS {
           const fromDate = currentWhen.start;
           const toDate = currentWhen.end;
           const dailySchedule = DailySchedule.NewFromWhen(currentWhen);
-          currentInterval = new Interval(fromDate, toDate, dailySchedule);
+          currentInterval = new Interval(fromDate, toDate, dailySchedule, currentWhen.eventLocation);
           // we must still check if we are the last day of the collection
           if(i == this.when.length - 1){
             // console.log("end of collection");
