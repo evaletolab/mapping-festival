@@ -1,5 +1,7 @@
 <template>
+
   <div class="spot spiegel margin-top1">
+
     <!-- <Toolbar />
     <div style="height:80px" />
     <PrimaryMenu /> -->
@@ -20,9 +22,23 @@
     </ul>
     <p class="margin-top1" v-html="t(eventLocation.content)"></p>
 
-    <img v-if="eventLocation.cover" :src="eventLocation.cover.sizes.headerimage.path" /> 
+    <!-- 
+      <img v-if="eventLocation.cover" :src="eventLocation.cover.sizes.headerimage.path" /> 
+  -->
+
+      <div v-if="events.length > 0">
+      <h1 class="margin-top2">Events</h1>
+      <div class="grid-container grid-container--fit">
+        <div class="grid-element event" 
+          v-for="event in events" :key="event._id">
+          <event-card :event="event" />
+        </div>
+      </div> 
+    </div>
 
     <div v-if="!!eventLocation.coordinates" class="map-container">
+      <h1 class="margin-top3">Map</h1><br><br>
+
       <MapLibre 
         :startCoordinates="eventLocation.coordinates"
         :interactive="false"
@@ -37,15 +53,7 @@
       </MapLibre>
     </div>
 
-    <div v-if="events.length > 0">
-      <h2 class="margin-top1">Events</h2>
-      <div class="grid-container grid-container--fit">
-        <div class="grid-element event" 
-          v-for="event in events" :key="event._id">
-          <event-card :event="event" />
-        </div>
-      </div> 
-    </div>
+<br><br><br><br><br><br><br><br>
 
   </div>
 </template>

@@ -5,7 +5,7 @@
   <div class="event">
 
     <div class="header hide-sm">
-      <h4 class="tagline  align-right">
+      <h4 class="tagline align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
           <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
       </h4>
@@ -24,45 +24,63 @@
       <section class="header-event spiegel" :style="backgroundImage">    
         <p v-if="date" class="ui-font big align-right ">{{date|shortdate}}</p>
         <br>
-        <p class="ui-font big ">{{t(event.title)}} </p>
+        <h1>{{t(event.title)}}</h1><br>
         <div v-for="artist in artists" :key="artist._id">
-          <p class="ui-font big ">
+          <p class="ui-font big">
             {{artist.fullname}} <sup>{{artist.country}}</sup></p>
         </div>
 
 
         <p class="ui-font align-center">
+          <br><br>
           <!-- {{event.type}} / --> {{event.subType}} <!-- {{t(event.header)}} --> </p>    
       </section>
 
 
       <!-- ABOUT -->
       <div class="spiegel">
-      <h4 class="width5 margin-top1">
-        <div class="item" v-for="(when,index) in event.when" :key="index">
-          {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
+      <h4 class="width6 indent2 margin-top1">
 
-          <span v-if="eventLocation" > -> </span>
+
+        <!-- Price and public admittance limit -->
+
+        <!-- <div class="item"></div> -->
+        <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
+        <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
+      </h4>
+
+
+      <p class="indent2" v-if="event.ticketUrl">
+        <a :href="event.ticketUrl">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
+      </p>
+      </div>
+
+      <br>
+
+      <div class="spiegel" v-html="t(event.content)"></div>
+
+      <!--
+      <p v-if="event.notes" v-html="t(event.notes)" />
+      -->
+
+      <!-- Datesssss -->
+
+      <div class="spiegel">
+
+        <h5 class="indent2 width6 margin-top1">
+
+        <div class="" v-for="(when,index) in event.when" :key="index">
+
+          {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
+          <span v-if="eventLocation" >  --->  </span>
           <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
             {{t(eventLocation.name)}}
           </router-link>
 
         </div>
-        <!--
-        <div class="item"></div> -->
-        <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
-        <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
-      </h4>
+      </h5>
+
       </div>
-
-
-      <div class="spiegel" v-html="t(event.content)"></div>
-
-      <p v-if="event.ticketUrl">
-        <a :href="event.ticketUrl">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
-      </p>
-
-      <p v-if="event.notes" v-html="t(event.notes)" />
 
 
       <div class="spiegel">
@@ -72,10 +90,12 @@
         </div> -->
         
         <div v-if="artists.length > 0">
-          <h2>Artists</h2>
+          <h1 class="margin-top3">Artists</h1>
           <div v-for="artist in artists" :key="artist._id">
-            <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450/000000/000000'">
-            <h2>{{artist.fullname}}<sup>{{artist.country}}</sup></h2>
+            <br>
+            <img class="image image-align-left width8 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450/000000/000000'">
+            <h2>{{artist.fullname}}<!--<sup>{{artist.country}}</sup>--></h2>
+            <br>
             <div v-html="t(artist.content)" />
           </div>
         </div>
@@ -118,7 +138,7 @@
 
         </div>
       </div>
-      <br><br><br><br>
+      <br><br><br><br><br><br>
     </div>
   </div>
   

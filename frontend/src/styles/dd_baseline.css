@@ -388,6 +388,10 @@ h5{  /*  notes et addendum */
   margin-top: -1px;
 }
 
+.capitalize{
+  text-transform:capitalize;
+}
+
 .prule{
   width:100%;
   height: 0px;
