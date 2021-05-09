@@ -80,11 +80,11 @@
           </div>
           <div v-else>
             <div class="interval" v-for="(interval, index) in intervals" :key="index">
-              
+
               {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
               <span v-if="eventLocation" >  --->  </span>
-              <router-link v-if="interval.eventLocation" class="simple-link" :to="`/map/${interval.eventLocation.slug}`">
-                {{t(interval.eventLocation.name)}}
+              <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
+                {{t(eventLocation.name)}}
               </router-link>
             </div>
           </div>
