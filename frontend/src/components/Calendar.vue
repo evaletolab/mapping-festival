@@ -323,7 +323,7 @@ export default class Calendar extends mixins(Translatable)  {
       this.lastScrollTop = st <= 0 ? 0 : st; 
     }, false);
 
-    setTimeout(()=>this.onToday(),1000);
+    // setTimeout(()=>this.onToday(),1000);
   }
 
 
