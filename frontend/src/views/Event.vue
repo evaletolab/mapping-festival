@@ -69,7 +69,7 @@
 
 
       <p class="indent2" v-if="event.ticketUrl">
-        <a :href="event.ticketUrl">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
+        <a :href="event.ticketUrl" target="_blank">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
       </p>
       </div>
 
