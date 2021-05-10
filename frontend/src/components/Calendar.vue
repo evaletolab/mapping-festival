@@ -337,6 +337,7 @@ export default class Calendar extends mixins(Translatable)  {
 
 
   async onAll(){
+    this.mppngTVFilter = false;
     this.$router.replace({ query: { selected: 'all' }}).catch(()=>{});    
   }
   
@@ -389,12 +390,16 @@ export default class Calendar extends mixins(Translatable)  {
         cat.selected = (cat.name.toLowerCase() === label);
       });     
       this.selected = label;
-      console.log("selected has changed to ", this.selected);
+      // console.log("selected has changed to ", this.selected);
     }else{
+      // console.log("selected not set --------------------- ");
       this.selected = 'all';
+      this.eventTypes.forEach(type => type.selected = false);   
+      this.mppngTVFilter = false;
     }
     this.$emit('calendar-update',this.selected);
-    this.isAll = !this.eventTypes.some(type => type.selected==true);
+    this.isAll = !this.eventTypes.some(type => type.selected==true) && !this.mppngTVFilter;
+    console.log(this.isAll);
   }
 
 }
