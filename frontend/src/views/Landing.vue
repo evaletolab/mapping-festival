@@ -18,7 +18,7 @@
       </div>
 
       <div class="destination hide-sm">
-        Program
+        
       </div>
 
     </div>

@@ -24,7 +24,7 @@ class EventService
 
     eventIsOfSpecialTypeLive(event: CMS.Event){
         const result = event.type == "Masterclass" || event.type == "Performance" ||
-        event.type == "Workshop" || event.type == "mppngTV";
+        event.type == "Workshop";
 
         return result;
     }

@@ -6,6 +6,9 @@
           :class="{'selected':menu.selected}" 
           :key="index"
           @click="onEventCategory(menu.name)" >{{getTypeLabel(menu.name)}}</a>
+        <a :class="{'selected':mppngTVFilter}"  @click="onMppngTV">
+          mappingTV
+        </a>
         <!-- <a class="today" @click="onToday">today</a>           -->
     </section>
     <section v-if="gotop" class="gotop" @click="onTop"
@@ -188,7 +191,12 @@ export default class Calendar extends mixins(Translatable)  {
   private now = Date.now();
   private isAll = true;
   private lastScrollTop = 0;
+
+  mppngTVFilter = false;
   scrollDirection = 0;
+
+
+  mppngTVLabel = "mappingTV";
 
   
   @Prop() readonly limit!: boolean;
@@ -200,7 +208,8 @@ export default class Calendar extends mixins(Translatable)  {
   get events() {
     const label = (this.selected||'').toLowerCase();
 
-    const key = `events_${label}`;
+    const key = `events_${label} ${this.mppngTVFilter}`;
+    console.log('---- key',key)
 
     if(this.cache[key]){
       return this.cache[key]
@@ -208,7 +217,7 @@ export default class Calendar extends mixins(Translatable)  {
 
     return this.cache[key] = $cms.cms.events.filter(event => {
       // if "all"
-      // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation 
+      // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation       
       if(!label || label == '' || label == 'all'){
         return event;
       }
@@ -218,7 +227,7 @@ export default class Calendar extends mixins(Translatable)  {
       // console.log("event type", event.type.toLowerCase(), "selected", this.selected);
       // console.log("filterPredicate", filterPredicate);
       return filterPredicate;
-    });
+    }).filter(event =>  !this.mppngTVFilter || event.subType == this.mppngTVLabel);
   }
 
   get currentLang(): string{
@@ -230,7 +239,7 @@ export default class Calendar extends mixins(Translatable)  {
   get calendar(): CMS.Calendar[] {
     const label = this.selected||'all';
 
-    const key = `calendar_${label}`
+    const key = `calendar_${label} ${this.mppngTVFilter}`
 
     //
     // local cache
@@ -313,6 +322,8 @@ export default class Calendar extends mixins(Translatable)  {
       // For Mobile or negative scrolling
       this.lastScrollTop = st <= 0 ? 0 : st; 
     }, false);
+
+    setTimeout(()=>this.onToday(),1000);
   }
 
 
@@ -338,8 +349,12 @@ export default class Calendar extends mixins(Translatable)  {
     element.scrollIntoView({ behavior: 'smooth' });
   }
 
-  async onToday($event) {
-    $event.stopPropagation();
+  async onMppngTV() {
+    this.mppngTVFilter = !this.mppngTVFilter;
+  }
+
+  async onToday($event?) {
+    $event && $event.stopPropagation();
     //
     // FIXME, for testing only
     const dest = this.calendar[3] || this.calendar[0];
