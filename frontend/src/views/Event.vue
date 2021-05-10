@@ -22,7 +22,25 @@
 
       <!-- HEADER -->
       <section class="header-event spiegel text-shadow" :style="backgroundImage">    
-        <p v-if="date" class="ui-font big align-right text-shadow">{{date|shortdate}}</p>
+       
+        <!-- <p v-if="date" class="ui-font big align-right text-shadow">{{date|shortdate}}</p> -->
+
+
+
+          <!------------- Nice dates ----------->
+          <div v-if="event.when.length < 2" >
+            <div class="ui-font big align-right text-shadow" v-for="(when,index) in event.when" :key="index">
+            {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
+            </div>
+          </div>
+          <div v-else>
+            <div class="interval ui-font big align-right text-shadow" v-for="(interval, index) in intervals" :key="index">
+              {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+            </div>
+          </div>
+          <!-- ------------------------------- -->
+
+
         <br>
         <h1>{{t(event.title)}}</h1><br>
         <div v-for="artist in artists" :key="artist._id">
@@ -56,14 +74,16 @@
       </div>
 
       <br>
-      <p class="indent2 width5" v-html="t(event.header)" /> 
-      <div class="spiegel" v-html="t(event.content)"></div>
+      <div class="spiegel">
+        <p class="indent2 width5" v-html="t(event.header)"></p> 
+        <div v-html="t(event.content)"/>
+      </div>
 
       <!--
       <p v-if="event.notes" v-html="t(event.notes)" />
       -->
 
-      <!-- Datesssss -->
+      <!-- Dates -->
 
       <div class="spiegel">
 

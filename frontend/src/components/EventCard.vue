@@ -5,8 +5,8 @@
         <div class="description"> 
           <div class="text event-title">{{ t(event.title) }}</div>
           <div v-for="artist in artists" :key="artist._id">
-            <div class="text artistname">{{artist.fullname}}</div>
-            <div class="text artist-country">{{artist.country}}</div>
+            <div class="text artistname">{{artist.fullname}} </div>
+            <div class="text artist-country">&#8239;{{artist.country}}</div>
           </div>
           <div v-if="location" class="text event-location">{{t(location)}}</div>
           <div v-if="timeStartAndEnd" class="text event-date">{{timeStartAndEnd}}</div>
