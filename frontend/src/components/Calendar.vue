@@ -203,14 +203,13 @@ export default class Calendar extends mixins(Translatable)  {
     const key = `events_${label}`;
 
     if(this.cache[key]){
-      console.log("returning cached data", `events_${label}`);
       return this.cache[key]
     }
 
     return this.cache[key] = $cms.cms.events.filter(event => {
       // if "all"
       // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation 
-      if(!label || label == '' || label == 'all' && $event.eventIsOfSpecialTypeLive(event)){
+      if(!label || label == '' || label == 'all'){
         return event;
       }
 
