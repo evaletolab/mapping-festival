@@ -208,10 +208,13 @@ export default class Calendar extends mixins(Translatable)  {
   get events() {
     const label = (this.selected||'').toLowerCase();
 
-    const key = `events_${label} ${this.mppngTVFilter}`;
+    // const key = `events_${label} ${this.mppngTVFilter}`;
+    const key = `events_${label}`;
+
     console.log('---- key',key)
 
     if(this.cache[key]){
+      console.log("events in cache");
       return this.cache[key]
     }
 
@@ -219,15 +222,21 @@ export default class Calendar extends mixins(Translatable)  {
       // if "all"
       // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation       
       if(!label || label == '' || label == 'all'){
-        return event;
+        console.log("all");
+        return true;
       }
 
-      const filterPredicate = (event.type||'').toLowerCase() == this.selected;
 
-      // console.log("event type", event.type.toLowerCase(), "selected", this.selected);
-      // console.log("filterPredicate", filterPredicate);
-      return filterPredicate;
-    }).filter(event =>  !this.mppngTVFilter || event.subType == this.mppngTVLabel);
+      if(label === this.mppngTVLabel.toLowerCase()){
+        console.log("we are mapping tv");
+        return event.subType === this.mppngTVLabel;
+      }else{
+        const filterPredicate = (event.type||'').toLowerCase() == this.selected;
+        return filterPredicate;
+      }
+
+    });
+    // .filter(event =>  !this.mppngTVFilter || event.subType == this.mppngTVLabel);
   }
 
   get currentLang(): string{
@@ -239,7 +248,7 @@ export default class Calendar extends mixins(Translatable)  {
   get calendar(): CMS.Calendar[] {
     const label = this.selected||'all';
 
-    const key = `calendar_${label} ${this.mppngTVFilter}`
+    const key = `calendar_${label} ${this.mppngTVFilter}`;
 
     //
     // local cache
@@ -333,7 +342,13 @@ export default class Calendar extends mixins(Translatable)  {
   
   async onEventCategory(name) {
     const label = (name||'all').toLowerCase();
+    this.mppngTVFilter = false;
     this.$router.replace({ query: { selected: label }}).catch(()=>{});    
+  }
+
+  async onMppngTV() {
+    this.mppngTVFilter = !this.mppngTVFilter;
+    this.$router.replace({ query: { selected: "mappingTV" }}).catch(()=>{});    
   }
 
   async onEvent(event: CMS.Event) {
@@ -349,9 +364,6 @@ export default class Calendar extends mixins(Translatable)  {
     element.scrollIntoView({ behavior: 'smooth' });
   }
 
-  async onMppngTV() {
-    this.mppngTVFilter = !this.mppngTVFilter;
-  }
 
   async onToday($event?) {
     $event && $event.stopPropagation();
@@ -369,6 +381,10 @@ export default class Calendar extends mixins(Translatable)  {
   async onRouteUpdate(to) {
     const label = this.$route.query.selected as string;
     if(label) {
+      if(label === this.mppngTVLabel){
+        console.log("filter is true");
+        this.mppngTVFilter = true;
+      }
       this.eventTypes.forEach(cat => {
         cat.selected = (cat.name.toLowerCase() === label);
       });     
