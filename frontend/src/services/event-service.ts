@@ -4,6 +4,13 @@ import { CMS } from "@/models";
 
 class EventService
 {
+
+    allSorted() : CMS.Event[]{
+        const result = $cms.events.slice();
+
+        return result.sort((a, b) => a.title.en.localeCompare(b.title.en));
+    }
+
     eventWithSlug(slug: string): CMS.Event | null {
         return $cms.events.find(e => e.slug === slug) || null;
     }
