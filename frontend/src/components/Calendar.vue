@@ -241,7 +241,6 @@ export default class Calendar extends mixins(Translatable)  {
 
   get currentLang(): string{
     const result = $i18n.lang;
-    console.log("result", result);
     return result;
   }
 

@@ -528,6 +528,12 @@ export namespace CMS {
     letterId: string;
     artists: Artist[];
   }
+  
+  export interface EventSetByType
+  {
+    type: string;
+    events: Event[];
+  }
 
   export interface Page {
     _id: string,

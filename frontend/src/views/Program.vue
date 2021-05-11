@@ -25,15 +25,21 @@
     </section>
 
 
-    <router-link to="/program/Collection virtuelle">test</router-link>
+    <router-link to="/program/Collection%20virtuelle">test</router-link>
 
-    <div class="content spiegel margin-top1" >
-      
+    <div v-if="filter == 'Collection virtuelle'" class="content spiegel margin-top1" >
       <div class="grid day-wrapper " v-for="event in events" :key="event._id" :id="event._id">
         <div class="grid-container grid-container--fit">
           <event-card :event="event" />
         </div> 
       </div> 
+    </div>
+    <div v-else class="content spiegel margin-top1" >
+      <div v-for="eventSet in sortedEventSets" :key="eventSet.type">
+        <p class="letter-key">{{t(computeEventTypeTranslation(eventSet.type))}}</p>
+        <event-card v-for="event in eventSet.events" :key="event._id" :event="event" />
+        <hr>
+      </div>
     </div>
 
   </div>
@@ -119,7 +125,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
-import { $config, $event } from '../services';
+import { $config, $event, $i18n } from '../services';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
@@ -161,13 +167,22 @@ export default class Program extends mixins(Translatable)  {
     }
   }
 
-  get events(): CMS.Event[]{
-    let result = $event.allSorted();
+  get currentLang(): string{
+    const result = $i18n.lang;
+    return result;
+  }
 
+  get sortedEventSets(): CMS.EventSetByType[] {
+    return $event.getSetsByLetter(this.currentLang);
+  }
+
+  get events(): CMS.Event[]{
+    let result = $event.all;
 
     console.log("route", this.$router.currentRoute.params);
     if(this.filter == 'Collection virtuelle'){
-      result = result.filter(e => e.type as string == 'Collection virtuelle');
+      result = result.filter(e => e.type as string == 'Collection virtuelle')
+      .sort((a, b) => a.title[this.currentLang].localeCompare(b.title[this.currentLang]));
     }
 
     return result;
@@ -208,6 +223,19 @@ export default class Program extends mixins(Translatable)  {
     document.body.classList.remove('body-scroll');
   }
 
+  computeEventTypeTranslation(eventType: string){
+    if(eventType == 'Collection virtuelle'){
+      return{
+        fr: 'Collection virtuelle',
+        en: 'Virtual Collection',
+      };
+    }else{
+      return {
+        fr: eventType,
+        en: eventType,
+      }
+    }
+  }
 
   async onBack() {
     this.$router.go(-1);
