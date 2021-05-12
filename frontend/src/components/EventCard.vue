@@ -72,7 +72,6 @@ export default class EventCard extends mixins(Translatable) {
 
   get timeStartAndEnd(): string | null{
     if(!this.date){
-      console.log("no date----------------------------------", this.date);
       return null;
     } 
 
