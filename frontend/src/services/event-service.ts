@@ -40,13 +40,14 @@ class EventService
         for(const evt of this.all ){
             if(evt.type in eventMap){
                 eventMap[evt.type].push(evt);
-            }else{
+            }else if(evt.type as string !== 'Collection virtuelle'){
                 eventMap[evt.type] = [evt];
             }
 
         }
 
         const keys = Object.keys(eventMap).sort((a, b) => a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase()));
+        console.log("keys-------", keys);
         for(let key of keys){
             result.push({
                 type: key,

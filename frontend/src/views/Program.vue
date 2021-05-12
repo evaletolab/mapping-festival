@@ -25,7 +25,7 @@
     </section>
 
 
-    <router-link to="/program/Collection%20virtuelle">test</router-link>
+    <!-- <router-link to="/program/Collection%20virtuelle">test</router-link> -->
 
     <div v-if="filter == 'Collection virtuelle'" class="content spiegel margin-top1" >
       <div class="grid day-wrapper " v-for="event in events" :key="event._id" :id="event._id">
@@ -36,7 +36,7 @@
     </div>
     <div v-else class="content spiegel margin-top1" >
       <div v-for="eventSet in sortedEventSets" :key="eventSet.type">
-        <p class="letter-key">{{t(computeEventTypeTranslation(eventSet.type))}}</p>
+        <h1 class="letter-key">{{t(computeEventTypeTranslation(eventSet.type))}}</h1>
         <event-card v-for="event in eventSet.events" :key="event._id" :event="event" />
         <hr>
       </div>

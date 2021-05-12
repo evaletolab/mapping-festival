@@ -31,6 +31,7 @@
     padding-right: 10px;
     padding-left: 10px;
     border: 1px solid var(--font-color);
+    z-index: 3;
 
     background-color: var(--body-color);
   }
