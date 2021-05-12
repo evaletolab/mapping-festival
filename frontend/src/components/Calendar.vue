@@ -211,10 +211,7 @@ export default class Calendar extends mixins(Translatable)  {
     // const key = `events_${label} ${this.mppngTVFilter}`;
     const key = `events_${label}`;
 
-    console.log('---- key',key)
-
     if(this.cache[key]){
-      console.log("events in cache");
       return this.cache[key]
     }
 
@@ -222,21 +219,17 @@ export default class Calendar extends mixins(Translatable)  {
       // if "all"
       // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation       
       if(!label || label == '' || label == 'all' && event.type as string != "Collection virtuelle"){
-        console.log("all");
         return true;
       }
 
 
       if(label === this.mppngTVLabel.toLowerCase()){
-        console.log("we are mapping tv");
         return event.subType === this.mppngTVLabel;
       }else{
         const filterPredicate = (event.type||'').toLowerCase() == this.selected;
         return filterPredicate;
       }
-
     });
-    // .filter(event =>  !this.mppngTVFilter || event.subType == this.mppngTVLabel);
   }
 
   get currentLang(): string{
