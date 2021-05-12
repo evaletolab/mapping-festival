@@ -18,7 +18,7 @@
             </button>          
 
             <!-- NAV HEADER -->
-            <section class="header" @click="onHome">
+            <section class="header pointer" @click="onHome">
               
               <h1 class="width7">mp<br>pngfst<br>vl<br>2051</h1>
 
@@ -69,6 +69,10 @@
 
   .inverted{
     filter: invert(100%);
+  }
+
+  .pointer{
+    cursor: pointer;
   }
 
   .menu-item-xs {
@@ -281,7 +285,7 @@ export default class NavigationDesktop extends mixins(Translatable) {
     if(this.externalLink(link)) {
       window.open(link,'_blank');
     }else {
-      this.$router.push(link);
+      this.$router.push(link).catch(() => {});
     }
   }
   onClose() {
@@ -289,7 +293,7 @@ export default class NavigationDesktop extends mixins(Translatable) {
   }
 
   onHome(){
-    this.$router.push('/');
+    this.$router.push('/').catch(() => {});
   }
 }
 </script>
