@@ -79,8 +79,11 @@ export default class App extends mixins(Translatable) {
   onUpdateAvailable(event){
       this.registration = event.detail
       this.updateExists = true;
-      console.log('---DBG',this.registration);
-      this.onRefreshApp();
+      this.registration.update().then(()=> {
+        window.location.reload(true);
+      });
+
+      //this.onRefreshApp();
   }
 
 
