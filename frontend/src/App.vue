@@ -77,13 +77,14 @@ export default class App extends mixins(Translatable) {
   }
 
   onUpdateAvailable(event){
-      this.registration = event.detail
-      this.updateExists = true;
-      this.registration.update().then(()=> {
-        window.location.reload(true);
-      });
+    this.registration = event.detail
+    this.updateExists = true;
+    this.registration.update().then(()=> {
+      console.log('--DBG pwa update',this.registration);
+      window.location.reload(true);
+    });
 
-      //this.onRefreshApp();
+    this.onRefreshApp();
   }
 
 
