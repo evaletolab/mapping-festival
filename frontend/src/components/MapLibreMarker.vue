@@ -86,7 +86,6 @@ export default class MapLibreEventLocationMarker extends Vue {
     }
 
     get markerUrl(): string{
-        console.log("type---------------", this.eventLocation.type);
         if(this.eventLocation.type == "Standard"){
             return "/map_assets/SpotMarker.svg";
         }else{
@@ -115,7 +114,6 @@ export default class MapLibreEventLocationMarker extends Vue {
 
     onClick(e: any){
         if(!this.clickable) return;
-        console.log("on marker click");
         this.$emit("selectionRequest", this.eventLocation);
     }
 

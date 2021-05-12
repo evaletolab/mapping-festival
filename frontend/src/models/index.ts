@@ -481,7 +481,6 @@ export namespace CMS {
           }
         }
 
-        console.log("----------------------------");
       }
 
       return result;
