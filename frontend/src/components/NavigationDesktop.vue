@@ -18,7 +18,8 @@
             </button>          
 
             <!-- NAV HEADER -->
-            <section class="header">
+            <section class="header" @click="onHome">
+              
               <h1 class="width7">mp<br>pngfst<br>vl<br>2051</h1>
 
               <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
@@ -277,6 +278,10 @@ export default class NavigationDesktop extends mixins(Translatable) {
   }
   onClose() {
     document.body.classList.remove('menu-open');
+  }
+
+  onHome(){
+    this.$router.push('/');
   }
 }
 </script>
