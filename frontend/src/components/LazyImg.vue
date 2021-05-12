@@ -54,7 +54,6 @@ export default class Page extends Vue {
   }
 
   onImgLoaded(){
-    console.log("image loaded", this.src);
     (this.$refs.imgElement as HTMLElement).style.opacity = "1";
   }
 
