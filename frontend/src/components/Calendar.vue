@@ -144,7 +144,7 @@
     width: calc(100% - 1em);
     margin-left: 0.5em;
     border-bottom: 1px solid black;
-    padding-top: 1.9em;        
+    padding-bottom: 1em;        
 
     &:first-child{
     }
@@ -304,6 +304,17 @@ export default class Calendar extends mixins(Translatable)  {
     // };
   }
 
+
+  scrollToTargetAdjusted(element){
+      const headerOffset = 65;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition - headerOffset;
+      window.scrollTo({
+          top: offsetPosition,
+          behavior: "auto"
+      });
+  }  
+
   async mounted(){
     this.selected = this.$route.query.selected as string;
     window.addEventListener("scroll", () => { 
@@ -370,7 +381,7 @@ export default class Calendar extends mixins(Translatable)  {
     if(!element) {
       return;
     }
-    element.scrollIntoView({ });
+    this.scrollToTargetAdjusted(element);
   }  
 
   @Watch('$route', { immediate: true, deep: true })
