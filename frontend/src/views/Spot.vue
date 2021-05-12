@@ -39,18 +39,20 @@
     <div v-if="!!eventLocation.coordinates" class="map-container">
       <h1 class="margin-top3">Map</h1><br><br>
 
-      <MapLibre 
-        :startCoordinates="eventLocation.coordinates"
-        :interactive="false"
-      >
-        <template slot-scope="{map}">
-          <MapLibreMarker 
-            :map="map" 
-            :eventLocation="eventLocation"
-            :coordinates="eventLocation.coordinates"
-          />
-        </template>
-      </MapLibre>
+      <router-link to="/map">
+        <MapLibre 
+          :startCoordinates="eventLocation.coordinates"
+          :interactive="false"
+        >
+          <template slot-scope="{map}">
+            <MapLibreMarker 
+              :map="map" 
+              :eventLocation="eventLocation"
+              :coordinates="eventLocation.coordinates"
+            />
+          </template>
+        </MapLibre>
+      </router-link>
     </div>
 
 <br><br><br><br><br><br><br><br>
