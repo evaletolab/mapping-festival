@@ -6,7 +6,7 @@
           <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
       </h4>
 
-      <div class="destination">
+      <div class="ui-font big destination">
         {{t(title)}}
       </div>
     </div>
