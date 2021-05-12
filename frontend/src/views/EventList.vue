@@ -13,7 +13,7 @@
 
     <!-- TOOLBAR -->
     <toolbar class="hide-lg hide-md" @exited="onToolbarExit"/>
-    <Calendar  gotop="yes" :class="{'exited': toolbarExit}" @calendarUpdate="onCalendarUpdate"/>
+    <Calendar limit="yes" gotop="yes" :class="{'exited': toolbarExit}" @calendarUpdate="onCalendarUpdate"/>
   </div>
 </template>
 
