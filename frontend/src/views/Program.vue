@@ -197,6 +197,9 @@ export default class Program extends mixins(Translatable)  {
   }
 
   mounted(){
+    try{window.scrollTo(0,0);}catch(e){
+      //
+    }
 
     window.addEventListener("scroll", () => { 
       const st = window.pageYOffset || document.documentElement.scrollTop;
