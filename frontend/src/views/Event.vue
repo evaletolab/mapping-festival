@@ -51,7 +51,7 @@
 
         <p class="ui-font align-center">
           <br><br>
-          <!-- {{event.type}} / --> {{event.subType}} <!-- {{t(event.header)}} --> </p>    
+          {{getTypeLabel(event.type)}} / {{event.subType}} </p>    
       </section>
 
 
@@ -237,7 +237,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
-import { $config, $event } from '../services';
+import { $config, $event, $i18n } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
@@ -281,6 +281,11 @@ export default class Event extends mixins(Translatable) {
     return intervals;
   }
 
+
+  getTypeLabel(type) {
+    return $i18n.t(type);
+  }
+  
   // //
   // // get first available date after now
   // get when(){

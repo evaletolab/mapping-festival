@@ -25,7 +25,7 @@
             <!-- ------------------------------- -->
           </div>
           <br>
-          <div class="text event-type">{{event.type}}</div>
+          <div class="text event-type">{{getTypeLabel(event.type)}}</div>
         </div>
     </div>
 </template>
@@ -55,7 +55,7 @@ import { Translatable } from '@/mixins';
 import { mixins } from 'vue-class-component';
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { CMS } from "../models";
-import { $config, $event, $artist } from '../services';
+import { $config, $event, $i18n } from '../services';
 import LazyImg from './LazyImg.vue';
 
 @Component({
@@ -118,6 +118,11 @@ export default class EventCard extends mixins(Translatable) {
     }
   }
 
+
+  getTypeLabel(type) {
+    return $i18n.t(type);
+  }
+  
   navigateToEvent(){
     const queryParams = this.date ? `?when=${this.date.getFullYear()}-${this.date.getMonth() + 1}-${this.date.getDate()}` : '';
     this.$router.push({path: `/events/${this.event.slug}${queryParams}`});

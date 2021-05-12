@@ -57,8 +57,8 @@ class i18nService {
     }
 
     t(key) {
-        if(!$config.config.i18n) {
-            return '';
+        if(!$config.config.i18n || !$config.config.i18n[key]) {
+            return key;
         }
         return $config.config.i18n[key][currentLangStore.lang];
     }
