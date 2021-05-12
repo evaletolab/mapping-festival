@@ -60,6 +60,7 @@ padding: 0;
 display:inline-block;
 font-size: calc(var(--font-size)*1.15);
 line-height: var(--line-height);
+word-break: break-all;
 }
 
 .grid-element .text.artist-country{
