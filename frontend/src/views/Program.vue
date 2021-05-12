@@ -161,8 +161,8 @@ export default class Program extends mixins(Translatable)  {
       };
     } else{
       return {
-        fr: 'Programme',
-        en: "Program",
+        fr: 'Événements',
+        en: "Events",
       };
     }
   }
