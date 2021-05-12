@@ -144,7 +144,7 @@
     width: calc(100% - 1em);
     margin-left: 0.5em;
     border-bottom: 1px solid black;
-    padding-bottom: 1em;        
+    padding-top: 1.9em;        
 
     &:first-child{
     }
@@ -325,7 +325,7 @@ export default class Calendar extends mixins(Translatable)  {
     }, false);
 
     if(this.limit){
-      setTimeout(()=>this.onToday(),1000);
+      setTimeout(()=>this.onToday(),80);
     }
   }
 
@@ -370,7 +370,7 @@ export default class Calendar extends mixins(Translatable)  {
     if(!element) {
       return;
     }
-    element.scrollIntoView({ behavior: 'smooth' });
+    element.scrollIntoView({ });
   }  
 
   @Watch('$route', { immediate: true, deep: true })
