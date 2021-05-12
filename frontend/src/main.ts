@@ -3,9 +3,9 @@
 import '@fortawesome/fontawesome-free/css/all.css'
 
 import Vue from 'vue';
-import './registerServiceWorker';
+// import './registerServiceWorker';
 
-import './registerServiceWorker';
+// import './registerServiceWorker';
 import App from './App.vue';
 import './ts/class-component-hooks.ts';
 import router from './router';
