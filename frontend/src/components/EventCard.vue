@@ -10,6 +10,20 @@
           </div>
           <div v-if="location" class="text event-location">{{t(location)}}</div>
           <div v-if="timeStartAndEnd" class="text event-date">{{timeStartAndEnd}}</div>
+          <div v-else>
+            <!------------- Nice dates ----------->
+            <div v-if="event.when.length < 2" >
+              <div class="text event-date" v-for="(when,index) in event.when" :key="index">
+              {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
+              </div>
+            </div>
+            <div v-else>
+              <div class="text event-date" v-for="(interval, index) in intervals" :key="index">
+                {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+              </div>
+            </div>
+            <!-- ------------------------------- -->
+          </div>
           <br>
           <div class="text event-type">{{event.type}}</div>
         </div>
@@ -72,6 +86,12 @@ export default class EventCard extends mixins(Translatable) {
     }
 
     return null;
+  }
+
+  get intervals(): CMS.Interval[]{
+    const intervals = new CMS.EventWrap(this.event).intervals;
+    console.log("intevals", intervals);
+    return intervals;
   }
 
   get artists(): CMS.ArtistWrap[]{

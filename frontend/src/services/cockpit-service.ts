@@ -192,72 +192,100 @@ class CockpitService {
     return obj;
   }
 
+  handleSpecialCaseCollectionVirtuelle(event: any){
+    console.log("col virt", event.when);
+    const startDate = 13;
+    const endDate = 23;
+    const month = 4; // 5 - 1
+    let day = new Date(2021, 4, startDate);
+    event.when = [];
+    while(day.getDate() <= endDate){
+      const start = new Date(day.getTime());
+      start.setHours(6);
+      const end = new Date(day.getTime());
+      end.setHours(23);
+      end.setMinutes(59);
+      const when = new CMS.When(start, end, false, null);
+      event.when.push(when);
+      day.setDate(day.getDate() + 1);
+    }
+
+    console.log(event.when);
+
+    return event;
+  }
+
   formatEvent(locations, artists, event: any): CMS.Event{
 
     this.formatSlugFromCMS(event);
     this.formatLocalMediaCollection(event);
     this.formatExternalMediaCollection(event);
 
-
-    // if no whens we are invalid
-    if(!event.when || event.when.length == 0){
-      const errorMsg = `event with title <strong>${t(event.title)}</strong> is invalid (has zero whens);`
-      this._diagnosticsLogger.log(errorMsg);
-    }
-
-    // build **when** array
-    event.when = (event.when||[]).map ((w, index) => {
-      const v = w.value;
-      // new Date("2021-05-06T16:25:00+02:00");
-
-      const start = new Date(`${v.startDate}T${v.startHour}:00+02:00`);
-      const end = new Date(`${v.endDate}T${v.endHour}:00+02:00`);
-      const cancel = v.cancel;
-      // console.log(v.startDate, v.startHour, start);
-      // console.log(v.endDate, v.endHour, end);
-      // console.log("-------------------------");
-      
-      // extract eventLocation if present
-      let eventLocation:CMS.EventLocation | null = null;
-      if(v.localisation){
-        const geoId = v.localisation[0]._id;
-        eventLocation = locations.find(e => e._id === geoId) as CMS.EventLocation;
+    if(event.type == 'Collection virtuelle'){
+      this.handleSpecialCaseCollectionVirtuelle(event);
+    }else{
+      // if no whens we are invalid
+      if (!event.when || event.when.length == 0) {
+        const errorMsg = `event with title <strong>${t(event.title)}</strong> is invalid (has zero whens);`
+        this._diagnosticsLogger.log(errorMsg);
       }
 
-      const id = index;
-      {
-        // date validation
+      // build **when** array
+      event.when = (event.when || []).map((w, index) => {
+        const v = w.value;
+        // new Date("2021-05-06T16:25:00+02:00");
 
-        // start is present
-        if(isNaN(start.getTime())) {
-          this._diagnosticsLogger.log(`event with title ${t(event.title)} has invalid start date and/or invalid start time`);
-          // console.log('---FIXME invalid date',event,w)
+        const start = new Date(`${v.startDate}T${v.startHour}:00+02:00`);
+        const end = new Date(`${v.endDate}T${v.endHour}:00+02:00`);
+        const cancel = v.cancel;
+        // console.log(v.startDate, v.startHour, start);
+        // console.log(v.endDate, v.endHour, end);
+        // console.log("-------------------------");
+
+        // extract eventLocation if present
+        let eventLocation: CMS.EventLocation | null = null;
+        if (v.localisation) {
+          const geoId = v.localisation[0]._id;
+          eventLocation = locations.find(e => e._id === geoId) as CMS.EventLocation;
         }
 
-        // end is present
-        if(isNaN(end.getTime())){
-          this._diagnosticsLogger.log(`event with title ${t(event.title)} has invalid end date and/or invalid end time`);
-        }
-        
-        // end is after start 
-        if(!isNaN(start.getTime()) && !isNaN(end.getTime())){
-          if(start.getTime() >= end.getTime()){
-            this._diagnosticsLogger.log(`event with title ${t(event.title)} has ends before is starts`);
+        const id = index;
+        {
+          // date validation
+
+          // start is present
+          if (isNaN(start.getTime())) {
+            this._diagnosticsLogger.log(`event with title ${t(event.title)} has invalid start date and/or invalid start time`);
+            // console.log('---FIXME invalid date',event,w)
+          }
+
+          // end is present
+          if (isNaN(end.getTime())) {
+            this._diagnosticsLogger.log(`event with title ${t(event.title)} has invalid end date and/or invalid end time`);
+          }
+
+          // end is after start 
+          if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+            if (start.getTime() >= end.getTime()) {
+              this._diagnosticsLogger.log(`event with title ${t(event.title)} has ends before is starts`);
+            }
           }
         }
-      }
 
-      return new CMS.When(start, end, cancel, eventLocation);
-    }).filter(w => {
-      //////////////////
-      // remove multiday whens 
-      // i.e. when lasting more than 24 hours
-      const aDayInMinutes = 24 * 60;
-      if(w.duration >= aDayInMinutes){
-        this._diagnosticsLogger.log(`event with title ${t(event.title)} has multi day when (was rejected)`);
-      }
-      return w.duration < aDayInMinutes;
-    });
+        return new CMS.When(start, end, cancel, eventLocation);
+      }).filter(w => {
+        //////////////////
+        // remove multiday whens 
+        // i.e. when lasting more than 24 hours
+        const aDayInMinutes = 24 * 60;
+        if (w.duration >= aDayInMinutes) {
+          this._diagnosticsLogger.log(`event with title ${t(event.title)} has multi day when (was rejected)`);
+        }
+        return w.duration < aDayInMinutes;
+      });
+
+    }
+
 
     event.when.sort((a, b) => a.start.getTime() - b.start.getTime());
 

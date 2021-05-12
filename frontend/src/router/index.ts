@@ -8,6 +8,7 @@ import EventList from '../views/EventList.vue'
 import Landing from '../views/Landing.vue'
 import NotFound from '../views/NotFound.vue'
 import Page from '../views/Page.vue';
+import Program from '../views/Program.vue';
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,11 @@ const routes: Array<RouteConfig> = [
     path: '/events/:event',
     name: 'Event',
     component: Event
+  },
+  {
+    path: '/program/:selected?',
+    name: 'Program',
+    component: Program
   },
   {
     path: '/artists',
