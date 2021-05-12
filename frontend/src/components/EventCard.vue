@@ -89,7 +89,6 @@ export default class EventCard extends mixins(Translatable) {
 
   get intervals(): CMS.Interval[]{
     const intervals = new CMS.EventWrap(this.event).intervals;
-    console.log("intevals", intervals);
     return intervals;
   }
 

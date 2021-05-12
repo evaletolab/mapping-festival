@@ -34,6 +34,7 @@ import NavigationMobile from './components/NavigationMobile.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
+import cfg from '../package.json';
 
 @Component({
   components: {
@@ -60,7 +61,9 @@ export default class App extends mixins(Translatable) {
 
     //
     // update app
-    addEventListener('swUpdated', this.onUpdateAvailable, { once: true })
+    addEventListener('swUpdated', this.onUpdateAvailable, { once: true });
+
+    console.log("version", cfg.version);
 
     this.computeScreenWidth();
   }
