@@ -40,6 +40,16 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
+    <script >
+      //
+      // clear all caches
+      try{
+        caches.keys().then((keys) => {
+        keys.forEach(async (key) => { await caches.delete(key); });
+      });
+
+      }catch(e){console.log(e)}
+    </script>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>      
     </noscript>
