@@ -2,18 +2,26 @@
     <img 
     ref="markerElement"
     :src="markerUrl"
-    class="spot-marker"
     @click.stop="onClick"
-    v-bind:class="{ clickable: clickable }"
+    v-bind:class="{ clickable: clickable, spotmarkerdefault: isDefault, spotmarkerpu: isPu }"
     alt="spot marker"> 
 </template>
 
 <style scoped>
-    .spot-marker
+    .spotmarkerdefault
     {
-        width:84px;
-        height:75px;
+        width: 84px;
+        height: 75px;
         opacity: 0; /* hack to hide marker before load */
+        z-index: 2;
+    }
+    
+    .spotmarkerpu
+    {
+        width: 55px;
+        height: 49px;
+        opacity: 0; /* hack to hide marker before load */
+        z-index: 1;
     }
 
     .spot-marker-current
@@ -69,6 +77,13 @@ export default class MapLibreEventLocationMarker extends Vue {
 
     zIndex = 1;
     marker!: Marker;
+
+    get isDefault(): boolean{
+        return this.eventLocation.type == "Standard";
+    }
+    get isPu(): boolean{
+        return this.eventLocation.type == "Parcours Urbain";
+    }
 
     get markerUrl(): string{
         console.log("type---------------", this.eventLocation.type);
