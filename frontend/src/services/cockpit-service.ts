@@ -193,7 +193,6 @@ class CockpitService {
   }
 
   handleSpecialCaseCollectionVirtuelle(event: any){
-    console.log("col virt", event.when);
     const startDate = 13;
     const endDate = 23;
     const month = 4; // 5 - 1
@@ -209,8 +208,6 @@ class CockpitService {
       event.when.push(when);
       day.setDate(day.getDate() + 1);
     }
-
-    console.log(event.when);
 
     return event;
   }

@@ -47,7 +47,6 @@ class EventService
         }
 
         const keys = Object.keys(eventMap).sort((a, b) => a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase()));
-        console.log("keys-------", keys);
         for(let key of keys){
             result.push({
                 type: key,

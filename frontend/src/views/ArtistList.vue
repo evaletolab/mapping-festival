@@ -161,7 +161,6 @@ export default class ArtistList extends mixins(Translatable)  {
   }
 
   get isMobileView(){
-    console.log("screen width", this.screenWidth);
     return this.screenWidth < 500;
   }
 

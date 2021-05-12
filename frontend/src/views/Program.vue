@@ -258,7 +258,6 @@ export default class Program extends mixins(Translatable)  {
 
   @Watch('$route', { immediate: true, deep: true })
   async onRouteUpdate(to) {
-    console.log("new route", this.$router.currentRoute);
 
     if(this.$router.currentRoute.params.selected == 'Collection virtuelle'){
       this.filter = 'Collection virtuelle';
