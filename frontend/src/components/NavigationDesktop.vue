@@ -26,14 +26,14 @@
             </section>
 
             <!-- NAV PRIMARY CONTENT -->
-            <RouterLink v-for="menu in primaryMenu" :key="menu.link"  @click.native="onClose()" :to="menu.link">
+            <a v-for="menu in primaryMenu" :key="menu.link"  @click="onRoute($event,menu.link)" >
               <div class="ui-button height3 width8 menu"> 
                 <p class="vcenter">{{t(menu.name)}}</p> 
                 <div class="ui-icon vcenter align-right">
                   <img class="inverted" src="/img/svg/dot.svg" alt="">
                 </div>
               </div>
-            </RouterLink>
+            </a>
 
             <!-- SHOULD NEVER USE -->
             <br>
@@ -275,6 +275,14 @@ export default class NavigationDesktop extends mixins(Translatable) {
   // - click on action
   onMenu() {
     document.body.classList.toggle('menu-open');
+  }
+  onRoute($event,link) {
+    document.body.classList.remove('menu-open');
+    if(this.externalLink(link)) {
+      window.open(link,'_blank');
+    }else {
+      this.$router.push(link);
+    }
   }
   onClose() {
     document.body.classList.remove('menu-open');
