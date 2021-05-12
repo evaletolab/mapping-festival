@@ -255,11 +255,11 @@ export default class Calendar extends mixins(Translatable)  {
 
     //
     // only display events after now
-    if (this.limit) {
-      this.cache[key] = this.cache[key].filter(cal=> {
-        return cal._id>=this.now;
-      });
-    }
+    // if (this.limit) {
+    //   this.cache[key] = this.cache[key].filter(cal=> {
+    //     return cal._id>=this.now;
+    //   });
+    // }
 
     console.log("final calendar collection", this.cache[key].length);
 
@@ -324,7 +324,9 @@ export default class Calendar extends mixins(Translatable)  {
       this.lastScrollTop = st <= 0 ? 0 : st; 
     }, false);
 
-    // setTimeout(()=>this.onToday(),1000);
+    if(this.limit){
+      setTimeout(()=>this.onToday(),1000);
+    }
   }
 
 
@@ -360,9 +362,10 @@ export default class Calendar extends mixins(Translatable)  {
 
   async onToday($event?) {
     $event && $event.stopPropagation();
-    //
-    // FIXME, for testing only
-    const dest = this.calendar[3] || this.calendar[0];
+    const now = Date.now();
+  
+    const destIdx = (this.calendar||[]).findIndex(cal => cal.moment >  now);
+    const dest = (destIdx == -1)? this.calendar[0]:this.calendar[destIdx-1];
     const element = document.getElementById(dest._id.toString());
     if(!element) {
       return;

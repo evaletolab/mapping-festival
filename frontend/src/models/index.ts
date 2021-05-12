@@ -518,7 +518,7 @@ export namespace CMS {
   export interface Calendar {
     day: string;
     month: string;
-    __date: Date;
+    moment: number;
     event: Event[];
     _id: number; // copied from When id
   }

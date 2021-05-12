@@ -70,12 +70,12 @@ class CMSService {
         const key = date+'.'+month;
         const _id = when._id + (counter);
         const time = when.startTime;
-        const __date =  new Date(when.start.getTime());
+        const moment =  new Date(when.start.getTime());
         const selector = date + '.' + month;
         const dayname = $config.store.config.time.days[when.start.getDay()];
-        const monthname = $config.store.config.time.months[when.start.getMonth()];
+        const monthname = $config.store.config.time.months[when.start.getMonth()];        
         if(!calendar[key]) {
-          calendar[key] = {_id,selector,time,date,month,events:[],dayname, monthname, __date};          
+          calendar[key] = {_id,selector,time,date,month,events:[],dayname, monthname, moment};          
         }
         event.when = [when];
         calendar[key].events.push(event);
