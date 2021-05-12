@@ -198,7 +198,7 @@
       position: relative;
       height: calc( 100vh / 2 );
       padding: var(--gutter-width);
-      padding-top:  calc(var(--gutter-width)*1.5);
+      padding-top:  calc(var(--gutter-width)*1.25);
       color: white;
 
 

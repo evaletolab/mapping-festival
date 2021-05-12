@@ -23,7 +23,7 @@
   margin: var(--gutter-width) var(--gutter-width) 0 0;
   color: #fff;
   /*border: 1px solid #fff;*/
-  height: 200px;
+  height: 220px;
 
 }
  
@@ -41,6 +41,7 @@ width: auto;
 margin: auto;
 font-weight: 500;
 text-shadow: 0px 0px 20px rgba(0,0,0,0.8);
+
 }
 
 .grid-element .text.event-date{
@@ -67,6 +68,7 @@ display:inline-block;
 font-size: calc(var(--font-size)*.5);
 line-height: var(--line-height);
 transform: translateY(calc(-1 * var(--image-to-x)));
+margin-left: calc(var(--gutter-width) * .25)
 }
 
 .grid-element .text.event-location{
@@ -81,6 +83,12 @@ line-height: var(--line-height);
 /*    position: absolute;
 bottom: 0; */
 
+}
+
+
+
+.event-card{
+  overflow: hidden;
 }
 
 
