@@ -9,7 +9,10 @@
             <div class="text artist-country">&#8239;{{artist.country}}</div>
           </div>
           <div v-if="location" class="text event-location">{{t(location)}}</div>
+
+      <!-- Only end date seems to be shown in calendar view (Check installations)! -->   
           <div v-if="timeStartAndEnd" class="text event-date">{{timeStartAndEnd}}</div>
+
           <div v-else>
             <!------------- Nice dates ----------->
             <div v-if="event.when.length < 2" >
