@@ -15,14 +15,14 @@
 
           <div v-else>
             <!------------- Nice dates ----------->
-            <div v-if="event.when.length < 2" >
-              <div class="text event-date" v-for="(when,index) in event.when" :key="index">
-              {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
+            <div v-if="realEvent.when.length < 2" >
+              <div class="text event-date" v-for="(when,index) in realEvent.when" :key="index">
+              {{when.start|shortdate}} 
               </div>
             </div>
             <div v-else>
               <div class="text event-date" v-for="(interval, index) in intervals" :key="index">
-                {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+                {{interval.shortDate}} 
               </div>
             </div>
             <!-- ------------------------------- -->
@@ -73,25 +73,36 @@ export default class EventCard extends mixins(Translatable) {
     return $config.store.config;
   }
 
-  get timeStartAndEnd(): string | null{
-    if(!this.date){
-      return null;
-    } 
-
+  get realEvent(): CMS.Event {
     const realEvt: CMS.Event = $event.eventWithId(this.event._id) as CMS.Event;
-    const firstWhenOfDate = new CMS.EventWrap(realEvt).getFirstWhenForDate(this.date);
+    return realEvt;
+  }
 
-    if(firstWhenOfDate){
-      return `${firstWhenOfDate.startTime}-${firstWhenOfDate.endTime}`;
-    }else{
-      console.log("no when found for date, event id ", this.date, this.event);
-    }
+  get realWhens(): CMS.When[]{
 
+    return this.realEvent.when;
+  }
+
+  get timeStartAndEnd(): string | null{
     return null;
+    // if(!this.date){
+    //   return null;
+    // } 
+
+    // const firstWhenOfDate = new CMS.EventWrap(this.realEvent).getFirstWhenForDate(this.date);
+
+    // if(firstWhenOfDate){
+    //   return `${firstWhenOfDate.startTime}-${firstWhenOfDate.endTime}`;
+    // }else{
+    //   console.log("no when found for date, event id ", this.date, this.event);
+    // }
+
+    // return null;
   }
 
   get intervals(): CMS.Interval[]{
-    const intervals = new CMS.EventWrap(this.event).intervals;
+    const realEvt: CMS.Event = $event.eventWithId(this.event._id) as CMS.Event;
+    const intervals = new CMS.EventWrap(realEvt).intervals;
     return intervals;
   }
 
