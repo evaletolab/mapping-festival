@@ -195,6 +195,8 @@ export default class Calendar extends mixins(Translatable)  {
   mppngTVFilter = false;
   scrollDirection = 0;
 
+  timeoutID = -1;
+
 
   mppngTVLabel = "mappingTV";
 
@@ -336,10 +338,10 @@ export default class Calendar extends mixins(Translatable)  {
     }, false);
 
     if(this.limit){
-      setTimeout(()=>this.onToday(),80);
+      clearTimeout(this.timeoutID);
+      this.timeoutID = setTimeout(this.onToday, 80);
     }
   }
-
 
   async onAll(){
     this.mppngTVFilter = false;
@@ -373,10 +375,18 @@ export default class Calendar extends mixins(Translatable)  {
 
   async onToday($event?) {
     $event && $event.stopPropagation();
-    const now = Date.now();
-  
-    const destIdx = (this.calendar||[]).findIndex(cal => cal.moment >  now);
-    const dest = (destIdx == -1)? this.calendar[0]:this.calendar[destIdx-1];
+    let today = new Date();
+
+    const findIndex = (today:Date) =>{
+      return (this.calendar||[]).findIndex(cal => {
+        const calDate = new Date(cal.moment);
+        return calDate.getDate() == today.getDate() && calDate.getMonth() == today.getMonth() && calDate.getFullYear() && today.getFullYear();
+      });
+    }    
+
+    // const destIdx = (this.calendar||[]).findIndex(cal => cal.moment >  now);
+    const destIdx = findIndex(today);
+    const dest = (destIdx == -1)? this.calendar[0]:this.calendar[destIdx];
     const element = document.getElementById(dest._id.toString());
     if(!element) {
       return;
@@ -389,7 +399,7 @@ export default class Calendar extends mixins(Translatable)  {
     const label = this.$route.query.selected as string;
     if(label) {
       if(label === this.mppngTVLabel){
-        console.log("filter is true");
+        // console.log("filter is true");
         this.mppngTVFilter = true;
       }
       this.eventTypes.forEach(cat => {
@@ -405,8 +415,8 @@ export default class Calendar extends mixins(Translatable)  {
     }
     this.$emit('calendar-update',this.selected);
     this.isAll = !this.eventTypes.some(type => type.selected==true) && !this.mppngTVFilter;
-    console.log(this.isAll);
   }
+
 
 }
 </script>
