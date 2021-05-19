@@ -43,10 +43,27 @@ class EventService
             }else if(evt.type as string !== 'Collection virtuelle'){
                 eventMap[evt.type] = [evt];
             }
-
         }
 
-        const keys = Object.keys(eventMap).sort((a, b) => a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase()));
+
+        // presentation order
+        // lowest valid weight is 1
+        const sortWeigths = {
+            "Performance": 1,
+            "Installation": 2,
+            "Collection virtuelle": 3,
+            "Masterclass": 4,
+            "mppngTV": 5,
+            "Parcours urbain": 6,
+            "Workshop": 7,
+        };
+
+        const keys = Object.keys(eventMap).sort((a, b) => {
+            const weightA = sortWeigths[a] || 10;
+            const weightB = sortWeigths[b] || 10;
+            return weightA - weightB;
+        });
+        
         for(let key of keys){
             result.push({
                 type: key,
