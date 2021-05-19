@@ -255,15 +255,17 @@ export default class Calendar extends mixins(Translatable)  {
       return a._id - b._id;
     });
 
-    //
+    
     // only display events after now
-    // if (this.limit) {
-    //   this.cache[key] = this.cache[key].filter(cal=> {
-    //     return cal._id>=this.now;
-    //   });
-    // }
-
-    console.log("final calendar collection", this.cache[key].length);
+    // if this.limit
+    {
+      this.cache[key] = this.cache[key].filter(cal=> {
+        const calDate = new Date(cal._id);
+        const today = new Date();
+        return calDate.getDate() >= today.getDate() && calDate.getMonth() >= today.getMonth() && calDate.getFullYear() >= today.getFullYear();
+        // return cal._id>=this.now;
+      });
+    }
 
     return this.cache[key];
   }
@@ -337,10 +339,10 @@ export default class Calendar extends mixins(Translatable)  {
       this.lastScrollTop = st <= 0 ? 0 : st; 
     }, false);
 
-    if(this.limit){
-      clearTimeout(this.timeoutID);
-      this.timeoutID = setTimeout(this.onToday, 80);
-    }
+    // if(this.limit){
+    //   clearTimeout(this.timeoutID);
+    //   this.timeoutID = setTimeout(this.onToday, 80);
+    // }
   }
 
   async onAll(){
