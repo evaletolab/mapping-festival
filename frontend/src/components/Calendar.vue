@@ -281,7 +281,28 @@ export default class Calendar extends mixins(Translatable)  {
       (elems[label.toLowerCase()] = {selected:(label.toLowerCase() === this.selected),name:label})
     });
     
-    return this.cache['eventTypes'] = Object.keys(elems).map(cat => (elems[cat]));
+    // ensure performance is shown first
+    // presentation order
+    // lowest valid weight is 1
+    const sortWeigths = {
+        "Performance": 1,
+        "Installation": 2,
+        "Collection virtuelle": 3,
+        "Masterclass": 4,
+        "mppngTV": 5,
+        "Parcours urbain": 6,
+        "Workshop": 7,
+    };
+
+    this.cache['eventTypes'] = Object.keys(elems)
+    .map(cat => (elems[cat]))
+    .sort((a, b) =>{
+      const weightA = sortWeigths[a.name] || 10;
+      const weightB = sortWeigths[b.name] || 10;
+      return weightA - weightB;
+    });
+
+    return this.cache['eventTypes'];
   }
 
   getTypeLabel(type) {
