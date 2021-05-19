@@ -73,9 +73,10 @@ class CMSService {
         const moment =  new Date(when.start.getTime());
         const selector = date + '.' + month;
         const dayname = $config.store.config.time.days[when.start.getDay()];
-        const monthname = $config.store.config.time.months[when.start.getMonth()];        
+        const monthname = $config.store.config.time.months[when.start.getMonth()];         
+        const eventType = event.type;
         if(!calendar[key]) {
-          calendar[key] = {_id,selector,time,date,month,events:[],dayname, monthname, moment};          
+          calendar[key] = {_id,selector,time,date,month,events:[],dayname, monthname, moment, eventType};          
         }
         event.when = [when];
         calendar[key].events.push(event);
@@ -84,7 +85,24 @@ class CMSService {
     const keys = Object.keys(calendar);
     return keys.map(key => {
       calendar[key].events = calendar[key].events.sort((a,b)=>{
-        return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
+
+        // ensure performance is shown first
+        // presentation order
+        // lowest valid weight is 1
+        const sortWeigths = {
+            "Performance": 1,
+            "Installation": 2,
+            "Collection virtuelle": 3,
+            "Masterclass": 4,
+            "mppngTV": 5,
+            "Parcours urbain": 6,
+            "Workshop": 7,
+        };
+        console.log(a);
+        const weightA = sortWeigths[a.type] || 10;
+        const weightB = sortWeigths[b.type] || 10;
+        return weightA - weightB;
+        // return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
       });
       return calendar[key] as CMS.Calendar;
     })
