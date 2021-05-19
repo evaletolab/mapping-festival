@@ -91,17 +91,22 @@ class CMSService {
         // lowest valid weight is 1
         const sortWeigths = {
             "Performance": 1,
-            "Installation": 2,
+            "Installation": 8,
             "Collection virtuelle": 3,
             "Masterclass": 4,
             "mppngTV": 5,
             "Parcours urbain": 6,
             "Workshop": 7,
         };
-        console.log(a);
         const weightA = sortWeigths[a.type] || 10;
         const weightB = sortWeigths[b.type] || 10;
-        return weightA - weightB;
+        const result = weightA - weightB;
+        if(result == 0){
+          // we are in same category so we want to "sub"sort on title
+          return a.title.fr.toLowerCase().localeCompare(b.title.fr.toLowerCase());
+        }else{
+          return result;
+        }
         // return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
       });
       return calendar[key] as CMS.Calendar;
