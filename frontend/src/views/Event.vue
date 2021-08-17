@@ -3,117 +3,233 @@
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
   <div class="event">
-    <!-- TOOLBAR -->
-    <Toolbar/>
 
-    <!-- HEADER -->
-    <section class="header spiegel" :style="backgroundImage">    
-      <p class="ui-font big align-right ">{{when|shortdate}}</p>    <br><br> 
-      <p class="ui-font big ">{{t(event.title)}}</p>  <br>
-      <p class="ui-font align-center">
-        <!-- {{event.type}} / --> {{event.subType}} <!-- {{t(event.header)}} --> </p>    
-    </section>
+    <div class="header hide-sm">
+      <h4 class="tagline align-right">
+          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
+          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
+      </h4>
 
-    <!-- ABOUT -->
-    <div class="spiegel">
-    <h4 class="width5 indent1 margin-top1">
-      <div class="item" v-for="(when,index) in event.when" :key="index">{{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}</div>
-      <!--
-      <div class="item"></div> -->
-      <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
-      <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
-    </h4>
+      <div class="destination hide">
+        {{t(event.title)}}
+      </div>
     </div>
 
-    <div class="spiegel" v-html="t(event.content)"></div>
+    <!-- TOOLBAR -->
+    <toolbar class="hide-lg hide-md" />
 
-    <div class="spiegel">
-      <h2>Artists</h2>
-      <div v-for="artist in artists" :key="artist._id">
-        <img class="image image-align-left width7 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450'">
-        <h2>{{artist.fullname}}<sup>{{artist.country}}</sup></h2>
-        <div v-html="t(artist.content)" />
-      </div>
+    <div class="content spiegel margin-top1">
 
-      <p v-if="!!when.eventLocation"> 
-          <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
-      </p>
+      <!-- HEADER -->
+      <section class="header-event spiegel text-shadow" :style="backgroundImage">    
+       
+        <!-- <p v-if="date" class="ui-font big align-right text-shadow">{{date|shortdate}}</p> -->
 
-  <!--
-      <h2>{{t({fr:"Horaires", en:"Timetable"})}}</h2>
 
-      <div v-for="when in whens" :key="when.id">
-        <p>{{when.dayOfWeek}} {{when.date}} {{when.month}}</p>
-        <p>{{when.startTime}} - {{when.endTime}}</p>
-        <p v-if="!!when.eventLocation"> 
-          <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
-        </p>
+
+          <!------------- Nice dates ----------->
+          <div v-if="event.when.length < 2" >
+            <div class="ui-font big align-right text-shadow" v-for="(when,index) in event.when" :key="index">
+            {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
+            </div>
+          </div>
+          <div v-else>
+            <div class="interval ui-font big align-right text-shadow" v-for="(interval, index) in intervals" :key="index">
+              {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+            </div>
+          </div>
+          <!-- ------------------------------- -->
+
+
         <br>
+        <h1>{{t(event.title)}}</h1><br>
+        <div v-for="artist in artists" :key="artist._id">
+          <p class="ui-font big">
+            {{artist.fullname}} <sup>{{artist.country}}</sup></p>
+        </div>
+
+
+        <p class="ui-font align-center">
+          <br><br>
+          {{getTypeLabel(event.type)}} / {{event.subType}} </p>    
+      </section>
+
+
+      <!-- ABOUT -->
+      <div class="spiegel">
+      <h4 class="width6 indent2 margin-top1">
+
+
+        <!-- Price and public admittance limit -->
+
+        <!-- <div class="item"></div> -->
+        <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
+        <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
+      </h4>
+
+
+      <p class="indent2" v-if="event.ticketUrl">
+        <a :href="event.ticketUrl" target="_blank">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
+      </p>
       </div>
 
+      <br>
+      <div class="spiegel">
+        <p class="indent2 width5" v-html="t(event.header)"></p> 
+        <div v-html="t(event.content)"/>
+      </div>
+
+      <!--
+      <p v-if="event.notes" v-html="t(event.notes)" />
       -->
 
-      <div v-if="mediaCount > 0">
-        <h4>Medias</h4>
-        <div v-for="media in externalVideos" :key="media.url">
-          <VideoPlayer :externalMedia="media" />
+      <!-- Dates -->
+
+      <div class="spiegel">
+
+        <h5 class="indent2 width6 margin-top1">
+          <div v-if="event.when.length < 2" >
+            <div class="" v-for="(when,index) in event.when" :key="index">
+
+            {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
+            <span v-if="eventLocation" >  --->  </span>
+            <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
+              {{t(eventLocation.name)}}
+            </router-link>
+            </div>
+          </div>
+          <div v-else>
+            <div class="interval" v-for="(interval, index) in intervals" :key="index">
+
+              {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+              <span v-if="eventLocation" >  --->  </span>
+              <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
+                {{t(eventLocation.name)}}
+              </router-link>
+            </div>
+          </div>
+        </h5>
       </div>
 
-      <div v-for="media in externalSoundCloud" :key="media.url">
-        <SoundCloud :track="media.url" :mini="true" />
-      </div>
+
+      <div class="spiegel">
+        <!-- <h2>{{ t({fr: "Lieu", en: "Location"}) }}</h2>
+        <div class="grid">
+          <spot-card v-if="eventLocation" :eventLocation="eventLocation" />
+        </div> -->
         
-      <div v-for="image in localImages" :key="image._id">
-        <img :src="image.sizes.headerimage.path" /> 
-      </div>
+        <div v-if="artists.length > 0">
+          <h1 class="margin-top3">Artists</h1>
+          <div v-for="artist in artists" :key="artist._id">
+            <br>
+            <img class="image image-align-left width8 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450/000000/000000'">
+            <h2>{{artist.fullname}}<!--<sup>{{artist.country}}</sup>--></h2>
+            <br>
+            <div v-html="t(artist.content)" />
+          </div>
+        </div>
 
-      <div v-for="image in externalImages" :key="image._id">
-        <img :src="image.url" /> 
-      </div>
+        <!-- <p v-if="!!when.eventLocation"> 
+            <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
+        </p> -->
 
+    <!--
+        <h2>{{t({fr:"Horaires", en:"Timetable"})}}</h2>
+
+        <div v-for="when in whens" :key="when.id">
+          <p>{{when.dayOfWeek}} {{when.date}} {{when.month}}</p>
+          <p>{{when.startTime}} - {{when.endTime}}</p>
+          <p v-if="!!when.eventLocation"> 
+            <router-link :to="`/map/${when.eventLocation.slug}`">{{t(when.eventLocation.name)}}</router-link> 
+          </p>
+          <br>
+        </div>
+
+        -->
+
+        <div v-if="mediaCount > 0">
+          <h4>Medias</h4>
+          <div v-for="media in externalVideos" :key="media.url">
+            <VideoPlayer :externalMedia="media" />
+        </div>
+
+        <div v-for="media in externalSoundCloud" :key="media.url">
+          <SoundCloud :track="media.url" :mini="true" />
+        </div>
+          
+        <div v-for="image in localImages" :key="image._id">
+          <img :src="image.sizes.headerimage.path" /> 
+        </div>
+
+        <div v-for="image in externalImages" :key="image._id">
+          <img :src="image.url" /> 
+        </div>
+
+        </div>
       </div>
+      <br><br><br><br><br><br>
     </div>
-      <br><br><br><br>
   </div>
   
 </template>
 
 <style lang="scss" scoped>
 
-  .header{
-    position: relative;
-    height: calc( 100vh / 2 );
-    padding: var(--gutter-width);
-    padding-top:  calc(var(--gutter-width)*1.5);
-    color: white;
-
-
-  .when{
-    position: absolute;
-    right: 30px;
-    top: 20px;
-    font-size: 40px;
-    font-weight: 600;      
-  }
-  .title{
-    position: absolute;
-    left: 20px;
-    top: 70px;
-    font-size: 40px;
-    font-weight: 500;      
-  }
-  .type{
-    position: absolute;
-    bottom: 50px;
-    text-align: center;
-    left: 30%;
-  }
-
-  }
-
   .event{
-    margin-top: 60px;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    color: var(--font-color);
+    margin: 0;
+    z-index: 2;
+    height: 100vh;
+    width: 100%;    
+    margin-top: 0px;
+
+    .content{
+      @media (max-width:425px) {
+        margin-top: 80px;        
+      }
+    }
+
+
+    .header-event{
+      position: relative;
+      height: calc( 100vh / 2 );
+      padding: var(--gutter-width);
+      padding-top:  calc(var(--gutter-width)*1.25);
+      color: white;
+
+
+    .when{
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      font-size: 40px;
+      font-weight: 600;      
+    }
+    .title{
+      position: absolute;
+      left: 20px;
+      top: 70px;
+      font-size: 40px;
+      font-weight: 500;      
+    }
+    .type{
+      position: absolute;
+      bottom: 50px;
+      text-align: center;
+      left: 30%;
+    }
+    }
+
+    .simple-link{
+      text-decoration: none;
+    }
+
   }
+
 
 </style>
 
@@ -121,14 +237,14 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
-import { $config, $event } from '../services';
+import { $config, $event, $i18n } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import VideoPlayer from '../components/VideoPlayer.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
-
 import SoundCloud from 'vue-soundcloud-player';
+import SpotCard from '../components/SpotCard.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -136,32 +252,47 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu, VideoPlayer, SoundCloud
+    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SpotCard
   }
 })
 export default class Event extends mixins(Translatable) {
+
+  date: Date | null = null;
+
   get config(){
     return $config.store.config;
   }
 
   get backgroundImage(){
-    const defaultImg = 'https://via.placeholder.com/450';
+    const defaultImg = 'https://via.placeholder.com/450/000000/000000';
     const cover = this.event.cover as any;
     const image = (cover &&  cover.sizes) ? cover.sizes.headerimage.path:defaultImg;
     return {
       backgroundImage:  'url(' + image + ') ',
       backgroundRepeat: 'no-repeat',
-      backgroundSize :'cover'
+      backgroundSize :'cover',
+      backgroundPosition: '50%'
     };
   }
 
-  //
-  // get first available date after now
-  get when(){
-    const now = Date.now();
-    const find = (this.event.when||[]).find(when => when._id > now );
-    return find ? find.start:null;
+  get intervals(): CMS.Interval[]{
+    const intervals = new CMS.EventWrap(this.event).intervals;
+    console.log("intevals", intervals);
+    return intervals;
   }
+
+
+  getTypeLabel(type) {
+    return $i18n.t(type);
+  }
+  
+  // //
+  // // get first available date after now
+  // get when(){
+  //   const now = Date.now();
+  //   const find = (this.event.when||[]).find(when => when._id > now );
+  //   return find ? find.start:null;
+  // }
 
   mounted(){
     document.body.classList.add('body-scroll');
@@ -170,6 +301,22 @@ export default class Event extends mixins(Translatable) {
       //
     }
     
+    if(this.$router.currentRoute.query.when){
+      const split = (this.$router.currentRoute.query.when as string).split("-");
+      if(split.length == 3){
+        const y = parseInt(split[0]);
+        const m = parseInt(split[1]);
+        const d = parseInt(split[2]);
+
+        if(m >0 && m <= 12){
+          const aDate = new Date(y, m - 1, d);
+          if(!isNaN(aDate.getTime())){
+            this.date = aDate;
+          }
+        }
+      }
+    }
+
 
   }
 
@@ -205,6 +352,10 @@ export default class Event extends mixins(Translatable) {
   
   get event(): CMS.Event {
     return $event.eventWithSlug(this.$route.params.event) as CMS.Event;
+  }
+
+  get eventLocation(): CMS.EventLocation | null{
+    return new CMS.EventWrap(this.event).eventLocation;
   }
 
   get artists(): CMS.ArtistWrap[]{

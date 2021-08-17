@@ -9,7 +9,7 @@
           <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
       </h4>
 
-      <div class="destination">
+      <div class="ui-font big destination">
         Artists
       </div>
     </div>
@@ -161,7 +161,6 @@ export default class ArtistList extends mixins(Translatable)  {
   }
 
   get isMobileView(){
-    console.log("screen width", this.screenWidth);
     return this.screenWidth < 500;
   }
 

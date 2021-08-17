@@ -1,5 +1,7 @@
 <template>
+
   <div class="spot spiegel margin-top1">
+
     <!-- <Toolbar />
     <div style="height:80px" />
     <PrimaryMenu /> -->
@@ -20,25 +22,12 @@
     </ul>
     <p class="margin-top1" v-html="t(eventLocation.content)"></p>
 
-    <img v-if="eventLocation.cover" :src="eventLocation.cover.sizes.headerimage.path" /> 
+    <!-- 
+      <img v-if="eventLocation.cover" :src="eventLocation.cover.sizes.headerimage.path" /> 
+  -->
 
-    <div v-if="!!eventLocation.coordinates" class="map-container">
-      <MapLibre 
-        :startCoordinates="eventLocation.coordinates"
-        :interactive="false"
-      >
-        <template slot-scope="{map}">
-          <MapLibreMarker 
-            :map="map" 
-            :eventLocation="eventLocation"
-            :coordinates="eventLocation.coordinates"
-          />
-        </template>
-      </MapLibre>
-    </div>
-
-    <div v-if="events.length > 0">
-      <h2 class="margin-top1">Events</h2>
+      <div v-if="events.length > 0">
+      <h1 class="margin-top2">Events</h1>
       <div class="grid-container grid-container--fit">
         <div class="grid-element event" 
           v-for="event in events" :key="event._id">
@@ -47,11 +36,35 @@
       </div> 
     </div>
 
+    <div v-if="!!eventLocation.coordinates" class="map-container">
+      <h1 class="margin-top3">Map</h1><br><br>
+
+      <router-link to="/map">
+        <MapLibre 
+          :startCoordinates="eventLocation.coordinates"
+          :interactive="false"
+        >
+          <template slot-scope="{map}">
+            <MapLibreMarker 
+              :map="map" 
+              :eventLocation="eventLocation"
+              :coordinates="eventLocation.coordinates"
+            />
+          </template>
+        </MapLibre>
+      </router-link>
+    </div>
+
+<br><br><br><br><br><br><br><br>
+
   </div>
 </template>
 
 <style lang="scss" scoped>
   .spot{
+    img{
+      width: 100%;
+    }
   }
 
   li{
@@ -99,11 +112,14 @@ export default class Spot extends mixins(Translatable) {
   }
   
   mounted(){
-    document.body.classList.add('body-scroll');
+    // document.body.classList.add('body-scroll');
+    try{window.scrollTo(0,0);}catch(e){
+      //
+    }
   }
 
   beforeDestroy() {
-    document.body.classList.remove('body-scroll');
+    // document.body.classList.remove('body-scroll');
   }
 
   themeTertiary(theme) {

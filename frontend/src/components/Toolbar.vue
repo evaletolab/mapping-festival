@@ -104,7 +104,7 @@
     flex-direction: column;
     justify-content: center;    
 
-    z-index: 4;    
+    z-index: 2;    
     position: fixed;
     top:-70px ;
     left: 0;

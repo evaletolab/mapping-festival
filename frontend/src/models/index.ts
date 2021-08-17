@@ -80,11 +80,11 @@ export namespace CMS {
   }
 
   // export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
-  export const eventTypeLabel = ["Installation", "Performance", "Workshop", "Masterclass", "Collection virtuelle", "Parcours urbain", "mppngTV"] as const;
+  export const eventTypeLabel = ["Installation", "Performance", "Workshop", "Masterclass"] as const;
   export type eventType = typeof eventTypeLabel[number];
 
-  const _eventSubType = ["Parcours urbain", "Exposition", "Performance", "Nighclubbing", "Concert", "Workshop", "Table ronde", "Masterclass", "mappingTV"] as const;
-  export type  eventSubType = typeof _eventSubType[number];
+  export const eventSubTypeLabel = ["Parcours urbain", "Exposition", "Performance", "Nighclubbing", "Concert", "Workshop", "Table ronde", "Masterclass", "mappingTV"] as const;
+  export type  eventSubType = typeof eventSubTypeLabel[number];
 
   export type EventLocationType = "Standard" | "Parcours Urbain";
   
@@ -227,6 +227,7 @@ export namespace CMS {
     when: When[],
     price: number,
     limit: number,
+    ticketUrl: string | null,
     artists:[{
       lastname: string,
       slug: string,
@@ -238,6 +239,82 @@ export namespace CMS {
     created: Date,
     // signature:string,
     // creator:string,    
+  }
+
+  export class Time{
+    constructor(
+      public readonly hours: number,
+      public readonly minutes:number){}
+
+    public static NewFromDate(date:Date): Time {
+      return new Time(date.getHours(), date.getMinutes());
+    }
+
+    public equals(other: Time): boolean{
+      return this.hours === other.hours && this.minutes === other.minutes;
+    }
+
+    public toString(): string{
+      return `${this.hours.toString().padStart(2, '0')}:${this.minutes.toString().padStart(2, '0')}`;
+    }
+  }
+
+  export class DailySchedule{
+    constructor(public from: Time, public to: Time) {}
+
+    public static NewFromWhen(when: When): DailySchedule{
+      return new DailySchedule(
+        Time.NewFromDate(when.start),
+        Time.NewFromDate(when.end),
+      );
+    }
+
+    public equals(other: DailySchedule): boolean{
+      return this.from.equals(other.from) && this.to.equals(other.to);
+    }
+  }
+
+  export class Interval{
+    public readonly fromDate: Date;
+    public toDate: Date;
+    public readonly dailySchedule: DailySchedule;
+    public readonly eventLocation: EventLocation | null;
+
+    constructor(
+      _fromDate: Date,
+      _toDate: Date,
+      _dailySchedule: DailySchedule,
+      _eventLocation: EventLocation | null)
+    {
+        this.fromDate = new Date(_fromDate.getTime());
+        this.toDate = new Date(_toDate.getTime());
+        this.dailySchedule = _dailySchedule;
+        this.eventLocation = _eventLocation;
+    }
+
+    get startTimeAsStr(): string{
+      return this.dailySchedule.from.toString(); 
+    }
+    
+    get endTimeAsStr(): string{
+      return this.dailySchedule.to.toString(); 
+    }
+
+    get shortDate(): string{
+      const toShortDate = (value) =>{
+        const d = new Date(value);
+        const result = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+        return result;
+      }
+
+      if(this.fromDate.getDate() == this.toDate.getDate() && 
+        this.fromDate.getMonth() == this.toDate.getMonth() &&
+        this.fromDate.getFullYear() == this.toDate.getFullYear()){
+          return `${toShortDate(this.fromDate)}`;
+        }else{
+          return `${toShortDate(this.fromDate)}-${toShortDate(this.toDate)}`;
+        }
+    }
   }
 
   export class EventWrap
@@ -301,21 +378,146 @@ export namespace CMS {
       return this._event.created;
     }
 
-    get location(): {fr: string, en:string} | null{
-      let result = null;      
+    get eventLocation(): EventLocation | null{
       for(const w of this.when){
         if(w.eventLocation){
-          return w.eventLocation.name;
+          return w.eventLocation;
         }
+      }
+
+      return null;
+    }
+
+    get location(): {fr: string, en:string} | null{
+      if(this.eventLocation) {
+        return this.eventLocation.name;
+      }else{
+        return null;
+      }
+    }
+
+    get intervals(): Interval[]{
+      let result: Interval[] = [];
+
+      if(this.when.length < 1) return result;
+
+      // assumes this.when is sorted
+      let currentWhen = this.when[0];
+      const fromDate = currentWhen.start;
+      const toDate = currentWhen.end;
+      const dailySchedule = DailySchedule.NewFromWhen(currentWhen);
+      let currentInterval = new Interval(fromDate, toDate, dailySchedule, currentWhen.eventLocation);
+
+      const computeNextDay = (date: Date) =>{
+        const result = new Date(date.getTime());
+        result.setDate(date.getDate() + 1);
+        return result;
+      }
+
+      
+      // console.log("current", currentInterval);
+      for(let i = 1; i < this.when.length; i++){
+        currentWhen = this.when[i];
+
+        // check if nextWhen belongs to currentInterval
+        // is next when the day after currentWhen ?
+        const nextDay = computeNextDay(currentInterval.toDate);
+        
+        // console.log("currentWhen", currentWhen, nextDay);
+        
+        if(nextDay.getDate() == currentWhen.start.getDate() && 
+          nextDay.getMonth() == currentWhen.start.getMonth() &&
+          nextDay.getFullYear() == currentWhen.start.getFullYear())
+        {
+          // we have asserted that nextWhen is one day after currentInterval.toDate
+
+          // check if nextWhen has the same DailySchedule
+          const nextWhenDailySchedule = DailySchedule.NewFromWhen(currentWhen);
+          // console.log("nextWhenDS", nextWhenDailySchedule, "currentinterval.ds", currentInterval.dailySchedule);
+          if(nextWhenDailySchedule.equals(currentInterval.dailySchedule) && currentWhen.eventLocation === currentInterval.eventLocation){
+            // we are in a continuation of interval
+            // we extend currentInterval.toDate
+            currentInterval.toDate = new Date(currentWhen.start.getTime());
+            // console.log("extend interval, currentInterval.toDate = ", currentInterval.toDate);
+
+            
+            // we must still check if we are the last day of the collection
+            if(i == this.when.length - 1){
+              // console.log("end of collection");
+              result.push(currentInterval);
+            }
+          }else{
+            // start A new Interval
+            // 1 push currentInterval in result
+            // console.log("continuation broken", currentWhen);
+            result.push(currentInterval);
+
+            // 2 define new currentInterval
+            const fromDate = currentWhen.start;
+            const toDate = currentWhen.end;
+            const dailySchedule = DailySchedule.NewFromWhen(currentWhen);
+            currentInterval = new Interval(fromDate, toDate, dailySchedule, currentWhen.eventLocation);
+            // we must still check if we are the last day of the collection
+            if(i == this.when.length - 1){
+              // console.log("end of collection");
+              result.push(currentInterval);
+            }
+          }
+        }else{
+          // start A new Interval
+          // 1 push currentInterval in result
+          // console.log("continuation broken", currentWhen);
+          result.push(currentInterval);
+
+          // 2 define new currentInterval
+          const fromDate = currentWhen.start;
+          const toDate = currentWhen.end;
+          const dailySchedule = DailySchedule.NewFromWhen(currentWhen);
+          currentInterval = new Interval(fromDate, toDate, dailySchedule, currentWhen.eventLocation);
+          // we must still check if we are the last day of the collection
+          if(i == this.when.length - 1){
+            // console.log("end of collection");
+            result.push(currentInterval);
+          }
+        }
+
       }
 
       return result;
     }
+
+    getFirstWhenForDate(date: Date): When | null{
+      if(!date) return null;
+      if(isNaN(date.getTime())) return null;
+
+      const targetYear = date.getFullYear();
+      const targetMonth = date.getMonth();
+      const targetDate = date.getDate();
+
+      const whens = this.when.filter(w => {
+        if(w.start.getFullYear() == targetYear &&
+          w.start.getMonth() == targetMonth &&
+          w.start.getDate() == targetDate ){
+            return true;
+          }else{
+            return false;
+          }
+      });
+
+      if(whens.length > 0){
+        return whens.sort((a: When,b: When) => a.start.getTime() - b.start.getTime())[0];
+
+      }else{
+        return null;
+      }
+    }
+
   }
 
   export interface Calendar {
     day: string;
     month: string;
+    moment: number;
     event: Event[];
     _id: number; // copied from When id
   }
@@ -324,6 +526,12 @@ export namespace CMS {
   {
     letterId: string;
     artists: Artist[];
+  }
+  
+  export interface EventSetByType
+  {
+    type: string;
+    events: Event[];
   }
 
   export interface Page {
@@ -449,7 +657,7 @@ export namespace CMS {
     
     private __computeDayIfDayStartsAt(date: Date, startingHour: number): Date{
 
-      if(date.getHours() >= startingHour){
+      if(date.getHours() >= startingHour || date.getHours() == 0 && date.getMinutes() == 0){
         return date;
       }else{
         const oneDayMillis =  60 * 60 * 24 * 1000;
