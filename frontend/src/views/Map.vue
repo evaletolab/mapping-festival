@@ -11,6 +11,10 @@
         v-on:loaded="onMapLoaded"
       >
         <template slot-scope="{map}">
+          <toggle class="toggle" :value="geolocationActive" v-on:change="gpsToggle" />
+        
+          <map-libre-user-marker :map="map" />
+          
           <MapLibreMarker v-for="evtLocation in eventLocationsForMarkers" :key="evtLocation.id"  
             :map="map" 
             :eventLocation="evtLocation"
@@ -53,6 +57,13 @@
     position: relative;
     
   }
+
+  .toggle{
+    position:absolute;
+    top: 10px;
+    left:10px;
+    z-index: 1000;
+  }
 </style>
 
 
@@ -60,15 +71,17 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
-import { $config, $eventLocation } from '../services';
+import { $config, $eventLocation, $geoLocation } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
 import MapLibre from '../components/MapLibre.vue';
 import MapLibreMarker from '../components/MapLibreMarker.vue';
+import MapLibreUserMarker from '../components/MapLibreUserMarker.vue';
 import MapLibrePopup from '../components/MapLibrePopup.vue';
 import MapLibrePopupFix from '../components/MapLibrePopupFix.vue';
+import Toggle from '../components/Toggle.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
@@ -76,13 +89,21 @@ import { getBbox } from '../lib/geoUtils';
 import { mapEventProvider } from '../lib/mapEventProvider';
 
 import { currentLangStore, Lang } from '../services/i18n';
+import { GeolocationEventType } from '@/services/geoLocation-service';
+import Coord from '@/lib/Coord';
 
 
 @Component({
   components: {
-    CMSIcons,Toolbar, PrimaryMenu, MapLibre, MapLibreMarker, MapLibrePopupFix,
-  }
-})
+    CMSIcons, 
+    Toolbar, 
+    PrimaryMenu, 
+    MapLibre, 
+    MapLibreMarker, 
+    MapLibrePopupFix, 
+    MapLibreUserMarker, 
+    Toggle,
+}})
 export default class Map extends mixins(Translatable) {
   startZoom = 12;
   center = [6.140561571463678, 46.203032099805];
@@ -92,6 +113,8 @@ export default class Map extends mixins(Translatable) {
   showPopup = false;
 
   height = 0;
+
+  geolocationActive: boolean = false;
 
   get config(){
     return $config.store.config;
@@ -141,6 +164,13 @@ export default class Map extends mixins(Translatable) {
     document.body.classList.remove('body-scroll');
     window.removeEventListener("resize", this.onResize);
     mapEventProvider.removeListener(this.onMapEvent);
+
+    // {
+    //   // geolocation deinit
+    //   $geoLocation.removeEventListener(GeolocationEventType.started, this.onGeoLocationStarted);
+    //   $geoLocation.removeEventListener(GeolocationEventType.significantCoords, this.onGeoLocationUpdate);
+    //   $geoLocation.removeEventListener(GeolocationEventType.stopped, this.onGeoLocationStopped);
+    // }
   }
   
   computeMapContainerHeight(){
@@ -156,7 +186,18 @@ export default class Map extends mixins(Translatable) {
   onMapLoaded(map:Map){
     console.log("map is loaded");
     mapEventProvider.addListener(this.onMapEvent);
+
+    this.geolocationActive = $geoLocation.isStarted;
+
+    // {
+    //   // geolocation init
+    //   $geoLocation.addEventListener(GeolocationEventType.started, this.onGeoLocationStarted);
+    //   $geoLocation.addEventListener(GeolocationEventType.significantCoords, this.onGeoLocationUpdate);
+    //   $geoLocation.addEventListener(GeolocationEventType.stopped, this.onGeoLocationStopped);
+    // }
+
   }
+
 
   onMapEvent(evt: any){
     if(evt.type == "click" && this.showPopup){
@@ -188,6 +229,26 @@ export default class Map extends mixins(Translatable) {
     this.showPopup = false;
   }
 
+  gpsToggle(e){
+    const toggled = e.value;
+    console.log("got toggle status", toggled);
+    if(toggled){
+      $geoLocation.start();
+    }else{
+      $geoLocation.stop();
+    }
+  }
+
+  // onGeoLocationStarted(){
+  //   console.log("geolocation service started");
+  // }
+
+  // onGeoLocationUpdate(event){
+  // }
+
+  // onGeoLocationStopped(){
+  //   console.log("geolocation service stopped");
+  // }
 
   async onBack() {
     this.$router.go(-1);

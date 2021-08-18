@@ -56,7 +56,6 @@
     "Parcours urbain":{"en":"Urban Itinary","fr":"Parcours urbain"}, 
     "mppngTV":{"en":"mppngTV","fr":"mppngTV"}
   },
-  "use_fake_geo_location_provider": true,
   "time":{
     "days":[
       {"fr": "dimanche", "en": "sunday"}, 

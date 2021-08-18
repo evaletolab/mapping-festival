@@ -2,7 +2,7 @@ import GeoLocationEngine from '../lib/geolocation/GeoLocationEngine';
 import FakeGeoLocationEngine from '../lib/geolocation/FakeGeoLocationEngine';
 import LocationTween from '../lib/geolocation/locationTween';
 import { BaseEventProvider } from '../lib/geolocation/BaseEventProvider';
-import { GeoLocationMessage, newCoords, newErrorCoords } from '../lib/geolocation/geoLocationMessage';
+import { GeoLocationMessage, newCoords } from '../lib/geolocation/geoLocationMessage';
 import { localStorage, LocalStorageKeys } from '../lib/geolocation/LocalStorage';
 import { $config } from './config-service';
 import { I_Engine } from '@/lib/geolocation/I_GeoEngine';
@@ -13,7 +13,7 @@ export enum LocationServiceState {
     PERMISSION_DENIED = "PERMISSION_DENIED",
     UNSUPPORTED_DEVICE = "UNSUPPORTED_DEVICE",
     WORKING = "WORKING",
-};
+}
 
 export enum GeolocationEventType  {
     locationError = "locationError",
@@ -21,33 +21,34 @@ export enum GeolocationEventType  {
     significantCoords = "significantcoords",
     started = "started",
     stopped = "stopped",
-};
+}
 
 class GeoLocationService extends BaseEventProvider
 {
-
-    private _currentEngine: I_Engine;
+    private _currentEngine!: I_Engine;
     private _tween: LocationTween | null;
     private _fromCoords: CoordData | null;
     private _currentCoords: CoordData | null;
     private _started: boolean = false;
     private _serviceState: LocationServiceState = LocationServiceState.UNKNOWN;
+    private _newCoordsHandler: (e) => void;
+    private _inited: boolean = false;
 
     constructor(){
         super();
-        this._currentEngine = $config.config.use_fake_geo_location_provider ? new FakeGeoLocationEngine() : new GeoLocationEngine();
 
         this._tween = null;
         this._fromCoords = null;
         this._currentCoords = null;
 
+        const useFakeGeoLocationProvider = false;
 
+        this._currentEngine = useFakeGeoLocationProvider ? new FakeGeoLocationEngine() : new GeoLocationEngine();
         this._serviceState = this.__getStateFromLocalStorage();
 
-        // this._newCoordsHandler = this.onNewCoords.bind(this);
-
-        console.log("geo location state at init", this._serviceState);
+        this._newCoordsHandler = this.onNewCoords.bind(this);
     }
+    
 
     __getStateFromLocalStorage(): LocationServiceState{
         const state = localStorage.get(LocalStorageKeys.geo_location_state);
@@ -75,9 +76,9 @@ class GeoLocationService extends BaseEventProvider
         return this._serviceState;
     }
 
-    get currentCoords(): GeoLocationMessage | null{
+    get currentCoords(): CoordData | null{
         if(this._serviceState == LocationServiceState.WORKING && this._currentCoords){
-            return newCoords(this._currentCoords.slice());
+            return this._currentCoords.slice() as CoordData;
         }else {
             return null;
         }
@@ -140,7 +141,7 @@ class GeoLocationService extends BaseEventProvider
 
         this._started = true;
         this._currentEngine.start();
-        this._currentEngine.addListener(this.onNewCoords);
+        this._currentEngine.addListener(this._newCoordsHandler);
         this.provide(GeolocationEventType.started, null);
         console.log("geoLocationManager started");
     }
@@ -152,7 +153,7 @@ class GeoLocationService extends BaseEventProvider
             this._tween.stop();
         }
         this._currentEngine.stop();
-        this._currentEngine.removeListener(this.onNewCoords);
+        this._currentEngine.removeListener(this._newCoordsHandler);
         this._started = false;
         this._fromCoords = null;
         this.provide(GeolocationEventType.stopped, null);

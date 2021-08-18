@@ -47,7 +47,7 @@ export default class GeoLocationEngine extends Provider implements I_Engine
         console.log("new geolocation", p.coords);
 
         this._broadcastValue(newCoords(p.coords));
-    };
+    }
 
     errorHandler(e) {
         // 1 = permission denied
