@@ -1,6 +1,6 @@
 <template>
   <label class="switch">
-    <input :disabled="disabled" type="checkbox" :checked="value"  @change.stop="toggle">
+    <input ref="inputElement" :disabled="disabled" type="checkbox" :checked="value"  @change.stop="toggle">
     <span class="slider round"></span>
   </label>
 </template>
@@ -73,7 +73,7 @@ input:checked + .slider:before {
 <script lang="ts">
 /* eslint-disable */
 
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component
 export default class Toggle extends Vue {
@@ -83,8 +83,6 @@ export default class Toggle extends Vue {
 
   toggle(e){
       const toggled = e.target.checked;
-      console.log("toggle", toggled);
-
       this.$emit('change', { value: toggled });
   }
 

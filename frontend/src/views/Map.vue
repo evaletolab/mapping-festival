@@ -11,7 +11,7 @@
         v-on:loaded="onMapLoaded"
       >
         <template slot-scope="{map}">
-          <toggle class="toggle" :value="geolocationActive" v-on:change="gpsToggle" />
+          <map-libre-geolocation-controls class="geolocation-controls"/>
         
           <map-libre-user-marker :map="map" />
           
@@ -55,10 +55,9 @@
   .map-container{
     width: 100%;
     position: relative;
-    
   }
 
-  .toggle{
+  .geolocation-controls{
     position:absolute;
     top: 10px;
     left:10px;
@@ -81,7 +80,7 @@ import MapLibreMarker from '../components/MapLibreMarker.vue';
 import MapLibreUserMarker from '../components/MapLibreUserMarker.vue';
 import MapLibrePopup from '../components/MapLibrePopup.vue';
 import MapLibrePopupFix from '../components/MapLibrePopupFix.vue';
-import Toggle from '../components/Toggle.vue';
+import MapLibreGeolocationControls from '../components/MapLibreGeolocationControls.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
@@ -89,8 +88,6 @@ import { getBbox } from '../lib/geoUtils';
 import { mapEventProvider } from '../lib/mapEventProvider';
 
 import { currentLangStore, Lang } from '../services/i18n';
-import { GeolocationEventType } from '@/services/geoLocation-service';
-import Coord from '@/lib/Coord';
 
 
 @Component({
@@ -102,7 +99,7 @@ import Coord from '@/lib/Coord';
     MapLibreMarker, 
     MapLibrePopupFix, 
     MapLibreUserMarker, 
-    Toggle,
+    MapLibreGeolocationControls,
 }})
 export default class Map extends mixins(Translatable) {
   startZoom = 12;
@@ -113,8 +110,6 @@ export default class Map extends mixins(Translatable) {
   showPopup = false;
 
   height = 0;
-
-  geolocationActive: boolean = false;
 
   get config(){
     return $config.store.config;
@@ -164,13 +159,6 @@ export default class Map extends mixins(Translatable) {
     document.body.classList.remove('body-scroll');
     window.removeEventListener("resize", this.onResize);
     mapEventProvider.removeListener(this.onMapEvent);
-
-    // {
-    //   // geolocation deinit
-    //   $geoLocation.removeEventListener(GeolocationEventType.started, this.onGeoLocationStarted);
-    //   $geoLocation.removeEventListener(GeolocationEventType.significantCoords, this.onGeoLocationUpdate);
-    //   $geoLocation.removeEventListener(GeolocationEventType.stopped, this.onGeoLocationStopped);
-    // }
   }
   
   computeMapContainerHeight(){
@@ -186,16 +174,6 @@ export default class Map extends mixins(Translatable) {
   onMapLoaded(map:Map){
     console.log("map is loaded");
     mapEventProvider.addListener(this.onMapEvent);
-
-    this.geolocationActive = $geoLocation.isStarted;
-
-    // {
-    //   // geolocation init
-    //   $geoLocation.addEventListener(GeolocationEventType.started, this.onGeoLocationStarted);
-    //   $geoLocation.addEventListener(GeolocationEventType.significantCoords, this.onGeoLocationUpdate);
-    //   $geoLocation.addEventListener(GeolocationEventType.stopped, this.onGeoLocationStopped);
-    // }
-
   }
 
 
@@ -228,27 +206,6 @@ export default class Map extends mixins(Translatable) {
     console.log("popup close request");
     this.showPopup = false;
   }
-
-  gpsToggle(e){
-    const toggled = e.value;
-    console.log("got toggle status", toggled);
-    if(toggled){
-      $geoLocation.start();
-    }else{
-      $geoLocation.stop();
-    }
-  }
-
-  // onGeoLocationStarted(){
-  //   console.log("geolocation service started");
-  // }
-
-  // onGeoLocationUpdate(event){
-  // }
-
-  // onGeoLocationStopped(){
-  //   console.log("geolocation service stopped");
-  // }
 
   async onBack() {
     this.$router.go(-1);

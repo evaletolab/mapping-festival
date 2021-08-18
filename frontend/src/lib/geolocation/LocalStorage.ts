@@ -6,6 +6,7 @@ class LocalStorage{
         try{
             result = window.localStorage.getItem(key);
         }catch(e){
+            return null;
         }
 
         return result;
