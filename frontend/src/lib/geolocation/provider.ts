@@ -21,3 +21,5 @@ export class Provider
         this._broadcastValue(value);
     }
 }
+
+export const flyToProvider = new Provider();

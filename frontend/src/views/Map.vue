@@ -11,9 +11,13 @@
         v-on:loaded="onMapLoaded"
       >
         <template slot-scope="{map}">
-          <map-libre-geolocation-controls class="geolocation-controls"/>
+          <map-libre-geolocation-controls 
+          class="geolocation-controls" 
+          :mapIsReady="mapIsReady"
+          v-on:centerRequest="onCenterRequest"
+          />
         
-          <map-libre-user-marker :map="map" />
+          <map-libre-user-marker :map="map" :mapIsReady="mapIsReady" />
           
           <MapLibreMarker v-for="evtLocation in eventLocationsForMarkers" :key="evtLocation.id"  
             :map="map" 
@@ -88,6 +92,7 @@ import { getBbox } from '../lib/geoUtils';
 import { mapEventProvider } from '../lib/mapEventProvider';
 
 import { currentLangStore, Lang } from '../services/i18n';
+import { flyToProvider } from '../lib/geolocation/provider';
 
 
 @Component({
@@ -107,9 +112,11 @@ export default class Map extends mixins(Translatable) {
 
   selectedEventLocation: CMS.EventLocation | null = null;
 
-  showPopup = false;
+  showPopup: boolean = false;
 
-  height = 0;
+  height: number = 0;
+
+  mapIsReady: boolean = false;
 
   get config(){
     return $config.store.config;
@@ -174,6 +181,7 @@ export default class Map extends mixins(Translatable) {
   onMapLoaded(map:Map){
     console.log("map is loaded");
     mapEventProvider.addListener(this.onMapEvent);
+    this.mapIsReady = true;
   }
 
 
@@ -205,6 +213,17 @@ export default class Map extends mixins(Translatable) {
   onPopupCloseRequest(){
     console.log("popup close request");
     this.showPopup = false;
+  }
+
+  onCenterRequest(){
+    const latest: CMS.Coordinate | null = $geoLocation.currentCoords;
+    if(latest){
+
+      const flyToOptions = {
+        coordinates: latest,
+      }
+      flyToProvider.provide(flyToOptions);
+    }
   }
 
   async onBack() {

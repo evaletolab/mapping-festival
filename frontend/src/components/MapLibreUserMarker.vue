@@ -34,12 +34,16 @@ export default class MapLibreUserMarker extends Vue {
 
   // @InjectReactive() map!: Map;
   @Prop() map!: Map;
-
+  @Prop({default: false}) mapIsReady!: boolean;
 
   marker!: Marker;
 
   get markerElement(): HTMLElement{
     return this.$refs.markerElement as HTMLElement;
+  }
+
+  mounted(){
+    this.hideMarker(); 
   }
 
   @Watch('map')
@@ -86,7 +90,7 @@ export default class MapLibreUserMarker extends Vue {
 
   hideMarker(){
     if(this.markerElement){
-            this.markerElement.style.visibility = "hidden";
+      this.markerElement.style.visibility = "hidden";
     }
   }
 
