@@ -29,7 +29,12 @@
   }
    
   
-  /* typo */
+
+/*******************************/
+/************ typo  ************/
+/*******************************/
+
+
   .day-title{ 
     margin: 0;
     padding: var(--gutter-width);
@@ -53,7 +58,7 @@
 
 .grid-element .text.artistname{
   display:inline-block;
-  font-size: calc(var(--font-size)*1.25);
+  font-size: calc(var(--font-size)*1);
   line-height: var(--line-height);
 }
 
@@ -62,7 +67,7 @@
   display:inline-block;
   font-size: calc(var(--font-size)*.5);
   line-height: var(--line-height);
-  transform: translateY(calc(-1 * var(--image-to-x)));
+  transform: translateY(calc(-.75 * var(--image-to-x)));
 }
 
 .grid-element .text.event-location{

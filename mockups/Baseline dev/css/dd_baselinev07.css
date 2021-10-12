@@ -41,13 +41,13 @@
 
 
   /* helpers settings */
-  --helper-color-alpha: 0;
+  --helper-color-alpha: 00;
 
   /* font basics settings*/
   --font-size-max: 22px;
   --font-size: min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max));
   --line-height: calc(var(--font-size) * 1.26);
-  --font-color: black;
+  --font-color: rgb(255, 255, 255);
   --main-font-color: black;
   --body-color: white;
   --nav-header-height: 230px;
