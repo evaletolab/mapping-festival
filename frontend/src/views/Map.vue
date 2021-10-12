@@ -11,6 +11,14 @@
         v-on:loaded="onMapLoaded"
       >
         <template slot-scope="{map}">
+          <map-libre-geolocation-controls 
+          class="geolocation-controls" 
+          :mapIsReady="mapIsReady"
+          v-on:centerRequest="onCenterRequest"
+          />
+        
+          <map-libre-user-marker :map="map" :mapIsReady="mapIsReady" />
+          
           <MapLibreMarker v-for="evtLocation in eventLocationsForMarkers" :key="evtLocation.id"  
             :map="map" 
             :eventLocation="evtLocation"
@@ -51,7 +59,13 @@
   .map-container{
     width: 100%;
     position: relative;
-    
+  }
+
+  .geolocation-controls{
+    position:absolute;
+    top: 10px;
+    left:10px;
+    z-index: 1000;
   }
 </style>
 
@@ -60,15 +74,17 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import { CMS } from "../models";
-import { $config, $eventLocation } from '../services';
+import { $config, $eventLocation, $geoLocation } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
 import MapLibre from '../components/MapLibre.vue';
 import MapLibreMarker from '../components/MapLibreMarker.vue';
+import MapLibreUserMarker from '../components/MapLibreUserMarker.vue';
 import MapLibrePopup from '../components/MapLibrePopup.vue';
 import MapLibrePopupFix from '../components/MapLibrePopupFix.vue';
+import MapLibreGeolocationControls from '../components/MapLibreGeolocationControls.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
@@ -76,22 +92,31 @@ import { getBbox } from '../lib/geoUtils';
 import { mapEventProvider } from '../lib/mapEventProvider';
 
 import { currentLangStore, Lang } from '../services/i18n';
+import { flyToProvider } from '../lib/geolocation/provider';
 
 
 @Component({
   components: {
-    CMSIcons,Toolbar, PrimaryMenu, MapLibre, MapLibreMarker, MapLibrePopupFix,
-  }
-})
+    CMSIcons, 
+    Toolbar, 
+    PrimaryMenu, 
+    MapLibre, 
+    MapLibreMarker, 
+    MapLibrePopupFix, 
+    MapLibreUserMarker, 
+    MapLibreGeolocationControls,
+}})
 export default class Map extends mixins(Translatable) {
   startZoom = 12;
   center = [6.140561571463678, 46.203032099805];
 
   selectedEventLocation: CMS.EventLocation | null = null;
 
-  showPopup = false;
+  showPopup: boolean = false;
 
-  height = 0;
+  height: number = 0;
+
+  mapIsReady: boolean = false;
 
   get config(){
     return $config.store.config;
@@ -156,7 +181,9 @@ export default class Map extends mixins(Translatable) {
   onMapLoaded(map:Map){
     console.log("map is loaded");
     mapEventProvider.addListener(this.onMapEvent);
+    this.mapIsReady = true;
   }
+
 
   onMapEvent(evt: any){
     if(evt.type == "click" && this.showPopup){
@@ -188,6 +215,16 @@ export default class Map extends mixins(Translatable) {
     this.showPopup = false;
   }
 
+  onCenterRequest(){
+    const latest: CMS.Coordinate | null = $geoLocation.currentCoords;
+    if(latest){
+
+      const flyToOptions = {
+        coordinates: latest,
+      }
+      flyToProvider.provide(flyToOptions);
+    }
+  }
 
   async onBack() {
     this.$router.go(-1);
