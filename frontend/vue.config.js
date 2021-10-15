@@ -14,10 +14,10 @@ module.exports = {
   //   }
   // },
   pwa:{
-    name:"CMS",
-    themeColor:"#6900FF",
-    appleMobileWebAppCapable: true,
-    appleMobileWebAppStatusBarStyle:'#6900FF',
+    name:"mppng2051",
+    themeColor:"#000000",
+    appleMobileWebAppCapable: false,
+    appleMobileWebAppStatusBarStyle:'#000000',
     workboxPluginMode: 'GenerateSW',
     workboxOptions: {
       // swSrc is required in InjectManifest mode.

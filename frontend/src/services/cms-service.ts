@@ -61,7 +61,8 @@ class CMSService {
     const calendar = {};
     let counter = 10;    
 
-    (events||this.events).forEach(event =>{      
+    (events||this.events).forEach(source =>{
+      const event = Object.assign({},source);
       const times = (event.when||[]).slice();
       times.forEach(when => {
         const date: string = when.date;
@@ -69,22 +70,44 @@ class CMSService {
         const key = date+'.'+month;
         const _id = when._id + (counter);
         const time = when.startTime;
-        const ms = when._id;
+        const moment =  new Date(when.start.getTime());
         const selector = date + '.' + month;
+        const dayname = $config.store.config.time.days[when.start.getDay()];
+        const monthname = $config.store.config.time.months[when.start.getMonth()];         
+        const eventType = event.type;
         if(!calendar[key]) {
-          calendar[key] = {_id,selector,time,date,month,events:[]};          
+          calendar[key] = {_id,selector,time,date,month,events:[],dayname, monthname, moment, eventType};          
         }
-        //
-        // only one time per event
-        event._id = ''+(counter++);
         event.when = [when];
         calendar[key].events.push(event);
       });        
-    })
+    });
     const keys = Object.keys(calendar);
     return keys.map(key => {
       calendar[key].events = calendar[key].events.sort((a,b)=>{
-        return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
+
+        // ensure performance is shown first
+        // presentation order
+        // lowest valid weight is 1
+        const sortWeigths = {
+            "Performance": 1,
+            "Installation": 8,
+            "Collection virtuelle": 3,
+            "Masterclass": 4,
+            "mppngTV": 5,
+            "Parcours urbain": 6,
+            "Workshop": 7,
+        };
+        const weightA = sortWeigths[a.type] || 10;
+        const weightB = sortWeigths[b.type] || 10;
+        const result = weightA - weightB;
+        if(result == 0){
+          // we are in same category so we want to "sub"sort on title
+          return a.title.fr.toLowerCase().localeCompare(b.title.fr.toLowerCase());
+        }else{
+          return result;
+        }
+        // return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
       });
       return calendar[key] as CMS.Calendar;
     })

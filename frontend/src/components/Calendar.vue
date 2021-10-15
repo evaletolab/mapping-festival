@@ -5,8 +5,11 @@
         <a v-for="(menu,index) in eventTypes" 
           :class="{'selected':menu.selected}" 
           :key="index"
-          @click="onEventCategory(menu.name)" >{{(menu.name)}}</a>
-        <a class="today" @click="onToday">today</a>          
+          @click="onEventCategory(menu.name)" >{{getTypeLabel(menu.name)}}</a>
+        <a :class="{'selected':mppngTVFilter}"  @click="onMppngTV">
+          mappingTV
+        </a>
+        <!-- <a class="today" @click="onToday">today</a>           -->
     </section>
     <section v-if="gotop" class="gotop" @click="onTop"
             :class="{'exited': (scrollDirection > 0) }">
@@ -17,9 +20,18 @@
 
     <div class="grid day-wrapper " v-for="elem in calendar" :key="elem._id" :id="elem._id">
 
-      <div class="day-title">
-        {{elem.date}}.{{elem.month}}
-      </div><!-- day-title -->
+      <!-- <div class="day-title"> -->
+      <br>
+      <h1 class="capitalize" v-if="currentLang=='fr'">
+        {{t(elem.dayname)}} {{elem.date}} {{t(elem.monthname)}}
+      </h1>      
+      <h1 class="capitalize" v-else>
+        {{t(elem.dayname)}} {{t(elem.monthname)}} {{elem.date}}th
+      </h1>
+
+      <div class="prule margin-top1"/>
+
+      <!-- day-title -->
 
       <!-- <div class="grid-container grid-container--fit">
         <div class="grid-element event" 
@@ -34,7 +46,7 @@
         </div>
       </div>  -->
       <div class="grid-container grid-container--fit">
-        <event-card v-for="(event, index) in elem.events" :key="index" :event="event" />
+        <event-card v-for="(event, index) in elem.events" :key="index" :event="event" :date="elem.__date" />
       </div> 
     </div> 
   </div>
@@ -138,7 +150,7 @@
     }
     .event {
       cursor: pointer;
-      background: url(https://via.placeholder.com/150) no-repeat, #ddd;
+      background: url(https://via.placeholder.com/150/000000/000000) no-repeat, #ddd;
       background-size: cover;
       background-position: center;
       overflow: hidden;
@@ -162,7 +174,7 @@
 <script lang="ts">
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { mixins } from 'vue-class-component';
-import { $config, $cms, $event } from '../services';
+import { $config, $cms, $event, $i18n } from '../services';
 import { CMS } from "../models";
 import { Translatable } from '../mixins';
 import LazyImg from './LazyImg.vue';
@@ -179,44 +191,58 @@ export default class Calendar extends mixins(Translatable)  {
   private now = Date.now();
   private isAll = true;
   private lastScrollTop = 0;
+
+   mppngTVFilter = false;
   scrollDirection = 0;
+
+  timeoutID = -1;
+
+
+  mppngTVLabel = "mappingTV";
 
   
   @Prop() readonly limit!: boolean;
   @Prop() readonly gotop!: boolean;
 
-  defaultCover = "https://via.placeholder.com/150";
+  defaultCover = "https://via.placeholder.com/150/000000/000000";
 
 
   get events() {
     const label = (this.selected||'').toLowerCase();
 
+    // const key = `events_${label} ${this.mppngTVFilter}`;
     const key = `events_${label}`;
 
     if(this.cache[key]){
-      console.log("returning cached data", `events_${label}`);
       return this.cache[key]
     }
 
     return this.cache[key] = $cms.cms.events.filter(event => {
       // if "all"
-      // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation 
-      if(!label || label == '' || label == 'all' && $event.eventIsOfSpecialTypeLive(event)){
-        return event;
+      // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation       
+      if(!label || label == '' || label == 'all' && event.type as string != "Collection virtuelle"){
+        return true;
       }
 
-      const filterPredicate = (event.type||'').toLowerCase() == this.selected;
 
-      // console.log("event type", event.type.toLowerCase(), "selected", this.selected);
-      // console.log("filterPredicate", filterPredicate);
-      return filterPredicate;
+      if(label === this.mppngTVLabel.toLowerCase()){
+        return event.subType === this.mppngTVLabel;
+      }else{
+        const filterPredicate = (event.type||'').toLowerCase() == this.selected;
+        return filterPredicate;
+      }
     });
+  }
+
+  get currentLang(): string{
+    const result = $i18n.lang;
+    return result;
   }
 
   get calendar(): CMS.Calendar[] {
     const label = this.selected||'all';
 
-    const key = `calendar_${label}`
+    const key = `calendar_${label} ${this.mppngTVFilter}`;
 
     //
     // local cache
@@ -224,20 +250,31 @@ export default class Calendar extends mixins(Translatable)  {
       return this.cache[key]
     }
 
+
+    // create local cache
+
     // console.log("compute calendar for", label, "and events", this.events);
-    this.cache[key] = $cms.getCalendarFrom(this.events).sort((a: any,b: any)=>{
+    this.cache[key] = $cms.getCalendarFrom(this.events).sort((a: any, b: any)=>{
       return a._id - b._id;
     });
 
-    //
-    // only display events after now
-    if (this.limit) {
-      this.cache[key] = this.cache[key].filter(cal=> {
-        return cal._id>=this.now;
+    
+    // if all events in the past show all events
+    // else
+    // only display events that have date now or later
+    {
+      // filter events with date of now or later
+      const eventsNowOrInTheFuture = this.cache[key].filter(cal=> {
+        const calDate = new Date(cal._id);
+        const today = new Date();
+        return calDate.getDate() >= today.getDate() && calDate.getMonth() >= today.getMonth() && calDate.getFullYear() >= today.getFullYear();
       });
-    }
 
-    console.log("final calendar collection", this.cache[key].length);
+      // do we have events now or in the future?
+      if(eventsNowOrInTheFuture.length > 0){
+        this.cache[key] = eventsNowOrInTheFuture;
+      }
+    }
 
     return this.cache[key];
   }
@@ -253,7 +290,32 @@ export default class Calendar extends mixins(Translatable)  {
       (elems[label.toLowerCase()] = {selected:(label.toLowerCase() === this.selected),name:label})
     });
     
-    return this.cache['eventTypes'] = Object.keys(elems).map(cat => (elems[cat]));
+    // ensure performance is shown first
+    // presentation order
+    // lowest valid weight is 1
+    const sortWeigths = {
+        "Performance": 1,
+        "Installation": 2,
+        "Collection virtuelle": 3,
+        "Masterclass": 4,
+        "mppngTV": 5,
+        "Parcours urbain": 6,
+        "Workshop": 7,
+    };
+
+    this.cache['eventTypes'] = Object.keys(elems)
+    .map(cat => (elems[cat]))
+    .sort((a, b) =>{
+      const weightA = sortWeigths[a.name] || 10;
+      const weightB = sortWeigths[b.name] || 10;
+      return weightA - weightB;
+    });
+
+    return this.cache['eventTypes'];
+  }
+
+  getTypeLabel(type) {
+    return $i18n.t(type);
   }
   
   getBackground(event) {
@@ -276,6 +338,17 @@ export default class Calendar extends mixins(Translatable)  {
     // };
   }
 
+
+  scrollToTargetAdjusted(element){
+      const headerOffset = 65;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition - headerOffset;
+      window.scrollTo({
+          top: offsetPosition,
+          behavior: "auto"
+      });
+  }  
+
   async mounted(){
     this.selected = this.$route.query.selected as string;
     window.addEventListener("scroll", () => { 
@@ -295,16 +368,27 @@ export default class Calendar extends mixins(Translatable)  {
       // For Mobile or negative scrolling
       this.lastScrollTop = st <= 0 ? 0 : st; 
     }, false);
+
+    // if(this.limit){
+    //   clearTimeout(this.timeoutID);
+    //   this.timeoutID = setTimeout(this.onToday, 80);
+    // }
   }
 
-
   async onAll(){
+    this.mppngTVFilter = false;
     this.$router.replace({ query: { selected: 'all' }}).catch(()=>{});    
   }
   
   async onEventCategory(name) {
     const label = (name||'all').toLowerCase();
+    this.mppngTVFilter = false;
     this.$router.replace({ query: { selected: label }}).catch(()=>{});    
+  }
+
+  async onMppngTV() {
+    this.mppngTVFilter = !this.mppngTVFilter;
+    this.$router.replace({ query: { selected: "mappingTV" }}).catch(()=>{});    
   }
 
   async onEvent(event: CMS.Event) {
@@ -320,34 +404,51 @@ export default class Calendar extends mixins(Translatable)  {
     element.scrollIntoView({ behavior: 'smooth' });
   }
 
-  async onToday($event) {
-    $event.stopPropagation();
-    //
-    // FIXME, for testing only
-    const dest = this.calendar[3] || this.calendar[0];
+
+  async onToday($event?) {
+    $event && $event.stopPropagation();
+    let today = new Date();
+
+    const findIndex = (today:Date) =>{
+      return (this.calendar||[]).findIndex(cal => {
+        const calDate = new Date(cal.moment);
+        return calDate.getDate() == today.getDate() && calDate.getMonth() == today.getMonth() && calDate.getFullYear() && today.getFullYear();
+      });
+    }    
+
+    // const destIdx = (this.calendar||[]).findIndex(cal => cal.moment >  now);
+    const destIdx = findIndex(today);
+    const dest = (destIdx == -1)? this.calendar[0]:this.calendar[destIdx];
     const element = document.getElementById(dest._id.toString());
     if(!element) {
       return;
     }
-    element.scrollIntoView({ behavior: 'smooth' });
+    this.scrollToTargetAdjusted(element);
   }  
 
   @Watch('$route', { immediate: true, deep: true })
   async onRouteUpdate(to) {
     const label = this.$route.query.selected as string;
-    console.log("label", label);
     if(label) {
+      if(label === this.mppngTVLabel){
+        // console.log("filter is true");
+        this.mppngTVFilter = true;
+      }
       this.eventTypes.forEach(cat => {
         cat.selected = (cat.name.toLowerCase() === label);
       });     
       this.selected = label;
-      console.log("selected has changed to ", this.selected);
+      // console.log("selected has changed to ", this.selected);
     }else{
+      // console.log("selected not set --------------------- ");
       this.selected = 'all';
+      this.eventTypes.forEach(type => type.selected = false);   
+      this.mppngTVFilter = false;
     }
-    this.isAll = !this.eventTypes.some(type => type.selected==true);
-    console.log("this.isAll is ", this.isAll);
+    this.$emit('calendar-update',this.selected);
+    this.isAll = !this.eventTypes.some(type => type.selected==true) && !this.mppngTVFilter;
   }
+
 
 }
 </script>

@@ -11,8 +11,8 @@
   --ui-font-color: black;
   --ui-border-color: black;
 
-  --ui-hover-background-color: grey;
-  --ui-hover-text-color:white;
+  --ui-hover-background-color: rgb(240, 240, 240);
+  --ui-hover-text-color:rgb(120, 137, 145);
   
 }
 
@@ -112,6 +112,51 @@ border-radius: 4px;
 .border-bottom{
   border-bottom: 2px solid var(--ui-border-color);
 }
+
+
+/* -------- filters -------- */
+.filters-button{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ui-button-auto-fit{
+  display: block;
+  /* width: max-content; */
+}
+.ui-button-auto-fit p{
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.ui-button-auto-fit span{
+  display: block;
+}
+.ui-button-auto-fit span.icon{
+  display: block;
+  min-width: 20px;
+  margin-right: 5px;
+}
+
+.ui-button-auto-fit span img{
+  display: block;
+  height: 100%;
+  width: auto;
+}
+
+.ui-button-auto-fit a{
+text-decoration: none;
+}
+
+
+/* --------------------------- */
+
+
+
+
+
 
 
   /*                                         */

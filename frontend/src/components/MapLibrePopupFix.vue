@@ -31,6 +31,7 @@
     padding-right: 10px;
     padding-left: 10px;
     border: 1px solid var(--font-color);
+    z-index: 3;
 
     background-color: var(--body-color);
   }
@@ -85,7 +86,7 @@ export default class MapLibrePopupFix extends mixins(Translatable) {
         if(this.eventLocation && this.eventLocation.cover){
             return this.eventLocation.cover.sizes.thumbs.path;
         }else{
-            return "https://via.placeholder.com/80";
+            return "https://via.placeholder.com/80/000000/000000";
         }
     }
 

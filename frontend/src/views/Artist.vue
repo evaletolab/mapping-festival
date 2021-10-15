@@ -10,9 +10,6 @@
           <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
       </h4>
 
-      <div class="destination">
-        {{artist.fullname}}
-      </div>
     </div>
 
     <!-- TOOLBAR -->
@@ -20,7 +17,16 @@
     <div class="content spiegel margin-top1">
 
       <!-- ARTIST CONTENT -->
-      <ul>
+
+            <h1 class="">
+        {{artist.fullname}}
+      </h1>
+      
+      <h1 class="indent1 margin-top2">Bio</h1>
+      <br>
+      <div class="indent1 width6" v-html="t(artist.content)" />
+
+      <ul class="indent1">
         <li v-if="artist.artistWebsite" >
           <a :href="artist.artistWebsite" target="_blank" rel="noopener noreferrer">
             {{artist.artistWebsite}}
@@ -28,24 +34,23 @@
         </li>
       </ul>
 
-      <img v-if="artist.cover" :src="artist.cover.path" /> 
-      
-      <h4>Bio</h4>
-      <div v-html="t(artist.content)" />
-
-
-      <h4>Events</h4>
+      <h1 class="margin-top1">Events</h1>
       <div class="grid-container grid-container--fit">
         <div class="grid-element event" 
             v-for="event in events" :key="event._id">
           <event-card :event="event" />
         </div>
       </div> 
+
       <!-- <event-card v-for="event in events" :key="event._id" :event="event" /> -->
 
+<!--
+      <img v-if="artist.cover" :src="artist.cover.path" /> -->
+
+
       <div v-if="mediaCount > 0">
-        <h4>Medias</h4>
-        <div v-for="media in externalVideos" :key="media.url">
+        <h1 class="margin-top2 align-center">Medias</h1>
+        <div class="margin-top2" v-for="media in externalVideos" :key="media.url">
           <VideoPlayer :externalMedia="media" />
         </div>
 
@@ -62,13 +67,15 @@
       </div>
 
       <div v-if="socialMedia.length > 0">
-        <h4>social media</h4>
+        <h4>Social media</h4>
         <div class="social-media" v-for="media in socialMedia" :key="media.platform">
           <SocialIcons :name="media.platform" :url="media.url"/> 
         </div>
       </div>
 
     </div>
+
+    <br><br><br><br><br><br>
 
   </div>
 </template>
@@ -159,6 +166,9 @@ export default class Artist extends mixins(Translatable) {
 
   mounted(){
     document.body.classList.add('body-scroll');
+    try{window.scrollTo(0,0);}catch(e){
+      //
+    }
   }
 
   beforeDestroy() {

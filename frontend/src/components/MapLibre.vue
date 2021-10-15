@@ -39,6 +39,8 @@ import { getMapStyle } from '../lib/esriStyleAdapter';
 // @ts-ignore
 import { mapEventProvider } from '../lib/mapEventProvider.js';
 
+import { flyToProvider } from '../lib/geolocation/provider';
+
 @Component
 export default class MapLibre extends Vue {
     @Prop() private msg!: string;
@@ -91,6 +93,7 @@ export default class MapLibre extends Vue {
 
     onMapLoaded(){
         console.log("map loaded");
+        flyToProvider.addListener(this.onFlyToRequest);
         this.$emit("loaded", {map: this.map});
     }
     
@@ -99,10 +102,38 @@ export default class MapLibre extends Vue {
             this.map.off('load', this.onMapLoaded);
             this.map.remove()
         }
+        flyToProvider.removeListener(this.onFlyToRequest);
     }
 
     get attributionText(): string{
         return "Esri Community maps, SITG State of Geneva";
+    }
+
+    onFlyToRequest(request){
+        // console.log("flying to ", request);
+        if(request.coordinates){
+            const options = {
+                center: request.coordinates, 
+                zoom: request.zoom || 14,
+                speed: 0.25
+            };
+            if(this.map){
+                this.map.flyTo(options);
+            }
+            return;
+        }
+
+        if(request.bounds){
+            const options = {
+                duration: 1500,
+                padding: request.padding || 0,
+            };
+            // console.log("flying to ", request.bounds, options);
+            if(this.map){
+                this.map.fitBounds(request.bounds, options);
+            }
+            return;
+        }
     }
 
 }

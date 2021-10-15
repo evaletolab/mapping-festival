@@ -1,9 +1,10 @@
 <template>
   <div class="landing">
     <div class="header ">
-      <div class="title ">
-        <p class="">mp<br>pngfst<br>vl</p>
-        <h1 class="margin-top1" v-html="t(config.landing.title1)"/>
+      <div class="title">
+        <h1 class="width7">mp<br>pngfst<br>vl<br>2051</h1>
+          <!-- <p class="">mp<br>pngfst<br>vl</p> -->
+          <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
       </div>
 
       <h4 class="tagline  align-right">
@@ -17,7 +18,7 @@
       </div>
 
       <div class="destination hide-sm">
-        {{t(destination.name)}}
+        
       </div>
 
     </div>
@@ -80,7 +81,7 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
 export default class Landing extends mixins(Translatable) {
   cfg = $config;
 
-  destination = {};
+  destination:{name: {fr: string, en: string}} = {name: {fr:"Live",en: "Live"}};
   //
   // return not active menu items
   get menuCollection() {
@@ -100,7 +101,10 @@ export default class Landing extends mixins(Translatable) {
       item.selected = item.link.indexOf(path) > -1;
     });
     
-    this.destination = menu.find(item => item.selected);
+    const menuItem = menu.find(item => item.selected);
+    if(menuItem){
+      this.destination = menuItem;
+    }
 
     return menu.filter(item => !item.selected);
   }

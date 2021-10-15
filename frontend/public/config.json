@@ -47,6 +47,15 @@
     "uploadsPath": "/storage/uploads",
     "authToken": "690a8296407bdd55ae785e519d02fe"
   },
+  "i18n":{
+    "Live":{"en":"Live","fr":"Live"}, 
+    "Installation":{"en":"Installation","fr":"Installation"}, 
+    "Performance":{"en":"Performance","fr":"Performance"}, 
+    "Workshop":{"en":"Workshop","fr":"Workshop"}, 
+    "Masterclass":{"en":"Masterclass","fr":"Masterclass"}, 
+    "Parcours urbain":{"en":"Urban Itinary","fr":"Parcours urbain"}, 
+    "mppngTV":{"en":"mppngTV","fr":"mppngTV"}
+  },
   "time":{
     "days":[
       {"fr": "dimanche", "en": "sunday"}, 

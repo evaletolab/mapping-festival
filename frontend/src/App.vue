@@ -34,6 +34,7 @@ import NavigationMobile from './components/NavigationMobile.vue';
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
 
+import cfg from '../package.json';
 
 @Component({
   components: {
@@ -60,7 +61,9 @@ export default class App extends mixins(Translatable) {
 
     //
     // update app
-    addEventListener('swUpdated', this.onUpdateAvailable, { once: true })
+    addEventListener('swUpdated', this.onUpdateAvailable, { once: true });
+
+    console.log("version", cfg.version);
 
     this.computeScreenWidth();
   }
@@ -77,10 +80,14 @@ export default class App extends mixins(Translatable) {
   }
 
   onUpdateAvailable(event){
-      this.registration = event.detail
-      this.updateExists = true;
-      console.log('---DBG',this.registration);
-      this.onRefreshApp();
+    this.registration = event.detail
+    this.updateExists = true;
+    this.registration.update().then(()=> {
+      console.log('--DBG pwa update',this.registration);
+      window.location.reload(true);
+    });
+
+    this.onRefreshApp();
   }
 
 
