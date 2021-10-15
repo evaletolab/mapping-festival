@@ -9,11 +9,11 @@ class EventLocationService
     }
 
     eventLocationWithSlug(slug: string): CMS.EventLocation | null {
-        return $cms.eventLocations.find(a => a.slug === slug) || null;
+        return $cms.allEventLocations.find(a => a.slug === slug) || null;
     }
     
     eventLocationWithId(id: string): CMS.EventLocation | null {
-        return $cms.eventLocations.find(a => a._id === id) || null;
+        return $cms.allEventLocations.find(a => a._id === id) || null;
     }
 
     eventsForEventLocation(eventLocation: CMS.EventLocation): CMS.Event[]{

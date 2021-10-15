@@ -19,6 +19,9 @@ function getAxiosOptions(){
 
 
 interface CMS_Map{
+  allEvents: CMS.Event[];
+  allArtists: CMS.Artist[];
+  allEventLocations: CMS.EventLocation[];
   events: CMS.Event[];
   artists: CMS.Artist[];
   eventLocations: CMS.EventLocation[];
@@ -34,6 +37,9 @@ class CMSService {
   private activesArtists:string[] = []; 
 
   cms: CMS_Map = {
+    allEvents: [],
+    allArtists: [],
+    allEventLocations: [],
     events: [],
     artists: [],
     eventLocations: [],
@@ -44,12 +50,18 @@ class CMSService {
     this.cms = Vue.observable(this.cms);
   }
 
-  // public get events(): CMS.Event[]{
-  //   return this.cms.events;
-  // }
+  public get allEvents(): CMS.Event[]{
+    return this.cms.allEvents;
+  }
 
-  //
-  // FIXME, currently events are filtered by Festival.Range
+  public get allEventLocations(): CMS.EventLocation[] {
+    return this.cms.allEventLocations;
+  }
+
+  public get allArtists(): CMS.Artist[]{
+    return this.cms.allArtists;
+  }
+
   public get events(): CMS.Event[]{
     return this.cms.events;
   }
@@ -138,7 +150,7 @@ class CMSService {
       const eventsUrl = `${baseUrl}/api/collections/get/localisations`;
       const eventLocations = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["name", "content"];
-      this.cms.eventLocations = eventLocations.entries
+      this.cms.eventLocations = this.cms.allEventLocations = eventLocations.entries
         .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
         .map(entry => $cockpit.formatEventLocation(entry))
         .filter(item => item.active);
@@ -150,7 +162,7 @@ class CMSService {
       const eventsUrl = `${baseUrl}/api/collections/get/artists`;
       const artists = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["content"];
-      this.cms.artists = artists.entries
+      this.cms.artists = this.cms.allArtists = artists.entries
         .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
         .map(entry => $cockpit.formatArtist(entry))
         .filter(item => item.active);
@@ -173,7 +185,7 @@ class CMSService {
       const eventsUrl = `${baseUrl}/api/collections/get/events`;
       const events = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["title", "header", "content", "hardware", "notes"]
-      this.cms.events = events.entries
+      this.cms.events = this.cms.allEvents = events.entries
         .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
         .map(entry => $cockpit.formatEvent(this.eventLocations,this.artists,entry))
         .filter(item => !!item.when) // events with no when are invalid
@@ -181,34 +193,34 @@ class CMSService {
       //console.log("my events", this.cms.events.filter(e => e.title.fr =="Lotus"));
     }
 
-    //
-    // FIXME: constraint by range
-    this.cms.events = this.filterEventsByRange(this.cms.events);
-    this.cms.artists = this.filterArtistsByRange(this.cms.artists);
-    this.cms.eventLocations = this.filterLocationsByRange(this.cms.eventLocations);
-  }
-
-  private filterArtistsByRange(artists) {
-    this.activesArtists = this.events.map(event => event.artists).flat().map(artist => artist._id);
-    //console.log('---- artistsByRange',this.activesArtists);
-    return this.cms.artists.filter(artist => this.activesArtists.indexOf(artist._id)>-1);
-
-  }
-
-  private filterLocationsByRange(locations:CMS.EventLocation[]) {
-    this.activesLocations = this.events.map(event => event.when).flat().filter(when => when && when.eventLocation).map((when:any) => when.eventLocation._id)
-    //console.log('---- locationsByRange',this.activesLocations);
-    return locations.filter(location => this.activesLocations.indexOf(location._id)>-1);
-  }
-
-  private filterEventsByRange(events) {
     const range = $config.config.landing.range;
+    // console.log('---- loaded',range,this.cms.allEvents.length,this.cms.allArtists.length,this.cms.allEventLocations.length)
+
     //
     // not in range ?
     if(!range){
-      return events  
+      return;  
     }
 
+    this.cms.events = this.filterEventsByRange(range, this.cms.allEvents);
+    this.cms.artists = this.filterArtistsByRange(range, this.cms.allArtists);
+    this.cms.eventLocations = this.filterLocationsByRange(range, this.cms.allEventLocations);
+  }
+
+  private filterArtistsByRange(range, artists) {
+    this.activesArtists = this.events.map(event => event.artists).flat().map(artist => artist._id);
+    // console.log('---- artistsByRange',this.activesArtists);
+    return artists.filter(artist => this.activesArtists.indexOf(artist._id)>-1);
+
+  }
+
+  private filterLocationsByRange(range, locations:CMS.EventLocation[]) {
+    this.activesLocations = this.events.map(event => event.when).flat().filter(when => when && when.eventLocation).map((when:any) => when.eventLocation._id)
+    // console.log('---- locationsByRange',this.activesLocations);
+    return locations.filter(location => this.activesLocations.indexOf(location._id)>-1);
+  }
+
+  private filterEventsByRange(range, events) {
     const _events = this.events.filter(event => {
       // FIXME, this should never happen!
       if(!event.when||!event.when.length) {
@@ -219,7 +231,7 @@ class CMSService {
       const date = event.when[0];
       return date.start >= range.from && date.start <= range.to;
     });
-    //console.log('---- eventsByRange',_events);
+    // console.log('---- eventsByRange',_events);
     return _events;
 
   }
