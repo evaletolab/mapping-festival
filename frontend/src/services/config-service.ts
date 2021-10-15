@@ -58,11 +58,22 @@ class ConfigService {
 
   async get(force?: boolean){
     if(!this._store.config.done && !force) {
+      //
+      // load current festival
+      const festival = await this.getCurrentFestival();
+
       const url = `${this._cmsBaseUrl}/api/singletons/get/config`;
       const res = await axios.get(url ,defaultAxios);
       this._store.config = res.data.content;
       this._store.config.cms.baseUrl = this._cmsBaseUrl; // sanity check!
-      console.log('--',this._store.config);
+
+      //
+      // map festival content
+      if(festival) {
+        Object.assign(this._store.config,festival);
+      }
+
+      console.log('-- config',this._store.config.landing);
       this._store.config.done = true;
 
       // console.log('---DBG', JSON.stringify(this._store,null,2))
@@ -74,6 +85,37 @@ class ConfigService {
     console.log("config loaded");
     return this._store.config;
   }  
+
+  //
+  //can be forced by url 
+  async getCurrentFestival() {
+    const _str=(str)=>{
+      return str.replace(/(\n|<br>|@n)/ig,'\n');
+    }
+    const url = `${this._cmsBaseUrl}/api/collections/get/Festival`;
+    const res = await axios.get(url ,defaultAxios);
+    //
+    // TODO domain name has priority over status!
+    const current = res.data.entries.find(festival => festival.active);
+    if(!current) {
+      return {};
+    }
+    const from = current.start.split('-');
+    const to = current.end.split('-');
+
+    return {
+      landing: {
+        name:current.name,
+        title1:_str(current.title1),
+        title2: {fr:_str(current.title2_fr),en:_str(current.title2)},
+        title3: {fr:_str(current.title3_fr),en:_str(current.title3)},
+        range:{
+          from:new Date(from[2],from[1]-1,from[0]),
+          to:new Date(to[2],to[1]-1,to[0])
+        }
+      }
+    };
+  }
 
   getMenu(layout) {
     const menu = this._store.config.menu || [];
