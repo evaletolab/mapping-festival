@@ -252,28 +252,28 @@ export default class Calendar extends mixins(Translatable)  {
 
 
     // create local cache
-
     // console.log("compute calendar for", label, "and events", this.events);
     this.cache[key] = $cms.getCalendarFrom(this.events).sort((a: any, b: any)=>{
       return a._id - b._id;
     });
 
-    
+
+    // DEPRECATED, david ? 
     // if all events in the past show all events
     // else
     // only display events that have date now or later
     {
       // filter events with date of now or later
-      const eventsNowOrInTheFuture = this.cache[key].filter(cal=> {
-        const calDate = new Date(cal._id);
-        const today = new Date();
-        return calDate.getDate() >= today.getDate() && calDate.getMonth() >= today.getMonth() && calDate.getFullYear() >= today.getFullYear();
-      });
+      // const eventsNowOrInTheFuture = this.cache[key].filter(cal=> {
+      //   const calDate = new Date(cal._id);
+      //   const today = new Date();
+      //   return calDate.getDate() >= today.getDate() && calDate.getMonth() >= today.getMonth() && calDate.getFullYear() >= today.getFullYear();
+      // });
 
-      // do we have events now or in the future?
-      if(eventsNowOrInTheFuture.length > 0){
-        this.cache[key] = eventsNowOrInTheFuture;
-      }
+      // // do we have events now or in the future?
+      // if(eventsNowOrInTheFuture.length > 0){
+      //   this.cache[key] = eventsNowOrInTheFuture;
+      // }
     }
 
     return this.cache[key];
