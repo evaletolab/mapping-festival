@@ -232,8 +232,8 @@ class CockpitService {
         const v = w.value;
         // new Date("2021-05-06T16:25:00+02:00");
 
-        const start = new Date(`${v.startDate}T${v.startHour}:00+02:00`);
-        const end = new Date(`${v.endDate}T${v.endHour}:00+02:00`);
+        const start = new Date(`${v.startDate}T${v.startHour}:00+01:00`);
+        const end = new Date(`${v.endDate}T${v.endHour}:00+01:00`);
         const cancel = v.cancel;
         // console.log(v.startDate, v.startHour, start);
         // console.log(v.endDate, v.endHour, end);

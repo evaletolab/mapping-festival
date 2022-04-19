@@ -8,6 +8,8 @@
     <div ref="map" :style="mapHeightStyle" class="map-container">
       <MapLibre 
         :bounds="bounds"
+        :startZoom="startZoom"
+        :startCoordinates="center"
         v-on:loaded="onMapLoaded"
       >
         <template slot-scope="{map}">
@@ -107,7 +109,7 @@ import { flyToProvider } from '../lib/geolocation/provider';
     MapLibreGeolocationControls,
 }})
 export default class Map extends mixins(Translatable) {
-  startZoom = 12;
+  startZoom = 11;
   center = [6.140561571463678, 46.203032099805];
 
   selectedEventLocation: CMS.EventLocation | null = null;
@@ -122,9 +124,12 @@ export default class Map extends mixins(Translatable) {
     return $config.store.config;
   }
 
-  get bounds(): any[]{
+  get bounds(): any[] | null{
     const coordinates = this.eventLocationsForMarkers.map(evtLocation => evtLocation.coordinates);
-    console.log("coordinates", coordinates);
+    //only compute bounds if we have more than 1 coordinate
+    if(coordinates.length == 1){
+      return null;
+    }
     const result = getBbox(coordinates);
     console.log("bounds", result);
     return result;
@@ -216,11 +221,10 @@ export default class Map extends mixins(Translatable) {
   }
 
   onCenterRequest(){
-    const latest: CMS.Coordinate | null = $geoLocation.currentCoords;
-    if(latest){
-
+    const latestCoords: CMS.Coordinate | null = $geoLocation.currentCoords;
+    if(latestCoords){
       const flyToOptions = {
-        coordinates: latest,
+        coordinates: latestCoords,
       }
       flyToProvider.provide(flyToOptions);
     }

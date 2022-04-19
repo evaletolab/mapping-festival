@@ -20,7 +20,8 @@
             <!-- NAV HEADER -->
             <section class="header pointer" @click="onHome">
               
-              <h1 class="width7">mp<br>pngfst<br>vl<br>2051</h1>
+              <h1 class="width7" v-html="config.landing.title1"></h1>
+
 
               <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
             </section>

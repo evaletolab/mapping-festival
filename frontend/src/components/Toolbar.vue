@@ -11,7 +11,7 @@
 
         <!-- <div class="toolbar-title"> -->
         <div class="ui-font vhcenter">
-          mppng2051
+          {{config.landing.title1}}
         </div>        
 
         <div class="toolbar-section-end">
@@ -209,6 +209,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import LanguageSelector from '../components/LanguageSelector.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
+import { $config } from '../services';
 
 @Component({
   components: {
@@ -258,6 +259,10 @@ export default class Toolbar extends Vue {
 
 
     }, false);
+  }
+
+  get config(){
+    return $config.store.config;
   }
 
   async onBack() {

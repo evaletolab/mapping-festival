@@ -9,11 +9,11 @@ class EventService
     }
 
     eventWithSlug(slug: string): CMS.Event | null {
-        return $cms.events.find(e => e.slug === slug) || null;
+        return $cms.allEvents.find(e => e.slug === slug) || null;
     }
     
     eventWithId(id: string): CMS.Event | null {
-        return $cms.events.find(e => e._id === id) || null;
+        return $cms.allEvents.find(e => e._id === id) || null;
     }
 
     artistsForEvent(event: CMS.Event): CMS.Artist[]{
