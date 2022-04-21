@@ -28,7 +28,7 @@
             <!-- ------------------------------- -->
           </div>
           <br>
-          <div class="text event-type">{{getTypeLabel(event.type)}}</div>
+          <div class="text event-type">{{getTypeLabel(event.typology)}}</div>
         </div>
     </div>
 </template>

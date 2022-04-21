@@ -27,8 +27,8 @@ class EventService
     }
 
     eventIsOfSpecialTypeLive(event: CMS.Event){
-        const result = event.type == "Masterclass" || event.type == "Performance" ||
-        event.type == "Workshop";
+        const result = event.typology == "Masterclass" || event.typology == "Performance" ||
+        event.typology == "Workshop";
 
         return result;
     }
@@ -38,10 +38,10 @@ class EventService
 
         const eventMap = {};
         for(const evt of this.all ){
-            if(evt.type in eventMap){
-                eventMap[evt.type].push(evt);
-            }else if(evt.type as string !== 'Collection virtuelle'){
-                eventMap[evt.type] = [evt];
+            if(evt.typology in eventMap){
+                eventMap[evt.typology].push(evt);
+            }else if(evt.typology as string !== 'Collection virtuelle'){
+                eventMap[evt.typology] = [evt];
             }
         }
 

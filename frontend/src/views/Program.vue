@@ -35,8 +35,8 @@
       </div> 
     </div>
     <div v-else class="content spiegel margin-top1" >
-      <div v-for="eventSet in sortedEventSets" :key="eventSet.type">
-        <h1 class="letter-key">{{t(computeEventTypeTranslation(eventSet.type))}}</h1>
+      <div v-for="eventSet in sortedEventSets" :key="eventSet.typology">
+        <h1 class="letter-key">{{t(computeEventTypeTranslation(eventSet.typology))}}</h1>
         <event-card v-for="event in eventSet.events" :key="event._id" :event="event" />
         <hr>
       </div>
@@ -181,7 +181,7 @@ export default class Program extends mixins(Translatable)  {
 
     console.log("route", this.$router.currentRoute.params);
     if(this.filter == 'Collection virtuelle'){
-      result = result.filter(e => e.type as string == 'Collection virtuelle')
+      result = result.filter(e => e.typology as string == 'Collection virtuelle')
       .sort((a, b) => a.title[this.currentLang].localeCompare(b.title[this.currentLang]));
     }
 

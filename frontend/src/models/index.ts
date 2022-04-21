@@ -201,8 +201,8 @@ export namespace CMS {
     slug: string,
     active: boolean,
     cover: LocalMedia | null,
-    type: eventType,
-    subType: eventSubType,
+    typology: eventType,
+    thematic: eventSubType,
     title:{
       fr:string,
       en:string
@@ -333,10 +333,10 @@ export namespace CMS {
       return this._event.cover;
     }
     get type(): eventType{
-      return this._event.type;
+      return this._event.typology;
     }
     get subType(): eventSubType{
-      return this._event.subType;
+      return this._event.thematic;
     }
     get title(): {fr: string, en: string} {
       return this._event.title;

@@ -51,7 +51,7 @@
 
         <p class="ui-font align-center">
           <br><br>
-          {{getTypeLabel(event.type)}} / {{event.subType}} </p>    
+          {{getTypeLabel(event.typology)}} / {{event.thematic}} </p>    
       </section>
 
 

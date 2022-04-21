@@ -96,7 +96,7 @@ class CMSService {
         const selector = date + '.' + month;
         const dayname = $config.store.config.time.days[when.start.getDay()];
         const monthname = $config.store.config.time.months[when.start.getMonth()];         
-        const eventType = event.type;
+        const eventType = event.typology;
         if(!calendar[key]) {
           calendar[key] = {_id,selector,time,date,month,events:[],dayname, monthname, moment, eventType};          
         }
@@ -120,8 +120,8 @@ class CMSService {
             "Parcours urbain": 6,
             "Workshop": 7,
         };
-        const weightA = sortWeigths[a.type] || 10;
-        const weightB = sortWeigths[b.type] || 10;
+        const weightA = sortWeigths[a.typology] || 10;
+        const weightB = sortWeigths[b.typology] || 10;
         const result = weightA - weightB;
         if(result == 0){
           // we are in same category so we want to "sub"sort on title
