@@ -27,13 +27,6 @@
             :coordinates="evtLocation.coordinates"
             v-on:selectionRequest="onMarkerClick"
           />
-          <!-- <MapLibrePopup
-            :map="map"
-            :visible="showPopup"
-            v-on:selectionRequest="onPopupSelectionRequest" 
-            v-on:closeRequest="onPopupCloseRequest"
-            :eventLocation="selectedEventLocation"
-          /> -->
         </template>
       </MapLibre>
 
@@ -44,11 +37,6 @@
         :eventLocation="selectedEventLocation" 
       />
     </div>
-    <!-- <h2>{{t({fr:"Lieux", en:"Spots"})}}</h2>
-
-    <ul v-for="evtLocation in eventLocationsForList" :key="evtLocation._id" >
-      <li><router-link :to="`/map/${evtLocation.slug}`" >{{t(evtLocation.name)}}</router-link></li>
-    </ul> -->
   </div>
 </template>
 
@@ -127,7 +115,7 @@ export default class Map extends mixins(Translatable) {
   get bounds(): any[] | null{
     const coordinates = this.eventLocationsForMarkers.map(evtLocation => evtLocation.coordinates);
     //only compute bounds if we have more than 1 coordinate
-    if(coordinates.length == 1){
+    if(coordinates.length <= 1){
       return null;
     }
     const result = getBbox(coordinates);
