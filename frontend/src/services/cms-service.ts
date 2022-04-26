@@ -26,6 +26,7 @@ interface CMS_Map{
   artists: CMS.Artist[];
   eventLocations: CMS.EventLocation[];
   pages: CMS.Page[];  
+  news: CMS.News [];
 }
 
 
@@ -44,6 +45,7 @@ class CMSService {
     artists: [],
     eventLocations: [],
     pages: [],
+    news: [],
   };
 
   constructor() {
@@ -179,6 +181,16 @@ class CMSService {
         .filter(item => item.active);
       // console.log("pages", this.cms.pages);
     }
+    
+    // load news
+    {
+      const newsUrl = `${baseUrl}/api/collections/get/news`;
+      const news = (await axios.get(newsUrl, config)).data;
+      const localizedKeys = ["title", "abstract", "content"]
+      this.cms.news= news.entries
+        .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
+        .map(entry => $cockpit.formatNews(entry));
+    }
 
     // load events (must be loaded last)
     {
@@ -193,6 +205,7 @@ class CMSService {
       //console.log("my events", this.cms.events.filter(e => e.title.fr =="Lotus"));
     }
 
+
     const range = $config.config.landing.range;
     // console.log('---- loaded',range,this.cms.allEvents.length,this.cms.allArtists.length,this.cms.allEventLocations.length)
 
@@ -205,6 +218,7 @@ class CMSService {
     this.cms.events = this.filterEventsByRange(range, this.cms.allEvents);
     this.cms.artists = this.filterArtistsByRange(range, this.cms.allArtists);
     this.cms.eventLocations = this.filterLocationsByRange(range, this.cms.allEventLocations);
+    this.cms.news = this.filterNewsByRange(range, this.cms.news);
   }
 
   private filterArtistsByRange(range, artists) {
@@ -235,7 +249,14 @@ class CMSService {
     return _events;
 
   }
+  
+  private filterNewsByRange(range, news) {
+    // TODO: how should we handle this, there is no date associated to the news itself
+    // for the time being we do nothing
+    return news;
+  }
 }
+
 
 //
 // services start with $

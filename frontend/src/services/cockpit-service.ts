@@ -49,6 +49,11 @@ class CockpitService {
     return result;
   }
 
+  formatNews(obj: any): CMS.News{
+    obj.created = new Date(obj._created * 1000);
+    return obj;
+  }
+
   formatLocalMedia(obj:any): CMS.LocalMedia{
 
     obj.path = this.absolutePathForLocalMedia(obj.path);
@@ -59,7 +64,6 @@ class CockpitService {
         obj.sizes[prop].path = this.absolutePathForLocalMedia(path);
       }
     }
-      // console.log("path", result.path);
 
     obj.created = new Date(obj.created * 1000);
     obj.modified = new Date(obj.modified * 1000);

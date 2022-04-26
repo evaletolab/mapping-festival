@@ -93,6 +93,26 @@ export namespace CMS {
 
   export type Coordinate = [Lng, Lat];
 
+  export interface News{
+    _id:string
+    slug:string,
+    highlighted: boolean,
+    featuredImage: LocalMedia,
+    title: {
+      fr: string,
+      en: string,
+    },
+    abstract:{
+      fr: string,
+      en: string,
+    },
+    content:{
+      fr: string,
+      en: string,
+    },
+    created: Date,
+  };
+
   export interface EventLocation {
     _id:string
     slug:string,
