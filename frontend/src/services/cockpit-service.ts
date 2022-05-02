@@ -52,6 +52,7 @@ class CockpitService {
   formatNews(obj: any): CMS.News{
     obj.created = new Date(obj._created * 1000);
     this.formatSlugFromCMS(obj);
+    this.formatLocalMedia(obj.featuredImage);
     return obj;
   }
 

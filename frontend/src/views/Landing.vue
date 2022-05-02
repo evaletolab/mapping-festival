@@ -23,6 +23,9 @@
 
     </div>
 
+    <div class="ui-font big destination">News</div>
+    <news-card-list />
+
     <!--------------- Main wrapper --------------------->
     <calendar limit="yes" gotop="yes" />
 
@@ -68,6 +71,7 @@ import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import Calendar from '../components/Calendar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
+import NewsCardList from '../components/NewsCardList.vue'
 
 
 @Component({
@@ -75,7 +79,8 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
     CMSIcons,
     PrimaryMenu,
     Toolbar,
-    Calendar
+    Calendar,
+    NewsCardList,
   },
 })
 export default class Landing extends mixins(Translatable) {

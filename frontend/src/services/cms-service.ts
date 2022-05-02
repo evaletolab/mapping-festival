@@ -68,6 +68,10 @@ class CMSService {
     return this.cms.events;
   }
 
+  public get news(): CMS.News[]{
+    return this.cms.news;
+  }
+
   public get eventLocations(): CMS.EventLocation[] {
     return this.cms.eventLocations;
   }
