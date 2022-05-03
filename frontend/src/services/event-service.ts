@@ -25,13 +25,6 @@ class EventService
            return result;
         }, [] as CMS.Artist[]);
     }
-
-    eventIsOfSpecialTypeLive(event: CMS.Event){
-        const result = event.typology == "Masterclass" || event.typology == "Performance" ||
-        event.typology == "Workshop";
-
-        return result;
-    }
     
     getSetsByLetter(lang = 'fr'): CMS.EventSetByType[]{
         let result: CMS.EventSetByType[] = []

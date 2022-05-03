@@ -80,7 +80,8 @@ export namespace CMS {
   }
 
   // export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
-  export const eventTypeLabel = ["Installation", "Performance", "Workshop", "Masterclass"] as const;
+  // export const eventTypeLabel = ["Installation", "Performance", "Workshop", "Masterclass"] as const;
+  export const eventTypeLabel = ["Performance", "Installation", "Concert", "Spectacle", "Conférence", "Workshop"] as const;
   export type eventType = typeof eventTypeLabel[number];
 
   export const eventSubTypeLabel = ["Parcours urbain", "Exposition", "Performance", "Nighclubbing", "Concert", "Workshop", "Table ronde", "Masterclass", "mappingTV"] as const;
