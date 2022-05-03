@@ -112,33 +112,22 @@ class CMSService {
     });
     const keys = Object.keys(calendar);
     return keys.map(key => {
-      calendar[key].events = calendar[key].events.sort((a,b)=>{
+      calendar[key].events = calendar[key].events.sort((a: CMS.Event, b: CMS.Event)=>{
+        const currentDate = key.split(".")[0];
 
-        // ensure performance is shown first
-        // presentation order
-        // lowest valid weight is 1
-        const sortWeigths = {
-            "Performance": 1,
-            "Installation": 8,
-            "Collection virtuelle": 3,
-            "Masterclass": 4,
-            "mppngTV": 5,
-            "Parcours urbain": 6,
-            "Workshop": 7,
-        };
-        const weightA = sortWeigths[a.typology] || 10;
-        const weightB = sortWeigths[b.typology] || 10;
-        const result = weightA - weightB;
-        if(result == 0){
-          // we are in same category so we want to "sub"sort on title
-          return a.title.fr.toLowerCase().localeCompare(b.title.fr.toLowerCase());
-        }else{
-          return result;
-        }
-        // return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
+        // fully non trimmed events
+        const eventA: CMS.Event = this.events.find(event => event._id == a._id)!;
+        const eventB: CMS.Event = this.events.find(event => event._id == b._id)!;
+
+        // FIX: improve date search (this will fail if event has 2 whens with same dayNumber, 
+        // ex: when 13.april and when 13.may)
+        const whenA = eventA.when.find(when => when.date == currentDate)!; 
+        const whenB = eventB.when.find(when => when.date == currentDate)!; 
+
+        return whenA.startTimeWeight - whenB.startTimeWeight;
       });
       return calendar[key] as CMS.Calendar;
-    })
+    });
   }
 
 
