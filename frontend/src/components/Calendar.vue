@@ -6,10 +6,6 @@
           :class="{'selected':menu.selected}" 
           :key="index"
           @click="onEventCategory(menu.name)" >{{getTypeLabel(menu.name)}}</a>
-        <a :class="{'selected':mppngTVFilter}"  @click="onMppngTV">
-          mappingTV
-        </a>
-        <!-- <a class="today" @click="onToday">today</a>           -->
     </section>
     <section v-if="gotop" class="gotop" @click="onTop"
             :class="{'exited': (scrollDirection > 0) }">
@@ -192,7 +188,7 @@ export default class Calendar extends mixins(Translatable)  {
   private isAll = true;
   private lastScrollTop = 0;
 
-   mppngTVFilter = false;
+  //  mppngTVFilter = false;
   scrollDirection = 0;
 
   timeoutID = -1;
@@ -220,17 +216,13 @@ export default class Calendar extends mixins(Translatable)  {
     return this.cache[key] = $cms.cms.events.filter(event => {
       // if "all"
       // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation       
-      if(!label || label == '' || label == 'all' && event.typology as string != "Collection virtuelle"){
+      if(!label || label == '' || label == 'all'){
         return true;
       }
 
 
-      if(label === this.mppngTVLabel.toLowerCase()){
-        return event.thematic === this.mppngTVLabel;
-      }else{
-        const filterPredicate = (event.typology||'').toLowerCase() == this.selected;
-        return filterPredicate;
-      }
+      const filterPredicate = (event.typology || '').toLowerCase() == this.selected;
+      return filterPredicate;
     });
   }
 
@@ -242,7 +234,8 @@ export default class Calendar extends mixins(Translatable)  {
   get calendar(): CMS.Calendar[] {
     const label = this.selected||'all';
 
-    const key = `calendar_${label} ${this.mppngTVFilter}`;
+    // const key = `calendar_${label} ${this.mppngTVFilter}`;
+    const key = `calendar_${label}`;
 
     //
     // local cache
@@ -293,23 +286,23 @@ export default class Calendar extends mixins(Translatable)  {
     // ensure performance is shown first
     // presentation order
     // lowest valid weight is 1
-    const sortWeigths = {
-        "Performance": 1,
-        "Installation": 2,
-        "Collection virtuelle": 3,
-        "Masterclass": 4,
-        "mppngTV": 5,
-        "Parcours urbain": 6,
-        "Workshop": 7,
-    };
+    // const sortWeigths = {
+    //     "Performance": 1,
+    //     "Installation": 2,
+    //     "Collection virtuelle": 3,
+    //     "Masterclass": 4,
+    //     "mppngTV": 5,
+    //     "Parcours urbain": 6,
+    //     "Workshop": 7,
+    // };
 
     this.cache['eventTypes'] = Object.keys(elems)
-    .map(cat => (elems[cat]))
-    .sort((a, b) =>{
-      const weightA = sortWeigths[a.name] || 10;
-      const weightB = sortWeigths[b.name] || 10;
-      return weightA - weightB;
-    });
+    .map(cat => (elems[cat]));
+    // .sort((a, b) =>{
+    //   const weightA = sortWeigths[a.name] || 10;
+    //   const weightB = sortWeigths[b.name] || 10;
+    //   return weightA - weightB;
+    // });
 
     return this.cache['eventTypes'];
   }
@@ -369,26 +362,17 @@ export default class Calendar extends mixins(Translatable)  {
       this.lastScrollTop = st <= 0 ? 0 : st; 
     }, false);
 
-    // if(this.limit){
-    //   clearTimeout(this.timeoutID);
-    //   this.timeoutID = setTimeout(this.onToday, 80);
-    // }
   }
 
   async onAll(){
-    this.mppngTVFilter = false;
+    // this.mppngTVFilter = false;
     this.$router.replace({ query: { selected: 'all' }}).catch(()=>{});    
   }
   
   async onEventCategory(name) {
     const label = (name||'all').toLowerCase();
-    this.mppngTVFilter = false;
+    // this.mppngTVFilter = false;
     this.$router.replace({ query: { selected: label }}).catch(()=>{});    
-  }
-
-  async onMppngTV() {
-    this.mppngTVFilter = !this.mppngTVFilter;
-    this.$router.replace({ query: { selected: "mappingTV" }}).catch(()=>{});    
   }
 
   async onEvent(event: CMS.Event) {
@@ -430,10 +414,6 @@ export default class Calendar extends mixins(Translatable)  {
   async onRouteUpdate(to) {
     const label = this.$route.query.selected as string;
     if(label) {
-      if(label === this.mppngTVLabel){
-        // console.log("filter is true");
-        this.mppngTVFilter = true;
-      }
       this.eventTypes.forEach(cat => {
         cat.selected = (cat.name.toLowerCase() === label);
       });     
@@ -443,10 +423,9 @@ export default class Calendar extends mixins(Translatable)  {
       // console.log("selected not set --------------------- ");
       this.selected = 'all';
       this.eventTypes.forEach(type => type.selected = false);   
-      this.mppngTVFilter = false;
     }
     this.$emit('calendar-update',this.selected);
-    this.isAll = !this.eventTypes.some(type => type.selected==true) && !this.mppngTVFilter;
+    this.isAll = !this.eventTypes.some(type => type.selected==true);
   }
 
 
