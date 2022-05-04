@@ -25,7 +25,7 @@
         {{t(elem.dayname)}} {{t(elem.monthname)}} {{elem.date}}th
       </h1>
 
-      <div class="prule "/>
+      <div class="prule margin-top1"/>
 
       <!-- day-title -->
 
