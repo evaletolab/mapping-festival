@@ -29,7 +29,7 @@
         {{t(elem.dayname)}} {{t(elem.monthname)}} {{elem.date}}th
       </h1>
 
-      <div class="prule margin-top1"/>
+      <div class="prule "/>
 
       <!-- day-title -->
 
@@ -45,7 +45,7 @@
           <div class="type">{{ (event.type) }} </div>      
         </div>
       </div>  -->
-      <div class="grid-container grid-container--fit">
+      <div class="grid-container grid-container--fill">
         <event-card v-for="(event, index) in elem.events" :key="index" :event="event" :date="elem.__date" />
       </div> 
     </div> 

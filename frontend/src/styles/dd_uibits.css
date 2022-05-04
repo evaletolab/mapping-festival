@@ -8,8 +8,8 @@
   /* color settings */
 
   --ui-background-color: black;
-  --ui-font-color: white;
-  --ui-border-color: white;
+  --ui-font-color: black;
+  --ui-border-color: black;
 
   --ui-hover-background-color: rgb(240, 240, 240);
   --ui-hover-text-color:rgb(120, 137, 145);

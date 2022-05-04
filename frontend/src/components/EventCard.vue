@@ -6,7 +6,7 @@
           <div class="text event-title">{{ t(event.title) }}</div>
           <div v-for="artist in artists" :key="artist._id">
             <div class="text artistname">{{artist.fullname}} </div>
-            <div class="text artist-country">&#8239;{{artist.country}}</div>
+            <div class="text artist-country">&#x202F;{{artist.country}}</div>
           </div>
           <div v-if="location" class="text event-location">{{t(location)}}</div>
 
@@ -15,22 +15,28 @@
 
           <div v-else>
             <!------------- Nice dates ----------->
-            <div v-if="realEvent.when.length < 2" >
-              <div class="text event-date" v-for="(when,index) in realEvent.when" :key="index">
-              {{when.start|shortdate}} 
+
+            <div class="text dates-wrapper">
+              
+              <div v-if="realEvent.when.length < 2" >
+                <div class="text event-date" v-for="(when,index) in realEvent.when" :key="index">
+                {{when.start|shortdate}}
+                </div>
+              </div>
+            
+              <div v-else>
+                <div class="text event-date" v-for="(interval, index) in intervals" :key="index">
+                  {{interval.shortDate}} /
+                </div>
               </div>
             </div>
-            <div v-else>
-              <div class="text event-date" v-for="(interval, index) in intervals" :key="index">
-                {{interval.shortDate}} 
-              </div>
-            </div>
+
             <!-- ------------------------------- -->
           </div>
-          <br>
-          <div class="text event-type">{{getTypeLabel(event.typology)}}</div>
+          <div class="text event-type">{{getTypeLabel(event.typology)}}
         </div>
-    </div>
+      </div>
+  </div>
 </template>
 
 <style scoped>
