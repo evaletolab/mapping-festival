@@ -9,7 +9,9 @@ import Landing from '../views/Landing.vue'
 import NotFound from '../views/NotFound.vue'
 import Page from '../views/Page.vue';
 import Program from '../views/Program.vue';
+import NewsList from '../views/NewsList.vue';
 import NewsItem from '../views/NewsItem.vue';
+
 
 Vue.use(VueRouter)
 
@@ -43,6 +45,11 @@ const routes: Array<RouteConfig> = [
     path: '/artists/:artist?',
     name: 'Artist',
     component: Artist
+  },
+  {
+    path: '/news',
+    name: 'NewsList',
+    component: NewsList
   },
   {
     path: '/news/:news',

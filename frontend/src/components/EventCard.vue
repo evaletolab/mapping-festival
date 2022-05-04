@@ -25,8 +25,8 @@
               </div>
             
               <div v-else>
-                <div class="text event-date" v-for="(interval, index) in intervals" :key="index">
-                  {{interval.shortDate}} /
+                <div class="text event-date">
+                  {{shortDatesAsString}}
                 </div>
               </div>
             </div>
@@ -114,6 +114,18 @@ export default class EventCard extends mixins(Translatable) {
 
   get artists(): CMS.ArtistWrap[]{
     return $event.artistsForEvent(this.event).map(a => new CMS.ArtistWrap(a));
+  }
+
+  get shortDatesAsString(): string{
+    let result = "";
+    for(let i = 0; i < this.intervals.length; i++){
+      if(i < this.intervals.length - 1){
+        result += `${this.intervals[i].shortDate} / `;
+      }else{
+        result += `${this.intervals[i].shortDate}`;
+      }
+    }
+    return result;
   }
 
   get location(): { fr: string, en: string } | null{
