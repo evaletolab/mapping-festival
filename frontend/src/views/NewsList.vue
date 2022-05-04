@@ -7,7 +7,7 @@
             </h4>
 
             <div class="ui-font big destination">
-                News
+                News (TODO)
             </div>
         </div>
 
