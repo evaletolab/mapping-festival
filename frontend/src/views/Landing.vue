@@ -2,19 +2,15 @@
   <div class="landing">
     <div class="header ">
       <div class="title">
+
         <h1 class="width7" v-html="config.landing.title1"></h1>
           <!-- <p class="">mp<br>pngfst<br>vl</p> -->
           <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
       </div>
 
-
     <div class="spiegel">
-        <!--super-->
         <img class="header-image" src="../images/mapping_header1.png">
     </div>
-
-
-
 
       <h4 class="spiegel align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">

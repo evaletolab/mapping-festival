@@ -4,10 +4,15 @@
   <!--         ---------         -->    
   <div class="page ">
     <div class="header hide-sm">
-      <h4 class="tagline  align-right">
+
+   <div class="spiegel">
+        <img class="header-image" src="../images/mapping_header1.png">
+    </div>
+
+      <!-- <h4 class="tagline  align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
           <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
-      </h4>
+      </h4> -->
 
       <div class="ui-font big destination">
         {{t(page.title)}}
