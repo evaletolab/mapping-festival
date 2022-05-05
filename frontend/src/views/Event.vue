@@ -5,6 +5,10 @@
   <div class="event">
 
     <div class="header hide-sm">
+
+    <!-- super -->
+
+
       <h4 class="tagline align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
           <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
@@ -59,22 +63,26 @@
       <div class="spiegel">
       <h4 class="width6 indent2 margin-top1">
 
-
         <!-- Price and public admittance limit -->
 
         <!-- <div class="item"></div> -->
         <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
-        <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
+        <!-- <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div> -->
+
+        <div class="item" v-if="event.ticketUrl">
+          <!-- {{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.– -->
+        <a :href="event.ticketUrl" target="_blank">---> {{t({fr: "Billetterie", en:"Ticketing"})}}</a>
+      </div>
       </h4>
 
-
+<!-- 
       <p class="indent2" v-if="event.ticketUrl">
         <a :href="event.ticketUrl" target="_blank">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
-      </p>
+      </p> -->
       </div>
 
-      <br>
-      <div class="spiegel">
+      
+      <div class="spiegel margin-top1">
         <p class="indent2 width5" v-html="t(event.header)"></p> 
         <div v-html="t(event.content)"/>
       </div>

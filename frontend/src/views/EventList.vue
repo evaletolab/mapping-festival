@@ -1,6 +1,8 @@
 <template>
   <div class="events">
     <div class="header hide-sm">
+
+    <!--super-->
       <h4 class="tagline  align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
           <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
@@ -9,6 +11,8 @@
       <div class="ui-font big destination">
         {{t(title)}}
       </div>
+
+
     </div>
 
     <!-- TOOLBAR -->

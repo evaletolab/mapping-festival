@@ -7,9 +7,23 @@
           <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
       </div>
 
-      <h4 class="tagline  align-right">
-          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
-          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
+
+    <div class="spiegel">
+        <!--super-->
+        <img class="header-image" src="https://img.freepik.com/vektoren-kostenlos/sammlung-charakter-tiere-niedlich-kawaii-auf-weissem-hintergrund_45981-320.jpg">
+    </div>
+
+
+
+
+      <h4 class="tagline align-right">
+          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">
+            <!-- {{title}} -->
+                        Mapping 2022<br><br>
+                        Visual audio and <br>deviant electronics festival
+
+            </div>
+         <!--  <div  v-html="t(config.landing.title3)"  class="hide-sm"/> -->
       </h4>
   
       <!-- EXTRA MENU SHORTCUT  -->
@@ -18,13 +32,18 @@
       </div>
 
       <div class="destination hide-sm">
-        
       </div>
 
     </div>
 
-    <div class="ui-font big destination">News</div>
+
+<div class="spiegel">
+    <h1 class="margin-top1">News</h1>
     <news-card-list />
+</div>
+<div class="spiegel">
+  <h1  class="margin-top2">Events</h1>
+</div>
 
     <!--------------- Main wrapper --------------------->
     <calendar limit="yes" gotop="yes" />

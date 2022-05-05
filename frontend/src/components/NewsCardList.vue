@@ -1,4 +1,5 @@
 <template>
+
   <div class="calendar">
     <div class="grid-container grid-container--fit">
       <news-card v-for="(newsItem, index) in news" :key="index" :newsItem="newsItem" />

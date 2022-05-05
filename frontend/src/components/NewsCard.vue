@@ -1,4 +1,5 @@
 <template>
+
     <div class="grid-element card" @click="navigateToNews">
         <lazy-img class="cover" :src="coverDesktop" />
         <div class="description"> 
@@ -6,6 +7,7 @@
           <div class="text">{{ t(newsItem.abstract) }} </div>
         </div>
     </div>
+    
 </template>
 
 <style scoped>

@@ -55,12 +55,25 @@
   }  
 
 
+  .header-image{
+    display: block;
+    width: 100%;
+    // object-fit: contain;
+    // object-position: 50% 50%;
+  }
+
+
+
+
+
   .page,
   .event,
   .events,
   .artist,
   .artists,
   .landing {
+
+    
 
     .header{
       /** BUG width overflow */

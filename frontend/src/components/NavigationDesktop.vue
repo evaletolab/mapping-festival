@@ -31,13 +31,12 @@
               <div class="ui-button height3 width8 menu"> 
                 <p class="vcenter">{{t(menu.name)}}</p> 
                 <div class="ui-icon vcenter align-right">
-                  <img class="inverted" src="/img/svg/dot.svg" alt="">
+                  <img class="" src="/img/svg/dot.svg" alt=""> <!-- class "inverted" -->
                 </div>
               </div>
             </a>
 
-            <!-- SHOULD NEVER USE -->
-            <br>
+          <div class="margin-top1"></div>
 
             <!-- NAV SECONDARY CONTENT -->
             <div class="menu-item-xs" v-for="menu in secondaryMenu" :key="menu.link"  >
