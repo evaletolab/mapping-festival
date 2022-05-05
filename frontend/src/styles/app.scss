@@ -56,10 +56,11 @@
 
 
   .header-image{
-    display: block;
+    // display: block;
     width: 100%;
-    // object-fit: contain;
-    // object-position: 50% 50%;
+    object-fit: contain;
+    object-position: 50% 50%;
+    z-index: -1;
   }
 
 

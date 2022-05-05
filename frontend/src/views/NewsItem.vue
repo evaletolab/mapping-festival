@@ -2,19 +2,26 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  <div class="news">
-    <div class="">
-        {{t(newsItem.title)}}
-    </div>
 
-    <img :src="newsItem.featuredImage.path" alt="">
+  <div class="spiegel">
+
+
+    <img class="width8 margin-top2" :src="newsItem.featuredImage.path" alt="">
+
+        <h1 class="margin-top2">
+        {{t(newsItem.title)}}
+    </h1>
 
     <!-- TOOLBAR -->
     <toolbar class="hide-lg hide-md" />
 
-    <div class="content spiegel margin-top1">
+    <div class=" spiegel margin-top2 width7 indent1">
       <div v-html="t(newsItem.content)"/>
     </div>
+
+    <div class="prule margin-top3"></div>
+    <div class=" margin-top4"></div>
+
   </div>
   
 </template>

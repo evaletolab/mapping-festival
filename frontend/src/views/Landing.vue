@@ -10,13 +10,13 @@
 
     <div class="spiegel">
         <!--super-->
-        <img class="header-image" src="https://img.freepik.com/vektoren-kostenlos/sammlung-charakter-tiere-niedlich-kawaii-auf-weissem-hintergrund_45981-320.jpg">
+        <img class="header-image" src="../images/mapping_header1.png">
     </div>
 
 
 
 
-      <h4 class="tagline align-right">
+      <h4 class="spiegel align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">
             <!-- {{title}} -->
                         Mapping 2022<br><br>
