@@ -15,7 +15,7 @@
 <script lang="ts">
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { mixins } from 'vue-class-component';
-import { $config, $cms, $i18n } from '../services';
+import { $config, $cms, $i18n, $news } from '../services';
 import { CMS } from "../models";
 import { Translatable } from '../mixins';
 import NewsCard from './NewsCard.vue';
@@ -29,8 +29,9 @@ export default class Calendar extends mixins(Translatable)  {
 
 
   get news() : CMS.News[] {
-    const result =  $cms.news;
-    console.log("news list --------------------------------------", result);
+    // const result =  $cms.news;
+    const maxNewsItemCount = 5;
+    const result = $news.getItems(maxNewsItemCount);
     return result;
   }
 
