@@ -180,7 +180,7 @@ class CMSService {
       const newsUrl = `${baseUrl}/api/collections/get/news`;
       const news = (await axios.get(newsUrl, config)).data;
       const localizedKeys = ["title", "abstract", "content"]
-      this.cms.news= news.entries
+      this.cms.news = news.entries
         .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
         .map(entry => $cockpit.formatNews(entry));
     }
