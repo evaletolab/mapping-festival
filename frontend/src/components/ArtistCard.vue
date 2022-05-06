@@ -27,6 +27,7 @@
     font-size:xx-small; 
     vertical-align:super;
   }
+  
   .artist-card-mobile
   {
     display: flex;
