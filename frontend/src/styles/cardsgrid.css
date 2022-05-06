@@ -59,6 +59,7 @@ padding: 0;
 }
 
 .grid-element .text.event-title{
+  font-weight: 550;
 font-size: calc(var(--font-size)*1.25);
 line-height: var(--line-height);
 margin-bottom: 0;
@@ -84,6 +85,8 @@ margin-left: calc(var(--gutter-width) * .25)
 .grid-element .text.event-location{
 font-size: calc(var(--font-size)*.75);
 line-height: calc(var(--line-height)*.75);
+margin-top: .5rem;
+
 }
 
 .grid-element .text.event-type{

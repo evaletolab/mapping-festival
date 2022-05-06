@@ -1,26 +1,53 @@
 <template>
   <div class="landing">
-    <div class="header ">
-      <div class="title">
 
-        <h1 class="width7" v-html="config.landing.title1"></h1>
-          <!-- <p class="">mp<br>pngfst<br>vl</p> -->
-          <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
+    <!-- ************************ -->
+    <!-- ******** Header ******** -->
+    <!-- ************************ -->
+
+    <div class="header-wrapper">
+
+      <div class="header-info">
+      <!-- 
+      config.landing.title1 : Mapping festival
+      config.landing.title2 : Visual audio…
+      config.landing.title3 : Geneva
+      -->
+      
+      <!------------->
+      <!-- Title 1 -->
+      <!------------->
+        <h2 class="" v-html="config.landing.title1"/> 
+        <!-- <h1 class="" v-html="t(config.landing.title1)"/> -->
+      
+      <!------------->
+      <!-- Title 2 -->
+      <!------------->
+        <!-- <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">
+          {{title}}</div> -->
+        <div class="">Visual audio and<br>deviant electronics</div>
+
+      <!------------->
+      <!--- Dates --->
+      <!------------->
+        <div class="margin-top1">19 &#8239; — &#8239; 29.5.2022</div>
+      
+      <!------------->
+      <!-- Title 3 -->
+      <!------------->
+      
+        <!--  <div  v-html="t(config.landing.title3)"  class="hide-sm"/> -->
+        <div  v-for="(title,index) in t(config.landing.title3).split('\n')" :key="index">
+        {{title}}</div>
+        
       </div>
 
-    <div class="spiegel">
-        <img class="header-image" src="../images/mapping_header1.png">
-    </div>
+      <!---------------------->
+      <!-- Background image -->
+      <!---------------------->
 
-      <h4 class="spiegel align-right">
-          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">
-            <!-- {{title}} -->
-                        Mapping 2022<br><br>
-                        Visual audio and <br>deviant electronics festival
+      <div class="header-image"></div>
 
-            </div>
-         <!--  <div  v-html="t(config.landing.title3)"  class="hide-sm"/> -->
-      </h4>
   
       <!-- EXTRA MENU SHORTCUT  -->
       <div class="menu-short hide">

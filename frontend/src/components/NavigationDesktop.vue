@@ -156,7 +156,7 @@ body.menu-open .page-sidebar {
       height: var(--nav-header-height);
       display: block;
       border-bottom: 1px solid var(--font-color);      
-      @media (max-width:426px) {
+      @media (max-width:476px) {
       height: 110px;
       h1{
         font-size: 22px;
