@@ -55,7 +55,7 @@
     position:absolute;
     top: 10px;
     left:10px;
-    z-index: 1000;
+    z-index: 10;
   }
 </style>
 

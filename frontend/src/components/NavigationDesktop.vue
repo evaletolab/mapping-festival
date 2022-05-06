@@ -122,7 +122,7 @@ body.menu-open .page-sidebar {
   height: 100vh;
   background: var(--body-color);
   display: block;     
-  z-index: 2;
+  z-index: 15;
   .header{
     border:none;
   }
