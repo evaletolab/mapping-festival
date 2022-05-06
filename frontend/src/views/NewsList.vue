@@ -2,19 +2,24 @@
     <div class="newsList">
         <div class="header hide-sm">
 
-          <div class="spiegel">
+          <!-- <div class="spiegel">
             <img class="header-image" src="../images/mapping_header1.png">
-          </div>
+          </div> -->
 
 
-            <h4 class="tagline  align-right">
+            <!-- <h4 class="tagline  align-right">
                 <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
                 <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
-            </h4>
+            </h4> -->
 
-            <div class="ui-font big destination">
-                News (TODO)
+            <div class="spiegel">
+                <h1 class="margin-top1">News</h1>
+                <news-card-list />
             </div>
+        </div>
+
+        <div>
+
         </div>
 
         <!-- TOOLBAR -->
@@ -37,11 +42,12 @@ import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
 import NewsCard from '../components/NewsCard.vue';
+import NewsCardList from '../components/NewsCardList.vue';
 
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu, NewsCard,
+    CMSIcons, Toolbar, PrimaryMenu, NewsCard, NewsCardList,
   }
 })
 export default class NewsList extends mixins(Translatable)  {

@@ -25,14 +25,19 @@ import NewsCard from './NewsCard.vue';
 })
 export default class Calendar extends mixins(Translatable)  {
 
+  @Prop({default: -1}) count!: number;
+
   defaultCover = "https://via.placeholder.com/150/000000/000000";
 
 
   get news() : CMS.News[] {
     // const result =  $cms.news;
-    const maxNewsItemCount = 5;
-    const result = $news.getItems(maxNewsItemCount);
-    return result;
+    if(this.count > 0){
+      const result = $news.getItems(this.count);
+      return result;
+    }else{
+      return $news.all;
+    }
   }
 
   get currentLang(): string{

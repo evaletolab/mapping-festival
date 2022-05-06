@@ -4,7 +4,8 @@ import { CMS } from "@/models";
 class NewsService
 {
     get all(): CMS.News[]{
-        return $cms.news;
+        return $cms.news
+        .sort((a, b) => b.created.getTime() - a.created.getTime());
     }
 
     get pinnedItems(): CMS.News[]{

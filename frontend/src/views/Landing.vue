@@ -67,7 +67,7 @@
 
 <div class="spiegel">
     <h1 class="margin-top1">News</h1>
-    <news-card-list />
+    <news-card-list :count="5" />
 </div>
 <div class="spiegel">
   <h1  class="margin-top2">Events</h1>
