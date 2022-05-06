@@ -21,6 +21,11 @@
             <section class="header pointer" @click="onHome">
               
               <!-- <h1 class="width7" v-html="config.landing.title1"></h1> -->
+                <h2 class="black" v-html="config.landing.title1"/> 
+                <div class="black">Visual audio and<br>deviant electronics</div>
+
+                <div class="margin-top1 black">19 &#8239; — &#8239; 29.5.2022</div>
+                <div class="black">Geneva</div>
 
 
               <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
@@ -153,6 +158,7 @@ body.menu-open .page-sidebar {
 
 
     section.header {
+      // background-color: black;
       height: var(--nav-header-height);
       display: block;
       border-bottom: 1px solid var(--font-color);      
