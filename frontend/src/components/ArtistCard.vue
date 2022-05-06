@@ -4,7 +4,7 @@
 
     <div class="artist-name-mobile">
       <span v-if="artist.artistName">{{artist.artistName}}</span>
-      <span v-if="artist.lastname">{{artist.lastname}}</span> {{artist.firstname}}<sup>{{artist.country}}</sup>
+      <span v-if="artist.lastname">{{artist.lastname}}</span> {{artist.firstname}} <sup>{{artist.country}}</sup>
     </div> 
 
     <div class="dot">•</div>
@@ -23,6 +23,10 @@
 </template>
 
 <style scoped>
+  sup {
+    font-size:xx-small; 
+    vertical-align:super;
+  }
   .artist-card-mobile
   {
     display: flex;
