@@ -6,7 +6,7 @@
     <!-- ******** Header ******** -->
     <!-- ************************ -->
 
-    <div class="header-wrapper">
+    <div class="header-wrapper hide-sm">
 
       <div class="header-info">
       <!-- 

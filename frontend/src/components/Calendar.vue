@@ -61,6 +61,7 @@
     overflow: hidden;
     overflow-x: auto;    
     font-size: 17px;
+    
     align-content: center;
     align-items: center;
     justify-content: flex-start;
@@ -82,7 +83,7 @@
 
     a{
       cursor: pointer;
-      text-transform: lowercase;
+      // text-transform: lowercase;
       color: var(--font-color);
       margin: 0 8px ;
       padding: 6px 0px 10px 0px;
@@ -102,6 +103,7 @@
 
       &.fas:not(.fa-selected){
         color: #777!important;
+        
       }
 
     }

@@ -16,7 +16,7 @@
     <!-- ******** Header ******** -->
     <!-- ************************ -->
 
-    <div class="header-wrapper">
+    <div class="header-wrapper hide-sm">
 
       <div class="header-info">
       <!-- 
@@ -126,10 +126,14 @@
       </div>
 
       <div v-if="socialMedia.length > 0">
-        <h4>Social media</h4>
-        <div class="social-media" v-for="media in socialMedia" :key="media.platform">
+        <h2 class="margin-top1 align-center">Social media</h2>
+
+      <div class="social-icons-wrapper">
+        <div class="social-media image" v-for="media in socialMedia" :key="media.platform">
           <SocialIcons :name="media.platform" :url="media.url"/> 
         </div>
+      </div>
+
       </div>
 
     </div>
@@ -159,12 +163,21 @@
     }
 
   }
-  img{
-    width:100%;
+  // img{
+  //   width:100%;
+  // }
+
+  .social-icons-wrapper{
+  display: flex;
   }
+
   .social-media{
-    display: inline-block;
-    margin-right: 20px;
+    // background-color: aqua;
+    // display: inline-block;
+    // margin-right: var(--gutter-width);
+    margin: auto;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
   }
 </style>
 
