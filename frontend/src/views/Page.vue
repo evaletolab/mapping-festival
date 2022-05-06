@@ -3,30 +3,84 @@
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->    
   <div class="page ">
-    <div class="header hide-sm">
+    <!-- <div class="header hide-sm"> -->
 
-   <div class="spiegel">
-        <img class="header-image" src="../images/mapping_header1.png">
-    </div>
+    <!-- ************************ -->
+    <!-- ******** Header ******** -->
+    <!-- ************************ -->
+
+    <div class="header-wrapper">
+
+      <div class="header-info">
+      <!-- 
+      config.landing.title1 : Mapping festival
+      config.landing.title2 : Visual audio…
+      config.landing.title3 : Geneva
+      -->
+      
+      <!------------->
+      <!-- Title 1 -->
+      <!------------->
+        <h2 class="white" v-html="config.landing.title1"/> 
+        <!-- <h1 class="" v-html="t(config.landing.title1)"/> -->
+      
+      <!------------->
+      <!-- Title 2 -->
+      <!------------->
+        <!-- <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">
+          {{title}}</div> -->
+        <div class="white">Visual audio and<br>deviant electronics</div>
+
+      <!------------->
+      <!--- Dates --->
+      <!------------->
+        <div class="margin-top1 white">19 &#8239; — &#8239; 29.5.2022</div>
+      
+      <!------------->
+      <!-- Title 3 -->
+      <!------------->
+      
+        <!--  <div  v-html="t(config.landing.title3)"  class="hide-sm"/> -->
+        <div  class="white" v-for="(title,index) in t(config.landing.title3).split('\n')" :key="index">
+        {{title}}</div>
+        
+      </div>
+
+      <!---------------------->
+      <!-- Background image -->
+      <!---------------------->
+
+      <div class="header-image"></div>
+
+
+    <!-- ************************ -->
+    <!-- ******* /Header ******** -->
+    <!-- ************************ -->
+
 
       <!-- <h4 class="tagline  align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
           <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
       </h4> -->
 
-      <div class="ui-font big destination">
-        {{t(page.title)}}
-      </div>
     </div>
 
     <!-- TOOLBAR -->
     <toolbar class="hide-lg hide-md" />
     <div class="content spiegel margin-top1">
-      <p v-html="t(page.header)"></p>
+
+            <div class="ui-font big destination">
+        {{t(page.title)}}
+      </div>
+
+      <p class="margin-top1" v-html="t(page.header)"></p>
       
       <p v-html="t(page.content)"></p>
 
     </div>
+
+<div class="prule margin-top5"></div>
+
 
   </div>
 </template>

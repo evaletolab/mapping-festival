@@ -85,7 +85,7 @@
       text-transform: lowercase;
       color: var(--font-color);
       margin: 0 8px ;
-      padding: 10px 0px;
+      padding: 6px 0px 10px 0px;
       padding-bottom: 0;
       text-decoration: none;
       line-height: 30px;

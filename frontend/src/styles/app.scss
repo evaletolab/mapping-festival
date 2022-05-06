@@ -64,7 +64,7 @@
 
     .header-info{
       position: absolute;
-      background-color: greenyellow;
+      background-color: hsla(0,0,0,85%);
       margin-top: var(--gutter-width);
       margin-left: var(--gutter-width);
       margin-right: var(--gutter-width);
@@ -83,11 +83,11 @@
       object-fit: cover;
       object-position: 50% 50%;
       z-index: -1;
-      background-image: url("./images/mapping_header3.png");
+      background-image: url("./images/mapping_header3b.png");
     }
     @media only screen and (max-width: 476px)
     {.header-image {
-      background-image: url("./images/mapping_header2.png");
+      background-image: url("./images/mapping_header2b.png");
      }}
 
     @media (max-width:476px) {
@@ -98,12 +98,11 @@
     .header-wrapper{
       /** BUG width overflow */
       // background-color: lightblue;
-
-      // overflow: hidden;
+      position: relative;
+      overflow: hidden;
       height: calc(var(--nav-header-height) + var(--gutter-width));
       width: auto;
       border-bottom: 1px solid var(--font-color);
-      position: relative;
 
       .tagline{
         border-top: none;

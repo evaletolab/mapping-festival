@@ -2,6 +2,7 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
+  
 
   <div class="spiegel">
 

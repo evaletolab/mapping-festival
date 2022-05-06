@@ -1,5 +1,5 @@
 <template>
-  <div class="landing">
+  <div class="landing hide-sms">
 
     <!-- ************************ -->
     <!-- ******** Header ******** -->
@@ -17,7 +17,7 @@
       <!------------->
       <!-- Title 1 -->
       <!------------->
-        <h2 class="" v-html="config.landing.title1"/> 
+        <h2 class="white" v-html="config.landing.title1"/> 
         <!-- <h1 class="" v-html="t(config.landing.title1)"/> -->
       
       <!------------->
@@ -25,19 +25,19 @@
       <!------------->
         <!-- <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">
           {{title}}</div> -->
-        <div class="">Visual audio and<br>deviant electronics</div>
+        <div class="white">Visual audio and<br>deviant electronics</div>
 
       <!------------->
       <!--- Dates --->
       <!------------->
-        <div class="margin-top1">19 &#8239; — &#8239; 29.5.2022</div>
+        <div class="margin-top1 white">19 &#8239; — &#8239; 29.5.2022</div>
       
       <!------------->
       <!-- Title 3 -->
       <!------------->
       
         <!--  <div  v-html="t(config.landing.title3)"  class="hide-sm"/> -->
-        <div  v-for="(title,index) in t(config.landing.title3).split('\n')" :key="index">
+        <div  class="white" v-for="(title,index) in t(config.landing.title3).split('\n')" :key="index">
         {{title}}</div>
         
       </div>
@@ -47,6 +47,11 @@
       <!---------------------->
 
       <div class="header-image"></div>
+
+
+    <!-- ************************ -->
+    <!-- ******* /Header ******** -->
+    <!-- ************************ -->
 
   
       <!-- EXTRA MENU SHORTCUT  -->
