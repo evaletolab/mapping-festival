@@ -116,7 +116,7 @@
         <!-- Price and public admittance limit -->
 
         <!-- <div class="item"></div> -->
-        <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
+        <div class="item">{{t({fr:"Prix", en:"Price"})}}: {{ price }}</div>
         <!-- <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div> -->
 
         <div class="item" v-if="event.ticketUrl">
@@ -335,8 +335,15 @@ export default class Event extends mixins(Translatable) {
 
   get intervals(): CMS.Interval[]{
     const intervals = new CMS.EventWrap(this.event).intervals;
-    console.log("intevals", intervals);
+    // console.log("intevals", intervals);
     return intervals;
+  }
+
+  get price(): string{
+    if(this.event.price == 0){
+      return this.t({fr: "gratuit", en:"free"}) as string;
+    }
+    return `CHF ${this.event.price}.-`;
   }
 
 
