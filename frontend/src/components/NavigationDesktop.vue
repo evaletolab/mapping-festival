@@ -21,11 +21,17 @@
             <section class="header pointer" @click="onHome">
               
               <!-- <h1 class="width7" v-html="config.landing.title1"></h1> -->
+              <div v-if="!isMobileView">
                 <h2 class="black" v-html="config.landing.title1"/> 
                 <div class="black">Visual audio and<br>deviant electronics</div>
 
                 <div class="margin-top1 black">19 &#8239; — &#8239; 29.5.2022</div>
                 <div class="black">Geneva</div>
+              </div>
+              <div v-else>
+                <h2 class="black" v-html="config.landing.title1"/> 
+                <div class="black">Visual audio and<br>deviant electronics<br>19 &#8239; — &#8239; 29.5.2022</div>
+              </div>
 
 
               <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
@@ -220,6 +226,12 @@ export default class NavigationDesktop extends mixins(Translatable) {
   stickyNav = 0;
   displayMenu = false;
 
+  screenWidth = 0;
+
+  get isMobileView(){
+    return this.screenWidth <= 476;
+  }
+
   get config(){
     return $config.store.config;
   }
@@ -272,6 +284,22 @@ export default class NavigationDesktop extends mixins(Translatable) {
       // this.lastScrollTop = st <= 0 ? 0 : st; 
     }, false);
 
+
+    window.addEventListener('resize', this.onResize);
+    this.computeScreenWidth();
+
+  }
+
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize);
+  }
+  
+  computeScreenWidth(){
+    this.screenWidth = window.innerWidth;
+  }
+
+  onResize(){
+    this.computeScreenWidth();
   }
 
   onDark(){
