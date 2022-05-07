@@ -2,28 +2,35 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
-  
+  <div class="news-item">
 
-  <div class="spiegel">
-
-
-    <img class="width8 margin-top2" :src="newsItem.featuredImage.path" alt="">
-
-        <h1 class="margin-top2">
-        {{t(newsItem.title)}}
-    </h1>
-
-    <!-- TOOLBAR -->
-    <toolbar class="hide-lg hide-md" />
-
-    <div class=" spiegel margin-top2 width7 indent1">
-      <div v-html="t(newsItem.content)"/>
+    <div class="header hide-sm">
+      <div class="header-wrapper hide-sm">
+        <header-info />
+      </div>
     </div>
+    <div class="spiegel">
 
-    <div class="prule margin-top3"></div>
-    <div class=" margin-top4"></div>
 
+      <img class="width8 margin-top2" :src="newsItem.featuredImage.path" alt="">
+
+          <h1 class="margin-top2">
+          {{t(newsItem.title)}}
+      </h1>
+
+      <!-- TOOLBAR -->
+      <toolbar class="hide-lg hide-md" />
+
+      <div class=" spiegel margin-top2 width7 indent1">
+        <div v-html="t(newsItem.content)"/>
+      </div>
+
+      <div class="prule margin-top3"></div>
+      <div class=" margin-top4"></div>
+
+    </div>
   </div>
+
   
 </template>
 
@@ -95,6 +102,7 @@ import { $config, $news, $i18n } from '../services';
 
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
+import HeaderInfo from '../components/HeaderInfo.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -102,7 +110,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, 
+    CMSIcons, Toolbar, HeaderInfo, 
   }
 })
 export default class NewsItem extends mixins(Translatable) {

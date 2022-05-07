@@ -11,47 +11,7 @@
     <!-- ************************ -->
 
     <div class="header-wrapper hide-sm">
-
-      <div class="header-info">
-      <!-- 
-      config.landing.title1 : Mapping festival
-      config.landing.title2 : Visual audio…
-      config.landing.title3 : Geneva
-      -->
-      
-      <!------------->
-      <!-- Title 1 -->
-      <!------------->
-        <h2 class="white" v-html="config.landing.title1"/> 
-        <!-- <h1 class="" v-html="t(config.landing.title1)"/> -->
-      
-      <!------------->
-      <!-- Title 2 -->
-      <!------------->
-        <!-- <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">
-          {{title}}</div> -->
-        <div class="white">Visual audio and<br>deviant electronics</div>
-
-      <!------------->
-      <!--- Dates --->
-      <!------------->
-        <div class="margin-top1 white">19 &#8239; — &#8239; 29.5.2022</div>
-      
-      <!------------->
-      <!-- Title 3 -->
-      <!------------->
-      
-        <!--  <div  v-html="t(config.landing.title3)"  class="hide-sm"/> -->
-        <div  class="white" v-for="(title,index) in t(config.landing.title3).split('\n')" :key="index">
-        {{title}}</div>
-        
-      </div>
-
-      <!---------------------->
-      <!-- Background image -->
-      <!---------------------->
-
-      <div class="header-image"></div>
+      <header-info />
 
     </div>
 
@@ -303,6 +263,7 @@ import VideoPlayer from '../components/VideoPlayer.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
 import SoundCloud from 'vue-soundcloud-player';
 import SpotCard from '../components/SpotCard.vue';
+import HeaderInfo from '../components/HeaderInfo.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -310,7 +271,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SpotCard
+    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SpotCard, HeaderInfo,
   }
 })
 export default class Event extends mixins(Translatable) {
