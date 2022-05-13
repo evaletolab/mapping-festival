@@ -2,10 +2,14 @@
   <div class="calendar">
     <section class="secondary filters">
         <a class="fas" :class="{'fa-selected fa-times':!isAll, 'fa-selected fa-sliders-h':isAll }" @click="onAll"></a> 
-        <a v-for="(menu,index) in eventTypes" 
+        <!-- <a v-for="(menu,index) in eventTypes" 
           :class="{'selected':menu.selected}" 
           :key="index"
-          @click="onEventCategory(menu.name)" >{{getTypeLabel(menu.name)}}</a>
+          @click="onEventCategory(menu.name)" >{{getTypeLabel(menu.name)}}</a> -->
+        <a v-for="(datePickerItem,index) in datePickerItems" 
+          :class="{'selected':datePickerItem.selected}" 
+          :key="index"
+          @click="onDatePicked(datePickerItem)">{{datePickerItem.day}}/{{datePickerItem.month}}</a>
     </section>
     <section v-if="gotop" class="gotop" @click="onTop"
             :class="{'exited': (scrollDirection > 0) }">
@@ -14,9 +18,8 @@
       </button>
     </section>
 
-    <div class="grid day-wrapper " v-for="elem in calendar" :key="elem._id" :id="elem._id">
+    <div class="grid day-wrapper " v-for="elem in filteredCalendar" :key="elem._id" :id="elem._id">
 
-      <!-- <div class="day-title"> -->
       <br>
       <h1 class="capitalize" v-if="currentLang=='fr'">
         {{t(elem.dayname)}} {{elem.date}} {{t(elem.monthname)}}
@@ -27,20 +30,6 @@
 
       <div class="prule margin-top1"/>
 
-      <!-- day-title -->
-
-      <!-- <div class="grid-container grid-container--fit">
-        <div class="grid-element event" 
-            v-for="(event,index) in elem.events" 
-            :key="index" 
-            @click="onEvent(event)">
-          <lazy-img :src="getBackground(event)" />
-
-          <div class="title">{{ t(event.title) }} </div>      
-          <div class="when">{{ event.when[0].startTime }} </div>
-          <div class="type">{{ (event.type) }} </div>      
-        </div>
-      </div>  -->
       <div class="grid-container grid-container--fill">
         <event-card v-for="(event, index) in elem.events" :key="index" :event="event" :date="elem.__date" />
       </div> 
@@ -182,21 +171,19 @@ import EventCard from './EventCard.vue';
   components: { LazyImg, EventCard }
 })
 export default class Calendar extends mixins(Translatable)  {
-  //
-  // "emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
   private selected = '';
   private cache = {};
   private now = Date.now();
   private isAll = true;
   private lastScrollTop = 0;
 
-  //  mppngTVFilter = false;
+  private datePickerItems: CMS.CalendarDatePickerItem[] = [];
+
   scrollDirection = 0;
 
   timeoutID = -1;
 
-
-  mppngTVLabel = "mappingTV";
+  selectedDate: CMS.CalendarDatePickerItem | null = null;
 
   
   @Prop() readonly limit!: boolean;
@@ -208,24 +195,25 @@ export default class Calendar extends mixins(Translatable)  {
   get events() {
     const label = (this.selected||'').toLowerCase();
 
-    // const key = `events_${label} ${this.mppngTVFilter}`;
     const key = `events_${label}`;
 
     if(this.cache[key]){
       return this.cache[key]
     }
 
-    return this.cache[key] = $cms.cms.events.filter(event => {
-      // if "all"
-      // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation       
-      if(!label || label == '' || label == 'all'){
-        return true;
-      }
+    // return this.cache[key] = $cms.cms.events.filter(event => {
+    //   // if "all"
+    //   // all now defaults to Live (temp solution) i.e. all categies except Pacours Urbain, Collection virt and Installation       
+    //   if(!label || label == '' || label == 'all'){
+    //     return true;
+    //   }
 
 
-      const filterPredicate = (event.typology || '').toLowerCase() == this.selected;
-      return filterPredicate;
-    });
+    //   const filterPredicate = (event.typology || '').toLowerCase() == this.selected;
+    //   return filterPredicate;
+    // });
+    
+    return this.cache[key] = $cms.cms.events;
   }
 
   get currentLang(): string{
@@ -271,7 +259,24 @@ export default class Calendar extends mixins(Translatable)  {
       // }
     }
 
+    console.log("calendar", this.cache[key]);
+
     return this.cache[key];
+  }
+
+  get filteredCalendar(): CMS.Calendar[]{
+    
+    if(!this.selectedDate){
+      return this.calendar;
+    }else{
+      // only select entry for selected date
+      const result = this.calendar.filter((cal: CMS.Calendar) => {
+        const calDate = new Date(cal.moment);
+        return calDate.getDate() == parseInt(this.selectedDate!.day) && (calDate.getMonth() + 1) == parseInt(this.selectedDate!.month);
+      });
+
+      return result;
+    }
   }
 
   get eventTypes() {
@@ -285,26 +290,9 @@ export default class Calendar extends mixins(Translatable)  {
       (elems[label.toLowerCase()] = {selected:(label.toLowerCase() === this.selected),name:label})
     });
     
-    // ensure performance is shown first
-    // presentation order
-    // lowest valid weight is 1
-    // const sortWeigths = {
-    //     "Performance": 1,
-    //     "Installation": 2,
-    //     "Collection virtuelle": 3,
-    //     "Masterclass": 4,
-    //     "mppngTV": 5,
-    //     "Parcours urbain": 6,
-    //     "Workshop": 7,
-    // };
 
     this.cache['eventTypes'] = Object.keys(elems)
     .map(cat => (elems[cat]));
-    // .sort((a, b) =>{
-    //   const weightA = sortWeigths[a.name] || 10;
-    //   const weightB = sortWeigths[b.name] || 10;
-    //   return weightA - weightB;
-    // });
 
     return this.cache['eventTypes'];
   }
@@ -345,7 +333,14 @@ export default class Calendar extends mixins(Translatable)  {
   }  
 
   async mounted(){
-    this.selected = this.$route.query.selected as string;
+    // this.selected = this.$route.query.selected as string;
+
+    {
+      // order important in this block
+      this.datePickerItems = $cms.getFestivalDatePickerItems();
+      this.checkSelectedDateQueryParam();
+    }
+
     window.addEventListener("scroll", () => { 
       const st = window.pageYOffset || document.documentElement.scrollTop;
       //
@@ -367,14 +362,19 @@ export default class Calendar extends mixins(Translatable)  {
   }
 
   async onAll(){
-    // this.mppngTVFilter = false;
-    this.$router.replace({ query: { selected: 'all' }}).catch(()=>{});    
+    // this.$router.replace({ query: { selected: 'all' }}).catch(()=>{}); 
+    this.$router.replace({ query: { selectedDate: 'all' }}).catch(()=>{}); 
   }
   
-  async onEventCategory(name) {
-    const label = (name||'all').toLowerCase();
-    // this.mppngTVFilter = false;
-    this.$router.replace({ query: { selected: label }}).catch(()=>{});    
+  // async onEventCategory(name) {
+  //   const label = (name||'all').toLowerCase();
+  //   // this.mppngTVFilter = false;
+  //   this.$router.replace({ query: { selected: label }}).catch(()=>{});    
+  // }
+
+  async onDatePicked(datePickerItem: CMS.CalendarDatePickerItem){
+    const queryParamValue = encodeURIComponent(`${datePickerItem.day}-${datePickerItem.month}`);
+    this.$router.replace({ query: { selectedDate: queryParamValue }}).catch(()=>{});    
   }
 
   async onEvent(event: CMS.Event) {
@@ -412,24 +412,66 @@ export default class Calendar extends mixins(Translatable)  {
     this.scrollToTargetAdjusted(element);
   }  
 
-  @Watch('$route', { immediate: true, deep: true })
-  async onRouteUpdate(to) {
-    const label = this.$route.query.selected as string;
-    if(label) {
-      this.eventTypes.forEach(cat => {
-        cat.selected = (cat.name.toLowerCase() === label);
-      });     
-      this.selected = label;
-      // console.log("selected has changed to ", this.selected);
-    }else{
-      // console.log("selected not set --------------------- ");
-      this.selected = 'all';
-      this.eventTypes.forEach(type => type.selected = false);   
+  checkSelectedDateQueryParam(){
+
+    // a func to parse a selectedDate in query param form
+    const parseSelectedDate = (queryParamValue:string) : CMS.CalendarDatePickerItem | null => {
+      if(!queryParamValue){
+        return null;
+      }
+      const regex = /(\d\d)-(\d\d)/;
+
+      const match = queryParamValue.match(regex);
+      if(!match){
+        return null;
+      }
+
+      return {
+        day: match[1],
+        month: match[2],
+        selected: true,
+      };
     }
-    this.$emit('calendar-update',this.selected);
-    this.isAll = !this.eventTypes.some(type => type.selected==true);
+    
+    const selectedDateQueryStr = this.$route.query.selectedDate as string;
+    const selectedDatePickerItem = parseSelectedDate(selectedDateQueryStr);
+    if($cms.calendarContainsDatePickerItem(selectedDatePickerItem)) {
+      // console.log("selected has changed to ", this.selected);
+      console.log("youpi we got a valid selected date", selectedDatePickerItem);
+      this.selectedDate = selectedDatePickerItem;
+      this.datePickerItems.forEach(item =>{
+        item.selected = false;
+        if(item.day == this.selectedDate!.day && item.month == this.selectedDate!.month){
+          item.selected = true;
+        }
+      });  
+    }else{
+      console.log("not youpi", selectedDatePickerItem);
+      // console.log("selected not set --------------------- ");
+      this.selectedDate = null;
+      this.datePickerItems.forEach(item => item.selected = false);  
+    }
+    // this.$emit('calendar-update',this.selected);
+    this.isAll = !this.datePickerItems.some(item => item.selected==true);
   }
 
-
+  @Watch('$route', { immediate: true, deep: true })
+  async onRouteUpdate(to) {
+    // const label = this.$route.query.selected as string;
+    // if(label) {
+    //   this.eventTypes.forEach(cat => {
+    //     cat.selected = (cat.name.toLowerCase() === label);
+    //   });     
+    //   this.selected = label;
+    //   // console.log("selected has changed to ", this.selected);
+    // }else{
+    //   // console.log("selected not set --------------------- ");
+    //   this.selected = 'all';
+    //   this.eventTypes.forEach(type => type.selected = false);   
+    // }
+    // this.$emit('calendar-update',this.selected);
+    // this.isAll = !this.eventTypes.some(type => type.selected==true);
+    this.checkSelectedDateQueryParam();
+  }
 }
 </script>
