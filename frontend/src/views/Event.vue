@@ -68,43 +68,24 @@
 
       <!-- ABOUT -->
       <div class="spiegel">
-      <h4 class="width6 indent2 margin-top1">
+      <h5 class="width6 indent2 margin-top1">
 
         <!-- Price and public admittance limit -->
-        <div class="item">{{t({fr:"Prix", en:"Price"})}}: {{ price }}</div>
-        <!-- <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div> -->
+        <div class="item">{{t({fr:"Tarif", en:"Price"})}}: {{ price }} <span class="" v-if="event.ticketUrl">-->
+        <a :href="event.ticketUrl" target="_blank"> {{t({fr: "Billetterie", en:"Ticketing"})}}</a>
+      </span></div>
 
-        <div class="item" v-if="event.ticketUrl">
-          <!-- {{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.– -->
-        <a :href="event.ticketUrl" target="_blank">--> {{t({fr: "Billetterie", en:"Ticketing"})}}</a>
-      </div>
-      </h4>
+      <!-- <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div> -->
       <!-- 
       <p class="indent2" v-if="event.ticketUrl">
         <a :href="event.ticketUrl" target="_blank">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
       </p> -->
-      </div>
 
-      
-      <div class="spiegel margin-top1">
-        <p class="indent2 width5" v-html="t(event.header)"></p> 
-        <div v-html="t(event.content)"/>
-      </div>
-
-      <!--
-      <p v-if="event.notes" v-html="t(event.notes)" />
-      -->
-
-      <!-- Dates -->
-
-      <div class="spiegel">
-
-        <h5 class="indent2 width6 margin-top1">
+            <!-- Dates -->
           <div v-if="event.when.length < 2" >
             <div class="" v-for="(when,index) in event.when" :key="index">
-
-            {{when.start|shortdate}} <br>{{when.startTime}} — {{when.endTime}}
-            <span v-if="eventLocation" > -->  </span>
+            {{when.start|shortdate}} | {{when.startTime}} — {{when.endTime}}
+            <span v-if="eventLocation" >--></span>
             <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
               {{t(eventLocation.name)}}
             </router-link>
@@ -121,6 +102,21 @@
           </div>
         </h5>
       </div>
+
+
+
+
+      
+      <div class="spiegel margin-top1">
+        <p class="indent2 width5" v-html="t(event.header)"></p> 
+        <div v-html="t(event.content)"/>
+      </div>
+
+      <!--
+      <p v-if="event.notes" v-html="t(event.notes)" />
+      -->
+
+
 
 
       <div class="spiegel">
@@ -352,7 +348,7 @@ export default class Event extends mixins(Translatable) {
 
   get price(): string{
     if(this.event.price == 0){
-      return this.t({fr: "gratuit", en:"free"}) as string;
+      return this.t({fr: "Entrée libre", en:"Free"}) as string;
     }
     return `CHF ${this.event.price}.-`;
   }
