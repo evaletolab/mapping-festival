@@ -104,7 +104,7 @@
       overflow: hidden;
       height: calc(var(--nav-header-height) + var(--gutter-width));
       width: auto;
-      border-bottom: 1px solid var(--font-color);
+      border-bottom: 1px solid var(--border-color);
 
       .tagline{
         border-top: none;

@@ -42,35 +42,34 @@
               <div class="ui-button height3 width8 menu"> 
                 <p class="vcenter">{{t(menu.name)}}</p> 
                 <div class="ui-icon vcenter align-right">
-                  <img class="" src="/img/svg/dot.svg" alt=""> <!-- class "inverted" -->
+                  <img class="inverted" src="/img/svg/dot.svg" alt=""> <!-- class "inverted" -->
                 </div>
               </div>
             </a>
 
-          <div class="margin-top1"></div>
-
+<br>
             <!-- NAV SECONDARY CONTENT -->
             <div class="menu-item-xs" v-for="menu in secondaryMenu" :key="menu.link"  >
               <RouterLink @click.native="onClose()" :to="menu.link"> {{t(menu.name)}}</RouterLink>
             </div>
-
-            <br>
-
+<br>
+            <div class="prule"></div>
+            
 
             <!-- NAV ACTIONS CONTENT -->
             <div class="menu-item-xs">
               <language-selector class=""/>
             </div>
-
-            <br>
+<br>
+            <div class=""></div>
 
             <!-- <div class="menu-item-xs" @click="onDark"><i class="fas fa-moon "></i> Night mode</div> -->
 
             <!-- NAV FOOTER CONTENT -->
-            <div class="menu-item-xs" v-for="menu in footerMenu" :key="menu.link">
-                <a v-if="externalLink(menu.link)" @click="onClose()" :href="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</a>
+            <span class="menu-item-xs" v-for="menu in footerMenu" :key="menu.link">
+                <a class="button" v-if="externalLink(menu.link)" @click="onClose()" :href="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</a>
                 <RouterLink v-else @click.native="onClose()" :to="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</RouterLink>
-            </div>
+            </span>
         </aside>
     </div>
 </template>

@@ -54,7 +54,7 @@ font-weight: 450;
 }
 
 .grid-element .shadow{
-  text-shadow: 0px 0px 20px rgba(0,0,0,0.7);
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.73);
     }
 
 .grid-element .text.dates-wrapper{

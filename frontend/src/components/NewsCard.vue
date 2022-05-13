@@ -16,7 +16,7 @@
   .card{
       position: relative;
       cursor: pointer;
-      border-bottom: 1px solid var(--main-font-color);
+      border-bottom: 1px solid var(--border-color);
   }
 
   .grid-element {
@@ -61,8 +61,8 @@
   }
 
   .news-description{
-    font-size: calc(min((var(--font-size) * .75), 15px));
-    line-height: calc(min((var(--line-height) * .75), 19px));
+    font-size: calc(min((var(--font-size) * .75), 14px));
+    line-height: calc(min((var(--line-height) * .75), 17.5px));
     font-weight: 400;
     color:rgb(148, 148, 148);
     padding-top:.38rem;

@@ -35,7 +35,7 @@
     <div class="content">
 
       <!-- HEADER -->
-      <section class="header-event text-shadow" :style="backgroundImage">    
+      <section class="header-event shadow" :style="backgroundImage">    
        
         <!-- <p v-if="date" class="ui-font big align-right text-shadow">{{date|shortdate}}</p> -->
 
@@ -51,11 +51,10 @@
             </div>
           </div> -->
           <!-- ------------------------------- -->
-
         <div class="event-title">{{t(event.title)}}</div>
-        <div class="artist-name-wrapper" v-for="artist in artists" :key="artist._id">
+        <div class="artist-name-wrapper " v-for="artist in artists" :key="artist._id">
           <span class="artist-name">
-              {{artist.fullname}}</span> <span class="artist-country">{{artist.country}}</span>
+              {{artist.fullname}}</span> <span class="artist-country ">{{artist.country}}</span>
         </div>
         <span class="event-location" v-if="eventLocation" >  -->  </span>
               <router-link v-if="eventLocation" class="simple-link event-location white" :to="`/map/${eventLocation.slug}`">
@@ -93,7 +92,7 @@
           </div>
           <div v-else>
             <div class="interval item" v-for="(interval, index) in intervals" :key="index">
-              {{interval.shortDate}} <br>{{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+              {{interval.shortDate}} | {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
               <span v-if="eventLocation" > -->  </span>
               <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
                 {{t(eventLocation.name)}}
@@ -103,10 +102,6 @@
         </h5>
       </div>
 
-
-
-
-      
       <div class="spiegel margin-top1">
         <p class="indent2 width5" v-html="t(event.header)"></p> 
         <div v-html="t(event.content)"/>
@@ -220,41 +215,38 @@
     }
 
     .event-title{
-      font-weight: 550;
-    font-size: calc(var(--font-size)*1.25);
-    line-height: var(--line-height);
+    font-weight: 550;
+    font-size: calc(var(--font-size)*2.5);
+    line-height: calc(var(--line-height)*2);
     margin-bottom: 0;
     padding: 0;
     }
 
-    .artistname{
+    .artist-name{
     display:inline-block;
-    font-size: calc(var(--font-size)*1);
-    line-height: calc(var(--line-height)*.75);
+    font-size: calc(var(--font-size)*1.5);
+    line-height: calc(var(--line-height)*1.5);
     /*word-break: break-all;*/
     }
 
     .artist-country{
     font-weight: 650;
     display:inline-block;
-    font-size: calc(var(--font-size)*.5);
-    transform: translateY(calc(-1 * var(--image-to-x)));
+    font-size: calc(var(--font-size)*2);
+    transform: translateY(calc(-2 * var(--image-to-x)));
     margin-left: calc(var(--gutter-width) * -.15)
     }
 
     .event-location{
-    font-size: calc(var(--font-size)*.75);
-    line-height: calc(var(--line-height)*.75);
+    font-size: calc(var(--font-size)*1.5);
+    line-height: calc(var(--line-height)*1.5);
     margin-top: .5rem;
 
     }
 
     .event-type{
-    font-size: calc(var(--font-size)*.75);
-    line-height: var(--line-height);
-    /* position: absolute;
-    bottom: 0;
-    right:0; */
+    font-size: calc(var(--font-size)*1.2);
+    line-height: calc(var(--line-height)*1.2);
     }
 
     .artist-country{

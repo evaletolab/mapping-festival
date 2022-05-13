@@ -34,7 +34,7 @@
     align-items: center;
     cursor: pointer;
     height: 70px;
-    border-top: 1px solid var(--font-color);
+    border-top: 1px solid var(--border-color);
   }
 
   .portrait-mobile
