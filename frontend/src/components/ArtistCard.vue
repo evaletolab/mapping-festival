@@ -120,11 +120,12 @@ export default class ArtistCard extends Vue {
     }
 
     let secondLine = "";
+    const supStyle = 'style="font-size:xx-small;vertical-align:super"';
     if(this.artist.artistName){
-      secondLine = `${this.artist.lastname} ${this.artist.firstname} <sup>${this.artist.country}</sup>`;
+      secondLine = `${this.artist.lastname} ${this.artist.firstname} <sup ${supStyle}>${this.artist.country}</sup>`;
     }else{
       const lastName = (this.artist.lastname && this.artist.artistName) ? `${this.artist.lastname} ` : "";
-      secondLine = `${lastName}${this.artist.firstname} <sup>${this.artist.country}</sup>`;
+      secondLine = `${lastName}${this.artist.firstname} <sup ${supStyle}>${this.artist.country}</sup>`;
     }
 
     return `${firstLine} ${secondLine}`;
