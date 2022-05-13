@@ -537,10 +537,17 @@ export namespace CMS {
 
   export interface Calendar {
     day: string;
+    date: string;
     month: string;
     moment: number;
     event: Event[];
     _id: number; // copied from When id
+  }
+
+  export interface CalendarDatePickerItem{
+    selected: boolean,
+    day: string,
+    month: string,
   }
 
   export interface ArtistSetByLetter

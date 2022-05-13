@@ -80,9 +80,38 @@ class CMSService {
     return this.cms.artists;
   }
 
-
   public get pages(): CMS.Page[]{
     return this.cms.pages;
+  }
+
+  public calendarContainsDatePickerItem(selectedDatePickerItem: CMS.CalendarDatePickerItem|null): boolean {
+    if(!selectedDatePickerItem){
+      return false;
+    }
+    const calendarItems = this.getCalendarFrom(this.events);
+    return !!calendarItems.find((cal: CMS.Calendar) =>{
+      const calDate = new Date(cal.moment);
+      const dayIsTheSame = parseInt(selectedDatePickerItem.day) == parseInt(cal.date);
+      const monthIsTheSame = parseInt(selectedDatePickerItem.month) == parseInt(`${calDate.getMonth() + 1}`); 
+      return dayIsTheSame && monthIsTheSame;
+    });
+  }
+
+  public getFestivalDatePickerItems(): CMS.CalendarDatePickerItem[]{
+    const calendarItems = this.getCalendarFrom(this.events).sort((a: any, b: any)=>{
+      return a._id - b._id;
+    });
+
+    const result = calendarItems.map((cal: CMS.Calendar, index: number) => {
+      const date = new Date(cal.moment);
+      return {
+        day: `${cal.date}`.padStart(2, '0'),
+        month: `${date.getMonth() + 1}`.padStart(2, '0'),
+        selected: false,
+      };
+    });
+
+    return result;
   }
 
   public getCalendarFrom(events?: CMS.Event[]): CMS.Calendar[] {
