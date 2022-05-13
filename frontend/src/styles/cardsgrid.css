@@ -13,15 +13,33 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
+
+
+
+
+.grid-container--fit2 {
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    padding: 0 calc(var(--gutter-width)/2) 0 calc(var(--gutter-width)/2);
+
+}
+@media only screen and (max-width: 476px)
+  {
+    .grid-container--fit2 {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    
+}
+
+
+
+
 .grid-container--fill {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .grid-element {
-  /*background-color: grey;*/
   margin: var(--gutter-width) var(--gutter-width) 0 0;
   color: #fff;
-  /* border: 1px solid #fff; */
   height: 240px;
 }
 
@@ -44,8 +62,6 @@
 }
 
 .grid-element .text{
-/*transform: translateY(calc(var(--image-to-x) * -1));*/
-/*padding: calc(var(--gutter-width)/2);*/
 width: auto;
 margin: auto;
 font-weight: 450;
@@ -54,7 +70,7 @@ font-weight: 450;
 }
 
 .grid-element .shadow{
-  text-shadow: 0px 0px 20px rgba(0,0,0,0.8);
+  text-shadow: 0px 0px 20px rgba(0,0,0,0.7);
     }
 
 .grid-element .text.dates-wrapper{

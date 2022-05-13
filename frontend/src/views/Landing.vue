@@ -32,9 +32,10 @@
 
 
 <div class="spiegel">
-    <h1 class="margin-top1">News</h1>
-    <news-card-list :count="3" />
-</div>
+    <h1 class="margin-top1">News</h1></div>
+    
+        <news-card-list :count="3" />
+
 <div class="spiegel">
   <h1  class="margin-top2">Events</h1>
 </div>

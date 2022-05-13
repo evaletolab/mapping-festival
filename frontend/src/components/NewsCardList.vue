@@ -1,7 +1,7 @@
 <template>
 
   <div class="calendar">
-    <div class="grid-container grid-container--fit">
+    <div class="grid-container grid-container--fit2">
       <news-card v-for="(newsItem, index) in news" :key="index" :newsItem="newsItem" />
     </div> 
   </div>

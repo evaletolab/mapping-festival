@@ -45,7 +45,12 @@
 
   /* font basics settings*/
   --font-size-max: 22px;
-  --font-size: min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max));
+  --font-size-min: 17px;
+
+  /* --font-size: min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max)); */
+
+  --font-size: max( min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max)) , var(--font-size-min));
+  
   --line-height: calc(var(--font-size) * 1.26);
   --font-color: black;
   --main-font-color: black;
@@ -476,7 +481,7 @@ h5{  /*  notes et addendum */
   @media only screen and (max-width: 568px) {
 
     .indent1, .indent2, .indent3 { margin-left: 0;}
-    .indent4, .indent5, .indent6, .indent7, { margin-left: calc(var(--column-width) * 4 + var(--gutter-width) * 4);}
+    .indent4, .indent5, .indent6, .indent7 { margin-left: calc(var(--column-width) * 4 + var(--gutter-width) * 4);}
 
     }
 
