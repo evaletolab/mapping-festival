@@ -50,9 +50,6 @@
   }
 
   .description{
-    /* background-color: aqua; */
-  /* position:absolute; */
-  /* top: 2.2rem; */
   left: 0;
   transform: translateY(calc(var(--text-to-baseline) *.4));
   }
@@ -64,8 +61,8 @@
   }
 
   .news-description{
-    font-size: calc(var(--font-size) * .75);
-    line-height: calc(var(--line-height) * .75);
+    font-size: calc(min((var(--font-size) * .75), 15px));
+    line-height: calc(min((var(--line-height) * .75), 19px));
     font-weight: 400;
     color:rgb(148, 148, 148);
     padding-top:.38rem;

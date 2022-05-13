@@ -1,9 +1,6 @@
 .day-wrapper{
-  /*padding: 1em;*/
-  /*background-color: rgba(230, 230, 230, 0.068);*/
   width: 100%;
 }
-
 
 .grid-container {
     display: grid;
@@ -12,10 +9,6 @@
 .grid-container--fit {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
-
-
-
-
 
 .grid-container--fit2 {
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -30,9 +23,6 @@
     
 }
 
-
-
-
 .grid-container--fill {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
@@ -43,8 +33,6 @@
   height: 240px;
 }
 
-
-
 @media only screen and (max-width: 476px)
   {
     .grid-element {
@@ -52,8 +40,6 @@
     }
 }
 
-
- 
 
 /* typo */
 .day-title{ 
@@ -79,11 +65,7 @@ font-weight: 450;
 }
 
 .artist-name-wrapper{
-  /* background-color: blue; */
-  /* padding: 0; */
-  /* border: 1px solid white; */
   height: auto;
-  /* margin-bottom:calc(var(--line-height)*-.25); */
 }
 
 .grid-element .text.event-date{
@@ -127,13 +109,10 @@ margin-top: .5rem;
 .grid-element .text.event-type{
 font-size: calc(var(--font-size)*.75);
 line-height: var(--line-height);
-
-/*    position: absolute;
-bottom: 0; */
-
+/* position: absolute;
+bottom: 0;
+right:0; */
 }
-
-
 
 .event-card{
   overflow: hidden;

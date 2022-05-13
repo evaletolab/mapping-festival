@@ -259,9 +259,6 @@ body{
 }
 
 
-.image.align-left{}
-
-
 .image.align-right{
   float:right;
   margin: 0 0 calc(var(--line-height) - var(--image-to-x)) var(--gutter-width);
