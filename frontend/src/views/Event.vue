@@ -32,17 +32,15 @@
     <!-- TOOLBAR -->
     <toolbar class="hide-lg hide-md" />
 
-    <div class="content spiegel margin-top1">
+    <div class="content">
 
       <!-- HEADER -->
-      <section class="header-event spiegel text-shadow" :style="backgroundImage">    
+      <section class="header-event text-shadow" :style="backgroundImage">    
        
         <!-- <p v-if="date" class="ui-font big align-right text-shadow">{{date|shortdate}}</p> -->
 
-
-
           <!------------- Nice dates ----------->
-          <div v-if="event.when.length < 2" >
+          <!-- <div v-if="event.when.length < 2" >
             <div class="ui-font big align-right text-shadow" v-for="(when,index) in event.when" :key="index">
             {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
             </div>
@@ -51,21 +49,20 @@
             <div class="interval ui-font big align-right text-shadow" v-for="(interval, index) in intervals" :key="index">
               {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
             </div>
-          </div>
+          </div> -->
           <!-- ------------------------------- -->
 
-
-        <br>
-        <h1>{{t(event.title)}}</h1><br>
-        <div v-for="artist in artists" :key="artist._id">
-          <p class="ui-font big">
-            {{artist.fullname}} <sup>{{artist.country}}</sup></p>
+        <div class="event-title">{{t(event.title)}}</div>
+        <div class="artist-name-wrapper" v-for="artist in artists" :key="artist._id">
+          <span class="artist-name">
+              {{artist.fullname}}</span> <span class="artist-country">{{artist.country}}</span>
         </div>
-
-
-        <p class="ui-font align-center">
-          <br><br>
-          {{getTypeLabel(event.typology)}} / {{event.thematic}} </p>    
+        <span class="event-location" v-if="eventLocation" >  -->  </span>
+              <router-link v-if="eventLocation" class="simple-link event-location white" :to="`/map/${eventLocation.slug}`">
+                {{t(eventLocation.name)}}
+              </router-link>
+        <div class="event-type">
+          {{getTypeLabel(event.typology)}} / {{event.thematic}} </div>
       </section>
 
 
@@ -74,18 +71,15 @@
       <h4 class="width6 indent2 margin-top1">
 
         <!-- Price and public admittance limit -->
-
-        <!-- <div class="item"></div> -->
         <div class="item">{{t({fr:"Prix", en:"Price"})}}: {{ price }}</div>
         <!-- <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div> -->
 
         <div class="item" v-if="event.ticketUrl">
           <!-- {{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.– -->
-        <a :href="event.ticketUrl" target="_blank">---> {{t({fr: "Billetterie", en:"Ticketing"})}}</a>
+        <a :href="event.ticketUrl" target="_blank">--> {{t({fr: "Billetterie", en:"Ticketing"})}}</a>
       </div>
       </h4>
-
-<!-- 
+      <!-- 
       <p class="indent2" v-if="event.ticketUrl">
         <a :href="event.ticketUrl" target="_blank">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
       </p> -->
@@ -109,18 +103,17 @@
           <div v-if="event.when.length < 2" >
             <div class="" v-for="(when,index) in event.when" :key="index">
 
-            {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
-            <span v-if="eventLocation" >  --->  </span>
+            {{when.start|shortdate}} <br>{{when.startTime}} — {{when.endTime}}
+            <span v-if="eventLocation" > -->  </span>
             <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
               {{t(eventLocation.name)}}
             </router-link>
             </div>
           </div>
           <div v-else>
-            <div class="interval" v-for="(interval, index) in intervals" :key="index">
-
-              {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
-              <span v-if="eventLocation" >  --->  </span>
+            <div class="interval item" v-for="(interval, index) in intervals" :key="index">
+              {{interval.shortDate}} <br>{{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+              <span v-if="eventLocation" > -->  </span>
               <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
                 {{t(eventLocation.name)}}
               </router-link>
@@ -211,13 +204,70 @@
       }
     }
 
-
     .header-event{
       position: relative;
       height: calc( 100vh / 2 );
       padding: var(--gutter-width);
       padding-top:  calc(var(--gutter-width)*1.25);
       color: white;
+
+    .artist-name-wrapper{
+    height: auto;
+    }
+
+    .event-date{
+    display:inline-block;
+    font-size: calc(var(--font-size)*.75);
+    line-height: calc(var(--line-height)*.5);
+    margin: 0;
+    padding: 0;
+    }
+
+    .event-title{
+      font-weight: 550;
+    font-size: calc(var(--font-size)*1.25);
+    line-height: var(--line-height);
+    margin-bottom: 0;
+    padding: 0;
+    }
+
+    .artistname{
+    display:inline-block;
+    font-size: calc(var(--font-size)*1);
+    line-height: calc(var(--line-height)*.75);
+    /*word-break: break-all;*/
+    }
+
+    .artist-country{
+    font-weight: 650;
+    display:inline-block;
+    font-size: calc(var(--font-size)*.5);
+    transform: translateY(calc(-1 * var(--image-to-x)));
+    margin-left: calc(var(--gutter-width) * -.15)
+    }
+
+    .event-location{
+    font-size: calc(var(--font-size)*.75);
+    line-height: calc(var(--line-height)*.75);
+    margin-top: .5rem;
+
+    }
+
+    .event-type{
+    font-size: calc(var(--font-size)*.75);
+    line-height: var(--line-height);
+    /* position: absolute;
+    bottom: 0;
+    right:0; */
+    }
+
+    .artist-country{
+      font-weight: 650;
+      display:inline-block;
+      font-size: calc(var(--font-size)*.5);
+      transform: translateY(calc(-1 * var(--image-to-x)));
+      margin-left: calc(var(--gutter-width) * -.15)
+    }
 
 
     .when{
