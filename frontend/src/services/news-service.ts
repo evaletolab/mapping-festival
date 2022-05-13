@@ -30,8 +30,6 @@ class NewsService
             result = [...result, ...remainingItems];
         }
 
-        console.log("limited news selection", result);
-
         return result;
     }
 

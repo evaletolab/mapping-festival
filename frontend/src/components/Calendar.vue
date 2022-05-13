@@ -259,8 +259,6 @@ export default class Calendar extends mixins(Translatable)  {
       // }
     }
 
-    console.log("calendar", this.cache[key]);
-
     return this.cache[key];
   }
 
@@ -436,8 +434,6 @@ export default class Calendar extends mixins(Translatable)  {
     const selectedDateQueryStr = this.$route.query.selectedDate as string;
     const selectedDatePickerItem = parseSelectedDate(selectedDateQueryStr);
     if($cms.calendarContainsDatePickerItem(selectedDatePickerItem)) {
-      // console.log("selected has changed to ", this.selected);
-      console.log("youpi we got a valid selected date", selectedDatePickerItem);
       this.selectedDate = selectedDatePickerItem;
       this.datePickerItems.forEach(item =>{
         item.selected = false;
@@ -446,12 +442,9 @@ export default class Calendar extends mixins(Translatable)  {
         }
       });  
     }else{
-      console.log("not youpi", selectedDatePickerItem);
-      // console.log("selected not set --------------------- ");
       this.selectedDate = null;
       this.datePickerItems.forEach(item => item.selected = false);  
     }
-    // this.$emit('calendar-update',this.selected);
     this.isAll = !this.datePickerItems.some(item => item.selected==true);
   }
 

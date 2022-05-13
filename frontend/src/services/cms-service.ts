@@ -173,7 +173,6 @@ class CMSService {
     try{
       let data = await axios.all(endPoints.map((endpoint) => axios.get(endpoint, config)));
       data = data.map((item) => item.data);
-      console.log("data", data);
       return data;
     }catch(e){
       console.error(e);
