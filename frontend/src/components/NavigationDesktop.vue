@@ -265,24 +265,7 @@ export default class NavigationDesktop extends mixins(Translatable) {
   }
 
   mounted(){
-    window.addEventListener("scroll", () => { 
-      const isMobile = $config.isMobile();
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      //
-      // downscroll code
-      if (st > this.lastScrollTop && !isMobile){
-        this.stickyNav = 1;
-      } 
-      //
-      // upscroll code
-      else {          
-        this.stickyNav = -1;
-      }
-
-      //
-      // For Mobile or negative scrolling
-      // this.lastScrollTop = st <= 0 ? 0 : st; 
-    }, false);
+    window.addEventListener("scroll", this.onScroll, false);
 
 
     window.addEventListener('resize', this.onResize);
@@ -290,7 +273,27 @@ export default class NavigationDesktop extends mixins(Translatable) {
 
   }
 
+  onScroll(){
+    const isMobile = $config.isMobile();
+    const st = window.pageYOffset || document.documentElement.scrollTop;
+    //
+    // downscroll code
+    if (st > this.lastScrollTop && !isMobile){
+      this.stickyNav = 1;
+    } 
+    //
+    // upscroll code
+    else {          
+      this.stickyNav = -1;
+    }
+
+    //
+    // For Mobile or negative scrolling
+    // this.lastScrollTop = st <= 0 ? 0 : st; 
+  }
+
   beforeDestroy() {
+    window.removeEventListener("scroll", this.onScroll, false);
     window.removeEventListener('resize', this.onResize);
   }
   
