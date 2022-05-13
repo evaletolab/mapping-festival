@@ -17,6 +17,7 @@
     <!-- ******* /Header ******** -->
     <!-- ************************ -->
 
+  <dynamic-spacer />
 
   <div class="spiegel margin-top1">
       <div class="ui-font big destination">
@@ -149,11 +150,11 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
 import ArtistCard from '../components/ArtistCard.vue';
 import VueCable from '../components/VueCable.vue';
 import HeaderInfo from '../components/HeaderInfo.vue';
-
+import DynamicSpacer from '../components/DynamicSpacer.vue';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu, ArtistCard, VueCable, HeaderInfo,
+    CMSIcons, Toolbar, PrimaryMenu, ArtistCard, VueCable, HeaderInfo, DynamicSpacer,
   }
 })
 export default class ArtistList extends mixins(Translatable)  {

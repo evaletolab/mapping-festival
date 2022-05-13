@@ -310,6 +310,7 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
 import SoundCloud from 'vue-soundcloud-player';
 import SpotCard from '../components/SpotCard.vue';
 import HeaderInfo from '../components/HeaderInfo.vue';
+import DynamicSpacer from '../components/DynamicSpacer.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -317,7 +318,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SpotCard, HeaderInfo,
+    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SpotCard, HeaderInfo, DynamicSpacer,
   }
 })
 export default class Event extends mixins(Translatable) {
@@ -347,7 +348,7 @@ export default class Event extends mixins(Translatable) {
   }
 
   get price(): string{
-    if(this.event.price == 0){
+    if(!this.event.price || this.event.price == 0){
       return this.t({fr: "Entrée libre", en:"Free"}) as string;
     }
     return `CHF ${this.event.price}.-`;
