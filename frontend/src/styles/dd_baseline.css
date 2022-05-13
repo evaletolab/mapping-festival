@@ -105,7 +105,7 @@
 @media only screen and (max-width: 476px)
   {
     :root {
-      /*-webkit-text-size-adjust: none;*/
+      /* -webkit-text-size-adjust: none; */
       --font-size: calc((1vmin + 1.5vmax) * 1.2);
   		--margin-left: calc((var(--line-height) * .1 ) - var(--text-to-baseline) + var(--image-to-x));
   		--margin-right: var(--margin-left);

@@ -4,9 +4,9 @@
         
         <div class="description shadow"> 
           <div class="text event-title">{{ t(event.title) }}</div>
-          <div v-for="artist in artists" :key="artist._id">
-            <div class="text artistname">{{artist.fullname}} </div>
-            <div class="text artist-country">&#x202F;{{artist.country}}</div>
+          <div class="artist-name-wrapper" v-for="artist in artists" :key="artist._id">
+            <span class="text artistname">{{artist.fullname}} 
+            <span class="text artist-country">&#x202F;{{artist.country}}</span></span>
           </div>
           <div v-if="location" class="text event-location">{{t(location)}}</div>
 
@@ -50,6 +50,7 @@
         height: 100%;
         object-fit: cover;
     }
+
     .description{
         position:absolute;
         top: 10px;
