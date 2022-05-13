@@ -1,9 +1,9 @@
 <template>
     <div class="newsList">
         <div class="spiegel">
-            <h1 class="margin-top1">News</h1>
+            <h1 class="margin-top1">News</h1></div>
             <news-card-list />
-        </div>
+        
 
         <!-- TOOLBAR -->
         <toolbar class="hide-lg hide-md" />
