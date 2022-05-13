@@ -1,13 +1,27 @@
 <template>
-    <div class="newsList">
-      
-        <div class="spiegel">
-            <h1 class="margin-top1">News</h1></div>
-            <news-card-list />
-        
+    <div class="news-list">
+      <!-- ************************ -->
+      <!-- ******** Header ******** -->
+      <!-- ************************ -->
 
-        <!-- TOOLBAR -->
-        <toolbar class="hide-lg hide-md" />
+      <div class="header-wrapper hide-sm">
+        <header-info/>
+      </div>
+
+      <!-- ************************ -->
+      <!-- ******* /Header ******** -->
+      <!-- ************************ -->
+
+      <dynamic-spacer/>
+
+      <div class="spiegel">
+          <h1 class="margin-top1">News</h1>
+      </div>
+      <news-card-list />
+      
+
+      <!-- TOOLBAR -->
+      <toolbar class="hide-lg hide-md" />
     </div>
     
 </template>
@@ -27,11 +41,13 @@ import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
 import NewsCard from '../components/NewsCard.vue';
 import NewsCardList from '../components/NewsCardList.vue';
+import HeaderInfo from '../components/HeaderInfo.vue';
+import DynamicSpacer from '../components/DynamicSpacer.vue';
 
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu, NewsCard, NewsCardList,
+    CMSIcons, Toolbar, PrimaryMenu, NewsCard, NewsCardList, HeaderInfo, DynamicSpacer,
   }
 })
 export default class NewsList extends mixins(Translatable)  {

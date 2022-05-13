@@ -73,7 +73,7 @@ class ConfigService {
         Object.assign(this._store.config,festival);
       }
 
-      console.log('-- config',this._store.config.landing);
+      // console.log('-- config',this._store.config.landing);
       this._store.config.done = true;
 
       // console.log('---DBG', JSON.stringify(this._store,null,2))

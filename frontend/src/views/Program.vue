@@ -20,6 +20,8 @@
 
     </div>
 
+    <dynamic-spacer />
+
     <div class="spiegel margin-top1">
       <div class="ui-font big destination">
         Projets <!--
@@ -150,12 +152,13 @@ import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import EventCard from '../components/EventCard.vue';
 import HeaderInfo from '../components/HeaderInfo.vue';
+import DynamicSpacer from '../components/DynamicSpacer.vue';
 
 type FilterType = "all" | "Collection virtuelle";
 
 @Component({
   components: {
-    CMSIcons, Toolbar, EventCard, HeaderInfo,
+    CMSIcons, Toolbar, EventCard, HeaderInfo, DynamicSpacer,
   }
 })
 export default class Program extends mixins(Translatable)  {
