@@ -2,7 +2,7 @@
     <div class="grid-element event-card" @click="navigateToEvent">
         <lazy-img class="cover-event" :src="coverDesktop" />
         
-        <div class="description"> 
+        <div class="description shadow"> 
           <div class="text event-title">{{ t(event.title) }}</div>
           <div v-for="artist in artists" :key="artist._id">
             <div class="text artistname">{{artist.fullname}} </div>
@@ -33,7 +33,7 @@
 
             <!-- ------------------------------- -->
           </div>
-          <div class="text event-type">{{getTypeLabel(event.typology)}}
+          <div class="text event-type shadow">{{getTypeLabel(event.typology)}}
         </div>
       </div>
   </div>
