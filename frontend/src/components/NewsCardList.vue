@@ -1,6 +1,6 @@
 <template>
 
-  <div class="calendar">
+  <div class="">
     <div class="grid-container grid-container--fit2">
       <news-card v-for="(newsItem, index) in news" :key="index" :newsItem="newsItem" />
     </div> 
@@ -27,16 +27,14 @@ export default class Calendar extends mixins(Translatable)  {
 
   @Prop({default: -1}) count!: number;
 
-  defaultCover = "https://via.placeholder.com/150/000000/000000";
-
-
   get news() : CMS.News[] {
     // const result =  $cms.news;
     if(this.count > 0){
       const result = $news.getItems(this.count);
       return result;
     }else{
-      return $news.all;
+      const allItems = $news.all;
+      return allItems;
     }
   }
 
@@ -44,7 +42,5 @@ export default class Calendar extends mixins(Translatable)  {
     const result = $i18n.lang;
     return result;
   }
-
-
 }
 </script>

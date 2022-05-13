@@ -1,25 +1,8 @@
 <template>
     <div class="newsList">
-        <div class="header hide-sm">
-
-          <!-- <div class="spiegel">
-            <img class="header-image" src="../images/mapping_header1.png">
-          </div> -->
-
-
-            <!-- <h4 class="tagline  align-right">
-                <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
-                <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
-            </h4> -->
-
-            <div class="spiegel">
-                <h1 class="margin-top1">News</h1>
-                <news-card-list />
-            </div>
-        </div>
-
-        <div>
-
+        <div class="spiegel">
+            <h1 class="margin-top1">News</h1>
+            <news-card-list />
         </div>
 
         <!-- TOOLBAR -->
@@ -65,7 +48,7 @@ export default class NewsList extends mixins(Translatable)  {
   }
 
   mounted(){
-    console.log("artist list mounted")
+    console.log("news list mounted")
     document.body.classList.add('body-scroll');
 
     window.addEventListener("scroll", () => { 
