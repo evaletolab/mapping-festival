@@ -122,7 +122,7 @@ html {
     font-family: inter;
 
     -moz-font-feature-settings: 
-      "frac" 1, 
+      "frac" 0, 
       "zero" 0,
       "ss01" 1, 
       "cv01" 1,
@@ -132,7 +132,7 @@ html {
     ;
 
     font-feature-settings: 
-      "frac" 1, 
+      "frac" 0, 
       "zero" 0, 
       "ss01" 1, 
       "cv01" 1,
