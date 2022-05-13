@@ -52,9 +52,9 @@
   --font-size: max( min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max)) , var(--font-size-min));
   
   --line-height: calc(var(--font-size) * 1.26);
-  --font-color: black;
-  --main-font-color: black;
-  --body-color: white;
+  --font-color: white;
+  --main-font-color: white;
+  --body-color: black;
   --nav-header-height: 230px;
 
  

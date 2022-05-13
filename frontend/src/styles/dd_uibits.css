@@ -8,11 +8,11 @@
   /* color settings */
 
   --ui-background-color: black;
-  --ui-font-color: black;
-  --ui-border-color: black;
+  --ui-font-color: var(--main-font-color);
+  --ui-border-color: var(--main-font-color);
 
   --ui-hover-background-color: rgb(240, 240, 240);
-  --ui-hover-text-color:rgb(120, 137, 145);
+  --ui-hover-text-color:rgb(34, 255, 0);
   
 }
 

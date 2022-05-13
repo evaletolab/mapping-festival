@@ -16,7 +16,7 @@
   .card{
       position: relative;
       cursor: pointer;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid var(--main-font-color);
   }
 
   .grid-element {
@@ -55,7 +55,7 @@
   }
 
   .news-title{
-    color: black;
+    color: var(--main-font-color);
       top:0;
 
   }
