@@ -345,6 +345,8 @@ h3{ /*  titres inter paragraphes */
 
 h4{  /*  infos techniques */
 
+  clear: both;
+
   background-color: rgba(180,150,220,var(--helper-color-alpha));
   margin:0;
   margin-bottom: calc(var(--line-height) - 1px);

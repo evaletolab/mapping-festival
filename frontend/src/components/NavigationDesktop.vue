@@ -166,7 +166,7 @@ body.menu-open .page-sidebar {
       // background-color: black;
       height: var(--nav-header-height);
       display: block;
-      border-bottom: 1px solid var(--font-color);      
+      // border-bottom: 1px solid var(--font-color);      
       @media (max-width:476px) {
       height: 110px;
       h1{

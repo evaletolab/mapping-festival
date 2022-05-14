@@ -1,5 +1,5 @@
 <template>
-      <div class="header-info white-background">
+      <div class="header-info">
       <!-- 
       config.landing.title1 : Mapping festival
       config.landing.title2 : Visual audio…
@@ -11,8 +11,7 @@
           <div class="margin-top1 white">19 &#8239; — &#8239; 29.5.2022</div>
           <div class="white">Geneva</div>
         </div>  -->
-        
-        <img class="cover" src="/img/mapping_header3.png" alt="">
+        <img class="cover" src="/img/mapping_header2b.png" alt="">
       </div>
 </template>
 
