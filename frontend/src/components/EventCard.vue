@@ -6,7 +6,7 @@
           <div class="text event-title">{{ t(event.title) }}</div>
           <div class="artist-name-wrapper" v-for="artist in artists" :key="artist._id">
             <span class="text artistname">{{artist.fullname}} 
-            <span class="text artist-country">&#x202F;{{artist.country}}</span></span>
+            <span class="text artist-country">{{artist.country}}</span></span>
           </div>
           <div v-if="location" class="text event-location">{{t(location)}}</div>
 
