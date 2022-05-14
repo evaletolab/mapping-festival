@@ -61,8 +61,8 @@
   }
 
   .news-description{
-    font-size: calc(min((var(--font-size) * .75), 14px));
-    line-height: calc(min((var(--line-height) * .75), 17.5px));
+    font-size: calc(min(var(--font-size) * .75, 14px));
+    line-height: calc(min(var(--line-height) * .75, 17.5px));
     font-weight: 400;
     color:rgb(148, 148, 148);
     padding-top:.38rem;
