@@ -69,7 +69,7 @@
 <style lang="scss" scoped>
   .artist{
     .content{
-      @media (max-width:425px) {
+      @media (max-width:var(--mobile-breakpoint)) {
         margin-top: 80px;        
       }
       .letter-key{
@@ -123,7 +123,7 @@
     margin-right: 20px;
     margin-left: 20px;
   }
-  @media (max-width: 414px) {
+  @media (max-width: var(--mobile-breakpoint)) {
   .flex-grid {
     display: block;
   }

@@ -37,7 +37,7 @@
         <news-card-list :count="3" />
 
 <div class="spiegel">
-  <h1  class="margin-top2">Events</h1>
+  <h1  class="margin-top2">Agenda</h1>
 </div>
 
     <!--------------- Main wrapper --------------------->

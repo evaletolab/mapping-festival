@@ -17,7 +17,7 @@
   }
 
 @media only screen
-    and (max-width : 560px) {
+    and (max-width : 476px)) {
 	:root {-webkit-text-size-adjust: none;}
 }
 
@@ -209,7 +209,7 @@ footer {
 }
 
 @media only screen 
-and (max-width : 560px) {
+and (max-width : 476px) {
     
     footer { bottom: 4rem; }
 }

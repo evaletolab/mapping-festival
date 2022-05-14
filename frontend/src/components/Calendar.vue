@@ -18,17 +18,16 @@
       </button>
     </section>
 
-    <div class="grid day-wrapper " v-for="elem in filteredCalendar" :key="elem._id" :id="elem._id">
+    <div class="grid day-wrapper" v-for="elem in filteredCalendar" :key="elem._id" :id="elem._id">
 
-      <br>
-      <h1 class="capitalize" v-if="currentLang=='fr'">
+      <h1 class="capitalize margin-top1" v-if="currentLang=='fr'">
         {{t(elem.dayname)}} {{elem.date}} {{t(elem.monthname)}}
       </h1>      
       <h1 class="capitalize" v-else>
         {{t(elem.dayname)}} {{t(elem.monthname)}} {{elem.date}}th
       </h1>
-
-      <div class="prule margin-top1"/>
+      
+      <div class="prule "/>
 
       <div class="grid-container grid-container--fill">
         <event-card v-for="(event, index) in elem.events" :key="index" :event="event" :date="elem.__date" />
@@ -42,9 +41,10 @@
   section.secondary.filters{
     display: flex;
     width: 100%;
-    height: 70px;
-    border-top: 1px solid var(--font-color);
-    border-bottom: 1px solid var(--font-color);
+    // height: 70px;
+    height: calc(var(--line-height)*2.5);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     margin-bottom: var(--gutter-width);
     margin-top: -1px;
     overflow: hidden;
@@ -60,7 +60,7 @@
     z-index: 1;
     background: var(--body-color);
 
-    @media (max-width:426px) {
+    @media (max-width:var(--mobile-breakpoint)) {
       box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%);      
     }
 

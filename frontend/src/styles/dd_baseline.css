@@ -43,9 +43,14 @@
   /* helpers settings */
   --helper-color-alpha: 0;
 
+  /* breakpoint for mobile phones */
+  --mobile-breakpoint: 476;
+
+
   /* font basics settings*/
   --font-size-max: 22px;
   --font-size-min: 17px;
+
 
   /* --font-size: min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max)); */
 
@@ -300,7 +305,7 @@ h1{ /*  grand titre */
   margin:0;
 
   font-family: 'Inter', sans-serif;
-  font-weight: 450;
+  font-weight: 400;
   font-family: 'inter';
 
 }
@@ -453,7 +458,7 @@ h5{  /*  notes et addendum */
   transform: translate(-50%, -50%);
 }
 
-@media only screen and (min-width: 568px) {
+@media only screen and (min-width: 476px) {
   
   .shift-left{
     margin-left: calc(-3.5 * var(--column-width) - 2 * var(--gutter-width));
@@ -614,13 +619,13 @@ h5{  /*  notes et addendum */
     background-color: none;
 
     color: white;
-    padding: .3rem ;
+    padding: .5rem ;
 
     text-decoration: none;
     text-transform: none;
 
-    /* border-radius: .25rem; */
-    border: 1px solid rgb(143, 143, 143);
+    border-radius: .25rem;
+    border: 1px solid var(--border-color);
 
 
 

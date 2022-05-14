@@ -36,7 +36,7 @@
   width: 100%;    
   margin-top: 0px;
 
-  @media (max-width:426px) {
+  @media (max-width: var(--mobile-breakpoint)) {
     .calendar {
       transition: all 200ms;      
       transform: translateY(0px);

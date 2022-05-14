@@ -117,7 +117,7 @@
     margin-top: 0px;
 
     .content{
-      @media (max-width:425px) {
+      @media (max-width: var(--mobile-breakpoint)) {
         margin-top: 80px;        
       }
     }

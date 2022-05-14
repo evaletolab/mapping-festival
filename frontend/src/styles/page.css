@@ -27,7 +27,7 @@ body {
   /*padding: 1rem;*/
 }
 
-@media (max-width: 600px) {
+@media (max-width:476px) {
   .page-wrap {
     grid-template-columns: 100%;
     grid-template-rows: auto;
