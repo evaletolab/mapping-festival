@@ -83,6 +83,7 @@ import { $config, $page } from '../services';
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
+import HeaderInfo from '../components/HeaderInfo.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -90,7 +91,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu,
+    CMSIcons, Toolbar, PrimaryMenu, HeaderInfo,
   }
 })
 export default class Page extends mixins(Translatable) {
