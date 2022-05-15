@@ -2,7 +2,7 @@
   <!--         ---------         -->  
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->    
-  <div class="page ">
+  <div class="page">
     <div class="header hide-sm">
 
     <!-- ************************ -->
