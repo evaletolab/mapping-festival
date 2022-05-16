@@ -46,7 +46,10 @@
   </div>
 </template>
 
+
+
 <style lang="scss" scoped>
+
   .page{
     left: 0;
     top: 0;
@@ -65,13 +68,23 @@
       }
     }
   }
+
   img{
     width:100%;
   }
+
+
   .social-media{
     display: inline-block;
     margin-right: 20px;
   }
+</style>
+
+<style>
+.page p img{
+  width: 100%;
+  height: auto;
+}
 </style>
 
 <script lang="ts">

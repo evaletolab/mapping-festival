@@ -98,7 +98,7 @@
 
   /* spiegel /  / columns properties */
   --spiegel-width: calc(100% - var(--margin-left) - var(--margin-right));
-  --column-width: calc( var(--spiegel-width) / var(--columns-count) - (var(--gutter-width) * ( var(--columns-count) - 1 ) / var(--columns-count))) ;
+  --column-width: calc( var(--spiegel-width) / var(--columns-count) - (var(--gutter-width) * ( var(--columns-count) - 1 ) / ( var(--columns-count) + 3))) ;
 
   /* baseline grid properties */
   --baseline-thickness: 1.2px;
@@ -305,7 +305,7 @@ h1{ /*  grand titre */
   margin:0;
 
   font-family: 'Inter', sans-serif;
-  font-weight: 400;
+  font-weight: 450;
   font-family: 'inter';
 
 }
@@ -458,12 +458,15 @@ h5{  /*  notes et addendum */
   transform: translate(-50%, -50%);
 }
 
-@media only screen and (min-width: 476px) {
-  
-  .shift-left{
-    margin-left: calc(-3.5 * var(--column-width) - 2 * var(--gutter-width));
-  }
 
+.shift-left{
+  margin-left: calc(-4.2 * var(--column-width) - 2 * var(--gutter-width));
+}
+
+@media only screen and (max-width: 476px  ) {
+  .shift-left{
+    margin-left: 0;
+}
 }
 
 

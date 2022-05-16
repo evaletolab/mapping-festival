@@ -26,6 +26,8 @@ class=“spiegel”
 
 qui gère les marges, colonnes et gouttières
 
+Le spiegel, miroir typographique, a 8 colonnes.
+
 
 
 ----------------------------------------------------
@@ -35,8 +37,8 @@ qui gère les marges, colonnes et gouttières
 
 Les unités de base concernant l'espacement sont:
 
-.line-height     (pas de grille verticale)
-.gutter-width    (gouttière horizontale, utilisable aussi pour le padding)
+--line-height     (pas de grille verticale)
+--gutter-width    (gouttière horizontale, utilisable aussi pour le padding)
 
 
 
@@ -89,6 +91,7 @@ Sub-classes images
 	.fullwidth
 	.align-left
 	.align-right
+  .shift-left
 
 
 

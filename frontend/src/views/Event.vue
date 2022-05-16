@@ -123,8 +123,17 @@
         <div v-if="artists.length > 0">
           <h1 class="margin-top3">Artists</h1>
           <div v-for="artist in artists" :key="artist._id">
-            <br>
-            <img class="image image-align-left width8 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450/000000/000000'">
+
+            <!-- <div class="prule margin-top1 width1"/>
+            <div class="prule margin-top1 indent1 width1"/>
+            <div class="prule margin-top1 indent2 width1"/>
+            <div class="prule margin-top1 indent3 width1"/>
+            <div class="prule margin-top1 indent4 width1"/>
+            <div class="prule margin-top1 indent5 width1"/>
+            <div class="prule margin-top1 indent6 width1"/>
+            <div class="prule margin-top1 indent7 width1"/> -->
+
+            <img class="image width8 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450/000000/000000'">
             <h2>{{artist.fullname}}<!--<sup>{{artist.country}}</sup>--></h2>
             <br>
             <div v-html="t(artist.content)" />
@@ -169,7 +178,7 @@
 
         </div>
       </div>
-      <br><br><br><br><br><br>
+      <div class="prule margin-top8"/>
     </div>
   </div>
   
