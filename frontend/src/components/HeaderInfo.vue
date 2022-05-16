@@ -11,7 +11,7 @@
           <div class="margin-top1 white">19 &#8239; — &#8239; 29.5.2022</div>
           <div class="white">Geneva</div>
         </div>  -->
-        <img class="cover" src="/img/mapping_header2b.png" alt="">
+        <img class="cover" src="/img/mapping_header2.png" alt="">
       </div>
 </template>
 
@@ -26,6 +26,7 @@
         height: 100%;
         object-fit: cover;
     }
+    
     .description{
         position:absolute;
         background-color: rgba(0, 0, 0, 0.7);
