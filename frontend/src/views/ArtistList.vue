@@ -20,9 +20,9 @@
   <dynamic-spacer />
 
   <div class="spiegel margin-top1">
-      <div class="ui-font big destination">
+      <h1 class="destination">
         Artists
-      </div>
+      </h1>
   </div>
 
 

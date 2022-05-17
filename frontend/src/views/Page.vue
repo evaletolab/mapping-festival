@@ -30,9 +30,9 @@
     <toolbar class="hide-lg hide-md" />
     <div class="content spiegel margin-top1">
 
-            <div class="ui-font big destination">
+            <h1 class="destination">
         {{t(page.title)}}
-      </div>
+      </h1>
 
       <p class="margin-top1" v-html="t(page.header)"></p>
       

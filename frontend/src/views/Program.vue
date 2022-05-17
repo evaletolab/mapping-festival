@@ -23,10 +23,10 @@
     <dynamic-spacer />
 
     <div class="spiegel margin-top1">
-      <div class="ui-font big destination">
+      <h1 class="ui-font big destination">
         Projets <!--
         {{t(title)}} -->
-      </div>
+      </h1>
     </div>
 
     <!-- TOOLBAR -->

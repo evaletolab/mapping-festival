@@ -51,18 +51,20 @@
   --font-size-max: 22px;
   --font-size-min: 17px;
 
-
-  /* --font-size: min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max)); */
-
   --font-size: max( min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max)) , var(--font-size-min));
-  
-  --line-height: calc(var(--font-size) * 1.26);
-  --font-color: white;
+    --line-height: calc(var(--font-size) * 1.26);
+
   --main-font-color: white;
+  --font-color: white;
+  --soft-text-color: grey;
+
   --border-color: rgba(255, 255, 255, 0.339);
   --body-color: black;
-  --nav-header-height: 230px;
 
+  --legende-background-color: hsla(0, 0%, 0%, 0.566);
+  --legende-texte-color: hsl(0, 0%, 83%);
+
+  --nav-header-height: 230px;
  
   /* text alignement properties */
   --text-to-baseline: calc(var(--line-height) * -.39 );
@@ -100,7 +102,7 @@
   --spiegel-width: calc(100% - var(--margin-left) - var(--margin-right));
   --column-width: calc( var(--spiegel-width) / var(--columns-count) - (var(--gutter-width) * ( var(--columns-count) - 1 ) / ( var(--columns-count) + 3))) ;
 
-  /* baseline grid properties */
+  /* baseline grid display properties */
   --baseline-thickness: 1.2px;
   --baseline-inter: calc(var(--line-height) - var(--baseline-thickness));
   --baseline-stop: var(--line-height);
@@ -166,8 +168,6 @@ body{
 
   font-size: var(--font-size);
   line-height: var(--line-height);
-  /* Bug with child element
-  transform: translateY(var(--text-to-baseline));*/
   
   background: var(--body-color);
   color: var(--font-color);
@@ -213,6 +213,7 @@ body{
 
     text-align: center;
     font-size: calc(var(--font-size) * .5);
+
 }
 
 
@@ -310,8 +311,15 @@ h1{ /*  grand titre */
 
 }
 
+.h1-sub {
+  /*  subtitle */
+  background-color: rgba(120, 210, 220, var(--helper-color-alpha));
+  font-size: calc(var(--font-size) * 1.5);
+  line-height: calc(var(--line-height) * 1.5);
+}
 
-h2{ /*  dates, etc */
+
+h2{ /*  dates, etc ... semble inutilisé.. memo to self */
 
   background-color: rgba(120,210,220,var(--helper-color-alpha));
 
@@ -330,8 +338,6 @@ h2{ /*  dates, etc */
 h3{ /*  titres inter paragraphes */
 
   background-color: rgba(120,210,220,var(--helper-color-alpha));
-
-
   font-size: var(--font-size);
   line-height: var(--line-height);
   transform: translateY(var(--text-to-baseline));
@@ -342,17 +348,16 @@ h3{ /*  titres inter paragraphes */
   margin-left: calc(var(--gutter-width) * 2);
 
   font-family: 'Inter', sans-serif;
-  font-weight: 470;
+  font-weight: 450;
   font-family: inter;
 }
 
 
 
 h4{  /*  infos techniques */
-
   clear: both;
-
   background-color: rgba(180,150,220,var(--helper-color-alpha));
+
   margin:0;
   margin-bottom: calc(var(--line-height) - 1px);
 
@@ -431,6 +436,39 @@ h5{  /*  notes et addendum */
   font-weight: 450;
   font-family: 'inter';
 
+}
+
+
+.legende {
+  clear: both;
+  position: relative;
+
+  background-color: var(--legende-background-color);
+  color: var(--legende-texte-color);
+
+  font-size: calc(var(--font-size) / 1.5);
+  line-height: calc(var(--line-height) / 1.5);
+  padding: calc(var(--line-height) / 2);
+
+  text-align: right;
+
+  transform: translate(
+    calc(var(--gutter-width) * -1),
+    calc(var(--line-height) * -2)
+  );
+  margin-bottom: calc(var(--line-height) * -1);
+}
+
+@media only screen and (max-width: 476px) {
+  .legende {
+    margin-left: calc(var(--line-height) * 2);
+    transform: translate(
+      calc(var(--gutter-width) * .41),
+      calc(var(--line-height) * -2)
+    );
+    text-align: left;
+
+  }
 }
 
 
