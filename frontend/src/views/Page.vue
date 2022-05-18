@@ -34,9 +34,10 @@
         {{t(page.title)}}
       </h1>
 
-      <p class="margin-top1" v-html="t(page.header)"></p>
-      
+      <p class="margin-top1 indent2 width5" v-html="t(page.header)"></p>
+     
       <p v-html="t(page.content)"></p>
+      
 
     </div>
 
