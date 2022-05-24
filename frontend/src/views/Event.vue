@@ -70,9 +70,12 @@
       <h5 class="width6 indent2 margin-top1">
 
         <!-- Price and public admittance limit -->
-        <div class="item">{{t({fr:"Tarif", en:"Price"})}}: {{ price }} <span class="" v-if="event.ticketUrl">-->
-        <a class="simple-link" :href="event.ticketUrl" target="_blank"> {{t({fr: "Billetterie", en:"Ticketing"})}}</a>
-      </span></div>
+        <div class="item">
+          <!-- {{t({fr:"Tarif", en:"Price"})}}: {{ price }}  -->
+          <span class="" v-if="event.ticketUrl">
+            <a class="simple-link" :href="event.ticketUrl" target="_blank"> {{t({fr: "Billetterie", en:"Ticketing"})}}</a>
+          </span>
+        </div>
 
       <!-- <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div> -->
       <!-- 
