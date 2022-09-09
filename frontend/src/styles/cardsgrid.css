@@ -1,31 +1,45 @@
 .day-wrapper{
-  /*padding: 1em;*/
-  /*background-color: rgba(230, 230, 230, 0.068);*/
   width: 100%;
 }
-
 
 .grid-container {
     display: grid;
 }
 
 .grid-container--fit {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-container--fit2 {
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  padding: 0 calc(var(--gutter-width)/2) 0 calc(var(--gutter-width)/2);
+
+}
+@media only screen and (max-width: 476px)
+  {
+    .grid-container--fit2 {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    
 }
 
 .grid-container--fill {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .grid-element {
-  /*background-color: grey;*/
   margin: var(--gutter-width) var(--gutter-width) 0 0;
   color: #fff;
-  /*border: 1px solid #fff;*/
-  height: 220px;
-
+  height: 240px;
 }
- 
+
+@media only screen and (max-width: 476px)
+  {
+    .grid-element {
+      margin-right: 0;
+    }
+}
+
 
 /* typo */
 .day-title{ 
@@ -34,22 +48,37 @@
 }
 
 .grid-element .text{
-/*transform: translateY(calc(var(--image-to-x) * -1));*/
-/*padding: calc(var(--gutter-width)/2);*/
 width: auto;
-margin: auto;
-font-weight: 500;
-text-shadow: 0px 0px 20px rgba(0,0,0,0.8);
+margin: 0;
+font-weight: 450;
+}
 
+.grid-element .shadow{
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.73);
+    }
+
+.grid-element .text.dates-wrapper{
+  /* background-color: grey; */
+  display: flex;
+  flex-direction: row;
+
+}
+
+.artist-name-wrapper{
+  height: auto;
 }
 
 .grid-element .text.event-date{
+display:inline-block;
 font-size: calc(var(--font-size)*.75);
-line-height: var(--line-height);
+line-height: calc(var(--line-height)*.5);
+margin: 0;
+padding: 0;
 }
 
 .grid-element .text.event-title{
-font-size: calc(var(--font-size)*1.15);
+  font-weight: 550;
+font-size: calc(var(--font-size)*1.25);
 line-height: var(--line-height);
 margin-bottom: 0;
 padding: 0;
@@ -57,35 +86,33 @@ padding: 0;
 
 .grid-element .text.artistname{
 display:inline-block;
-font-size: calc(var(--font-size)*1.15);
-line-height: var(--line-height);
-word-break: break-all;
+font-size: calc(var(--font-size)*1);
+line-height: calc(var(--line-height)*.75);
+/*word-break: break-all;*/
 }
 
 .grid-element .text.artist-country{
 font-weight: 650;
 display:inline-block;
 font-size: calc(var(--font-size)*.5);
-line-height: var(--line-height);
 transform: translateY(calc(-1 * var(--image-to-x)));
-margin-left: calc(var(--gutter-width) * .25)
+margin-left: calc(var(--gutter-width) * -.15)
 }
 
 .grid-element .text.event-location{
 font-size: calc(var(--font-size)*.75);
-line-height: var(--line-height);
+line-height: calc(var(--line-height)*.75);
+margin-top: .5rem;
+
 }
 
 .grid-element .text.event-type{
 font-size: calc(var(--font-size)*.75);
 line-height: var(--line-height);
-
-/*    position: absolute;
-bottom: 0; */
-
+/* position: absolute;
+bottom: 0;
+right:0; */
 }
-
-
 
 .event-card{
   overflow: hidden;

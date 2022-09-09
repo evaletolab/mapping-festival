@@ -20,7 +20,18 @@
             <!-- NAV HEADER -->
             <section class="header pointer" @click="onHome">
               
-              <h1 class="width7" v-html="config.landing.title1"></h1>
+              <!-- <h1 class="width7" v-html="config.landing.title1"></h1> -->
+              <div v-if="!isMobileView">
+                <h2 class="black" v-html="config.landing.title1"/> 
+                <div class="black">Visual audio and<br>deviant electronics</div>
+
+                <div class="margin-top1 black">19 &#8239; — &#8239; 29.5.2022</div>
+                <div class="black">Geneva</div>
+              </div>
+              <div v-else>
+                <h2 class="black" v-html="config.landing.title1"/> 
+                <div class="black">Visual audio and<br>deviant electronics<br>19 &#8239; — &#8239; 29.5.2022</div>
+              </div>
 
 
               <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
@@ -31,36 +42,34 @@
               <div class="ui-button height3 width8 menu"> 
                 <p class="vcenter">{{t(menu.name)}}</p> 
                 <div class="ui-icon vcenter align-right">
-                  <img class="inverted" src="/img/svg/dot.svg" alt="">
+                  <img class="inverted" src="/img/svg/dot.svg" alt=""> <!-- class "inverted" -->
                 </div>
               </div>
             </a>
 
-            <!-- SHOULD NEVER USE -->
-            <br>
-
+<br>
             <!-- NAV SECONDARY CONTENT -->
             <div class="menu-item-xs" v-for="menu in secondaryMenu" :key="menu.link"  >
               <RouterLink @click.native="onClose()" :to="menu.link"> {{t(menu.name)}}</RouterLink>
             </div>
-
-            <br>
-
+<br>
+            <div class="prule"></div>
+            
 
             <!-- NAV ACTIONS CONTENT -->
             <div class="menu-item-xs">
               <language-selector class=""/>
             </div>
-
-            <br>
+<br>
+            <div class=""></div>
 
             <!-- <div class="menu-item-xs" @click="onDark"><i class="fas fa-moon "></i> Night mode</div> -->
 
             <!-- NAV FOOTER CONTENT -->
-            <div class="menu-item-xs" v-for="menu in footerMenu" :key="menu.link">
-                <a v-if="externalLink(menu.link)" @click="onClose()" :href="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</a>
+            <span class="menu-item-xs" v-for="menu in footerMenu" :key="menu.link">
+                <a class="button" v-if="externalLink(menu.link)" @click="onClose()" :href="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</a>
                 <RouterLink v-else @click.native="onClose()" :to="menu.link" target="_blank" rel="noopener noreferrer">{{t(menu.name)}}</RouterLink>
-            </div>
+            </span>
         </aside>
     </div>
 </template>
@@ -123,7 +132,7 @@ body.menu-open .page-sidebar {
   height: 100vh;
   background: var(--body-color);
   display: block;     
-  z-index: 2;
+  z-index: 15;
   .header{
     border:none;
   }
@@ -154,10 +163,11 @@ body.menu-open .page-sidebar {
 
 
     section.header {
+      // background-color: black;
       height: var(--nav-header-height);
       display: block;
-      border-bottom: 1px solid var(--font-color);      
-      @media (max-width:426px) {
+      // border-bottom: 1px solid var(--font-color);      
+      @media (max-width:476px) {
       height: 110px;
       h1{
         font-size: 22px;
@@ -215,6 +225,12 @@ export default class NavigationDesktop extends mixins(Translatable) {
   stickyNav = 0;
   displayMenu = false;
 
+  screenWidth = 0;
+
+  get isMobileView(){
+    return this.screenWidth <= 476;
+  }
+
   get config(){
     return $config.store.config;
   }
@@ -248,25 +264,44 @@ export default class NavigationDesktop extends mixins(Translatable) {
   }
 
   mounted(){
-    window.addEventListener("scroll", () => { 
-      const isMobile = $config.isMobile();
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      //
-      // downscroll code
-      if (st > this.lastScrollTop && !isMobile){
-        this.stickyNav = 1;
-      } 
-      //
-      // upscroll code
-      else {          
-        this.stickyNav = -1;
-      }
+    window.addEventListener("scroll", this.onScroll, false);
 
-      //
-      // For Mobile or negative scrolling
-      // this.lastScrollTop = st <= 0 ? 0 : st; 
-    }, false);
 
+    window.addEventListener('resize', this.onResize);
+    this.computeScreenWidth();
+
+  }
+
+  onScroll(){
+    const isMobile = $config.isMobile();
+    const st = window.pageYOffset || document.documentElement.scrollTop;
+    //
+    // downscroll code
+    if (st > this.lastScrollTop && !isMobile){
+      this.stickyNav = 1;
+    } 
+    //
+    // upscroll code
+    else {          
+      this.stickyNav = -1;
+    }
+
+    //
+    // For Mobile or negative scrolling
+    // this.lastScrollTop = st <= 0 ? 0 : st; 
+  }
+
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.onScroll, false);
+    window.removeEventListener('resize', this.onResize);
+  }
+  
+  computeScreenWidth(){
+    this.screenWidth = window.innerWidth;
+  }
+
+  onResize(){
+    this.computeScreenWidth();
   }
 
   onDark(){

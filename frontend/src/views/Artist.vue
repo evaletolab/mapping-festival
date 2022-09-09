@@ -4,13 +4,32 @@
   <!--         ---------         -->  
   <div class="artist">
 
-    <div class="header hide-sm">
+    <!-- <div class="header hide-sm">
       <h4 class="tagline  align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
           <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
       </h4>
 
+    </div> -->
+
+    <!-- ************************ -->
+    <!-- ******** Header ******** -->
+    <!-- ************************ -->
+
+    <div class="header-wrapper hide-sm">
+      <header-info />
+
     </div>
+    <!-- ************************ -->
+    <!-- ******* /Header ******** -->
+    <!-- ************************ -->
+
+
+
+
+
+
+
 
     <!-- TOOLBAR -->
     <toolbar class="hide-lg hide-md" />
@@ -67,15 +86,19 @@
       </div>
 
       <div v-if="socialMedia.length > 0">
-        <h4>Social media</h4>
-        <div class="social-media" v-for="media in socialMedia" :key="media.platform">
+        <h2 class="margin-top1 align-center">Social media</h2>
+
+      <div class="social-icons-wrapper">
+        <div class="social-media image" v-for="media in socialMedia" :key="media.platform">
           <SocialIcons :name="media.platform" :url="media.url"/> 
         </div>
       </div>
 
+      </div>
+
     </div>
 
-    <br><br><br><br><br><br>
+<div class="prule margin-top5"></div>
 
   </div>
 </template>
@@ -94,18 +117,27 @@
     margin-top: 0px;
 
     .content{
-      @media (max-width:425px) {
+      @media (max-width: 576px) {
         margin-top: 80px;        
       }
     }
 
   }
-  img{
-    width:100%;
+  // img{
+  //   width:100%;
+  // }
+
+  .social-icons-wrapper{
+  display: flex;
   }
+
   .social-media{
-    display: inline-block;
-    margin-right: 20px;
+    // background-color: aqua;
+    // display: inline-block;
+    // margin-right: var(--gutter-width);
+    margin: auto;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
   }
 </style>
 
@@ -122,6 +154,7 @@ import VideoPlayer from '../components/VideoPlayer.vue';
 import SoundCloud from 'vue-soundcloud-player';
 import SocialIcons from '../components/SocialIcons.vue';
 import EventCard from '../components/EventCard.vue';
+import HeaderInfo from '../components/HeaderInfo.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -129,7 +162,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu, VideoPlayer, SoundCloud, SocialIcons, EventCard
+    CMSIcons, Toolbar, PrimaryMenu, VideoPlayer, SoundCloud, SocialIcons, EventCard, HeaderInfo,
   }
 })
 export default class Artist extends mixins(Translatable) {

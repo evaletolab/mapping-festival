@@ -25,23 +25,16 @@ class EventService
            return result;
         }, [] as CMS.Artist[]);
     }
-
-    eventIsOfSpecialTypeLive(event: CMS.Event){
-        const result = event.type == "Masterclass" || event.type == "Performance" ||
-        event.type == "Workshop";
-
-        return result;
-    }
     
     getSetsByLetter(lang = 'fr'): CMS.EventSetByType[]{
         let result: CMS.EventSetByType[] = []
 
         const eventMap = {};
         for(const evt of this.all ){
-            if(evt.type in eventMap){
-                eventMap[evt.type].push(evt);
-            }else if(evt.type as string !== 'Collection virtuelle'){
-                eventMap[evt.type] = [evt];
+            if(evt.typology in eventMap){
+                eventMap[evt.typology].push(evt);
+            }else if(evt.typology as string !== 'Collection virtuelle'){
+                eventMap[evt.typology] = [evt];
             }
         }
 

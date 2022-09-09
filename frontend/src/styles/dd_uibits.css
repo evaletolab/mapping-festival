@@ -7,12 +7,14 @@
 
   /* color settings */
 
-  --ui-background-color: black;
-  --ui-font-color: white;
-  --ui-border-color: white;
+  --ui-background-color: rgb(67, 67, 67);
+  --ui-font-color: var(--main-font-color);
+  --ui-border-color: var(--border-color);
 
   --ui-hover-background-color: rgb(240, 240, 240);
-  --ui-hover-text-color:rgb(120, 137, 145);
+  --ui-hover-text-color:rgb(34, 255, 0);
+
+  --ui-font-weight: 550;
   
 }
 
@@ -24,7 +26,7 @@
 
 
 .ui-font{
-  font-weight: 520;
+  font-weight: var(--ui-font-weight);
   font-size: calc(var(--font-size) * 1);
   line-height: calc(var(--line-height) * 1);
   background-color: rgba(200,180,220,var(--helper-color-alpha));
@@ -57,13 +59,11 @@
   border: 1px solid var(--ui-border-color);
   padding: var(--image-to-x);
   margin: -1px 0 0 0 ;
-
-  /*font-weight: 400;*/
 }
 
 .ui-button p,
 .ui-button.menu{
-  font-weight: 550;
+  font-weight: var(--ui-font-weight);
 }
 
 

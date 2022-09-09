@@ -80,7 +80,8 @@ export namespace CMS {
   }
 
   // export type eventType = ("emission"|"workshop"|"masterclass"|"table-ronde"|"concert"|"performance"|"nightclubbing");
-  export const eventTypeLabel = ["Installation", "Performance", "Workshop", "Masterclass"] as const;
+  // export const eventTypeLabel = ["Installation", "Performance", "Workshop", "Masterclass"] as const;
+  export const eventTypeLabel = ["Performance", "Installation", "Concert", "Spectacle", "Conférence", "Workshop"] as const;
   export type eventType = typeof eventTypeLabel[number];
 
   export const eventSubTypeLabel = ["Parcours urbain", "Exposition", "Performance", "Nighclubbing", "Concert", "Workshop", "Table ronde", "Masterclass", "mappingTV"] as const;
@@ -92,6 +93,26 @@ export namespace CMS {
   type Lng = number;
 
   export type Coordinate = [Lng, Lat];
+
+  export interface News{
+    _id:string
+    slug:string,
+    highlighted: boolean,
+    featuredImage: LocalMedia,
+    title: {
+      fr: string,
+      en: string,
+    },
+    abstract:{
+      fr: string,
+      en: string,
+    },
+    content:{
+      fr: string,
+      en: string,
+    },
+    created: Date,
+  };
 
   export interface EventLocation {
     _id:string
@@ -201,8 +222,8 @@ export namespace CMS {
     slug: string,
     active: boolean,
     cover: LocalMedia | null,
-    type: eventType,
-    subType: eventSubType,
+    typology: eventType,
+    thematic: eventSubType,
     title:{
       fr:string,
       en:string
@@ -333,10 +354,10 @@ export namespace CMS {
       return this._event.cover;
     }
     get type(): eventType{
-      return this._event.type;
+      return this._event.typology;
     }
     get subType(): eventSubType{
-      return this._event.subType;
+      return this._event.thematic;
     }
     get title(): {fr: string, en: string} {
       return this._event.title;
@@ -516,10 +537,17 @@ export namespace CMS {
 
   export interface Calendar {
     day: string;
+    date: string;
     month: string;
     moment: number;
     event: Event[];
     _id: number; // copied from When id
+  }
+
+  export interface CalendarDatePickerItem{
+    selected: boolean,
+    day: string,
+    month: string,
   }
 
   export interface ArtistSetByLetter

@@ -5,10 +5,24 @@
   <div class="event">
 
     <div class="header hide-sm">
-      <h4 class="tagline align-right">
+
+    <!-- ************************ -->
+    <!-- ******** Header ******** -->
+    <!-- ************************ -->
+
+    <div class="header-wrapper hide-sm">
+      <header-info />
+
+    </div>
+
+    <!-- ************************ -->
+    <!-- ******* /Header ******** -->
+    <!-- ************************ -->
+
+      <!-- <h4 class="tagline align-right">
           <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
           <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
-      </h4>
+      </h4> -->
 
       <div class="destination hide">
         {{t(event.title)}}
@@ -18,17 +32,15 @@
     <!-- TOOLBAR -->
     <toolbar class="hide-lg hide-md" />
 
-    <div class="content spiegel margin-top1">
+    <div class="content">
 
       <!-- HEADER -->
-      <section class="header-event spiegel text-shadow" :style="backgroundImage">    
+      <section class="header-event shadow" :style="backgroundImage">    
        
         <!-- <p v-if="date" class="ui-font big align-right text-shadow">{{date|shortdate}}</p> -->
 
-
-
           <!------------- Nice dates ----------->
-          <div v-if="event.when.length < 2" >
+          <!-- <div v-if="event.when.length < 2" >
             <div class="ui-font big align-right text-shadow" v-for="(when,index) in event.when" :key="index">
             {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
             </div>
@@ -37,44 +49,63 @@
             <div class="interval ui-font big align-right text-shadow" v-for="(interval, index) in intervals" :key="index">
               {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
             </div>
-          </div>
+          </div> -->
           <!-- ------------------------------- -->
-
-
-        <br>
-        <h1>{{t(event.title)}}</h1><br>
-        <div v-for="artist in artists" :key="artist._id">
-          <p class="ui-font big">
-            {{artist.fullname}} <sup>{{artist.country}}</sup></p>
+        <div class="event-title">{{t(event.title)}}</div>
+        <div class="artist-name-wrapper " v-for="artist in artists" :key="artist._id">
+          <span class="artist-name">
+              {{artist.fullname}}</span> <span class="artist-country ">{{artist.country}}</span>
         </div>
-
-
-        <p class="ui-font align-center">
-          <br><br>
-          {{getTypeLabel(event.type)}} / {{event.subType}} </p>    
+        <span class="event-location" v-if="eventLocation" >  -->  </span>
+              <router-link v-if="eventLocation" class="simple-link event-location white" :to="`/map/${eventLocation.slug}`">
+                {{t(eventLocation.name)}}
+              </router-link>
+        <div class="event-type">
+          {{getTypeLabel(event.typology)}} / {{event.thematic}} </div>
       </section>
 
 
       <!-- ABOUT -->
       <div class="spiegel">
-      <h4 class="width6 indent2 margin-top1">
-
+      <h5 class="width6 indent2 margin-top1">
 
         <!-- Price and public admittance limit -->
+        <div class="item">
+          <!-- {{t({fr:"Tarif", en:"Price"})}}: {{ price }}  -->
+          <span class="" v-if="event.ticketUrl">
+            <a class="simple-link" :href="event.ticketUrl" target="_blank"> {{t({fr: "Billetterie", en:"Ticketing"})}}</a>
+          </span>
+        </div>
 
-        <!-- <div class="item"></div> -->
-        <div class="item">{{t({fr:"Prix", en:"Price"})}}: CHF {{event.price || '--'}}.–</div>
-        <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div>
-      </h4>
-
-
+      <!-- <div class="item">{{t({fr:"Limite", en:"Limit"})}}: {{event.limit || '--'}} personnes</div> -->
+      <!-- 
       <p class="indent2" v-if="event.ticketUrl">
         <a :href="event.ticketUrl" target="_blank">{{t({fr: "Billetterie", en:"Ticketing"})}}</a>
-      </p>
+      </p> -->
+
+            <!-- Dates -->
+          <div v-if="event.when.length < 2" >
+            <div class="" v-for="(when,index) in event.when" :key="index">
+            {{when.start|shortdate}} | {{when.startTime}} — {{when.endTime}}
+            <span v-if="eventLocation" >--></span>
+            <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
+              {{t(eventLocation.name)}}
+            </router-link>
+            </div>
+          </div>
+          <div v-else>
+            <div class="interval item" v-for="(interval, index) in intervals" :key="index">
+              {{interval.shortDate}} | {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
+              <span v-if="eventLocation" > -->  </span>
+              <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
+                {{t(eventLocation.name)}}
+              </router-link>
+            </div>
+          </div>
+        </h5>
       </div>
 
-      <br>
-      <div class="spiegel">
+      <div class="spiegel margin-top1">
         <p class="indent2 width5" v-html="t(event.header)"></p> 
         <div v-html="t(event.content)"/>
       </div>
@@ -83,33 +114,7 @@
       <p v-if="event.notes" v-html="t(event.notes)" />
       -->
 
-      <!-- Dates -->
 
-      <div class="spiegel">
-
-        <h5 class="indent2 width6 margin-top1">
-          <div v-if="event.when.length < 2" >
-            <div class="" v-for="(when,index) in event.when" :key="index">
-
-            {{when.start|shortdate}} / {{when.startTime}} — {{when.endTime}}
-            <span v-if="eventLocation" >  --->  </span>
-            <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
-              {{t(eventLocation.name)}}
-            </router-link>
-            </div>
-          </div>
-          <div v-else>
-            <div class="interval" v-for="(interval, index) in intervals" :key="index">
-
-              {{interval.shortDate}} / {{interval.startTimeAsStr}} — {{interval.endTimeAsStr}}
-              <span v-if="eventLocation" >  --->  </span>
-              <router-link v-if="eventLocation" class="simple-link" :to="`/map/${eventLocation.slug}`">
-                {{t(eventLocation.name)}}
-              </router-link>
-            </div>
-          </div>
-        </h5>
-      </div>
 
 
       <div class="spiegel">
@@ -121,8 +126,17 @@
         <div v-if="artists.length > 0">
           <h1 class="margin-top3">Artists</h1>
           <div v-for="artist in artists" :key="artist._id">
-            <br>
-            <img class="image image-align-left width8 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450/000000/000000'">
+
+            <!-- <div class="prule margin-top1 width1"/>
+            <div class="prule margin-top1 indent1 width1"/>
+            <div class="prule margin-top1 indent2 width1"/>
+            <div class="prule margin-top1 indent3 width1"/>
+            <div class="prule margin-top1 indent4 width1"/>
+            <div class="prule margin-top1 indent5 width1"/>
+            <div class="prule margin-top1 indent6 width1"/>
+            <div class="prule margin-top1 indent7 width1"/> -->
+
+            <img class="image width8 height14 shift-left" :src="artist.cover ? artist.cover.path: 'https://via.placeholder.com/450/000000/000000'">
             <h2>{{artist.fullname}}<!--<sup>{{artist.country}}</sup>--></h2>
             <br>
             <div v-html="t(artist.content)" />
@@ -167,7 +181,7 @@
 
         </div>
       </div>
-      <br><br><br><br><br><br>
+      <div class="prule margin-top8"/>
     </div>
   </div>
   
@@ -188,11 +202,10 @@
     margin-top: 0px;
 
     .content{
-      @media (max-width:425px) {
-        margin-top: 80px;        
+      @media (max-width:576px) {
+        margin-top: 80px;
       }
     }
-
 
     .header-event{
       position: relative;
@@ -200,6 +213,61 @@
       padding: var(--gutter-width);
       padding-top:  calc(var(--gutter-width)*1.25);
       color: white;
+
+    .artist-name-wrapper{
+    height: auto;
+    }
+
+    .event-date{
+    display:inline-block;
+    font-size: calc(var(--font-size)*.75);
+    line-height: calc(var(--line-height)*.5);
+    margin: 0;
+    padding: 0;
+    }
+
+    .event-title{
+    font-weight: 550;
+    font-size: calc(var(--font-size)*2.5);
+    line-height: calc(var(--line-height)*2);
+    margin-bottom: 0;
+    padding: 0;
+    }
+
+    .artist-name{
+    display:inline-block;
+    font-size: calc(var(--font-size)*1.5);
+    line-height: calc(var(--line-height)*1.5);
+    /*word-break: break-all;*/
+    }
+
+    .artist-country{
+    font-weight: 650;
+    display:inline-block;
+    font-size: calc(var(--font-size)*2);
+    transform: translateY(calc(-2 * var(--image-to-x)));
+    margin-left: calc(var(--gutter-width) * -.15)
+    }
+
+    .event-location{
+    font-size: calc(var(--font-size)*1.5);
+    line-height: calc(var(--line-height)*1.5);
+    margin-top: .5rem;
+
+    }
+
+    .event-type{
+    font-size: calc(var(--font-size)*1.2);
+    line-height: calc(var(--line-height)*1.2);
+    }
+
+    .artist-country{
+      font-weight: 650;
+      display:inline-block;
+      font-size: calc(var(--font-size)*.5);
+      transform: translateY(calc(-1 * var(--image-to-x)));
+      margin-left: calc(var(--gutter-width) * -.15)
+    }
 
 
     .when{
@@ -245,6 +313,8 @@ import VideoPlayer from '../components/VideoPlayer.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
 import SoundCloud from 'vue-soundcloud-player';
 import SpotCard from '../components/SpotCard.vue';
+import HeaderInfo from '../components/HeaderInfo.vue';
+import DynamicSpacer from '../components/DynamicSpacer.vue';
 
 import { mixins } from 'vue-class-component';
 import { Translatable } from '@/mixins';
@@ -252,7 +322,7 @@ import { Translatable } from '@/mixins';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SpotCard
+    CMSIcons, Toolbar, VideoPlayer, SoundCloud, SpotCard, HeaderInfo, DynamicSpacer,
   }
 })
 export default class Event extends mixins(Translatable) {
@@ -277,8 +347,15 @@ export default class Event extends mixins(Translatable) {
 
   get intervals(): CMS.Interval[]{
     const intervals = new CMS.EventWrap(this.event).intervals;
-    console.log("intevals", intervals);
+    // console.log("intevals", intervals);
     return intervals;
+  }
+
+  get price(): string{
+    if(!this.event.price || this.event.price == 0){
+      return this.t({fr: "Entrée libre", en:"Free"}) as string;
+    }
+    return `CHF ${this.event.price}.-`;
   }
 
 

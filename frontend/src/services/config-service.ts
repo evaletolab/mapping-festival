@@ -13,7 +13,7 @@ class ConfigService {
   // https://fr.vuejs.org/v2/guide/reactivity.html
   private _store: any;
   // private _baseUrl = process.env.BASE_URL;
-  private _cmsBaseUrl = "https://iziapi.ch/mappingDev/index";
+  private _cmsBaseUrl = "https://2022.mappingfestival.com/api/index";
 
   private _lang = 'fr';
  
@@ -73,7 +73,7 @@ class ConfigService {
         Object.assign(this._store.config,festival);
       }
 
-      console.log('-- config',this._store.config.landing);
+      // console.log('-- config',this._store.config.landing);
       this._store.config.done = true;
 
       // console.log('---DBG', JSON.stringify(this._store,null,2))

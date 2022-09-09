@@ -1,14 +1,20 @@
 <template>
   <div class="events">
-    <div class="header hide-sm">
-      <h4 class="tagline  align-right">
-          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
-          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
-      </h4>
+    
 
-      <div class="ui-font big destination">
-        {{t(title)}}
-      </div>
+    <!-- ************************ -->
+    <!-- ******** Header ******** -->
+    <!-- ************************ -->
+
+    <div class="header-wrapper hide-sm">
+
+      <header-info/>
+
+    <!-- ************************ -->
+    <!-- ******* /Header ******** -->
+    <!-- ************************ -->
+
+
     </div>
 
     <!-- TOOLBAR -->
@@ -30,7 +36,7 @@
   width: 100%;    
   margin-top: 0px;
 
-  @media (max-width:426px) {
+  @media (max-width: var(--mobile-breakpoint)) {
     .calendar {
       transition: all 200ms;      
       transform: translateY(0px);
@@ -85,11 +91,12 @@ import { Translatable } from '../mixins';
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import Calendar from '../components/Calendar.vue';
+import HeaderInfo from '../components/HeaderInfo.vue';
 
 
 @Component({
   components: {
-    CMSIcons, Toolbar,Calendar
+    CMSIcons, Toolbar,Calendar, HeaderInfo,
   }
 })
 export default class EventList extends mixins(Translatable) {

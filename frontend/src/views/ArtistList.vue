@@ -3,16 +3,29 @@
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
   <div class="artist" id="artists-top">
-    <div class="header hide-sm">
-      <h4 class="tagline  align-right">
-          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
-          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
-      </h4>
 
-      <div class="ui-font big destination">
-        Artists
-      </div>
+    
+    <!-- ************************ -->
+    <!-- ******** Header ******** -->
+    <!-- ************************ -->
+
+    <div class="header-wrapper hide-sm">
+      <header-info/>
     </div>
+
+    <!-- ************************ -->
+    <!-- ******* /Header ******** -->
+    <!-- ************************ -->
+
+  <dynamic-spacer />
+
+  <div class="spiegel margin-top1">
+      <h1 class="destination">
+        Artists
+      </h1>
+  </div>
+
+
 
     <!-- TOOLBAR -->
     <toolbar class="hide-lg hide-md" />
@@ -52,7 +65,7 @@
 <style lang="scss" scoped>
   .artist{
     .content{
-      @media (max-width:425px) {
+      @media (max-width: 576px) {
         margin-top: 80px;        
       }
       .letter-key{
@@ -106,7 +119,7 @@
     margin-right: 20px;
     margin-left: 20px;
   }
-  @media (max-width: 414px) {
+  @media (max-width: var(--mobile-breakpoint)) {
   .flex-grid {
     display: block;
   }
@@ -136,11 +149,12 @@ import Toolbar from '../components/Toolbar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
 import ArtistCard from '../components/ArtistCard.vue';
 import VueCable from '../components/VueCable.vue';
-
+import HeaderInfo from '../components/HeaderInfo.vue';
+import DynamicSpacer from '../components/DynamicSpacer.vue';
 
 @Component({
   components: {
-    CMSIcons, Toolbar, PrimaryMenu, ArtistCard, VueCable
+    CMSIcons, Toolbar, PrimaryMenu, ArtistCard, VueCable, HeaderInfo, DynamicSpacer,
   }
 })
 export default class ArtistList extends mixins(Translatable)  {

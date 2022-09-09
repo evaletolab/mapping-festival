@@ -26,6 +26,7 @@ interface CMS_Map{
   artists: CMS.Artist[];
   eventLocations: CMS.EventLocation[];
   pages: CMS.Page[];  
+  news: CMS.News [];
 }
 
 
@@ -44,6 +45,7 @@ class CMSService {
     artists: [],
     eventLocations: [],
     pages: [],
+    news: [],
   };
 
   constructor() {
@@ -66,6 +68,10 @@ class CMSService {
     return this.cms.events;
   }
 
+  public get news(): CMS.News[]{
+    return this.cms.news;
+  }
+
   public get eventLocations(): CMS.EventLocation[] {
     return this.cms.eventLocations;
   }
@@ -74,9 +80,38 @@ class CMSService {
     return this.cms.artists;
   }
 
-
   public get pages(): CMS.Page[]{
     return this.cms.pages;
+  }
+
+  public calendarContainsDatePickerItem(selectedDatePickerItem: CMS.CalendarDatePickerItem|null): boolean {
+    if(!selectedDatePickerItem){
+      return false;
+    }
+    const calendarItems = this.getCalendarFrom(this.events);
+    return !!calendarItems.find((cal: CMS.Calendar) =>{
+      const calDate = new Date(cal.moment);
+      const dayIsTheSame = parseInt(selectedDatePickerItem.day) == parseInt(cal.date);
+      const monthIsTheSame = parseInt(selectedDatePickerItem.month) == parseInt(`${calDate.getMonth() + 1}`); 
+      return dayIsTheSame && monthIsTheSame;
+    });
+  }
+
+  public getFestivalDatePickerItems(): CMS.CalendarDatePickerItem[]{
+    const calendarItems = this.getCalendarFrom(this.events).sort((a: any, b: any)=>{
+      return a._id - b._id;
+    });
+
+    const result = calendarItems.map((cal: CMS.Calendar, index: number) => {
+      const date = new Date(cal.moment);
+      return {
+        day: `${cal.date}`.padStart(2, '0'),
+        month: `${date.getMonth() + 1}`.padStart(2, '0'),
+        selected: false,
+      };
+    });
+
+    return result;
   }
 
   public getCalendarFrom(events?: CMS.Event[]): CMS.Calendar[] {
@@ -96,7 +131,7 @@ class CMSService {
         const selector = date + '.' + month;
         const dayname = $config.store.config.time.days[when.start.getDay()];
         const monthname = $config.store.config.time.months[when.start.getMonth()];         
-        const eventType = event.type;
+        const eventType = event.typology;
         if(!calendar[key]) {
           calendar[key] = {_id,selector,time,date,month,events:[],dayname, monthname, moment, eventType};          
         }
@@ -106,49 +141,58 @@ class CMSService {
     });
     const keys = Object.keys(calendar);
     return keys.map(key => {
-      calendar[key].events = calendar[key].events.sort((a,b)=>{
+      calendar[key].events = calendar[key].events.sort((a: CMS.Event, b: CMS.Event)=>{
+        const currentDate = key.split(".")[0];
 
-        // ensure performance is shown first
-        // presentation order
-        // lowest valid weight is 1
-        const sortWeigths = {
-            "Performance": 1,
-            "Installation": 8,
-            "Collection virtuelle": 3,
-            "Masterclass": 4,
-            "mppngTV": 5,
-            "Parcours urbain": 6,
-            "Workshop": 7,
-        };
-        const weightA = sortWeigths[a.type] || 10;
-        const weightB = sortWeigths[b.type] || 10;
-        const result = weightA - weightB;
-        if(result == 0){
-          // we are in same category so we want to "sub"sort on title
-          return a.title.fr.toLowerCase().localeCompare(b.title.fr.toLowerCase());
-        }else{
-          return result;
-        }
-        // return a.when[0].startTimeWeight - b.when[0].startTimeWeight;
+        // fully non trimmed events
+        const eventA: CMS.Event = this.events.find(event => event._id == a._id)!;
+        const eventB: CMS.Event = this.events.find(event => event._id == b._id)!;
+
+        // FIX: improve date search (this will fail if event has 2 whens with same dayNumber, 
+        // ex: when 13.april and when 13.may)
+        const whenA = eventA.when.find(when => when.date == currentDate)!; 
+        const whenB = eventB.when.find(when => when.date == currentDate)!; 
+
+        return whenA.startTimeWeight - whenB.startTimeWeight;
       });
       return calendar[key] as CMS.Calendar;
-    })
+    });
   }
 
+  private async concurrentLoadAll(): Promise<any[]>{
+    const baseUrl = $config.store.config.cms.baseUrl;
+    const config = Object.assign({}, getAxiosOptions()) as any;
+    const endPoints = [
+      `${baseUrl}/api/collections/get/localisations`,
+      `${baseUrl}/api/collections/get/artists`,
+      `${baseUrl}/api/collections/get/pages`,
+      `${baseUrl}/api/collections/get/news`,
+      `${baseUrl}/api/collections/get/events`,
+    ];
+    
+    try{
+      let data = await axios.all(endPoints.map((endpoint) => axios.get(endpoint, config)));
+      data = data.map((item) => item.data);
+      return data;
+    }catch(e){
+      console.error(e);
+      throw e;
+    }
+  }
 
   public async loadAll(force?: boolean){
     if(!force && this.cms.events.length) {
       return;
     } 
     console.log("cms-service load all");
+    const [eventLocations, artists, pages, news, events ] = await this.concurrentLoadAll();
+
     const config = Object.assign({}, getAxiosOptions()) as any;
 
     const baseUrl = $config.store.config.cms.baseUrl;
     
-    // load eventLocations
+    // handle eventLocations
     {
-      const eventsUrl = `${baseUrl}/api/collections/get/localisations`;
-      const eventLocations = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["name", "content"];
       this.cms.eventLocations = this.cms.allEventLocations = eventLocations.entries
         .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
@@ -157,10 +201,8 @@ class CMSService {
       //console.log("eventLocations", this.cms.eventLocations);
     }
     
-    // load artists
+    // handle artists
     {
-      const eventsUrl = `${baseUrl}/api/collections/get/artists`;
-      const artists = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["content"];
       this.cms.artists = this.cms.allArtists = artists.entries
         .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
@@ -168,22 +210,26 @@ class CMSService {
         .filter(item => item.active);
     }
     
-    // load pages
+    // handle pages
     {
-      const eventsUrl = `${baseUrl}/api/collections/get/pages`;
-      const events = (await axios.get(eventsUrl, config)).data;
       const localizedKeys = ["title", "header", "content"];
-      this.cms.pages = events.entries
+      this.cms.pages = pages.entries
         .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
         .map(entry => $cockpit.formatPage(entry))
         .filter(item => item.active);
       // console.log("pages", this.cms.pages);
     }
-
-    // load events (must be loaded last)
+    
+    // handle news
     {
-      const eventsUrl = `${baseUrl}/api/collections/get/events`;
-      const events = (await axios.get(eventsUrl, config)).data;
+      const localizedKeys = ["title", "abstract", "content"]
+      this.cms.news = news.entries
+        .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
+        .map(entry => $cockpit.formatNews(entry));
+    }
+
+    // handle events (must be loaded last)
+    {
       const localizedKeys = ["title", "header", "content", "hardware", "notes"]
       this.cms.events = this.cms.allEvents = events.entries
         .map(entry => $cockpit.formatTranslations(entry, localizedKeys))
@@ -192,6 +238,7 @@ class CMSService {
         .filter(item => item.active);
       //console.log("my events", this.cms.events.filter(e => e.title.fr =="Lotus"));
     }
+
 
     const range = $config.config.landing.range;
     // console.log('---- loaded',range,this.cms.allEvents.length,this.cms.allArtists.length,this.cms.allEventLocations.length)
@@ -205,6 +252,7 @@ class CMSService {
     this.cms.events = this.filterEventsByRange(range, this.cms.allEvents);
     this.cms.artists = this.filterArtistsByRange(range, this.cms.allArtists);
     this.cms.eventLocations = this.filterLocationsByRange(range, this.cms.allEventLocations);
+    this.cms.news = this.filterNewsByRange(range, this.cms.news);
   }
 
   private filterArtistsByRange(range, artists) {
@@ -235,7 +283,14 @@ class CMSService {
     return _events;
 
   }
+  
+  private filterNewsByRange(range, news) {
+    // TODO: how should we handle this, there is no date associated to the news itself
+    // for the time being we do nothing
+    return news;
+  }
 }
+
 
 //
 // services start with $

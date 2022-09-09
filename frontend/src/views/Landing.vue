@@ -1,16 +1,24 @@
 <template>
-  <div class="landing">
-    <div class="header ">
-      <div class="title">
-        <h1 class="width7" v-html="config.landing.title1"></h1>
-          <!-- <p class="">mp<br>pngfst<br>vl</p> -->
-          <!-- <h1 class="margin-top1" v-html="t(config.landing.title1)"/> -->
-      </div>
+  <div class="landing hide-sms">
 
-      <h4 class="tagline  align-right">
-          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
-          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
-      </h4>
+    <!-- ************************ -->
+    <!-- ******** Header ******** -->
+    <!-- ************************ -->
+
+    <div class="header-wrapper">
+
+      <header-info />
+
+      <!---------------------->
+      <!-- Background image -->
+      <!---------------------->
+
+
+
+    <!-- ************************ -->
+    <!-- ******* /Header ******** -->
+    <!-- ************************ -->
+
   
       <!-- EXTRA MENU SHORTCUT  -->
       <div class="menu-short hide">
@@ -18,10 +26,19 @@
       </div>
 
       <div class="destination hide-sm">
-        
       </div>
 
     </div>
+
+
+<div class="spiegel">
+    <h1 class="margin-top1">News</h1></div>
+    
+        <news-card-list :count="3" />
+
+<div class="spiegel">
+  <h1  class="margin-top2">Agenda</h1>
+</div>
 
     <!--------------- Main wrapper --------------------->
     <calendar limit="yes" gotop="yes" />
@@ -68,6 +85,8 @@ import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import Calendar from '../components/Calendar.vue';
 import PrimaryMenu from '../components/PrimaryMenu.vue';
+import NewsCardList from '../components/NewsCardList.vue';
+import HeaderInfo from '../components/HeaderInfo.vue';
 
 
 @Component({
@@ -75,7 +94,9 @@ import PrimaryMenu from '../components/PrimaryMenu.vue';
     CMSIcons,
     PrimaryMenu,
     Toolbar,
-    Calendar
+    Calendar,
+    NewsCardList,
+    HeaderInfo,
   },
 })
 export default class Landing extends mixins(Translatable) {

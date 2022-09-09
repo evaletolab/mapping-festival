@@ -49,6 +49,13 @@ class CockpitService {
     return result;
   }
 
+  formatNews(obj: any): CMS.News{
+    obj.created = new Date(obj._created * 1000);
+    this.formatSlugFromCMS(obj);
+    this.formatLocalMedia(obj.featuredImage);
+    return obj;
+  }
+
   formatLocalMedia(obj:any): CMS.LocalMedia{
 
     obj.path = this.absolutePathForLocalMedia(obj.path);
@@ -59,7 +66,6 @@ class CockpitService {
         obj.sizes[prop].path = this.absolutePathForLocalMedia(path);
       }
     }
-      // console.log("path", result.path);
 
     obj.created = new Date(obj.created * 1000);
     obj.modified = new Date(obj.modified * 1000);
@@ -232,8 +238,8 @@ class CockpitService {
         const v = w.value;
         // new Date("2021-05-06T16:25:00+02:00");
 
-        const start = new Date(`${v.startDate}T${v.startHour}:00+01:00`);
-        const end = new Date(`${v.endDate}T${v.endHour}:00+01:00`);
+        const start = new Date(`${v.startDate}T${v.startHour}`);
+        const end = new Date(`${v.endDate}T${v.endHour}`);
         const cancel = v.cancel;
         // console.log(v.startDate, v.startHour, start);
         // console.log(v.endDate, v.endHour, end);

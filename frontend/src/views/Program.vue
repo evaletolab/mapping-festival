@@ -3,15 +3,30 @@
   <!-- TESTING READ-ONLY DISPLAY -->
   <!--         ---------         -->  
   <div class="artist" id="artists-top">
-    <div class="header hide-sm">
-      <h4 class="tagline  align-right">
-          <div  v-for="(title,index) in t(config.landing.title2).split('\n')" :key="index">{{title}}</div>
-          <div  v-html="t(config.landing.title3)"  class="hide-sm"/>
-      </h4>
 
-      <div class="ui-font big destination">
-        {{t(title)}}
-      </div>
+    <!-- <div class="header hide-sm"> -->
+
+    <!-- ************************ -->
+    <!-- ******** Header ******** -->
+    <!-- ************************ -->
+
+    <div class="header-wrapper hide-sm">
+
+      <header-info/>
+
+    <!-- ************************ -->
+    <!-- ******* /Header ******** -->
+    <!-- ************************ -->
+
+    </div>
+
+    <dynamic-spacer />
+
+    <div class="spiegel margin-top1">
+      <h1 class="ui-font big destination">
+        Projets <!--
+        {{t(title)}} -->
+      </h1>
     </div>
 
     <!-- TOOLBAR -->
@@ -35,14 +50,17 @@
       </div> 
     </div>
     <div v-else class="content spiegel margin-top1" >
-      <div v-for="eventSet in sortedEventSets" :key="eventSet.type">
-        <h1 class="letter-key">{{t(computeEventTypeTranslation(eventSet.type))}}</h1>
+      <div v-for="eventSet in sortedEventSets" :key="eventSet.typology">
+        <h1 class="letter-key">{{t(computeEventTypeTranslation(eventSet.typology))}}</h1>
         <event-card v-for="event in eventSet.events" :key="event._id" :event="event" />
         <hr>
       </div>
     </div>
+  <div class="prule margin-top5"></div>
 
   </div>
+
+
 </template>
 
 <style >
@@ -51,7 +69,7 @@
 <style lang="scss" scoped>
   .artist{
     .content{
-      @media (max-width:425px) {
+      @media (max-width:576px) {
         margin-top: 80px;        
       }
       .letter-key{
@@ -105,7 +123,7 @@
     margin-right: 20px;
     margin-left: 20px;
   }
-  @media (max-width: 414px) {
+  @media (max-width: var(--mobile-breakpoint)) {
   .flex-grid {
     display: block;
   }
@@ -133,12 +151,14 @@ import { Translatable } from '@/mixins';
 import CMSIcons from '../components/CMSIcons.vue';
 import Toolbar from '../components/Toolbar.vue';
 import EventCard from '../components/EventCard.vue';
+import HeaderInfo from '../components/HeaderInfo.vue';
+import DynamicSpacer from '../components/DynamicSpacer.vue';
 
 type FilterType = "all" | "Collection virtuelle";
 
 @Component({
   components: {
-    CMSIcons, Toolbar, EventCard,
+    CMSIcons, Toolbar, EventCard, HeaderInfo, DynamicSpacer,
   }
 })
 export default class Program extends mixins(Translatable)  {
@@ -181,7 +201,7 @@ export default class Program extends mixins(Translatable)  {
 
     console.log("route", this.$router.currentRoute.params);
     if(this.filter == 'Collection virtuelle'){
-      result = result.filter(e => e.type as string == 'Collection virtuelle')
+      result = result.filter(e => e.typology as string == 'Collection virtuelle')
       .sort((a, b) => a.title[this.currentLang].localeCompare(b.title[this.currentLang]));
     }
 

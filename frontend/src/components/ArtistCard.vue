@@ -4,7 +4,7 @@
 
     <div class="artist-name-mobile">
       <span v-if="artist.artistName">{{artist.artistName}}</span>
-      <span v-if="artist.lastname">{{artist.lastname}}</span> {{artist.firstname}}<sup>{{artist.country}}</sup>
+      <span v-if="artist.lastname">{{artist.lastname}}</span> {{artist.firstname}} <sup>{{artist.country}}</sup>
     </div> 
 
     <div class="dot">•</div>
@@ -23,13 +23,18 @@
 </template>
 
 <style scoped>
+  sup {
+    font-size:xx-small; 
+    vertical-align:super;
+  }
+  
   .artist-card-mobile
   {
     display: flex;
     align-items: center;
     cursor: pointer;
     height: 70px;
-    border-top: 1px solid var(--font-color);
+    border-top: 1px solid var(--border-color);
   }
 
   .portrait-mobile
@@ -70,6 +75,7 @@
     position: absolute;
     top: 5px;
     left: 5px;
+    color: white;
   }
 </style>
 
@@ -114,11 +120,12 @@ export default class ArtistCard extends Vue {
     }
 
     let secondLine = "";
+    const supStyle = 'style="font-size:xx-small;vertical-align:super"';
     if(this.artist.artistName){
-      secondLine = `${this.artist.lastname} ${this.artist.firstname} <sup>${this.artist.country}</sup>`;
+      secondLine = `${this.artist.lastname} ${this.artist.firstname} <sup ${supStyle}>${this.artist.country}</sup>`;
     }else{
       const lastName = (this.artist.lastname && this.artist.artistName) ? `${this.artist.lastname} ` : "";
-      secondLine = `${lastName}${this.artist.firstname} <sup>${this.artist.country}</sup>`;
+      secondLine = `${lastName}${this.artist.firstname} <sup ${supStyle}>${this.artist.country}</sup>`;
     }
 
     return `${firstLine} ${secondLine}`;

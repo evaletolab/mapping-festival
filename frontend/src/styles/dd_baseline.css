@@ -43,15 +43,28 @@
   /* helpers settings */
   --helper-color-alpha: 0;
 
+  /* breakpoint for mobile phones */
+  --mobile-breakpoint: 476;
+
+
   /* font basics settings*/
   --font-size-max: 22px;
-  --font-size: min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max));
-  --line-height: calc(var(--font-size) * 1.26);
-  --font-color: white;
-  --main-font-color: white;
-  --body-color: black;
-  --nav-header-height: 230px;
+  --font-size-min: 17px;
 
+  --font-size: max( min(calc((1vmin + 1.5vmax) * .7), var(--font-size-max)) , var(--font-size-min));
+    --line-height: calc(var(--font-size) * 1.26);
+
+  --main-font-color: white;
+  --font-color: white;
+  --soft-text-color: grey;
+
+  --border-color: rgba(255, 255, 255, 0.339);
+  --body-color: black;
+
+  --legende-background-color: hsla(0, 0%, 0%, 0.566);
+  --legende-texte-color: hsl(0, 0%, 83%);
+
+  --nav-header-height: 230px;
  
   /* text alignement properties */
   --text-to-baseline: calc(var(--line-height) * -.39 );
@@ -87,9 +100,9 @@
 
   /* spiegel /  / columns properties */
   --spiegel-width: calc(100% - var(--margin-left) - var(--margin-right));
-  --column-width: calc( var(--spiegel-width) / var(--columns-count) - (var(--gutter-width) * ( var(--columns-count) - 1 ) / var(--columns-count))) ;
+  --column-width: calc( var(--spiegel-width) / var(--columns-count) - (var(--gutter-width) * ( var(--columns-count) - 1 ) / ( var(--columns-count) + 3))) ;
 
-  /* baseline grid properties */
+  /* baseline grid display properties */
   --baseline-thickness: 1.2px;
   --baseline-inter: calc(var(--line-height) - var(--baseline-thickness));
   --baseline-stop: var(--line-height);
@@ -97,10 +110,10 @@
 }
 
 
-@media only screen and (max-width: 400px)
+@media only screen and (max-width: 476px)
   {
     :root {
-      /*-webkit-text-size-adjust: none;*/
+      /* -webkit-text-size-adjust: none; */
       --font-size: calc((1vmin + 1.5vmax) * 1.2);
   		--margin-left: calc((var(--line-height) * .1 ) - var(--text-to-baseline) + var(--image-to-x));
   		--margin-right: var(--margin-left);
@@ -122,8 +135,8 @@ html {
     font-family: inter;
 
     -moz-font-feature-settings: 
-      "frac" 1, 
-      "zero" 1,
+      "frac" 0, 
+      "zero" 0,
       "ss01" 1, 
       "cv01" 1,
       "cv09" 1, 
@@ -132,8 +145,8 @@ html {
     ;
 
     font-feature-settings: 
-      "frac" 1, 
-      "zero" 1, 
+      "frac" 0, 
+      "zero" 0, 
       "ss01" 1, 
       "cv01" 1,
       "cv09" 1, 
@@ -155,8 +168,6 @@ body{
 
   font-size: var(--font-size);
   line-height: var(--line-height);
-  /* Bug with child element
-  transform: translateY(var(--text-to-baseline));*/
   
   background: var(--body-color);
   color: var(--font-color);
@@ -202,6 +213,7 @@ body{
 
     text-align: center;
     font-size: calc(var(--font-size) * .5);
+
 }
 
 
@@ -254,9 +266,6 @@ body{
 }
 
 
-.image.align-left{}
-
-
 .image.align-right{
   float:right;
   margin: 0 0 calc(var(--line-height) - var(--image-to-x)) var(--gutter-width);
@@ -291,8 +300,8 @@ h1{ /*  grand titre */
 
   background-color: rgba(200,210,170,var(--helper-color-alpha));
 
-  font-size: calc(var(--font-size) * 2.75);
-  line-height: calc(var(--line-height) * 2);
+  font-size: calc(var(--font-size) * 2);
+  line-height: calc(var(--line-height) * 1.75);
 
   margin:0;
 
@@ -302,8 +311,15 @@ h1{ /*  grand titre */
 
 }
 
+.h1-sub {
+  /*  subtitle */
+  background-color: rgba(120, 210, 220, var(--helper-color-alpha));
+  font-size: calc(var(--font-size) * 1.5);
+  line-height: calc(var(--line-height) * 1.5);
+}
 
-h2{ /*  dates, etc */
+
+h2{ /*  dates, etc ... semble inutilisé.. memo to self */
 
   background-color: rgba(120,210,220,var(--helper-color-alpha));
 
@@ -322,8 +338,6 @@ h2{ /*  dates, etc */
 h3{ /*  titres inter paragraphes */
 
   background-color: rgba(120,210,220,var(--helper-color-alpha));
-
-
   font-size: var(--font-size);
   line-height: var(--line-height);
   transform: translateY(var(--text-to-baseline));
@@ -334,15 +348,16 @@ h3{ /*  titres inter paragraphes */
   margin-left: calc(var(--gutter-width) * 2);
 
   font-family: 'Inter', sans-serif;
-  font-weight: 470;
+  font-weight: 450;
   font-family: inter;
 }
 
 
 
 h4{  /*  infos techniques */
-
+  clear: both;
   background-color: rgba(180,150,220,var(--helper-color-alpha));
+
   margin:0;
   margin-bottom: calc(var(--line-height) - 1px);
 
@@ -353,7 +368,7 @@ h4{  /*  infos techniques */
   font-weight: 470;
   font-family: 'inter';
 
-  border-top: 1px solid var(--font-color);;
+  border-top: 1px solid var(--border-color);
 
 }
 
@@ -371,8 +386,8 @@ h5{  /*  notes et addendum */
   font-weight: 470;
   font-family: inter;
 
-  border-top: 1px solid var(--font-color);
-  border-bottom: 1px solid var(--font-color);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 
 }
 
@@ -384,7 +399,7 @@ h5{  /*  notes et addendum */
 
 .item{
   width: 100%;
-  border-bottom: 1px solid var(--font-color);
+  border-bottom: 1px solid var(--border-color);
   margin-top: -1px;
 }
 
@@ -400,7 +415,7 @@ h5{  /*  notes et addendum */
   width:100%;
   height: 0px;
   background-color: none;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid var(--border-color);
   margin-top: -1px;
 }
 
@@ -421,6 +436,39 @@ h5{  /*  notes et addendum */
   font-weight: 450;
   font-family: 'inter';
 
+}
+
+
+.legende {
+  clear: both;
+  position: relative;
+
+  background-color: var(--legende-background-color);
+  color: var(--legende-texte-color);
+
+  font-size: calc(var(--font-size) / 1.5);
+  line-height: calc(var(--line-height) / 1.5);
+  padding: calc(var(--line-height) / 2);
+
+  text-align: right;
+
+  transform: translate(
+    calc(var(--gutter-width) * -1),
+    calc(var(--line-height) * -2)
+  );
+  margin-bottom: calc(var(--line-height) * -1);
+}
+
+@media only screen and (max-width: 476px) {
+  .legende {
+    margin-left: calc(var(--line-height) * 2);
+    transform: translate(
+      calc(var(--gutter-width) * .41),
+      calc(var(--line-height) * -2)
+    );
+    text-align: left;
+
+  }
 }
 
 
@@ -448,12 +496,15 @@ h5{  /*  notes et addendum */
   transform: translate(-50%, -50%);
 }
 
-@media only screen and (min-width: 568px) {
-  
-  .shift-left{
-    margin-left: calc(-3.5 * var(--column-width) - 2 * var(--gutter-width));
-  }
 
+.shift-left{
+  margin-left: calc(-4.2 * var(--column-width) - 2 * var(--gutter-width));
+}
+
+@media only screen and (max-width: 476px  ) {
+  .shift-left{
+    margin-left: 0;
+}
 }
 
 
@@ -476,7 +527,7 @@ h5{  /*  notes et addendum */
   @media only screen and (max-width: 568px) {
 
     .indent1, .indent2, .indent3 { margin-left: 0;}
-    .indent4, .indent5, .indent6, .indent7, { margin-left: calc(var(--column-width) * 4 + var(--gutter-width) * 4);}
+    .indent4, .indent5, .indent6, .indent7 { margin-left: calc(var(--column-width) * 4 + var(--gutter-width) * 4);}
 
     }
 
@@ -589,7 +640,7 @@ h5{  /*  notes et addendum */
 
   a:hover,
   a:active {
-      color: #a3b0e4;
+      color: var(--ui-hover-text-color);
   }
 
 
@@ -597,7 +648,7 @@ h5{  /*  notes et addendum */
 
   a.button {
     position: relative;
-    /* display: block; */
+    display: inline-block;
     /* width: auto; */
 
     font-family: 'inter';
@@ -609,20 +660,35 @@ h5{  /*  notes et addendum */
     background-color: none;
 
     color: white;
-    padding: .3rem ;
+    
+    padding: .5rem ;
+    margin-top: .5rem;
 
     text-decoration: none;
     text-transform: none;
 
-    /* border-radius: .25rem; */
-    border: 1px solid rgb(143, 143, 143);
-
-    /*
-    -webkit-box-shadow: 0px 0px 8px 0px rgba(167, 167, 167, 0.5);
-    -moz-box-shadow: 0px 0px 8px 0px rgba(167, 167, 167, 0.5);
-    box-shadow: 0px 0px 8px 0px rgba(167, 167, 167, 0.5);
-    */
+    border-radius: .25rem;
+    border: 1px solid var(--border-color);
 
   }
+
+  a.button:hover{
+    border-radius: .25rem;
+    background-color: var(--ui-hover-text-color);
+    color: black;
+    border: 4px solid var(ui-hover-text-color);
+  }
+
+
+  /* ************************************************ */
+  /* *************  Color overrides *******************/
+  /* ************************************************ */
   
+  .white{
+    color: white;
+  }
+
+  .shadow{
+     text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.73);
+  }
 

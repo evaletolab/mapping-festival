@@ -4,6 +4,7 @@ export { $event } from './event-service';
 export { $artist } from './artist-service';
 export { $eventLocation } from './eventLocation-service';
 export { $user } from './user-service';
+export { $news } from './news-service';
 export { $page } from './page-service';
 export { $cockpit } from './cockpit-service';
 export { $i18n } from './i18n';

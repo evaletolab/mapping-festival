@@ -61,7 +61,7 @@ export default class MapLibre extends Vue {
              [ 5.4052734375, 45.838367585245855 ],
              [ 7.248229980468751, 46.66263249079177 ]
         ];
-
+        
         let options: any = {
             container: "maplibre-container-id", // container id
             style: mapStyle,

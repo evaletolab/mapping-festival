@@ -2,11 +2,11 @@
     <div class="grid-element event-card" @click="navigateToEvent">
         <lazy-img class="cover-event" :src="coverDesktop" />
         
-        <div class="description"> 
+        <div class="description shadow"> 
           <div class="text event-title">{{ t(event.title) }}</div>
-          <div v-for="artist in artists" :key="artist._id">
-            <div class="text artistname">{{artist.fullname}} </div>
-            <div class="text artist-country">&#8239;{{artist.country}}</div>
+          <div class="artist-name-wrapper" v-for="artist in artists" :key="artist._id">
+            <span class="text artistname">{{artist.fullname}} 
+            <span class="text artist-country">{{artist.country}}</span></span>
           </div>
           <div v-if="location" class="text event-location">{{t(location)}}</div>
 
@@ -15,22 +15,28 @@
 
           <div v-else>
             <!------------- Nice dates ----------->
-            <div v-if="realEvent.when.length < 2" >
-              <div class="text event-date" v-for="(when,index) in realEvent.when" :key="index">
-              {{when.start|shortdate}} 
+
+            <div class="text dates-wrapper">
+              
+              <div v-if="realEvent.when.length < 2" >
+                <div class="text event-date" v-for="(when,index) in realEvent.when" :key="index">
+                {{when.start|shortdate}}
+                </div>
+              </div>
+            
+              <div v-else>
+                <div class="text event-date">
+                  {{shortDatesAsString}}
+                </div>
               </div>
             </div>
-            <div v-else>
-              <div class="text event-date" v-for="(interval, index) in intervals" :key="index">
-                {{interval.shortDate}} 
-              </div>
-            </div>
+
             <!-- ------------------------------- -->
           </div>
-          <br>
-          <div class="text event-type">{{getTypeLabel(event.type)}}</div>
+          <div class="text event-type shadow">{{getTypeLabel(event.typology)}}
         </div>
-    </div>
+      </div>
+  </div>
 </template>
 
 <style scoped>
@@ -44,6 +50,7 @@
         height: 100%;
         object-fit: cover;
     }
+
     .description{
         position:absolute;
         top: 10px;
@@ -108,6 +115,18 @@ export default class EventCard extends mixins(Translatable) {
 
   get artists(): CMS.ArtistWrap[]{
     return $event.artistsForEvent(this.event).map(a => new CMS.ArtistWrap(a));
+  }
+
+  get shortDatesAsString(): string{
+    let result = "";
+    for(let i = 0; i < this.intervals.length; i++){
+      if(i < this.intervals.length - 1){
+        result += `${this.intervals[i].shortDate} / `;
+      }else{
+        result += `${this.intervals[i].shortDate}`;
+      }
+    }
+    return result;
   }
 
   get location(): { fr: string, en: string } | null{
