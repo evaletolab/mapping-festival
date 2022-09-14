@@ -25,12 +25,12 @@
                 <h2 class="black" v-html="config.landing.title1"/> 
                 <div class="black">Visual audio and<br>deviant electronics</div>
 
-                <div class="margin-top1 black">19 &#8239; — &#8239; 29.5.2022</div>
+                <div class="margin-top1 black">3 &#8239; — &#8239; 13.11.2022</div>
                 <div class="black">Geneva</div>
               </div>
               <div v-else>
                 <h2 class="black" v-html="config.landing.title1"/> 
-                <div class="black">Visual audio and<br>deviant electronics<br>19 &#8239; — &#8239; 29.5.2022</div>
+                <div class="black">Visual audio and<br>deviant electronics<br>3 &#8239; — &#8239; 13.11.2022</div>
               </div>
 
 
