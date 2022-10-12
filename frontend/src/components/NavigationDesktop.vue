@@ -139,6 +139,8 @@ body.menu-open .page-sidebar {
 }
 
 .page-sidebar {
+  overflow: scroll;
+
   @media (max-width:476px) {
     transition: all 200ms;      
     transform: translateX(- 100vw);
